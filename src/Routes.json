@@ -1,0 +1,51 @@
+{
+  "Auth": {
+    "login": "http://192.168.1.25:8080/Users/login",
+    "signUp": "http://193.47.189.15:3004/signup",
+    "logout": "http://193.47.189.15:3004/Logout"
+  },
+  "UOM": {
+    "root": "http://193.47.189.15:3004/UOM"
+  },
+  "Contract": {
+    "root": "http://192.168.1.25:8080/Contracts/"
+  },
+  "Contract_Payment": {
+    "root": "http://192.168.1.25:8080/Contract_Payment"
+  },
+  "Property_Party": {
+    "root": "http://192.168.1.25:8080/Property_Party"
+  },
+  "Property_Property": {
+    "root": "http://192.168.1.25:8080/Property_Property"
+  },
+  "Property_Attribute": {
+    "root": "http://192.168.1.25:8080/Property_Attribute"
+  },
+  "Property_Terrority": {
+    "root": "http://192.168.1.25:8080/Property_Terrority"
+  },
+  "Setup_Branch": {
+    "root": "http://192.168.1.25:8080/Branches"
+  },
+  "ContractType": {
+    "root": "http://192.168.1.25:8080/ContractType"
+  },
+  "Setup_Permission": {
+    "root": "http://192.168.1.25:8080/Setup_Permission"
+  },
+  "Setup_Purpose": {
+    "root": "http://192.168.1.25:8080/Setup_Purpose"
+  },
+  "Setup_User": {
+    "root": "http://192.168.1.25:8080/Setup_User"
+  },
+  "Setup_UserRole": {
+    "root": "http://192.168.1.25:8080/Setup_UserRole"
+  },
+  "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
+  "Socket": {
+    "data": "http://193.47.189.15:3004",
+    "check": "http://193.47.189.15:8000"
+  }
+}

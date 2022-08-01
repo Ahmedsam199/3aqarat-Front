@@ -1,0 +1,22 @@
+import Core from "../../core";
+export default Core.Object({
+  FirstParty: Core.String(),
+  SecondParty: Core.String(),
+  ContractDate: Core.String(),
+  Property: Core.String(),
+  ContractType: Core.String(),
+  IsFurnished: Core.Boolean(),
+  ContractStarts: Core.String(),
+  HandoverDate: Core.String(),
+  PaidAmt: Core.String(),
+  ContractEnds: Core.String(),
+  RequestedAmt: Core.String(),
+  PaidCurrency: Core.String(),
+  RentFor: Core.String(),
+  AdvanceAmt: Core.String(),
+  Lawyer: Core.String(),
+  AdvanceCurrency: Core.String(),
+  InsuranceAmount: Core.String(),
+  InsuranceCurrency: Core.String(),
+  Remark: Core.String(),
+});

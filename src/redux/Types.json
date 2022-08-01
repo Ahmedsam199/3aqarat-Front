@@ -1,0 +1,112 @@
+{
+  "ChangeNetworkStatus": "ChangeNetworkStatus",
+  "clear": "Clear_All",
+  "Error": "Error",
+  "Offline": {
+    "clear": "OFFline_clear",
+    "Doctype": {
+      "insert": "Offline_Insert_Doctype",
+      "update": "Offline_Update_Doctype",
+      "delete": "Offline_Delete_Doctype",
+      "clear": "Offline_Clear_Doctype"
+    }
+  },
+  "UOM": {
+    "set": "Set_UOM",
+    "insert": "Insert_UOM",
+    "update": "Update_UOM",
+    "delete": "Delete_UOM",
+    "clear": "Clear_UOM"
+  },
+  "Customer": {
+    "set": "Set_Customer",
+    "insert": "Insert_Customer",
+    "update": "Update_Customer",
+    "delete": "Delete_Customer",
+    "clear": "Clear_Customer"
+  },
+  "Contract": {
+    "set": "Set_Contract",
+    "insert": "Insert_Contract",
+    "update": "Update_Contract",
+    "delete": "Delete_Contract",
+    "clear": "Clear_Contract"
+  },
+  "Contract_Payment": {
+    "set": "Set_Contract_Payment",
+    "insert": "Insert_Contract_Payment",
+    "update": "Update_Contract_Payment",
+    "delete": "Delete_Contract_Payment",
+    "clear": "Clear_Contract_Payment"
+  },
+  "Property_Party": {
+    "set": "Set_Property_Party",
+    "insert": "Insert_Property_Party",
+    "update": "Update_Property_Party",
+    "delete": "Delete_Property_Party",
+    "clear": "Clear_Property_Party"
+  },
+  "Property_Property": {
+    "set": "Set_Property_Property",
+    "insert": "Insert_Property_Property",
+    "update": "Update_Property_Property",
+    "delete": "Delete_Property_Property",
+    "clear": "Clear_Property_Property"
+  },
+  "Property_Attribute": {
+    "set": "Set_Property_Attribute",
+    "insert": "Insert_Property_Attribute",
+    "update": "Update_Property_Attribute",
+    "delete": "Delete_Property_Attribute",
+    "clear": "Clear_Property_Attribute"
+  },
+  "Property_Terrority": {
+    "set": "Set_Property_Terrority",
+    "insert": "Insert_Property_Terrority",
+    "update": "Update_Property_Terrority",
+    "delete": "Delete_Property_Terrority",
+    "clear": "Clear_Property_Terrority"
+  },
+  "Setup_Branch": {
+    "set": "Set_Setup_Branch",
+    "insert": "Insert_Setup_Branch",
+    "update": "Update_Setup_Branch",
+    "delete": "Delete_Setup_Branch",
+    "clear": "Clear_Setup_Branch"
+  },
+  "ContractType": {
+    "set": "Set_ContractType",
+    "insert": "Insert_ContractType",
+    "update": "Update_ContractType",
+    "delete": "Delete_ContractType",
+    "clear": "Clear_ContractType"
+  },
+  "Setup_Permission": {
+    "set": "Set_Setup_Permission",
+    "insert": "Insert_Setup_Permission",
+    "update": "Update_Setup_Permission",
+    "delete": "Delete_Setup_Permission",
+    "clear": "Clear_Setup_Permission"
+  },
+  "Setup_Purpose": {
+    "set": "Set_Setup_Purpose",
+    "insert": "Insert_Setup_Purpose",
+    "update": "Update_Setup_Purpose",
+    "delete": "Delete_Setup_Purpose",
+    "clear": "Clear_Setup_Purpose"
+  },
+  "Setup_User": {
+    "set": "Set_Setup_User",
+    "insert": "Insert_Setup_User",
+    "update": "Update_Setup_User",
+    "delete": "Delete_Setup_User",
+    "clear": "Clear_Setup_User"
+  },
+  "Setup_UserRole": {
+    "set": "Set_Setup_UserRole",
+    "insert": "Insert_Setup_UserRole",
+    "update": "Update_Setup_UserRole",
+    "delete": "Delete_Setup_UserRole",
+    "clear": "Clear_Setup_UserRole"
+  }
+}
