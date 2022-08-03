@@ -10,6 +10,7 @@ import { store, persistor } from './redux/storeConfig/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 import AppProvider from 'context/AppProvider';
+import NetworkProvider from '@hooks/useNetworkV2';
 
 // ** Intl, CASL & ThemeColors Context
 import ability from './configs/acl/ability'
@@ -62,13 +63,14 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SocketProvider />
+        <NetworkProvider />
         <Suspense fallback={<Spinner />}>
           <AbilityContext.Provider value={ability}>
             <AppProvider>
-            <ThemeContext>
-              <LazyApp />
-              <Toaster position={themeConfig.layout.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-            </ThemeContext>
+              <ThemeContext>
+                <LazyApp />
+                <Toaster position={themeConfig.layout.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+              </ThemeContext>
             </AppProvider>
           </AbilityContext.Provider>
         </Suspense>
