@@ -47,6 +47,7 @@
     "moment": "^2.29.3",
     "nouislider": "^15.5.0",
     "nouislider-react": "^3.4.1",
+    "number-format.js": "^2.0.9",
     "ol": "^6.15.1",
     "pigeon-maps": "^0.21.0",
     "postcss-rtl": "^1.5.0",

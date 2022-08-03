@@ -1,4 +1,4 @@
-import { UOM as createColumns } from "@columns";
+import { Contract_Type as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
@@ -20,7 +20,7 @@ import {
 import POST from "./post";
 const Index = () => {
   const { t } = useTranslation();
-  const { Setup_ContractType } = useSelector((state) => state);
+  const { ContractType } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -66,12 +66,14 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
-            <Button.Ripple color="primary" className="mb-1" onClick={() => toggleFunc.current()}>
+            <Button.Ripple
+              color="primary"
+              className="mb-1"
+              onClick={() => toggleFunc.current()}
+            >
               {t("New")}
             </Button.Ripple>
           </div>
@@ -111,7 +113,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={Setup_ContractType}
+          offlineData={ContractType}
           columns={Columns}
           filters={filters}
         />

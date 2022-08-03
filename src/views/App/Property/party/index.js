@@ -1,4 +1,4 @@
-import { UOM as createColumns } from "@columns";
+import { Party as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
@@ -20,7 +20,7 @@ import {
 import POST from "./post";
 const Index = () => {
   const { t } = useTranslation();
-  const { Properites_Party } = useSelector((state) => state);
+  const { Property_Party } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -49,7 +49,7 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
+    dispatch(deleteItem("Property_Party", Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: "success", msg: "Delete Successfully!" });
@@ -113,7 +113,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={Properites_Party}
+          offlineData={Property_Party}
           columns={Columns}
           filters={filters}
         />

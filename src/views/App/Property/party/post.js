@@ -54,12 +54,14 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   }, [errors]);
   const onSubmit = async (values) => {
     setLoading(true);
+    console.log(values)
     dispatch(
       values.Series
         ? updateItem("Property_Party", values)
         : insertItem("Property_Party", values)
     )
       .then((res) => {
+        console.log(res)
         toasty({ type: "success" });
         clear();
         toggle();

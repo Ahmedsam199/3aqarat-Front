@@ -11,13 +11,7 @@
       "clear": "Offline_Clear_Doctype"
     }
   },
-  "UOM": {
-    "set": "Set_UOM",
-    "insert": "Insert_UOM",
-    "update": "Update_UOM",
-    "delete": "Delete_UOM",
-    "clear": "Clear_UOM"
-  },
+ 
   "Customer": {
     "set": "Set_Customer",
     "insert": "Insert_Customer",

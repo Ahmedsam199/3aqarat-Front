@@ -46,7 +46,7 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
+    dispatch(deleteItem("Contract", Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: "success", msg: "Delete Successfully!" });

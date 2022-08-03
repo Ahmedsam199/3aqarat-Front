@@ -15,6 +15,7 @@ import {
   Twitter,
   Mail,
   GitHub,
+  UserCheck,
   HelpCircle,
   Coffee,
   X,
@@ -49,27 +50,11 @@ import {
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
+import { useState } from "preact/hooks";
 
 const ToastContent = ({ t, name, role }) => {
   return (
     <div className="d-flex">
-      <div className="me-1">
-        <Avatar size="sm" color="success" icon={<Coffee size={12} />} />
-      </div>
-      <div className="d-flex flex-column">
-        <div className="d-flex justify-content-between">
-          <h6>{name}</h6>
-          <X
-            size={12}
-            className="cursor-pointer"
-            onClick={() => toast.dismiss(t.id)}
-          />
-        </div>
-        <span>
-          You have successfully logged in as an {role} user to Vuexy. Now you
-          can start to explore. Enjoy!
-        </span>
-      </div>
     </div>
   );
 };
@@ -81,6 +66,7 @@ const defaultValues = {
 
 const Login = () => {
   // ** Hooks
+  
   const { skin } = useSkin();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,7 +86,7 @@ const Login = () => {
       useJwt
         .login({ UserName: data.UserName, Password: data.Password })
         .then((res) => {
-          console.log(res);
+
           const data = {
             ...res.data,
             accessToken: res.data,
@@ -218,43 +204,15 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Vuexy! 👋
+              Welcome to AlJazary RealState 👋
             </CardTitle>
-            <CardText className="mb-2">
-              Please sign-in to your account and start the adventure
-            </CardText>
-            <Alert color="primary">
-              <div className="alert-body font-small-2">
-                <p>
-                  <small className="me-50">
-                    <span className="fw-bold">Admin:</span> admin@demo.com |
-                    admin
-                  </small>
-                </p>
-                <p>
-                  <small className="me-50">
-                    <span className="fw-bold">Client:</span> client@demo.com |
-                    client
-                  </small>
-                </p>
-              </div>
-              <HelpCircle
-                id="login-tip"
-                className="position-absolute"
-                size={18}
-                style={{ top: "10px", right: "10px" }}
-              />
-              <UncontrolledTooltip target="login-tip" placement="left">
-                This is just for ACL demo purpose.
-              </UncontrolledTooltip>
-            </Alert>
             <Form
               className="auth-login-form mt-2"
               onSubmit={handleSubmit(onSubmit)}
             >
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
-                  Email
+                  UserName
                 </Label>
                 <Controller
                   id="UserName"
@@ -276,9 +234,7 @@ const Login = () => {
                   <Label className="form-label" for="login-password">
                     Password
                   </Label>
-                  <Link to="/forgot-password">
-                    <small>Forgot Password?</small>
-                  </Link>
+                
                 </div>
                 <Controller
                   id="Password"
@@ -293,12 +249,6 @@ const Login = () => {
                   )}
                 />
               </div>
-              <div className="form-check mb-1">
-                <Input type="checkbox" id="remember-me" />
-                <Label className="form-check-label" for="remember-me">
-                  Remember Me
-                </Label>
-              </div>
               <Button type="submit" color="primary" block>
                 Sign in
               </Button>
@@ -309,23 +259,7 @@ const Login = () => {
                 <span>Create an account</span>
               </Link>
             </p>
-            <div className="divider my-2">
-              <div className="divider-text">or</div>
-            </div>
-            <div className="auth-footer-btn d-flex justify-content-center">
-              <Button color="facebook">
-                <Facebook size={14} />
-              </Button>
-              <Button color="twitter">
-                <Twitter size={14} />
-              </Button>
-              <Button color="google">
-                <Mail size={14} />
-              </Button>
-              <Button className="me-0" color="github">
-                <GitHub size={14} />
-              </Button>
-            </div>
+           
           </Col>
         </Col>
       </Row>

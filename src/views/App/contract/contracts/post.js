@@ -55,8 +55,8 @@ const POST = (props) => {
       setLoading(true);
       dispatch(
         values.Series
-          ? updateItem("Set_Contract", values)
-          : insertItem("Set_Contract", values)
+          ? updateItem("Contract", values)
+          : insertItem("Contract", values)
       )
         .then((res) => {
           toasty({ type: "success" });

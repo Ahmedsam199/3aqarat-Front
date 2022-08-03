@@ -1,8 +1,8 @@
 // ** React Imports
 import { element } from 'prop-types'
 import { lazy } from 'react'
-const Customer = lazy(() => import('../../views/App/Customer'))
-const CustomerPOST = lazy(() => import('../../views/App/Customer/post'))
+
+
 const Permissions = lazy(() => import('../../views/App/Permissions'))
 const Permissions_POST = lazy(() => import('../../views/App/Permissions/post'))
 const Contract_contract=lazy(()=>import('../../views/App/contract/contracts'))
@@ -15,7 +15,7 @@ const Properity_Property=lazy(()=>import('../../views/App/Property/Property'))
 const Properity_Property_New=lazy(()=>import('../../views/App/Property/Property/post'))
 const Properity_Terrority=lazy(()=>import('../../views/App/Property/Terrority'))
 const Setup_Branches=lazy(()=>import('../../views/App/Setup/Branches'))
-const UOM = lazy(() => import('../../views/App/UOM'))
+
 const Setup_Template=lazy(()=>import('../../views/App/Setup/contractTemplate'))
 const Setup_ContractType=lazy(()=>import('../../views/App/Setup/ContractType'))
 const Setup_Permission=lazy(()=>import('../../views/App/Setup/Permissions'))
@@ -26,15 +26,12 @@ const Editor=lazy(()=>import('../../views/App/Setup/contractTemplate/post'))
 const Dashboad=lazy(()=>import('../../views/App/Dashboard/index'))
 const AppRoutes = [
   {
-    element: <Customer />,
-    path: "/App/Customer",
-  },{
-element:<Dashboad />,
-path: "/DashBoard"
+    element: <Dashboad />,
+    path: "/DashBoard",
   },
   {
-    element :<Editor />,
-    path:"/newTemp"
+    element: <Editor />,
+    path: "/App/Customer",
   },
   {
     element: <Contract_New />,
@@ -88,18 +85,12 @@ path: "/DashBoard"
     element: <Setup_Branches />,
     path: "/Setup/Branchies",
   },
-  {
-    path: "/App/NewCustomer",
-    element: <CustomerPOST />,
-  },
+
   {
     path: "/App/Contract/Contract",
     element: <Contract_contract />,
   },
-  {
-    element: <CustomerPOST />,
-    path: "/App/UpdateCustomer/:series",
-  },
+
   {
     element: <Contract_Payment_New />,
     path: "/App/Contract/Payment/new",
@@ -135,10 +126,6 @@ path: "/DashBoard"
     meta: {
       appLayout: true,
     },
-  },
-  {
-    element: <UOM />,
-    path: "/App/UOM",
   },
 ];
 

@@ -1,4 +1,4 @@
-import { UOM as createColumns } from "@columns";
+import { Purpose as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
@@ -66,12 +66,14 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-     
-        </div>
+        <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
-            <Button.Ripple className='mb-1' color="primary" onClick={() => toggleFunc.current()}>
+            <Button.Ripple
+              className="mb-1"
+              color="primary"
+              onClick={() => toggleFunc.current()}
+            >
               {t("New")}
             </Button.Ripple>
           </div>

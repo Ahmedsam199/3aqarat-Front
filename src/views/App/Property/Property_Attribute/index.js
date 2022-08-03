@@ -1,4 +1,4 @@
-import { UOM as createColumns } from "@columns";
+import { Property_Attribute as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
@@ -49,7 +49,7 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
+    dispatch(deleteItem("Property_Attribute", Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: "success", msg: "Delete Successfully!" });

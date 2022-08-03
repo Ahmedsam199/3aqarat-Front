@@ -56,6 +56,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   }, [errors]);
   const onSubmit = async (values) => {
     setLoading(true);
+    console.log(values)
     dispatch(
       values.Series
         ? updateItem("Setup_User", values)

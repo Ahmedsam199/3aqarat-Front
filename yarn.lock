@@ -11327,6 +11327,11 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
+number-format.js@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/number-format.js/-/number-format.js-2.0.9.tgz#91f54f9d2afc62cd3b608cb67cdc587319af8ceb"
+  integrity sha512-VMDspFTTDRgWopKSYsIUGZKcjuL39zQw3cDG20fKxVroqSRI6OofHlWCRwUimNvOpDuLIL92L1K8NVHCRAbF1A==
+
 nwsapi@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/nwsapi/-/nwsapi-2.2.0.tgz#204879a9e3d068ff2a55139c2c772780681a38b7"

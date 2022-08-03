@@ -1,5 +1,4 @@
-import Customer from './Customer';
-import UOM from './UOM';
+
 import Contract_Contract from './Contract/Contract_Contract';
 import  Contract_Payment  from './Contract/Contract_Payment';
 import  Properites_Party  from './Property/Party';
@@ -13,8 +12,8 @@ import Setup_Purpose from './Setup/Purpose'
 import Setup_User from './Setup/User';
 import Setup_UserRole from './Setup/UserRole'
 export default {
-  Customer,
-  UOM,
+ 
+  
   Contract_Contract,
   Contract_Payment,
   Properites_Party,

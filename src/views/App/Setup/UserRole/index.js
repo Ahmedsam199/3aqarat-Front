@@ -1,4 +1,4 @@
-import { UOM as createColumns } from "@columns";
+import { UserRole as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";

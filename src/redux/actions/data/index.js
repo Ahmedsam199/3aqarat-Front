@@ -20,7 +20,7 @@ export const insertItem = (name, values) => {
   return async (dispatch) => {
     return new Promise(async (resolve, reject) => {
       try {
-        if (networkStatus()) {
+        if (1 || networkStatus()) {
           const _ = await axios.post(Routes[name].root, values);
           if (_.status === 200) {
             dispatch({

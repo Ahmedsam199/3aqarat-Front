@@ -57,19 +57,19 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   const onSubmit = async (values) => {
     setLoading(true);
     console.log(values);
-    // dispatch(
-    //   values.Series
-    //     ? updateItem("Setup_UserRole", values)
-    //     : insertItem("Setup_UserRole", values)
-    // )
-    //   .then((res) => {
-    //     toasty({ type: "success" });
-    //     clear();
-    //     toggle();
-    //   })
-    //   .catch((err) => {
-    //     console.log("hacker_it_err", err);
-    //   });
+    dispatch(
+      values.Series   
+        ? updateItem("Setup_UserRole", values)
+        : insertItem("Setup_UserRole", values)
+    )
+      .then((res) => {
+        toasty({ type: "success" });
+        clear();
+        toggle();
+      })
+      .catch((err) => {
+        console.log("hacker_it_err", err);
+      });
     setLoading(false);
   };
   useEffect(() => {

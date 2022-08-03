@@ -1,16 +1,16 @@
-import { checkDateFromRange, isEmpty, isObjEmpty } from '@utils';
-import axios from 'axios';
+import { checkDateFromRange, isEmpty, isObjEmpty } from "@utils";
+import axios from "axios";
 import React, {
   forwardRef,
   useEffect,
   useImperativeHandle,
   useMemo,
-  useState
-} from 'react';
-import DataTable from 'react-data-table-component';
-import { ChevronDown } from 'react-feather';
-import { useTranslation } from 'react-i18next';
-import { Spinner } from 'reactstrap';
+  useState,
+} from "react";
+import DataTable from "react-data-table-component";
+import { ChevronDown } from "react-feather";
+import { useTranslation } from "react-i18next";
+import { Spinner } from "reactstrap";
 const CustomTable = forwardRef(
   (
     {
@@ -20,11 +20,11 @@ const CustomTable = forwardRef(
       offlineData,
       paginationServer,
       handleClickEvent,
-      loadStyle = 'normal',
+      loadStyle = "normal",
     },
     ref
   ) => {
-    const { t } = useTranslation()
+    const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     // const [totalRows, setTotalRows] = useState(0);
@@ -37,22 +37,27 @@ const CustomTable = forwardRef(
     }));
 
     const fetchDate = async () => {
-      setLoading(true);
-      // !back
-      const response = await axios.get(url, null);
-      if (response) {
-        const { data } = response;
-        if (data) {
-          setData(response.data[0]?.filter((e) => e.Series !== undefined));
-          setOriginalData(
-            response.data[0]?.filter((e) => e.Series !== undefined)
-          );
-        } else {
-          setData([]);
-          setOriginalData([]);
+      try {
+        setLoading(true);
+        // !back
+        const response = await axios.get(url, null);
+        console.log("hacker_it", response);
+        if (response) {
+          const { data } = response;
+          if (data) {
+            setData(response.data[0]?.filter((e) => e.Series !== undefined));
+            setOriginalData(
+              response.data[0]?.filter((e) => e.Series !== undefined)
+            );
+          } else {
+            setData([]);
+            setOriginalData([]);
+          }
         }
+        setLoading(false);
+      } catch (error) {
+        console.error("hacker_it", error);
       }
-      setLoading(false);
     };
 
     useEffect(() => {
@@ -73,25 +78,25 @@ const CustomTable = forwardRef(
         let _result = true;
         for (var key in filters) {
           if (!_result) return false;
-          if (typeof filters[key] === 'object') {
+          if (typeof filters[key] === "object") {
             if (!isEmpty(filters[key]?.value))
               switch (filters[key]?.op) {
-                case 'like':
+                case "like":
                   _result = item[key]
                     ?.toString()
                     .toLowerCase()
                     .includes(filters[key]?.value.toLowerCase());
                   break;
-                case 'eq':
-                  if (filters[key].value !== '')
+                case "eq":
+                  if (filters[key].value !== "")
                     _result = item[key] === filters[key].value;
                   break;
-                case 'range':
+                case "range":
                   if (
                     !isEmpty(filters[key].value) &&
                     filters[key].value.length === 2
                   ) {
-                    const [_, _key] = key.split('_');
+                    const [_, _key] = key.split("_");
                     _result = checkDateFromRange({
                       value: item[_key],
                       range: filters[key].value,
@@ -103,14 +108,14 @@ const CustomTable = forwardRef(
               }
           } else {
             switch (typeof filters[key]) {
-              case 'string':
-                if (filters[key] !== '')
+              case "string":
+                if (filters[key] !== "")
                   _result = item[key]
                     ?.toString()
                     .toLowerCase()
                     .includes(filters[key].toLowerCase());
                 break;
-              case 'function':
+              case "function":
                 _result = filters[key](item[key]);
                 break;
             }
@@ -135,21 +140,16 @@ const CustomTable = forwardRef(
         className="react-dataTable"
         progressPending={loading}
         progressComponent={(() => {
-          if (loadStyle === 'spinner')
+          if (loadStyle === "spinner")
             return (
               <Spinner
                 size="xl"
                 color="secondary"
-                style={{ width: '10rem', height: '10rem' }}
+                style={{ width: "10rem", height: "10rem" }}
                 className="float-left"
               />
             );
-          else
-            return (
-              <h3 className="p-5">
-                {t("Loading...")}
-              </h3>
-            );
+          else return <h3 className="p-5">{t("Loading...")}</h3>;
         })()}
         sortIcon={<ChevronDown size={10} />}
         data={data}
