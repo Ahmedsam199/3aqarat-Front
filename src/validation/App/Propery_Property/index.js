@@ -4,6 +4,6 @@ export default Core.Object({
   Territory: Core.String(),
   Currency: Core.String(),
   Purpose: Core.String(),
-  RequestedAmt: Core.String(),
+  RequestedAmt: Core.Number(),
   IsFurnished: Core.Boolean(),
 });

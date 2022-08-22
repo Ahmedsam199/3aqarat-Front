@@ -11,7 +11,7 @@
       "clear": "Offline_Clear_Doctype"
     }
   },
- 
+
   "Customer": {
     "set": "Set_Customer",
     "insert": "Insert_Customer",
@@ -19,7 +19,7 @@
     "delete": "Delete_Customer",
     "clear": "Clear_Customer"
   },
-  "Contract": {
+  "Contract_Contract": {
     "set": "Set_Contract",
     "insert": "Insert_Contract",
     "update": "Update_Contract",
@@ -67,6 +67,13 @@
     "update": "Update_Setup_Branch",
     "delete": "Delete_Setup_Branch",
     "clear": "Clear_Setup_Branch"
+  },
+  "Contract_Template": {
+    "set": "Set_Contract_Template",
+    "insert": "Insert_Contract_Template",
+    "update": "Update_Contract_Template",
+    "delete": "Delete_Contract_Template",
+    "clear": "Clear_Contract_Template"
   },
   "ContractType": {
     "set": "Set_ContractType",

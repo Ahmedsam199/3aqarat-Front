@@ -41,7 +41,6 @@ const CustomTable = forwardRef(
         setLoading(true);
         // !back
         const response = await axios.get(url, null);
-        console.log("hacker_it", response);
         if (response) {
           const { data } = response;
           if (data) {
@@ -71,6 +70,7 @@ const CustomTable = forwardRef(
     }, [offlineData]);
 
     useEffect(() => {
+
       if (isObjEmpty(filters) || filters === undefined || filters === null)
         return;
       let _data = [...originalData];

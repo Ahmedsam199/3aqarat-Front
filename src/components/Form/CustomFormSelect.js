@@ -32,7 +32,6 @@ function CustomFormSelect({
   } = useFormContext();
   const changeValue = (val, onChange) => {
     if (isMulti) {
-      // onChange(val?.map(x => x[valueName]) ?? null)
       onChange(val?.map((x) => x.value) ?? null);
     } else {
       // onChange(val[valueName] ?? null)

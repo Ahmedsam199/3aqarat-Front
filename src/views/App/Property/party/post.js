@@ -1,5 +1,7 @@
 import CustomFormInput from "@Component/Form/CustomFormInput";
+import CustomFormRadioInput from "../../../../components/Form/CustomFormRadioInput";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
+import CustomFormSelect from "../../../../components/Form/CustomFormSelect";
 import Sidebar from "@components/sidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AbilityContext } from "@src/utility/context/Can";
@@ -12,7 +14,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-
+import { toast } from "react-toastify";
+import { GenderOptions } from "@FixedOptions";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -31,7 +34,13 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     [ability.can("write", "DT-13")]
   );
   const clear = () => {
-    reset({ _write: true, ConverstionFactor: 0, UOM: "", Series: "" });
+    reset({
+      _write: true,
+      ConverstionFactor: 0,
+      UOM: "",
+      Series: "",
+      Gender: undefined,
+    });
   };
   useEffect(() => {
     if (row != undefined) {
@@ -54,15 +63,15 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   }, [errors]);
   const onSubmit = async (values) => {
     setLoading(true);
-    console.log(values)
+    console.log(values);
     dispatch(
       values.Series
         ? updateItem("Property_Party", values)
         : insertItem("Property_Party", values)
     )
       .then((res) => {
-        console.log(res)
-        toasty({ type: "success" });
+        console.log(res);
+        toast.success("");
         clear();
         toggle();
       })
@@ -88,11 +97,11 @@ const POST = ({ onToggle, row, toggleFunc }) => {
           <Form onSubmit={handleSubmit(onSubmit)}>
             {/* s</ModalHeader> */}
             <CustomFormInput name="FullName" />
-            <CustomFormNumberInput name="Phone" />
-            <CustomFormNumberInput name="Cell" />
+            <CustomFormInput type="tel" name="Phone" />
+            <CustomFormInput type="tel" name="Cell" />
             <CustomFormInput name="Address" />
-            <CustomFormInput name="Gender" />
-            <CustomFormInput name="Remark" />
+            <CustomFormSelect options={GenderOptions} name="Gender" />
+            <CustomFormInput name="Remarks" />
             <div className="mt-1">
               <Button
                 color="primary"

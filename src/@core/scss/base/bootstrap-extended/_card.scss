@@ -36,6 +36,9 @@
   .card-body[class*='border-bottom-'] {
     border-bottom-width: 2px !important;
   }
+  .card-body{
+    padding: 1rem 1rem !important;
+  }
   .card-img-overlay {
     &.bg-overlay {
       background: rgba($black, 0.45);

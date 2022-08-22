@@ -5,7 +5,7 @@ export default Core.Object({
   Password: Core.String(),
   DefaultLanguage: Core.String(),
   DefaultCurrency: Core.String(),
-  FromDate: Core.Date(),
+  FromDate: Core.String(),
   ToDate: Core.String(),
   Disabled:Core.Boolean(),
 });

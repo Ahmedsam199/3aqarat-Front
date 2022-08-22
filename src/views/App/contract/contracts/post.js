@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
 import { isObjEmpty, toBoolean } from "@utils";
+import {Currency} from '@FixedOptions'
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
@@ -21,14 +22,16 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import ReferenceList from "./ReferenceList";
+import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+import ReferenceList from './ReferenceList'
 import Ref2 from './Ref2'
 import Ref3 from './Ref3'
-import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+import { toast } from "react-toastify";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Currency, Party } = useSelector((state) => state);
+  const { Contract_Contract, ContractType, Property_Property, Property_Party } =
+    useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -48,19 +51,22 @@ const POST = (props) => {
   } = methods;
   const _dataForm = useWatch({ control });
   // ** Function to handle form submit
-
+useEffect(()=>{
+  console.log('testing',errors);
+},[errors])
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
       setLoading(true);
+      
       dispatch(
         values.Series
-          ? updateItem("Contract", values)
-          : insertItem("Contract", values)
+          ? updateItem("Contract_Contract", values)
+          : insertItem("Contract_Contract", values)
       )
         .then((res) => {
-          toasty({ type: "success" });
-          navigate("/App/Customer");
+          toast.success('')
+          navigate("");
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
@@ -74,11 +80,14 @@ const POST = (props) => {
     () => toBoolean(ability.can("write", "DT-6")),
     [ability.can("write", "DT-6")]
   );
+
   useEffect(async () => {
     if (params.series) {
-      if (!Party.length) return;
+      if (!Contract_Contract.length) return;
       // const _ = Party.find((x) => x.Series === params.series);
-      const { data } = await axios.get(`${Routes.Party.root}/${params.series}`);
+      const { data } = await axios.get(
+        `${Routes.Contract_Contract.root}/${params.series}`
+      );
 
       console.log("joseph data ", data);
 
@@ -94,7 +103,20 @@ const POST = (props) => {
         _write: true,
         _loading: false,
       });
-  }, [Party]);
+  }, [Contract_Contract]);
+  let TypeOpt = [];
+  ContractType.forEach((x) => {
+    TypeOpt.push({ value: x.Series, label: x.Series + " " + x.ContractType });
+  });
+  let PropOpt = [];
+  Property_Property.forEach((x) => {
+    PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
+  });
+  let PartyOpt = [];
+  Property_Party.forEach((x) => {
+    PartyOpt.push({ value: x.Series, label: x.Series + " " + x.FullName });
+  });
+  
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -118,29 +140,18 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect
-                    name="FirstParty"
-                    options={PartyTypeOptions}
-                  />
-                  <CustomFormSelect
-                    name="SecondParty"
-                    options={PartyTypeOptions}
-                  />
+                  <CustomFormSelect name="FirstParty" options={PartyOpt} />
+                  <CustomFormSelect name="SecondParty" options={PartyOpt} />
                   <CustomFormInput
-                    name="ContractDate"
+                    name="ContractStarts"
                     textName="Currency"
                     type="Date"
                   />
                 </Col>
                 <Col sm="6">
-                  <CustomFormSelect name="Property" textName="Currency" />
+                  <CustomFormSelect options={PropOpt} name="Property" />
                   {/* Where BackEnd */}
-                  <CustomFormSelect
-                    name="ContractType"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormSelect name="ContractType" options={TypeOpt} />
                   <Row>
                     <Col sm="6" style={{ marginTop: "2rem" }}>
                       <CustomFormInputCheckbox
@@ -173,42 +184,33 @@ const POST = (props) => {
               <Row>
                 <Col sm="6">
                   <CustomFormInput
+                    name="ContractDate"                    
                     type="Date"
-                    name="ContractStarts"
-                    options={PartyTypeOptions}
                   />
                   <CustomFormInput name="HandoverDate" type="Date" />
-                  <CustomFormInput
-                    name="PaidAmt"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormNumberInput name="PaidAmt" />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput type="Date" name="ContractEnds" />
-                  <CustomFormInput
+                  <CustomFormNumberInput
                     name="RequestedAmt"
                     textName="Currency"
                     valueName="Series"
-                    options={Currency}
                   />
-                  <CustomFormSelect
-                    name="PaidCurrency"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormSelect name="PaidCurrency" options={Currency} />
                 </Col>
               </Row>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect
-                    name="RentFor"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormInput name="RentFor" />
+                </Col>
+              </Row>
+              <Row className="mt-1">
+                <Col>
+                  <CustomFormInputCheckbox name="IsSale" />
+                </Col>
+                <Col>
+                  <CustomFormInputCheckbox name="IsRent" />
                 </Col>
               </Row>
             </CardBody>
@@ -220,24 +222,17 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormInput
+                  <CustomFormNumberInput
                     name="AdvanceAmt"
                     options={PartyTypeOptions}
                   />
                   <CustomFormInput name="Lawyer" />
-                  <CustomFormSelect
-                    name="AdvanceCurrency"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormSelect name="AdvanceCurrency" options={Currency} />
                 </Col>
                 <Col sm="6">
-                  <CustomFormInput name="InsuranceAmount" />
+                  <CustomFormInput type="number" name="InsuranceAmt" />
                   <CustomFormSelect
                     name="InsuranceCurrency"
-                    textName="Currency"
-                    valueName="Series"
                     options={Currency}
                   />
                 </Col>
@@ -254,7 +249,7 @@ const POST = (props) => {
                 </Col>
                 <Col>
                   {/* Table Go Here */}
-                  <CustomFormInput name="Remark" type="textarea" />
+                  <CustomFormInput name="Remarks" type="textarea" />
                 </Col>
               </Row>
             </CardBody>

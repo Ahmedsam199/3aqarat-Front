@@ -25,3 +25,15 @@ export const getHomeRouteForLoggedInUser = userRole => {
   if (userRole === 'client') return { name: 'access-control' }
   return { name: 'auth-login' }
 }
+export const stringToCapitalize = (str) => {
+  return !str ? "" : str.charAt(0).toUpperCase() + str.slice(1);
+};
+import OneSignal from "react-onesignal";
+
+export default async function runOneSignal() {
+  await OneSignal.init({
+    appId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    allowLocalhostAsSecureOrigin: true,
+  });
+  OneSignal.showSlidedownPrompt();
+}

@@ -15,7 +15,7 @@ const Properity_Property=lazy(()=>import('../../views/App/Property/Property'))
 const Properity_Property_New=lazy(()=>import('../../views/App/Property/Property/post'))
 const Properity_Terrority=lazy(()=>import('../../views/App/Property/Terrority'))
 const Setup_Branches=lazy(()=>import('../../views/App/Setup/Branches'))
-
+const NewPer=lazy(()=>import('../../views/App/Setup/Permissions/post'))
 const Setup_Template=lazy(()=>import('../../views/App/Setup/contractTemplate'))
 const Setup_ContractType=lazy(()=>import('../../views/App/Setup/ContractType'))
 const Setup_Permission=lazy(()=>import('../../views/App/Setup/Permissions'))
@@ -36,6 +36,10 @@ const AppRoutes = [
   {
     element: <Contract_New />,
     path: "/contract/New",
+  },
+  {
+    element: <Contract_New />,
+    path: "/UpdateContract/:series",
   },
   {
     element: <Setup_User />,
@@ -70,8 +74,12 @@ const AppRoutes = [
     path: "/Properity/Property/New",
   },
   {
+    element: <Properity_Property_New />,
+    path: "/Properity/Property/Update/:series",
+  },
+  {
     element: <Properity_Property />,
-    path: "Properity/Properity",
+    path: "/Properity/Properity",
   },
   {
     element: <Properity_Owner />,
@@ -85,16 +93,29 @@ const AppRoutes = [
     element: <Setup_Branches />,
     path: "/Setup/Branchies",
   },
+  {
+    element: <NewPer />,
+    path: "/Setup/NewPer",
+  },
 
   {
-    path: "/App/Contract/Contract",
     element: <Contract_contract />,
+    path: "/App/Contract/Contract",
   },
 
   {
     element: <Contract_Payment_New />,
     path: "/App/Contract/Payment/new",
   },
+  {
+    element: <Contract_Payment_New />,
+    path: "/Payment/Update/:series",
+  },
+  {
+    element: <NewPer />,
+    path: "/Setup/UpdatePer/:series",
+  },
+
   {
     element: <Contract_Payment />,
     path: "/App/Contract/Payment",
@@ -119,6 +140,10 @@ const AppRoutes = [
     meta: {
       appLayout: true,
     },
+  },
+  {
+    element: <NewPer />,
+    path: "/Setup/UpdatePer/:seriues",
   },
   {
     element: <Permissions_POST />,

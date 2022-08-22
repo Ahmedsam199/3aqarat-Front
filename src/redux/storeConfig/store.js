@@ -20,7 +20,7 @@ const persistConfig = {
     key: "root",
     transforms: [
         encryptTransform({
-            secretKey: 'POS-secret-key',
+            secretKey: 'RealState-secret-key',
             onError: function (error) {
                 // Handle the error.
                 console.error("hacker_it_error", error)
@@ -36,5 +36,4 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 // ** Create store
 export const store = createStore(persistReducer(persistConfig, rootReducer), {}, composeEnhancers(applyMiddleware(...middleware)))
-
 export const persistor = persistStore(store);

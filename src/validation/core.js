@@ -28,9 +28,11 @@ const Number = (
   required
     ? yup
         .number()
-        .transform((value, originalValue) => {
-          return parseNumber(originalValue);
-        })
+        // .transform((value, originalValue) => {
+        //   console.log("testing", value);
+        //   return ;
+        //   return parseNumber(originalValue);
+        // })
         .moreThan(more)
         .lessThan(less)
         .required()

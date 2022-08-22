@@ -10,6 +10,7 @@ import { store, persistor } from './redux/storeConfig/store'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react';
 import AppProvider from './context/AppProvider';
+import NetworkProvider from '@hooks/useNetworkV2';
 
 // ** Intl, CASL & ThemeColors Context
 import ability from './configs/acl/ability'
@@ -44,7 +45,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 // ** React Hot Toast Styles
 import '@styles/react/libs/react-hot-toasts/react-hot-toasts.scss'
-
+import { ToastContainer}from 'react-toastify'
 // ** Core styles
 import './@core/assets/fonts/feather/iconfont.css'
 import './@core/scss/core.scss'
@@ -56,19 +57,20 @@ import * as serviceWorker from './serviceWorker'
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))
 
-
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SocketProvider />
+        <NetworkProvider />
         <Suspense fallback={<Spinner />}>
           <AbilityContext.Provider value={ability}>
             <AppProvider>
-            <ThemeContext>
-              <LazyApp />
-              <Toaster position={themeConfig.layout.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
-            </ThemeContext>
+              <ThemeContext>
+                <LazyApp />
+                <Toaster position={themeConfig.layout.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
+                {/* <ToastContainer/> */}
+              </ThemeContext>
             </AppProvider>
           </AbilityContext.Provider>
         </Suspense>

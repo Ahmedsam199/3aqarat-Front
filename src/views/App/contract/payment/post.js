@@ -1,5 +1,6 @@
 // ** React Import
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { Currency } from "@FixedOptions";
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
@@ -14,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Routes from "@Routes";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
-import { toasty } from "@toast";
+import { toast } from "react-toastify";
 import { Contract_Payment as Schema } from "@validation";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
@@ -22,10 +23,13 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Currency, Party } = useSelector((state) => state);
+  const { Contract_Payment, Property_Property, Setup_Purpose } = useSelector(
+    (state) => state
+  );
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -57,7 +61,7 @@ const POST = (props) => {
       )
         .then((res) => {
           toasty({ type: "success" });
-          navigate("/App/Customer");
+          navigate("/App/Contract/Payment");
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
@@ -73,16 +77,18 @@ const POST = (props) => {
   );
   useEffect(async () => {
     if (params.series) {
-      if (!Party.length) return;
+      if (!Contract_Payment.length) return;
       // const _ = Party.find((x) => x.Series === params.series);
-      const { data } = await axios.get(`${Routes.Party.root}/${params.series}`);
+      const { data } = await axios.get(
+        `${Routes.Contract_Payment.root}/${params.series}`
+      );
 
-      console.log("joseph data ", data);
-
+      
       reset({
         ...data,
         // IsDefault: `${_.IsDefault}`,
         // Disabled: `${_.Disabled}`,
+        
         _loading: false,
         _write,
       });
@@ -91,7 +97,15 @@ const POST = (props) => {
         _write: true,
         _loading: false,
       });
-  }, [Party]);
+  }, [Contract_Payment]);
+  let PropOpt = [];
+  Property_Property.forEach((x) => {
+    PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
+  });
+  let PurpOpt = [];
+  Setup_Purpose.forEach((x) => {
+    PurpOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
+  });
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -127,7 +141,6 @@ const POST = (props) => {
                     textName="Currency"
                     type="Date"
                     valueName="Series"
-                    options={Currency}
                   />
                 </Col>
                 <Col sm="6">
@@ -135,14 +148,8 @@ const POST = (props) => {
                     name="Reference"
                     textName="Currency"
                     valueName="Series"
-                    options={Currency}
                   />
-                  <CustomFormSelect
-                    name="Property"
-                    textName="Currency"
-                    valueName="Series"
-                    options={Currency}
-                  />
+                  <CustomFormSelect name="Property" options={PropOpt} />
                 </Col>
               </Row>
             </CardBody>
@@ -155,15 +162,10 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect
-                    name="Pourpose"
-                    options={PartyTypeOptions}
-                  />
+                  <CustomFormSelect name="Pourpose" options={PurpOpt} />
                   <CustomFormInput name="FromDate" type="Date" />
                   <CustomFormSelect
-                    name="Paid Currency"
-                    textName="Currency"
-                    valueName="Series"
+                    name="PaidCurrency"
                     options={Currency}
                   />
                 </Col>
@@ -174,7 +176,6 @@ const POST = (props) => {
                     name="ToDate"
                     textName="Currency"
                     valueName="Series"
-                    options={Currency}
                   />
                 </Col>
               </Row>
@@ -182,7 +183,6 @@ const POST = (props) => {
           </Card>
         </Row>
         {/* Third */}
-
         <Row>
           <Card>
             <CardBody>
@@ -202,5 +202,4 @@ const POST = (props) => {
     </FormProvider>
   );
 };
-
 export default POST;

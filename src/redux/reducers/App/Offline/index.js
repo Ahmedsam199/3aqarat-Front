@@ -3,7 +3,8 @@ const initSate = {
   Order: [],
   StockEntry: [],
   Payment: [],
-}
+  Contract_Contract: [],
+};
 const reducer = (state = initSate, action) => {
   switch (action.type) {
     //? inset 

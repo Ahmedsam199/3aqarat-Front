@@ -9,36 +9,17 @@ export default ({ onEdit, onDelete }) => {
       onDelete={() => onDelete(row?.Series)}
     />
   );
-  const selectors = [
-    "Series",
-    "FirstParty",
-    "SecondParty",
-    "Property",
-    "IsSale",
-    "IsRent",
-    "ContractStarts",
-    "ContractEnds",
-    "HandoverDate",
-    "RequestedAmt",
-    "PaidAmt",
-    "PaidCurrency",
-    "RentFor",
-    "RentCurrency",
-    "AdvanceAmt",
-    "AdvanceCurrency",
-    "InsuranceCurrency",
-    "IsFurnished",
-    "Furnitures",
-  ];
+  const selectors = ["Series", "Reference", "Purpose", "Amount", "Currency","Active"];
   const sortable = [...Array.from({ length: 3 }, () => true), false];
   const sortFunctions = [sortSeries, ...Array.from({ length: 3 }, () => null)];
-  const minWidths = Array.from({ length: 4 }, () => "25%");
-  const cells = [...Array.from({ length: 3 }, () => null), Actions];
+  const minWidths = Array.from({ length: 0 }, () => "25%");
+  const cells = [...Array.from({ length: 5 }, () => null), Actions];
   return create({
     selectors,
     sortable,
     minWidths,
     cells,
     sortFunctions,
+    Actions
   });
 };

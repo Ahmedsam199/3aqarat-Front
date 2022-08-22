@@ -21,11 +21,11 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Reference",
+    name: "Furniture",
   });
   return (
     <>
-      <h5 className="mb-1 text-center">{t("Reference")}</h5>
+      <h5 className="mb-1 text-center">{t("Furniture")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>

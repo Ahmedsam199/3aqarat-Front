@@ -1,21 +1,25 @@
 // ** Third Party Components
-import { useTranslation } from 'react-i18next'
 import ReactCountryFlag from 'react-country-flag'
+import { useTranslation } from 'react-i18next'
 
 // ** Reactstrap Imports
 import { UncontrolledDropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap'
-
 const IntlDropdown = () => {
   // ** Hooks
+  
   const { i18n } = useTranslation()
-
+const img =
+  "<img src'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS47FZB1fv1hovR4mn-b1SaHFlr3muL_TXooH4Ex_gO2g&s'></img>";
   // ** Vars
   const langObj = {
-    en: 'English',
-    de: 'German',
-    fr: 'French',
-    pt: 'Portuguese'
-  }
+    en: "English",
+    de: "German",
+    fr: "French",
+    pt: "Portuguese",
+    tr:"Turkish",
+    iq: "Iraq",
+    img: "Kurdish",
+  };
 
   // ** Function to switch Language
   const handleLangUpdate = (e, lang) => {
@@ -54,34 +58,31 @@ const IntlDropdown = () => {
         <DropdownItem
           href="/"
           tag="a"
-          onClick={(e) => handleLangUpdate(e, "fr")}
-        >
-          <ReactCountryFlag className="country-flag" countryCode="fr" svg />
-          <span className="ms-1">French</span>
-        </DropdownItem>
-        <DropdownItem
-          href="/"
-          tag="a"
-          onClick={(e) => handleLangUpdate(e, "de")}
-        >
-          <ReactCountryFlag className="country-flag" countryCode="de" svg />
-          <span className="ms-1">German</span>
-        </DropdownItem>
-        <DropdownItem
-          href="/"
-          tag="a"
-          onClick={(e) => handleLangUpdate(e, "pt")}
-        >
-          <ReactCountryFlag className="country-flag" countryCode="pt" svg />
-          <span className="ms-1">Portuguese</span>
-        </DropdownItem>
-        <DropdownItem
-          href="/"
-          tag="a"
-          onClick={(e) => handleLangUpdate(e, "pt")}
+          onClick={(e) => handleLangUpdate(e, "iq")}
         >
           <ReactCountryFlag className="country-flag" countryCode="iq" svg />
           <span className="ms-1">Iraq</span>
+        </DropdownItem>
+        <DropdownItem
+          href="/"
+          tag="a"
+          onClick={(e) => handleLangUpdate(e, "tr")}
+        >
+          <ReactCountryFlag className="country-flag" countryCode="tr" svg />
+          <span className="ms-1">Turkish</span>
+        </DropdownItem>
+
+        <DropdownItem
+          href="/"
+          tag="a"
+          onClick={(e) => handleLangUpdate(e, "kr")}
+        >
+          <img
+            height={14}
+            width={18}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS47FZB1fv1hovR4mn-b1SaHFlr3muL_TXooH4Ex_gO2g&s"
+          ></img>
+          <span className="ms-1">Kurdish</span>
         </DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>

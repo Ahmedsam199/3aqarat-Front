@@ -1,10 +1,15 @@
 import { Property_Attribute as createColumns } from "@columns";
+import CustomTable from "@Component/CustomTable";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
+import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
+import "@styles/react/apps/app-invoice.scss";
+import "@styles/react/libs/react-select/_react-select.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { toasty } from "@toast";
-import CustomTable from "@Component/CustomTable";
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,12 +20,12 @@ import {
   FormGroup,
   Input,
   Label,
-  Row,
+  Row
 } from "reactstrap";
 import POST from "./post";
 const Index = () => {
   const { t } = useTranslation();
-  const { Property_Attribute } = useSelector((state) => state);
+  const { Property_Attribute: Attribute } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -30,11 +35,7 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    UOM: {
-      value: "",
-      op: "like",
-    },
-    ConverstionFactor: {
+    Attribute: {
       value: "",
       op: "like",
     },
@@ -52,72 +53,77 @@ const Index = () => {
     dispatch(deleteItem("Property_Attribute", Series))
       .then((res) => {
         ref.current?.refresh();
-        toasty({ type: "success", msg: "Delete Successfully!" });
+        toast.success("Deleted")
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
       });
   };
 
-  const Columns = useMemo(
-    () => createColumns({ onDelete, onEdit: (row) => setCurrentRow(row) }),
-    []
-  );
+  const Columns = createColumns({
+    onDelete,
+    onEdit: (row) => setCurrentRow(row),
+  });
   return (
     <>
-      <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-13") && (
-          <div>
-            <Button.Ripple
-              color="primary"
-              className="mb-2"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
-      </div>
-      <Card>
-        <div>
-          <POST
-            row={currentRow}
-            toggleFunc={toggleFunc}
-            onToggle={() => setCurrentRow(undefined)}
-          />
+      <div className="w-100">
+        <div className="w-100 d-flex justify-content-between">
+          <div className="flex-grow-1"></div>
+          
+          {ability.can("create", "DT-13") && (
+            <div>
+              <Button.Ripple
+                color="primary"
+                className="mb-2"
+                onClick={() => toggleFunc.current()}
+              >
+                {t("New")}
+              </Button.Ripple>
+            </div>
+          )}
         </div>
-        <CardBody>
-          <Row>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("Series")}</Label>
-                <Input
-                  placeholder={t("Series")}
-                  onChange={(e) =>
-                    handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
-            </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("UOM")}</Label>
-                <Input
-                  placeholder={t("ConverstionFactor")}
-                  onChange={(e) => handleFiltersChange("UOM", e.target.value)}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </CardBody>
-        <CustomTable
-          ref={ref}
-          offlineData={Property_Attribute}
-          columns={Columns}
-          filters={filters}
-        />
-      </Card>
+        <Card>
+          <div>
+            <POST
+              row={currentRow}
+              toggleFunc={toggleFunc}
+              onToggle={() => setCurrentRow(undefined)}
+            />
+          </div>
+          <CardBody>
+            <Row>
+              <Col lg="3" md="4">
+                <FormGroup>
+                  <Label>{t("Series")}</Label>
+                  <Input
+                    placeholder={t("Series")}
+                    onChange={(e) =>
+                      handleFiltersChange("Series", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+              <Col lg="3" md="4">
+                <FormGroup>
+                  <Label>{t("Attribute")}</Label>
+                  <Input
+                    placeholder={t("Attribute")}
+                    onChange={(e) =>
+                      handleFiltersChange("Attribute", e.target.value)
+                    }
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+          </CardBody>
+          <CustomTable
+            ref={ref}
+            offlineData={Attribute}
+            columns={Columns}
+            filters={filters}
+          />
+        </Card>
+      </div>
     </>
   );
 };

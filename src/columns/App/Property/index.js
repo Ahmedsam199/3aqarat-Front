@@ -15,11 +15,12 @@ export default ({ onEdit, onDelete }) => {
     "Attributes",
     "Purpose",
     "RequestedAmt",
+    "Active",
   ];
   const sortable = [...Array.from({ length: 3 }, () => true), false];
   const sortFunctions = [sortSeries, ...Array.from({ length: 3 }, () => null)];
-  const minWidths = Array.from({ length: 4 }, () => "25%");
-  const cells = [...Array.from({ length: 3 }, () => null), Actions];
+  const minWidths = Array.from({ length: 0 }, () => "25%");
+  const cells = [...Array.from({ length: 5 }, () => null), Actions];
   return create({
     selectors,
     sortable,

@@ -110,9 +110,9 @@ const POST = (props) => {
           </Col>
 
         </Row>
-        <Row>
+        
 <Editor />
-        </Row>
+        
       </Form>
     </FormProvider>
   );

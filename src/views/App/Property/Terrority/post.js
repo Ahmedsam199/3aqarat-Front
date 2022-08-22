@@ -13,12 +13,14 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-
+import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
+  const { Property_Terrority } = useSelector((state) => state);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
@@ -62,7 +64,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
         : insertItem("Property_Terrority", values)
     )
       .then((res) => {
-        toasty({ type: "success" });
+        toast.success('')
         clear();
         toggle();
       })
@@ -74,6 +76,10 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
+  let TerrOpt = [];
+  Property_Terrority.forEach((x) => {
+    TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
+  });
   return (
     <>
       <Sidebar
@@ -89,8 +95,8 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             {/* s</ModalHeader> */}
             <CustomFormInput name="Territory" />
             <CustomFormInputCheckbox name="isGroup" />
-            
-            <CustomFormSelect name="ParentTerrority" />
+
+            <CustomFormSelect options={TerrOpt} name="Parent" />
             <div className="mt-1">
               <Button
                 color="primary"

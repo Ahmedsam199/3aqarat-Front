@@ -9,16 +9,17 @@ export default ({ onEdit, onDelete }) => {
       onDelete={() => onDelete(row?.Series)}
     />
   );
-  const selectors = ["Series", "BranchName"];
+  const selectors = ["Series", "BranchName", "Active"];
   const sortable = [...Array.from({ length: 3 }, () => true), false];
   const sortFunctions = [sortSeries, ...Array.from({ length: 3 }, () => null)];
-  const minWidths = Array.from({ length: 4 }, () => "25%");
-  const cells = [...Array.from({ length: 3 }, () => null), Actions];
+  const minWidths = Array.from({ length: 0 }, () => "25%");
+  const cells = [...Array.from({ length: 2 }, () => null), Actions];
   return create({
     selectors,
     sortable,
     minWidths,
     cells,
     sortFunctions,
+    Actions,
   });
 };

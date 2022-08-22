@@ -1,13 +1,13 @@
-import { UOM as createColumns } from "@columns";
+import { SuccessToast } from "@Component/SuccessToast";
 import Breadcrumbs from "@components/breadcrumbs";
-import { AbilityContext } from "@src/utility/context/Can";
-import { deleteItem } from "@store/actions/data";
-import { toasty } from "@toast";
-import CustomTable from "@Component/CustomTable";
-import React, { useContext, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext, useMemo } from "react";
+import "@styles/react/apps/app-invoice.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
+import "@styles/react/libs/react-select/_react-select.scss";
+import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
+
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -17,10 +17,26 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import POST from "./post";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import { Permissions as createColumns } from "@columns";
+import CustomSelect from "@Component/CustomSelect";
+import CustomTable from "@Component/CustomTable";
+import { PartyTypeOptions } from "@FixedOptions";
+import { AbilityContext } from "@src/utility/context/Can";
+import { deleteItem } from "@store/actions/data";
+import { useRef, useState } from "react";
+import { AlertCircle } from "react-feather";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 const Index = () => {
   const { t } = useTranslation();
-  const { Setup_Permission } = useSelector((state) => state);
+  const {
+    Setup_Permission,
+    tempData: { network },
+  } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -30,15 +46,12 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    UOM: {
-      value: "",
-      op: "like",
-    },
-    ConverstionFactor: {
+    Attributes: {
       value: "",
       op: "like",
     },
   });
+  const navigate = useNavigate();
   const ref = useRef();
 
   const handleFiltersChange = (key, value) => {
@@ -48,48 +61,37 @@ const Index = () => {
     });
   };
 
-  const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
+  const onDelete = async (Series) => {
+    dispatch(deleteItem("Setup_Permission", Series))
       .then((res) => {
-        ref.current?.refresh();
-        toasty({ type: "success", msg: "Delete Successfully!" });
+        toast.success("Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
       });
   };
+  const Columns = createColumns({
+    onDelete,
+    onEdit: (row) => navigate(`/Setup/UpdatePer/${row?.Series}`),
+  });
 
-  const Columns = useMemo(
-    () => createColumns({ onDelete, onEdit: (row) => setCurrentRow(row) }),
-    []
-  );
   return (
-    <>
-      <div className="d-flex justify-content-between align-items-start">
+    <div className="w-100">
+      <div className="w-100 d-flex justify-content-between">
         <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-13") && (
+        {ability.can("create", "DT-6") && (
           <div>
-            <Button.Ripple
-              className="mb-1"
-              color="primary"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
+            <Link to="/Setup/NewPer">
+              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
+            </Link>
           </div>
         )}
       </div>
+      <br></br>
       <Card>
-        <div>
-          <POST
-            row={currentRow}
-            toggleFunc={toggleFunc}
-            onToggle={() => setCurrentRow(undefined)}
-          />
-        </div>
         <CardBody>
           <Row>
-            <Col lg="3" md="4">
+            <Col md="2">
               <FormGroup>
                 <Label>{t("Series")}</Label>
                 <Input
@@ -100,26 +102,17 @@ const Index = () => {
                 />
               </FormGroup>
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("UOM")}</Label>
-                <Input
-                  placeholder={t("ConverstionFactor")}
-                  onChange={(e) => handleFiltersChange("UOM", e.target.value)}
-                />
-              </FormGroup>
-            </Col>
           </Row>
         </CardBody>
+
         <CustomTable
           ref={ref}
           offlineData={Setup_Permission}
-          columns={Columns}
           filters={filters}
+          columns={Columns}
         />
       </Card>
-    </>
+    </div>
   );
 };
-
 export default Index;

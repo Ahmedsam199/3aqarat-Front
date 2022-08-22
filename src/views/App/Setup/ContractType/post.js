@@ -14,7 +14,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-
+import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
         : insertItem("ContractType", values)
     )
       .then((res) => {
-        toasty({ type: "success" });
+        toast.success("");
         clear();
         toggle();
       })

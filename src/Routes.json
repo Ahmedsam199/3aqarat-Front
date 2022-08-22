@@ -4,41 +4,44 @@
     "signUp": "http://193.47.189.15:3004/signup",
     "logout": "http://193.47.189.15:3004/Logout"
   },
-  "Contract": {
-    "root": "http://192.168.1.25:8080/Contracts/"
+  "Contract_Contract": {
+    "root": "http://192.168.1.12:8080/Contracts"
   },
   "Contract_Payment": {
-    "root": "http://192.168.1.25:8080/Payments/"
+    "root": "http://192.168.1.12:8080/Payments"
   },
   "Property_Party": {
-    "root": "http://192.168.1.25:8080/Party/"
+    "root": "http://192.168.1.12:8080/Party"
   },
   "Property_Property": {
-    "root": "http://192.168.1.25:8080/Property/"
+    "root": "http://192.168.1.12:8080/Property"
   },
   "Property_Attribute": {
-    "root": "http://192.168.1.25:8080/PropertyAttr/"
+    "root": "http://192.168.1.12:8080/PropertyAttr"
   },
   "Property_Terrority": {
-    "root": "http://192.168.1.25:8080/Territory/"
+    "root": "http://192.168.1.12:8080/Territory"
   },
   "Setup_Branch": {
-    "root": "http://192.168.1.25:8080/Branches/"
+    "root": "http://192.168.1.12:8080/Branches"
+  },
+  "Contract_Template":{
+    "root":"http://192.168.1.12:8080/ContractTemplates"
   },
   "ContractType": {
-    "_root": "http://192.168.1.25:8080/ContractType/"
+    "root": "http://192.168.1.12:8080/ContractType"
   },
   "Setup_Permission": {
-    "root": "http://192.168.1.25:8080/Permission/"
+    "root": "http://192.168.1.12:8080/Permission"
   },
   "Setup_Purpose": {
-    "root": "http://192.168.1.25:8080/Purpose/"
+    "root": "http://192.168.1.12:8080/Purpose"
   },
   "Setup_User": {
-    "root": "http://192.168.1.25:8080/Users/"
+    "root": "http://192.168.1.12:8080/Users"
   },
   "Setup_UserRole": {
-    "root": "http://192.168.1.25:8080/Roles/"
+    "root": "http://192.168.1.12:8080/Roles"
   },
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {

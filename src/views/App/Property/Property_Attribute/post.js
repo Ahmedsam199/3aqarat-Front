@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
 import {Row,Col} from 'reactstrap'
+import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
         : insertItem("Property_Attribute", values)
     )
       .then((res) => {
-        toasty({ type: "success" });
+        toast.success('')
         clear();
         toggle();
       })

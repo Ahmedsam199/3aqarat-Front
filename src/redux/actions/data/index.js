@@ -1,10 +1,11 @@
-import Routes from '@Routes';
+import Routes from "@Routes";
 // import db from '@src/utility/api/cacheDB';
-import { store } from '../../storeConfig/store';
-import Types from '@Types';
-import axios from 'axios';
-import { insertOrUpdateFormData } from '@utility/api';
-import { v4 as uuidv4 } from 'uuid';
+import { store } from "../../storeConfig/store";
+import Types from "@Types";
+import axios from "axios";
+import { insertOrUpdateFormData } from "@utility/api";
+import { v4 as uuidv4 } from "uuid";
+import { types } from "sass";
 const networkStatus = () => store.getState().tempData.network;
 /*
 !  server and locale
@@ -20,20 +21,28 @@ export const insertItem = (name, values) => {
   return async (dispatch) => {
     return new Promise(async (resolve, reject) => {
       try {
-        if (1 || networkStatus()) {
+        if (networkStatus()) {
+          // dispatch({
+          //   type: Types[name]?.insert,
+          //   payload: {
+          //     value: { ...values, Series: "Hello World" },
+          //   },
+          // });
+
           const _ = await axios.post(Routes[name].root, values);
-          if (_.status === 200) {
+          console.log('testing',_);
+          if ( _.status ==201) {
             dispatch({
               type: Types[name]?.insert,
               payload: {
-                value: { ...values, Series: _?.data?.Series ?? undefined }
-              }
+                value: { ...values,Series:_.data.Series},
+              },
             });
             resolve({ Series: _?.data?.Series ?? true });
           } else {
             reject(_);
           }
-        } else {
+          } else {
           const _ = uuidv4();
           const request = {
             timestamp: new Date().toUTCString(),
@@ -60,7 +69,7 @@ export const insertItem = (name, values) => {
           resolve({ ID: res });
         }
       } catch (e) {
-        console.error('hacker_it error', e);
+        console.error("hacker_it error", e);
         reject(e);
       }
     });
@@ -79,7 +88,7 @@ export const insertItemByFormData = (name, values, file) => {
         const _ = await insertOrUpdateFormData({
           url: Routes[name].root,
           values,
-          nameFile: 'img',
+          nameFile: "img",
           file,
         });
         if (_.status === 200) {
@@ -89,16 +98,16 @@ export const insertItemByFormData = (name, values, file) => {
               value: {
                 ...values,
                 IMG: _.data.image,
-                Series: _.data.Series
-              }
-            }
+                Series: _.data.Series,
+              },
+            },
           });
           resolve(_);
         } else {
           reject(_);
         }
       } catch (e) {
-        console.error('hacker_it error', e);
+        console.error("hacker_it error", e);
         reject(e);
       }
     });
@@ -115,9 +124,9 @@ export const updateItem = (name, values) => {
     return new Promise(async (resolve, reject) => {
       try {
         if (networkStatus()) {
-          const _ = await axios.post(Routes[name].root, values);
+          const _ = await axios.put(`${Routes[name].root}/${values.Series}`, values);
 
-          if (_.status === 200) {
+          if (_.status == 201) {
             dispatch({
               type: Types[name]?.update,
               payload: {
@@ -150,7 +159,7 @@ export const updateItem = (name, values) => {
         }
       } catch (e) {
         reject(e);
-        console.error('hacker_it error', e);
+        console.error("hacker_it error", e);
       }
     });
   };
@@ -168,7 +177,7 @@ export const updateItemByFormData = (name, values, file) => {
         const _ = await insertOrUpdateFormData({
           url: Routes[name].root,
           values,
-          nameFile: 'img',
+          nameFile: "img",
           file,
         });
         if (_.status === 200) {
@@ -178,10 +187,10 @@ export const updateItemByFormData = (name, values, file) => {
               name,
               value: {
                 ...values,
-                IMG: _.data.image
+                IMG: _.data.image,
               },
               Series: values.Series,
-            }
+            },
           });
           resolve(_.status);
         } else {
@@ -189,7 +198,7 @@ export const updateItemByFormData = (name, values, file) => {
         }
       } catch (e) {
         reject(e);
-        console.error('hacker_it error', e);
+        console.error("hacker_it error", e);
       }
     });
   };
@@ -205,16 +214,18 @@ export const deleteItem = (name, Series) => {
       try {
         if (networkStatus()) {
           const _ = await axios.delete(`${Routes[name].root}/${Series}`);
+
           if (_.status === 200) {
+
             dispatch({
               type: Types[name]?.delete,
               payload: {
-                Series
-              }
+                Series,
+              },
             });
             resolve(_.status);
           } else {
-            reject(_ ?? 'Error');
+            reject(_ ?? "Error");
           }
         } else {
           // delete from from cache
@@ -230,7 +241,7 @@ export const deleteItem = (name, Series) => {
           resolve(true);
         }
       } catch (e) {
-        console.error('hacker_it error', e);
+        console.error("hacker_it error", e);
         reject(e);
       }
     });
@@ -244,12 +255,10 @@ export const syncData = (name) => {
   return async (dispatch) => {
     return new Promise(async (resolve, reject) => {
       const _ = await axios.get(`${Routes[name].root}?filters`);
-
       if (_.status === 200) {
         dispatch({
           type: Types[name]?.set,
           payload: _.data,
-
         });
         resolve(_.status);
       } else {

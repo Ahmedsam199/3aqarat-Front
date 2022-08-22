@@ -16,20 +16,23 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
 import { Properites_Property as Schema } from "@validation";
+import {Currency} from '@FixedOptions'
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import Ref1 from './Ref1'
-import Ref2 from './Ref2'
 import { Map, Marker } from "pigeon-maps";
-
+import Ref2 from "./Ref2";
+import Ref1 from "./Ref1";
+import { toast } from "react-toastify";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Currency, Party } = useSelector((state) => state);
+  const { Property_Property, Property_Terrority, Setup_Purpose } = useSelector(
+    (state) => state
+  );
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -49,7 +52,9 @@ const POST = (props) => {
   } = methods;
   const _dataForm = useWatch({ control });
   // ** Function to handle form submit
-
+useEffect(() => {
+  console.log("testing", errors);
+}, [errors]);
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
@@ -60,8 +65,8 @@ const POST = (props) => {
           : insertItem("Property_Property", values)
       )
         .then((res) => {
-          toasty({ type: "success" });
-          navigate("/App/Customer");
+          toast.success('')
+          navigate("/Properity/Properity");
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
@@ -77,9 +82,11 @@ const POST = (props) => {
   );
   useEffect(async () => {
     if (params.series) {
-      if (!Party.length) return;
+      if (!Property_Property.length) return;
       // const _ = Party.find((x) => x.Series === params.series);
-      const { data } = await axios.get(`${Routes.Party.root}/${params.series}`);
+      const { data } = await axios.get(
+        `${Routes.Property_Property.root}/${params.series}`
+      );
 
       console.log("joseph data ", data);
 
@@ -95,7 +102,15 @@ const POST = (props) => {
         _write: true,
         _loading: false,
       });
-  }, [Party]);
+  }, [Property_Property]);
+  let TerrOpt=[]
+Property_Terrority.forEach((x)=>{
+    TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
+  });
+  let PurposeOpt = [];
+  Setup_Purpose.forEach((x) => {
+    PurposeOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
+  });
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -121,16 +136,11 @@ const POST = (props) => {
                 <Row>
                   <Col sm="6">
                     <CustomFormSelect name="Party" options={PartyTypeOptions} />
-                    <CustomFormSelect name="Territory" />
-                    <CustomFormSelect
-                      name="Currency"
-                      textName="Currency"
-                      valueName="Series"
-                      options={Currency}
-                    />
+                    <CustomFormSelect options={TerrOpt} name="Territory" />
+                    <CustomFormSelect name="Currency" options={Currency} />
                   </Col>
                   <Col sm="6">
-                    <CustomFormSelect name="Purpose" />
+                    <CustomFormSelect options={PurposeOpt} name="Purpose" />
                     <CustomFormInput name="RequestedAmt" />
 
                     <Row>

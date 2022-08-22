@@ -2,8 +2,16 @@ import React, { useRef, useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import "./App.css";
 import registerEmoji from "./EmojiHelper";
-
-import { Modal,Col,Row, ModalHeader, ModalBody, ModalFooter, Input } from "reactstrap";
+import Select from "react-select";
+import {
+  Modal,
+  Col,
+  Row,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Input,
+} from "reactstrap";
 
 import {
   BrowserRouter as Router,
@@ -15,23 +23,26 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Button } from "react-bootstrap";
+import AddTable from "./AddTable";
+import { getAttributFromObject } from "../../../../../utility/Utils";
 
 const emojiTooltipText = "Emoji picker";
 
 const editorConfig = {
   plugins: `advlist wizardExample  pageembed horizntalline autocomplete mentions advlink paste mention autolink lists link image charmap print preview anchor export pagebreak code emoticons image table paste lists advlist checklist link hr charmap directionality
         searchreplace visualblocks code fullscreen 
-        insertdatetime media table paste code imagetools help wordcount testBTN`,
+        insertdatetime media table paste code imagetools  wordcount testBTN`,
   toolbar: `|undo redo  wizardExample | h1 h2 h3 h4 h5 h6  |  bold italic backcolor table | \
         alignleft aligncenter alignright alignjustify | \
-        bullist numlist outdent indent |  removeformat  | image |imagetools \ export print  myCustomToolbarButton  | `,
+        bullist numlist outdent indent |  removeformat  | image |imagetools \ export print   myCustomToolbarButton  | `,
   a11y_advanced_options: true,
   image_caption: true,
   images_upload_credentials: true,
+  skin: "oxide-dark",
   typeahead_urls: true,
   browser_spellcheck: true,
   paste_data_images: true,
-  height: 1200,
+  height: 600,
   file_picker_types: "image",
   image_title: true,
   resize: "both",
@@ -67,13 +78,20 @@ export function getActiveEditor() {
 
 export default function App() {
   const editorRef = useRef(null);
-  const [data, setData] = useState("");
-  const dispatch = useDispatch();
-  const log = () => {
-    dispatch({ type: "add", Data: editorRef.current.getContent() });
-  };
-
-  const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
+  const [image3,setImage3]=useState(null)
+//For Header And Footer
+  const [image2, setImage2] = useState(null);
+  const [tableData, setTableData] = useState("");
+  const [EditorData2, setEditorData] = useState("");
+  const [theSelectedAttr, setSelectedAttr] = useState("");
+const [modal, setModal] = useState(false);
+const [modal2, setModal2] = useState(false);
+const [modal4, setModal4] = useState(false);
+  const toggle = () => setModal(!modal);
+  const toggle2 = () => setModal2(!modal2);
+const toggle3 = () => setModal4(!modal4);
+  const toggle4 = () => setmodal3(!modal3);
   const [activeItem, setActiveItem] = useState("");
   const toolbarId = "toolbar";
   const emojiButtonRef = useRef();
@@ -124,25 +142,12 @@ export default function App() {
     registerEmoji(localEditor, toolbarId, onActionForEmoji, emojiTooltipText);
     registerAutocompleter(localEditor, handleResolve);
   };
-  const specialChars = [
-    { text: "Name", value: "@Name" },
-    { text: "Address", value: "@Address" },
-    { text: "hash", value: "#" },
-    { text: "dollars", value: "$" },
-    { text: "percent sign", value: "%" },
-    { text: "caret", value: "^" },
-    { text: "ampersand", value: "&" },
-    { text: "asterisk", value: "*" },
-    { text: "Header", value: "@Header" },
-    { text: "Header", value: "@Header" },
-  ];
 
   function getMatchedChars(pattern) {
     return specialChars.filter((char) => {
       return char.text.includes(pattern);
     });
   }
-
   function registerAutocompleter(editor, onResolve) {
     editor.ui.registry.addAutocompleter("specialchars_cardmenuitems", {
       ch: "@",
@@ -182,18 +187,20 @@ export default function App() {
       },
     });
   }
-  const saveData = useSelector((state) => state);
 
-  const [image, setImage] = useState(null);
 
-  const footer = `  
- <img width="800" height="65px" src=${image}   >  `;
-
-  const Header = `  
-  <img width="800" height="65px" src=${image}   >  `;
-  const Footer = `  
-  <img width="800" height="65px" src=${image}   >  `;
-  const [image2, setImage2] = useState(null);
+  //Mentions
+  const specialChars = [
+    { text: "Name", value: "@Name" },
+    { text: "Address", value: "@Address " },
+    { text: "hash", value: "#" },
+    { text: "dollars", value: "$" },
+    { text: "percent sign", value: "%" },
+    { text: "caret", value: "^" },
+    { text: "ampersand", value: "&" },
+    { text: "asterisk", value: "*" },
+  ];
+  
   const handleChange2 = (e) => {
     let blob = e.target.files[0];
     var reader = new FileReader();
@@ -202,24 +209,6 @@ export default function App() {
       var base64String = reader.result;
 
       setImage2(base64String.substr(base64String.indexOf(", ") + 1));
-
-      let newData = saveData.Data.replace(
-        `
-<td style="width: 98.7654%; height: 50px;">@Footer</td>`,
-        `
-           <td style="width: 98.7654%; height: 50px;">
-   <div style=" position: fixed;
-   height: 50px;
-  bottom: 0;
-  width: 100%;
-   /* for demo */
-   /* for demo */" class="page-footer">
-    <img src=${image2}></p>
-  </div>
-  </td>`
-      );
-
-      dispatch({ type: "add", Data: newData });
     };
   };
 
@@ -231,114 +220,53 @@ export default function App() {
       var base64String = reader.result;
 
       setImage(base64String.substr(base64String.indexOf(", ") + 1));
-
-      let newData = saveData.Data.replace(
-        `
-<td style="width: 98.7654%; height: 50px;">@Footer</td>`,
-        `
-           <td style="width: 98.7654%; height: 50px;">
-   <div style=" position: fixed;
-   height: 50px;
-  bottom: 0;
-  width: 100%;
-   /* for demo */
-   /* for demo */" class="page-footer">
-    <img src=${image}></p>
-  </div>
-  </td>`
-      );
-
-      dispatch({ type: "add", Data: newData });
     };
   };
-  const [newData, setNewData] = useState("");
-  const [modal, setModal] = useState(false);
-  const [modal2, setModal2] = useState(false);
+  const handleChange3=(e)=>{
+     let blob = e.target.files[0];
+     var reader = new FileReader();
+     reader.readAsDataURL(blob);
+     reader.onloadend = function () {
+       var base64String = reader.result;
 
-  const toggle = () => setModal(!modal);
-  const toggle2 = () => setModal2(!modal2);
-
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => {
-        setData(res.data);
-      })
-
-      .catch((err) => {
-        console.log("failed toffetch");
-      });
-  }, []);
-  let y = 0;
-  var datas = "";
-  for (let x = 0; x < data.length; x += 5) {
-    datas += `<br><br><br><br><br><br> <table style="page-break-after: always;">
-            <tr ><td> ${data[x].id}<td>${data[x].title}</tr>
-            <tr><td > ${data[x + 1].id}<td>${data[x + 1].title}</tr>
-            <tr><td > ${data[x + 2].id}<td>${data[x + 2].title}</tr>
-            <tr><td > ${data[x + 3].id}<td>${data[x + 3].title}</tr>
-            <tr style="page-break-after: always;"><td> ${data[x + 4].id}<td>${
-      data[x + 4].title
-    }</tr>
-            </table>`;
+       setImage3(base64String.substr(base64String.indexOf(", ") + 1));
+     };
   }
-  var headers = `<div style="position: fixed;
-          height: 100px;
-  top: 0mm;
-  width: 100%;
-   /* for demo */
-   /* for demo */" class="page-header" style="text-align: center">
-    <p>@Headers</p>
-    
-  </div>`;
-  var foot = `
-  <div style=" position: fixed;
-   height: 50px;
-  bottom: 0;
-  width: 100%;
-   /* for demo */
-   /* for demo */" class="page-footer">
-    <p>@Footer</p>
-  </div>`;
-  var emptys = `<table>
 
-    <thead>
-      <tr>
-        <td>
-          <!--place holder for the fixed-position header-->
-          <div style=" height: 50px;" class="page-header-space"></div>
-        </td>
-      </tr>
-    </thead> 
-    <tbody>
-      <tr>
-        <td style="width:1200px">
-        @Data
-        </td>
-      </tr>
-    </tbody>
-
-    <tfoot>
-      <tr>
-        <td>
-          <!--place holder for the fixed-position footer-->
-          <div style=" height: 50px;" class="page-footer-space"></div>
-        </td>
-      </tr>
-    </tfoot>
-
-  </table> `;
   function printDivContent() {
-    var divElementContents = "Test";
     let newString = editorRef.current.getContent().replace(
       `<tr>
 <td style="width: 48.8651%;">@Data</td>
 <td style="width: 48.8651%;">&nbsp;</td>
 </tr>`,
-      tableRows2
     );
-    var windows = window.open("", "", "height=400, width=400");
-    windows.document.write("<html>");
+    var windows = window.open("", "", "height=2339, width=1654");
+    windows.document.write(
+      "<html>",
+      `<style>
+ html{
+  height: 100%;
+}
+body{
+  position: relative;
+  height: 90%;
+}
+
+body:before{
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background: url('${image3}') ;
+  background-repeat: no-repeat;
+  background-position: center;  
+  opacity: 0.06;
+}
+</style>`
+    );
     windows.document
       .write(`<table style="width: 96.4286%; border: none; height: 234.4px;">
 <thead>
@@ -348,15 +276,19 @@ export default function App() {
   top: 0;
   width: 100%;
 
-  text-align: center;height:"120px" ; src="${image}" ></center>
+  text-align: center;height:"120px" ; src="${image}"></center>
 <div class="page-header-space" style="height: 170px;">&nbsp;</div>
 </td>
 </tr>
 </thead>
-<tbody>
+<tbody  >
 <tr style="height: 54.4px;">
 <td style="width: 98.7654%; height: 54.4px;">
-<p><span style="font-size: 36pt;">${newString}</span></p>
+<p><span style="font-size: 36pt;">
+
+${newString}
+
+</span></p>
 </td>
 </tr>
 </tbody>
@@ -373,64 +305,257 @@ export default function App() {
 </tr>
 </tfoot>
 </table>`);
-    windows.document.write(divElementContents);
+
     windows.document.write("</body></html>");
     windows.document.close();
     windows.print();
   }
 
-  const data2 = [
-    { name: "AAA", Phone: "077" },
-    { name: "BBB", Phone: "075" },
-  ];
-  const tableRows2 = data2.map((info) => {
-    return `<tr><td>${info.name}</td><td>${info.Phone}</td></tr>`;
-  });
-
-  const table = ` <table className="table table-stripped">
-
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-          </tr>
-          ${tableRows2}
-        </thead>
-        <tbody></tbody>
-        </table>`;
-  let phrase = "<table><tr><td>@Data</td>@Hola</tr></table>";
-  let men = [];
-  var ment = ["@Hola", "@Data", "@Name"];
-  for (let i = 0; i < ment.length; i++) {
-    let result = phrase.match(ment[i]);
-    if (result === null) {
+  
+// ADD Table ON SAVE
+  const AddT = () => {
+    //Search For The ID In Our String
+    let indexof = editorRef.current
+      .getContent()
+      .indexOf(`<table id="${theSelectedAttr}">`);
+    //if there is no table with this id create new 1 if there is table with this id Replace it
+    if (indexof == -1) {
+      // Insert To The Position of Cursor
+      tinymce.activeEditor.execCommand("mceInsertContent", false, tableData);
     } else {
-      men.push(result);
+      let indexout = editorRef.current
+        .getContent()
+        .indexOf("</table>", indexof);
+      let newStr2 = editorRef.current
+        .getContent()
+        .substring(indexof, indexout + 8);
+      /* +8 is for to insert The whole Table */
+      let newEditorData = editorRef.current
+        .getContent()
+        .replace(newStr2, tableData);
+      setEditorData(newEditorData);
     }
-  }
-  console.log(men);
-  men.forEach((x) => {
-    let tablerow = `<td>${x}</td>`;
-    console.log(tablerow);
-  });
+  };
+
+  const indexes = [];
+  let indexout = [];
+  let theAttr = [];
+  /* Search For Mentions And Replace Them */
+  const Search = () => {
+    let index = 0;
+    for (; index < editorRef.current.getContent().length; ) {
+      if (editorRef.current.getContent()[index] === "@") {
+        indexes.push(index);
+        let index2 = editorRef.current.getContent().indexOf(" "||"", index);
+        indexout.push(index2);
+        theAttr.push({ from: index, to: index2 });
+        index += 1;
+      } else {
+        index++;
+      }
+    }
+
+    let newEditorData = editorRef.current.getContent();
+    for (let y = 0; y < theAttr.length; y++) {
+      let newStr2 = editorRef.current
+        .getContent()
+        .substring(theAttr[y].from, theAttr[y].to);
+
+      newEditorData = newEditorData.replaceAll(newStr2, "outdata.newStr2");
+      //
+    }
+
+    setEditorData(newEditorData);
+
+    
+  };
+  
+  
+  const [modal3, setmodal3] = useState(false);
+
+  const dummy = {
+    Properties: [
+      { Property: "AA", Attribute: "11", Owner: "ME", Territory: "LOL" },
+      { Property: "BB", Attribute: "22", Owner: "you", Territory: "NotNul" },
+      { Property: "CC", Attribute: "33", Owner: "Him", Territory: "Mul" },
+    ],
+    Contract: [
+      { Contract: "DA", Payment: "200" },
+      { Contract: "GG", Payment: "444" },
+    ],
+  };
+  const buildHTMLTable = (data) => {
+    const _keys = Object.keys(data[0]);
+    const Tbl = document.createElement("table");
+    const Tbody = document.createElement("tbody");
+    // add header for table
+    const Tr = Tbl.insertRow();
+    for (let j = 0; j < _keys.length; j++) {
+      const Td = Tr.insertCell();
+      Td.appendChild(document.createTextNode(_keys[j]));
+      Tr.appendChild(Td);
+    }
+    // add body for  table
+    for (let i = 0; i < data.length; i++) {
+      const Tr = Tbl.insertRow();
+      for (let j = 0; j < _keys.length; j++) {
+        const Td = Tr.insertCell();
+        Td.appendChild(document.createTextNode(data[i][_keys[j]]));
+        Tr.appendChild(Td);
+      }
+      Tbody.appendChild(Tr);
+    }
+    Tbl.appendChild(Tbody);
+
+    
+    return Tbl;
+  };
+  const getSubstring = (string, start, end) => {
+    try {
+      const _start = string.indexOf(start);
+      if (_start < 0) throw new Error();
+      const _stringAfterStart = string.slice(_start + start.length);
+      const _end = _stringAfterStart.indexOf(end);
+      if (_end < 0) throw new Error();
+      return [
+        string.slice(
+          _start,
+          _end + (string.length - _stringAfterStart.length) - 1
+        ),
+        _end + end.length + (string.length - _stringAfterStart.length),
+      ];
+    } catch (error) {
+      return [null];
+    }
+  };
+  const getSubstringV2 = (string, start, end) => {
+    try {
+      const _start = string.indexOf(start);
+      if (_start < 0) throw new Error();
+      const _stringAfterStart = string.slice(_start + start.length);
+      const _end = _stringAfterStart.indexOf(end);
+      if (_end < 0) throw new Error();
+      return [
+        string.slice(
+          _start + start.length,
+          _end + end.length + (string.length - _stringAfterStart.length) - 1
+        ),
+        _end + end.length + (string.length - _stringAfterStart.length),
+      ];
+    } catch (error) {
+      return "";
+    }
+  };
+  const getAttributes = (string) => {
+    let Data = [];
+    let index = 0;
+    for (; index < string.length; ) {
+      const [attribute, end] = getSubstringV2(
+        string.slice(index),
+        `data-name=\"@`,
+        `\"`
+      );
+
+      index += end || string?.length;
+      if (!!attribute) Data.push(attribute);
+    }
+
+    return Data;
+  };
+  /**
+   *
+   * @param string
+   * @returns array of string
+   */
+  
+
+  
+  const getTablesName = (string) => {
+    const tableNames = {};
+    let index = 0;
+    for (; index < string.length; ) {
+      const [table, end] = getSubstring(
+        string.slice(index),
+        "<table id",
+        "</table>"
+      );
+
+      index += end || string?.length;
+      if (!!table) {
+        const [tableName] = getSubstringV2(table, `id=\"`, `\"`);
+        const attributes = getAttributes(table);
+        tableNames[tableName] = attributes;
+      }
+    }
+    return tableNames;
+  };
+
+  const purefun = () => {
+    const tableNames = getTablesName(editorRef.current.getContent());
+    console.log("testing", tableNames);
+    const mapTables = Object.keys(tableNames)
+      .map((x) => {
+        return {
+          [`${x}`]: buildHTMLTable(
+            dummy[`${x}`].map((y) => {
+              return getAttributFromObject(y, tableNames[x]);
+            })
+          ),
+        };
+      })
+      .reduce((s, x) => ({ ...s, ...x }), {});
+      let newEditorData = editorRef.current.getContent();
+Object.keys(tableNames).forEach((x)=>{
+  let indexof = editorRef.current
+      .getContent()
+      .indexOf(`<table id="${x}">`)
+      let indexout = editorRef.current
+        .getContent()
+        .indexOf("</table>", indexof);
+      let newStr2 = editorRef.current
+        .getContent()
+        .substring(indexof, indexout + 8);
+      /* +8 is for to insert The whole Table */
+       newEditorData = newEditorData.replace(newStr2, mapTables[x].outerHTML);
+        
+        
+        
+      })
+      setEditorData(newEditorData);
+  };
 
   return (
     <>
       <Row>
         <Col>
-          <Button style={{ marginTop: "10px" }} onClick={toggle}>
-            Footer
-          </Button>
+          <Button onClick={purefun}>Table Func</Button>
+          <Button onClick={Search}>Test Mention</Button>
+          <Button onClick={toggle4}>Insert Table</Button>
         </Col>
         <Col>
-          <Button style={{ marginTop: "10px" }} onClick={toggle2}>
-            Header
-          </Button>
+          <Button onClick={toggle3}>Insert WaterMark</Button>
+        </Col>
+        <Col>
+          <Button onClick={toggle}>Footer</Button>
+        </Col>
+        <Col>
+          <Button onClick={toggle2}>Header</Button>
         </Col>
         <Col>
           <Button onClick={printDivContent}>Print</Button>
         </Col>
       </Row>
+
+      <AddTable
+        theSelectedAttr={theSelectedAttr}
+        tableData={tableData}
+        buildHTMLTable={buildHTMLTable}
+        setSelectedAttr={setSelectedAttr}
+        AddT={AddT}
+        modal={modal3}
+        toggle={toggle4}
+        setTableData={setTableData}
+      />
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
@@ -440,11 +565,21 @@ export default function App() {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>
-            Do Something
+            Done
           </Button>{" "}
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={modal4} toggle={toggle3}>
+        <ModalHeader toggle={toggle3}>Modal title</ModalHeader>
+        <ModalBody>
+          <h1>Choose The WaterMark</h1>
+
+          <Input type="file" onChange={handleChange3} />
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle3}>
+            Done
+          </Button>{" "}
         </ModalFooter>
       </Modal>
       <Modal isOpen={modal2} toggle={toggle2}>
@@ -456,11 +591,8 @@ export default function App() {
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle2}>
-            Do Something
+            Done
           </Button>{" "}
-          <Button color="secondary" onClick={toggle2}>
-            Cancel
-          </Button>
         </ModalFooter>
       </Modal>
       <Editor
@@ -469,11 +601,8 @@ export default function App() {
         id="editor"
         cloudChannel="5-dev"
         init={editorConfig}
-        initialValue={""}
+        initialValue={EditorData2}
       />
-      <Button style={{ marginTop: "10px" }} variant="primary" onClick={log}>
-        Save
-      </Button>
     </>
   );
 }

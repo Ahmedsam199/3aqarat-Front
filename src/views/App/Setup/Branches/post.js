@@ -1,11 +1,12 @@
 import CustomFormInput from "@Component/Form/CustomFormInput";
-import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
-import CustomFormSelect from "@Component/Form/CustomFormSelect";
+import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
+
 import Sidebar from "@components/sidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
+import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { toasty } from "@toast";
 import { toBoolean } from "@utils";
 import { Setup_Branch as Schema } from "@validation";
@@ -13,12 +14,14 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-
+import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
+  const { Setup_Branch } = useSelector((state) => state);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
@@ -56,13 +59,14 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   }, [errors]);
   const onSubmit = async (values) => {
     setLoading(true);
+    console.log(values);
     dispatch(
       values.Series
         ? updateItem("Setup_Branch", values)
-        : insertItem("Setup_Branch", values)
+        : insertItem("Setup_Branch", values) 
     )
       .then((res) => {
-        toasty({ type: "success" });
+        toast.success("");
         clear();
         toggle();
       })
@@ -74,6 +78,11 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
+  console.log(Setup_Branch);
+  let BranchOpt = [];
+  Setup_Branch.forEach((x) => {
+    BranchOpt.push({ value: x.Series, label: x.Series + " " + x.BranchName });
+  });
   return (
     <>
       <Sidebar
@@ -89,12 +98,13 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             {/* s</ModalHeader> */}
             <CustomFormInput name="BranchName" />
             <CustomFormInputCheckbox name="isGroup" />
-            <CustomFormSelect name="ParentBranch" />
+            <CustomFormSelect options={BranchOpt} name="ParentBranch" />
+
             <div className="mt-1">
               <Button
                 color="primary"
                 type="submit"
-                className="mr-1 "
+                className="mr-1"
                 disabled={loading || (row && !_write)}
               >
                 {loading && (

@@ -1,33 +1,34 @@
-import Sugar from 'sugar';
-import HashMap from 'hashmap';
-import { t } from 'i18next';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-import Swal from 'sweetalert2';
-import { toasty } from '@toast';
+import Sugar from "sugar";
+import HashMap from "hashmap";
+import { t } from "i18next";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import Swal from "sweetalert2";
+import { toasty } from "@toast";
 
-import { DefaultRoute } from '../router/routes'
+import { DefaultRoute } from "../router/routes";
 
 // ** Checks if an object is empty (returns boolean)
-export const isObjEmpty = obj => Object.keys(obj).length === 0
+export const isObjEmpty = (obj) => Object.keys(obj).length === 0;
 
 // ** Returns K format from a number
-export const kFormatter = num => (num > 999 ? `${(num / 1000).toFixed(1)}k` : num)
+export const kFormatter = (num) =>
+  num > 999 ? `${(num / 1000).toFixed(1)}k` : num;
 
 // ** Converts HTML to string
-export const htmlToString = html => html.replace(/<\/?[^>]+(>|$)/g, '')
+export const htmlToString = (html) => html.replace(/<\/?[^>]+(>|$)/g, "");
 
 // ** Checks if the passed date is today
-const isToday = date => {
-  const today = new Date()
+const isToday = (date) => {
+  const today = new Date();
   return (
     /* eslint-disable operator-linebreak */
     date.getDate() === today.getDate() &&
     date.getMonth() === today.getMonth() &&
     date.getFullYear() === today.getFullYear()
     /* eslint-enable */
-  )
-}
+  );
+};
 
 /**
  ** Format and return date in Humanize format
@@ -36,30 +37,33 @@ const isToday = date => {
  * @param {String} value date to format
  * @param {Object} formatting Intl object to format with
  */
-export const formatDate = (value, formatting = { month: 'short', day: 'numeric', year: 'numeric' }) => {
-  if (!value) return value
-  return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
-}
+export const formatDate = (
+  value,
+  formatting = { month: "short", day: "numeric", year: "numeric" }
+) => {
+  if (!value) return value;
+  return new Intl.DateTimeFormat("en-US", formatting).format(new Date(value));
+};
 
 // ** Returns short month of passed date
 export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
-  const date = new Date(value)
-  let formatting = { month: 'short', day: 'numeric' }
+  const date = new Date(value);
+  let formatting = { month: "short", day: "numeric" };
 
   if (toTimeForCurrentDay && isToday(date)) {
-    formatting = { hour: 'numeric', minute: 'numeric' }
+    formatting = { hour: "numeric", minute: "numeric" };
   }
 
-  return new Intl.DateTimeFormat('en-US', formatting).format(new Date(value))
-}
+  return new Intl.DateTimeFormat("en-US", formatting).format(new Date(value));
+};
 
 /**
  ** Return if user is logged in
  ** This is completely up to you and how you want to store the token in your frontend application
  *  ? e.g. If you are using cookies to store the application please update this function
  */
-export const isUserLoggedIn = () => localStorage.getItem('userData')
-export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
+export const isUserLoggedIn = () => localStorage.getItem("userData");
+export const getUserData = () => JSON.parse(localStorage.getItem("userData"));
 
 /**
  ** This function is used for demo purpose route navigation
@@ -69,28 +73,28 @@ export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
  * ? NOTE: If you have different pages to navigate based on user ability then this function can be useful. However, you need to update it.
  * @param {String} userRole Role of user
  */
-export const getHomeRouteForLoggedInUser = userRole => {
-  if (userRole === 'admin') return DefaultRoute
-  if (userRole === 'client') return '/access-control'
-  return '/login'
-}
+export const getHomeRouteForLoggedInUser = (userRole) => {
+  if (userRole === "admin") return DefaultRoute;
+  if (userRole === "client") return "/access-control";
+  return "/login";
+};
 
 // ** React Select Theme Colors
-export const selectThemeColors = theme => ({
+export const selectThemeColors = (theme) => ({
   ...theme,
   colors: {
     ...theme.colors,
-    primary25: '#7367f01a', // for option hover bg-color
-    primary: '#7367f0', // for selected option bg-color
-    neutral10: '#7367f0', // for tags bg-color
-    neutral20: '#ededed', // for input border-color
-    neutral30: '#ededed' // for input hover border-color
-  }
-})
+    primary25: "#7367f01a", // for option hover bg-color
+    primary: "#7367f0", // for selected option bg-color
+    neutral10: "#7367f0", // for tags bg-color
+    neutral20: "#ededed", // for input border-color
+    neutral30: "#ededed", // for input hover border-color
+  },
+});
 
 export const bytesToSize = (bytes) => {
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes === 0) return 'n/a';
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  if (bytes === 0) return "n/a";
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
   if (i === 0) return `${bytes} ${sizes[i]})`;
   return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
@@ -111,11 +115,11 @@ export const initState = ({ setState, data }) => {
   });
 };
 export const stringToCapitalize = ([first, ...rest]) => {
-  return first.toUpperCase() + rest.join('');
+  return first.toUpperCase() + rest.join("");
 };
 
 export function parseISOString(s) {
-  if (s === '') s = new Date().toISOString();
+  if (s === "") s = new Date().toISOString();
   var b = s.split(/\D+/);
   return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
 }
@@ -125,8 +129,8 @@ export const parseNumber = (value) => {
   //     ? value?.replaceAll(',', '')?.replaceAll(' ', '')
   //     : value)
   // );
-  const _ = +(typeof value === 'string'
-    ? value?.replaceAll(',', '')?.replaceAll(' ', '')
+  const _ = +(typeof value === "string"
+    ? value?.replaceAll(",", "")?.replaceAll(" ", "")
     : value);
   return isNaN(_) ? 0 : _;
 };
@@ -144,33 +148,33 @@ export const LOCALE_TIME_ZONE = date
     date.toString().search(/GMT/g) + 3,
     date.toString().search(/GMT/g) + 8
   )
-  .replaceBetween(3, 3, ':');
+  .replaceBetween(3, 3, ":");
 
 export const ScrollToTop = () => {
   setTimeout(() => {
     const mainContentScrollTop = document.querySelector(
-      '.container-after-titlebar'
+      ".container-after-titlebar"
     );
-    mainContentScrollTop.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    mainContentScrollTop.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, 500);
 };
 export const isEmpty = (value) => {
   return (
     value === undefined ||
     value === null ||
-    value === '' ||
+    value === "" ||
     (Array.isArray(value) && !value.length) ||
     (value instanceof Object && Sugar.Object.isEmpty(value))
   );
 };
 // redux
-import Routes from '@Routes';
-import { syncData } from '@store/actions/data';
-import { resolve } from 'path';
-import axios from 'axios';
-import { SuccessToast } from '../components/SuccessToast';
-import { toast } from 'react-toastify';
-import { getCurrencyExchangeRate } from '../redux/actions/helper';
+import Routes from "@Routes";
+import { syncData } from "@store/actions/data";
+import { resolve } from "path";
+import axios from "axios";
+import { SuccessToast } from "../components/SuccessToast";
+import { toast } from "react-toastify";
+import { getCurrencyExchangeRate } from "../redux/actions/helper";
 export const onSyncData = (dispatch) => {
   const keys = Object.keys(Routes);
   keys.forEach((x) => {
@@ -178,16 +182,16 @@ export const onSyncData = (dispatch) => {
   });
 };
 export const toBoolean = (value) => {
-  if (typeof value !== 'string') return value;
+  if (typeof value !== "string") return value;
   switch (value.toLowerCase().trim()) {
-    case 'true':
-    case 'yes':
-    case '1':
+    case "true":
+    case "yes":
+    case "1":
       return true;
 
-    case 'false':
-    case 'no':
-    case '0':
+    case "false":
+    case "no":
+    case "0":
     case null:
       return false;
 
@@ -197,23 +201,23 @@ export const toBoolean = (value) => {
 };
 export const toISOString = (date) => {
   var tzo = -date.getTimezoneOffset(),
-    dif = tzo >= 0 ? '+' : '-',
+    dif = tzo >= 0 ? "+" : "-",
     pad = function (num) {
       var norm = Math.floor(Math.abs(num));
-      return (norm < 10 ? '0' : '') + norm;
+      return (norm < 10 ? "0" : "") + norm;
     };
 
   return (
     date.getFullYear() +
-    '-' +
+    "-" +
     pad(date.getMonth() + 1) +
-    '-' +
+    "-" +
     pad(date.getDate()) +
-    'T' +
+    "T" +
     pad(date.getHours()) +
-    ':' +
+    ":" +
     pad(date.getMinutes()) +
-    ':' +
+    ":" +
     pad(date.getSeconds())
   );
 };
@@ -247,7 +251,7 @@ export const subMonths = (date, number) => {
   return date.subMonths(number);
 };
 export const isNumber = (number) => {
-  return typeof number === 'number';
+  return typeof number === "number";
 };
 
 export const sliceString = (str, length = 10) => {
@@ -267,25 +271,25 @@ export const getDistinctDataFromArray = (array, getValue) => {
   return [...new Set(array.map((x) => getValue(x)))];
 };
 export const convertObjectToParam = (value) => {
-  let _params = '';
+  let _params = "";
   const keys = Object.keys(value);
   const values = Object.values(value);
   keys.forEach((x, i) => {
     if (!isEmpty(values[i]))
-      _params += `${i !== 0 ? '&' : '?'}${x}=${values[i]}`;
+      _params += `${i !== 0 ? "&" : "?"}${x}=${values[i]}`;
   });
   return _params;
 };
 export const statusObj = {
-  draft: 'light-success',
-  submitted: 'light-warning',
-  cancelled: 'light-danger',
+  draft: "light-success",
+  submitted: "light-warning",
+  cancelled: "light-danger",
 };
-export const findValue = ({ array = [], name = 'Series', value = '' }) => {
+export const findValue = ({ array = [], name = "Series", value = "" }) => {
   try {
     return array.find((x) => x[name] === value);
   } catch (e) {
-    console.error('hacker_it error', e);
+    console.error("hacker_it error", e);
   }
 };
 export const parseStringToJSON = (string) => {
@@ -299,7 +303,7 @@ export const parseStringToJSON = (string) => {
 export const isValidDate = (date) => {
   return (
     date &&
-    Object.prototype.toString.call(date) === '[object Date]' &&
+    Object.prototype.toString.call(date) === "[object Date]" &&
     !isNaN(date)
   );
 };
@@ -311,28 +315,28 @@ export const isValidDate = (date) => {
 // }
 export const getDate = (date) => {
   return isValidDate(date)
-    ? date.toISOString().split('T')[0]
-    : date?.split('T')[0];
+    ? date.toISOString().split("T")[0]
+    : date?.split("T")[0];
 };
 export const fixDuplicateOptions = {
   init: ({
     selections = [],
-    selected_ID = 'Series',
+    selected_ID = "Series",
     data = [],
-    data_ID = 'Series',
+    data_ID = "Series",
   }) => {
     try {
       const _data = deepCopy(data);
       const _selectionsSeries = selections.map((x) => x[`${selected_ID}`]);
       return _data.filter((x) => !_selectionsSeries.includes(x[`${data_ID}`]));
     } catch (e) {
-      console.error('hacker_it error', e);
+      console.error("hacker_it error", e);
     }
   },
 };
 
 export const ObjectToString = (data) => {
-  return JSON.stringify(data ?? '');
+  return JSON.stringify(data ?? "");
 };
 
 export const clearDefaultValueOfArray = ({ name, control, reset, index }) => {
@@ -344,8 +348,8 @@ export const clearDefaultValueOfArray = ({ name, control, reset, index }) => {
 };
 export const setValueToArray = ({
   array,
-  name = 'OriginalQty',
-  from = 'Qty',
+  name = "OriginalQty",
+  from = "Qty",
   value = undefined,
   setValue = undefined,
 }) => {
@@ -356,7 +360,7 @@ export const setValueToArray = ({
 };
 export const checkFormatTime = (i) => {
   if (i < 10) {
-    i = '0' + i;
+    i = "0" + i;
   }
   return i;
 };
@@ -372,7 +376,7 @@ export const getTimeAsString = (date) => {
   return `${h}:${m}:${s}`;
 };
 const getDateAsString = (date) => {
-  return Sugar.Date.format(new Date(date), '%Y-%m-%d');
+  return Sugar.Date.format(new Date(date), "%Y-%m-%d");
 };
 export const sendTime = (date) => {
   const _date = isValidDate(date) ? date : new Date(date);
@@ -382,7 +386,7 @@ export const receiptTime = (date) => {
   const _date = /Z/.test(date) ? date.slice(0, date.length - 1) : date;
   return [new Date(_date)];
 };
-export const arrToHashMap = (arr, val = 'Series') => {
+export const arrToHashMap = (arr, val = "Series") => {
   const map = new HashMap();
   arr.forEach((x) => {
     map.set(x[val], x);
@@ -393,7 +397,7 @@ export const isNullOrUndefined = (val) => {
   return val === null || val === undefined;
 };
 export const getTotalDiscount = ({ DiscountOn, Total, DiscountAmount }) => {
-  return DiscountOn === 'Percent'
+  return DiscountOn === "Percent"
     ? (DiscountAmount * Total) / 100
     : DiscountAmount;
 };
@@ -441,24 +445,39 @@ export const findOffer = ({ OffersToday, item, Qty }) => {
   const hasOffer = findItemOffer({ OffersToday, item, Qty });
   return findHighPriorityOffer(hasOffer);
 };
-export const calcOfferDiscountAmount = ({ offer, baseCost, Currency, dispatch }) => {
+export const calcOfferDiscountAmount = ({
+  offer,
+  baseCost,
+  Currency,
+  dispatch,
+}) => {
   return offer
     ? calcTotalDiscountAmount({
-      Total: baseCost,
-      DiscountON: offer.DiscountON,
-      DiscountAmt: +offer.DiscountAmt,
-      Currency,
-      dispatch
-    })
+        Total: baseCost,
+        DiscountON: offer.DiscountON,
+        DiscountAmt: +offer.DiscountAmt,
+        Currency,
+        dispatch,
+      })
     : 0;
 };
-export const calcTotalDiscountAmount = ({ DiscountON, DiscountAmt, Total, Currency, dispatch }) => {
-  return +DiscountON ? getDiscountAmount({ DiscountAmt: +DiscountAmt, Currency, dispatch }) : (+Total * DiscountAmt) / 100;
+export const calcTotalDiscountAmount = ({
+  DiscountON,
+  DiscountAmt,
+  Total,
+  Currency,
+  dispatch,
+}) => {
+  return +DiscountON
+    ? getDiscountAmount({ DiscountAmt: +DiscountAmt, Currency, dispatch })
+    : (+Total * DiscountAmt) / 100;
 };
 const getDiscountAmount = async ({ DiscountAmt, Currency, dispatch }) => {
-  const exchange = await dispatch(getCurrencyExchangeRate({ from: Currency, showError: false }))
-  return DiscountAmt * exchange
-}
+  const exchange = await dispatch(
+    getCurrencyExchangeRate({ from: Currency, showError: false })
+  );
+  return DiscountAmt * exchange;
+};
 // #endregion
 let timeID;
 export const sleep = (timeout = 100) => {
@@ -491,11 +510,13 @@ export const checkDateValue = (data) => {
     const _data = deepCopy(data);
     const Keys = Object.keys(_data);
     Keys.forEach((x) => {
-      /date/.test(x.toLocaleLowerCase()) ? (_data[x] = sendTime(_data[x][0])) : null;
+      /date/.test(x.toLocaleLowerCase())
+        ? (_data[x] = sendTime(_data[x][0]))
+        : null;
     });
     return _data;
   } catch (error) {
-    console.error('hacker_it error', error);
+    console.error("hacker_it error", error);
   }
 };
 export const changeDateFormat = (date) => {
@@ -503,11 +524,11 @@ export const changeDateFormat = (date) => {
   return `${_date?.toLocaleDateString()}-${_date?.toLocaleTimeString()}`;
 };
 export const fixValue = (data) => {
-  if (typeof data === 'boolean') return data ? 'true' : 'false';
-  if (typeof data === 'number') return data.toFixed(2);
+  if (typeof data === "boolean") return data ? "true" : "false";
+  if (typeof data === "number") return data.toFixed(2);
   if (checkTime(data)) return changeDateFormat(data);
-  if (typeof data === 'string') return data;
-  return '';
+  if (typeof data === "string") return data;
+  return "";
 };
 export const checkTime = (data) => {
   return /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)((-(\d{2}):(\d{2})|Z)?)$/.test(
@@ -516,20 +537,20 @@ export const checkTime = (data) => {
 };
 
 export const handleScroll = (ref) => {
-  const TitleTable = document.querySelector('#TitleTable');
+  const TitleTable = document.querySelector("#TitleTable");
   const mainContentScrollTop = document.querySelector(
-    '.container-after-titlebar'
+    ".container-after-titlebar"
   );
   switch (true) {
     case mainContentScrollTop.scrollTop > TitleTable?.offsetTop + 315:
-      ref.current.style.position = 'fixed';
-      ref.current.style.zIndex = '100';
-      ref.current.style.top = '95px';
-      ref.current.style.width = '92%';
+      ref.current.style.position = "fixed";
+      ref.current.style.zIndex = "100";
+      ref.current.style.top = "95px";
+      ref.current.style.width = "92%";
       break;
     case mainContentScrollTop.scrollTop < TitleTable?.offsetTop + 290:
-      ref.current.style.position = 'relative';
-      ref.current.style.zIndex = '0';
+      ref.current.style.position = "relative";
+      ref.current.style.zIndex = "0";
       break;
     default:
       break;
@@ -550,7 +571,7 @@ export const getTotalRows = ({ data, ignoreTotalKeys }) =>
         key,
         !ignoreTotalKeys.includes(key) && (!!val || val === 0) && !isNaN(+val)
           ? data.reduce((sum, row) => +row[key] + sum, 0).toFixed(2)
-          : '_',
+          : "_",
       ];
     })
   );
@@ -559,8 +580,8 @@ export const removeNullValue = (data) => {
 };
 export const buildHTMLTable = (data) => {
   const _keys = Object.keys(data[0]);
-  const Tbl = document.createElement('table');
-  const Tbody = document.createElement('tbody');
+  const Tbl = document.createElement("table");
+  const Tbody = document.createElement("tbody");
   // add header for table
   const Tr = Tbl.insertRow();
   for (let j = 0; j < _keys.length; j++) {
@@ -596,7 +617,7 @@ const downloadAndDelete = ({
 
   let requests = filePaths.map((path) =>
     fetch(`${Routes.Attachments.AmazonS3}/${path}`, {
-      responseType: 'arraybuffer',
+      responseType: "arraybuffer",
     }).then((r) => r.blob())
   );
 
@@ -606,7 +627,7 @@ const downloadAndDelete = ({
     });
   });
 
-  zip.generateAsync({ type: 'blob' }).then(function (content) {
+  zip.generateAsync({ type: "blob" }).then(function (content) {
     saveAs(content, `${refDoctype}.zip`);
   });
 
@@ -618,7 +639,7 @@ const downloadAndDelete = ({
           .delete(
             `${Routes.Attachments.delete}?refDoctype=${refDoctype}&refSeries=${refSeries}`
           )
-          .then(() => { });
+          .then(() => {});
         toast.success(<SuccessToast msg="Delete Successfully!" />, {
           hideProgressBar: true,
         });
@@ -641,7 +662,7 @@ const deleteRecordAndAttachment = ({
         .delete(
           `${Routes.Attachments.delete}?refDoctype=${refDoctype}&refSeries=${refSeries}`
         )
-        .then(() => { });
+        .then(() => {});
 
       toast.success(<SuccessToast msg="Delete Successfully!" />, {
         hideProgressBar: true,
@@ -685,7 +706,7 @@ export const deleteRecordWithAttachments = ({
           title: `You have ${data?.rows?.length} attachment on this record!`,
           showDenyButton: true,
           showCancelButton: true,
-          confirmButtonText: 'Download attachments',
+          confirmButtonText: "Download attachments",
           denyButtonText: `Delete Anyway`,
         }).then((result) => {
           if (result.isConfirmed) {
@@ -714,17 +735,17 @@ export const deleteRecordWithAttachments = ({
         });
       }
     })
-    .catch((err) => console.log('Joseph err attachment'));
+    .catch((err) => console.log("Joseph err attachment"));
 };
 
 export const sendAttachment = ({
   files = [],
-  refDoctype = '',
-  refSeries = '',
+  refDoctype = "",
+  refSeries = "",
 }) => {
   let formData = new FormData();
   files.forEach((img) => {
-    formData.append('image', img);
+    formData.append("image", img);
   });
 
   axios.post(
@@ -752,11 +773,25 @@ export const listFonts = () => {
   return [...new Set(arr)];
 };
 export const checkDiscountAmtNotValid = (data) => {
-  if (data.DiscountAmt > data.Total && data.DiscountBy === 'Amount') {
+  if (data.DiscountAmt > data.Total && data.DiscountBy === "Amount") {
     toasty({
-      type: 'warning',
-      msg: 'Discount greater then Total, change please!',
+      type: "warning",
+      msg: "Discount greater then Total, change please!",
     });
     return true;
   } else return false;
+};
+
+/**
+ *
+ * @param  arr
+ * @param  x
+ * @returns object
+ */
+export const getAttributFromObject = (x,arr) => {
+  return arr
+    .map((y) => {
+      return { [y]: x[y] };
+    })
+    .reduce((x, s) => ({ ...s, ...x }), {});
 };

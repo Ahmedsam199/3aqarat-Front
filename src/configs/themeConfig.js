@@ -1,9 +1,9 @@
 // You can customize the template with the help of this file
-
+// Here Ican Search For Logo And App Name
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
+    appName: 'Real State',
     appLogoImage: require('@src/assets/images/logo/logo.svg').default
   },
   layout: {

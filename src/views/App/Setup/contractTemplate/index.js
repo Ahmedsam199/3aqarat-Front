@@ -7,6 +7,10 @@ import CustomTable from "@Component/CustomTable";
 import React, { useContext, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import "@styles/react/apps/app-invoice.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
+import "@styles/react/libs/react-select/_react-select.scss";
+import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -21,7 +25,7 @@ import {
 import POST from "./post";
 const Index = () => {
   const { t } = useTranslation();
-  const { UOM } = useSelector((state) => state);
+  const { Contract_Template } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -50,7 +54,7 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
+    dispatch(deleteItem("Contract_Template", Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: "success", msg: "Delete Successfully!" });
@@ -67,14 +71,16 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
+        <div className="flex-grow-1">
+          
+        </div>
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
             <Link
-              to="/newTemp"
+              to="/App/Customer"
               className="btn btn-primary mb-1"
               color="primary"
-              
             >
               {t("New")}
             </Link>
@@ -82,7 +88,6 @@ const Index = () => {
         )}
       </div>
       <Card>
-       
         <CardBody>
           <Row>
             <Col lg="3" md="4">
@@ -96,20 +101,11 @@ const Index = () => {
                 />
               </FormGroup>
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("UOM")}</Label>
-                <Input
-                  placeholder={t("ConverstionFactor")}
-                  onChange={(e) => handleFiltersChange("UOM", e.target.value)}
-                />
-              </FormGroup>
-            </Col>
           </Row>
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={UOM}
+          offlineData={Contract_Template}
           columns={Columns}
           filters={filters}
         />

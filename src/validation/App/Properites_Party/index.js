@@ -4,6 +4,6 @@ export default Core.Object({
   Cell: Core.String(),
   Phone: Core.String(),
   Address: Core.String(),
-  Gender: Core.String(),
-  Remark: Core.String(),
+  Gender: Core.Boolean(),
+  Remarks: Core.String(),
 });

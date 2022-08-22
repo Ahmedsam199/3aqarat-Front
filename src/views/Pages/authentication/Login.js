@@ -47,26 +47,33 @@ import {
   CardTitle,
   UncontrolledTooltip,
 } from "reactstrap";
-
+import themeConfig from "@configs/themeConfig";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
 import { useState } from "preact/hooks";
 
 const ToastContent = ({ t, name, role }) => {
   return (
-    <div className="d-flex">
+    <div>
+      <div>
+        <h4>Welcome to Al-Jazary Real State</h4>
+      </div>
+      <br></br>
+      <div className="text-center">
+        <img className="brand-logo" width={36} height={30} src={themeConfig.app.appLogoImage}></img>
+      </div>
     </div>
   );
 };
 
 const defaultValues = {
-  UserName: "ddcdcd",
-  Password: "asasdasx",
+  UserName: "Ahmed11",
+  Password: "Eq11223344",
 };
 
 const Login = () => {
   // ** Hooks
-  
+
   const { skin } = useSkin();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -81,16 +88,13 @@ const Login = () => {
     source = require(`@src/assets/images/pages/${illustration}`).default;
 
   const onSubmit = (data) => {
-    
     if (Object.values(data).every((field) => field.length > 0)) {
       useJwt
         .login({ UserName: data.UserName, Password: data.Password })
         .then((res) => {
-
           const data = {
             ...res.data,
-            accessToken: res.data,
-            
+            accessToken: res.data ,
           };
           dispatch(handleLogin(data));
           ability.update([
@@ -124,7 +128,7 @@ const Login = () => {
     <div className="auth-wrapper auth-cover">
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
-          <svg viewBox="0 0 139 95" version="1.1" height="28">
+          {/* <svg viewBox="0 0 139 95" version="1.1" height="28">
             <defs>
               <linearGradient
                 x1="100%"
@@ -189,8 +193,8 @@ const Login = () => {
                 </g>
               </g>
             </g>
-          </svg>
-          <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+          </svg> */}
+          <h2 className="brand-text text-primary ms-1">RealState</h2>
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
@@ -221,7 +225,6 @@ const Login = () => {
                   render={({ field }) => (
                     <Input
                       autoFocus
-                      
                       placeholder="john@example.com"
                       invalid={errors.loginEmail && true}
                       {...field}
@@ -234,7 +237,6 @@ const Login = () => {
                   <Label className="form-label" for="login-password">
                     Password
                   </Label>
-                
                 </div>
                 <Controller
                   id="Password"
@@ -253,13 +255,12 @@ const Login = () => {
                 Sign in
               </Button>
             </Form>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               <span className="me-25">New on our platform?</span>
               <Link to="/register">
                 <span>Create an account</span>
               </Link>
-            </p>
-           
+            </p> */}
           </Col>
         </Col>
       </Row>

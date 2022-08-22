@@ -27,8 +27,11 @@
     // remove box-shadow on focus of buttons
     button.swal2-confirm:focus {
       box-shadow: none;
+      
     }
-
+button.swal2-confirm{
+  margin: 10px;
+}
     // input
     input.swal2-input {
       height: $input-height;
@@ -109,7 +112,10 @@
       .swal2-html-container {
         color: $theme-dark-body-color;
       }
-
+.swal2-content button{
+  padding: 10px !important;
+  margin: 10px !important;
+}
       pre,
       code {
         color: $theme-dark-body-color;
