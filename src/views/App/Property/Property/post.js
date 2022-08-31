@@ -88,7 +88,7 @@ useEffect(() => {
         `${Routes.Property_Property.root}/${params.series}`
       );
 
-      console.log("joseph data ", data);
+      console.log("testing ", data);
 
       reset({
         ...data,
