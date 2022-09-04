@@ -136,5 +136,19 @@
     "add": "Add_Attachments",
     "delete": "Delete_Attachments",
     "clear": "clear_Attachments"
+  },
+  "PrintCustomization": {
+    "insert": "Insert_PrintCustomization",
+    "update": "Update_PrintCustomization",
+    "delete": "Delete_PrintCustomization",
+    "set": "Set_PrintCustomization",
+    "clear": "Clear_PrintCustomization"
+  },
+  "PrintKeys": {
+    "insert": "Insert_PrintKeys",
+    "update": "Update_PrintKeys",
+    "delete": "Delete_PrintKeys",
+    "set": "Set_PrintKeys",
+    "clear": "Clear_PrintKeys"
   }
 }

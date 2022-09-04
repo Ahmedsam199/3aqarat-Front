@@ -29,6 +29,7 @@ const Router = () => {
   const getHomeRoute = () => {
     const user = getUserData()
     if (user) {
+      console.log('hacker_it', user.role);
       return getHomeRouteForLoggedInUser(user.role)
     } else {
       return '/login'

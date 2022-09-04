@@ -796,3 +796,21 @@ export const getAttributFromObject = (x,arr) => {
     .reduce((x, s) => ({ ...s, ...x }), {});
 };
 
+export const getSubstring = ({ string, start, end, inner = false }) => {
+  try {
+    const _start = string.indexOf(start);
+    if (_start < 0) throw new Error();
+    const _stringAfterStart = string.slice(_start + start.length);
+    const _end = _stringAfterStart.indexOf(end);
+    if (_end < 0) throw new Error();
+    return [
+      string.slice(
+        _start + (start.length * inner),
+        _end + (end.length * !inner) + (string.length - _stringAfterStart.length) - +inner
+      ),
+      _end + end.length + (string.length - _stringAfterStart.length),
+    ];
+  } catch (error) {
+    return [];
+  }
+};

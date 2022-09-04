@@ -114,6 +114,12 @@ export default [
         icon: <Users size={12} />,
         navLink: "/Setup/User",
       },
+      {
+        id: "",
+        title: "PrintCustomization",
+        icon: <Users size={12} />,
+        navLink: "/Setup/PrintCustomization",
+      },
     ],
   },
 ];

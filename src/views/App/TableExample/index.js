@@ -1,5 +1,5 @@
 import Breadcrumbs from '@components/breadcrumbs';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
 import {
   Button,
@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Row,
+  Row
 } from 'reactstrap';
 
 import { Payment as createColumns } from '@columns';
@@ -19,10 +19,10 @@ import { deleteItem } from '@store/actions/data';
 import { arrToHashMap, isEmpty } from '@utils';
 import CustomSelect from 'components/CustomSelect';
 import CustomTable from 'components/CustomTable';
+import { t } from 'i18next';
 import { useContext, useMemo, useRef, useState } from 'react';
 import Flatpickr from 'react-flatpickr';
 import { useDispatch, useSelector } from 'react-redux';
-import { toasty } from '@toast';
 import { deleteRecordWithAttachments } from '../../../utility/Utils';
 const Index = () => {
   const {
@@ -33,7 +33,6 @@ const Index = () => {
   const PartyMap = useMemo(() => arrToHashMap(Party), [Party]);
   const { network } = useSelector((state) => state.tempData);
   const dispatch = useDispatch();
-  const { formatMessage } = useIntl();
   const ability = useContext(AbilityContext);
   const [filters, setFilters] = useState({
     Series: {
@@ -82,8 +81,7 @@ const Index = () => {
         onDelete,
         onEdit: (row) =>
           history.push(
-            `/Entry/UpdatePayment/${
-              isEmpty(row?.Series) ? row.ID : row?.Series
+            `/Entry/UpdatePayment/${isEmpty(row?.Series) ? row.ID : row?.Series
             }`
           ),
       }),
@@ -119,7 +117,7 @@ const Index = () => {
                   <FormattedMessage id="Series" />:
                 </Label>
                 <Input
-                  placeholder={formatMessage({ id: 'Series' })}
+                  placeholder={t("Series")}
                   onChange={(e) =>
                     handleFiltersChange('Series', e.target.value)
                   }
@@ -182,12 +180,12 @@ const Index = () => {
                 <Input
                   onKeyPress={(event) =>
                     event.charCode == 8 ||
-                    event.charCode == 0 ||
-                    event.charCode == 13
+                      event.charCode == 0 ||
+                      event.charCode == 13
                       ? null
                       : event.charCode >= 48 && event.charCode <= 57
                   }
-                  placeholder={formatMessage({ id: 'Amount' })}
+                  placeholder={t("Amount")}
                   value={filters.Amount.value ?? 0}
                   onChange={(e) => {
                     if (e.target.value * 1 >= 0)

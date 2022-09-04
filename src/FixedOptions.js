@@ -198,3 +198,41 @@ export const GenderOptions = [
   { label: "Male", value: true },
   { label: "Female", value: false },
 ];
+
+export const Tables = {
+  "DT-11":
+    [
+      {
+        label: 'ItemsTbl',
+        value: 'ItemsTbl',
+        attributes: [
+          { label: 'itemSeries', value: "itemSeries" },
+          { label: 'cost', value: "cost" },
+          { label: 'quantity', value: "quantity" },
+          { label: 'description', value: "description" },
+          { label: 'uom', value: "uom" },
+        ]
+      },
+      {
+        label: 'PaymentTermInfo',
+        value: 'PaymentTermInfo',
+        attributes: [
+          { label: 'BasedOn', value: "BasedOn" },
+          { label: 'Portion', value: "Portion" },
+          { label: 'DueDate', value: "DueDate" },
+          { label: 'Amount', value: "Amount" },
+          { label: 'Description', value: "Description" },
+        ]
+      },
+      {
+        label: 'ChargesInfo',
+        value: 'ChargesInfo',
+        attributes: [
+          { label: 'ChargeName', value: "ChargeName" },
+          { label: 'Currency', value: "Currency" },
+          { label: 'Amount', value: "Amount" },
+        ]
+      },
+
+    ]
+};
