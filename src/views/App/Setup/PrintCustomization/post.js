@@ -11,6 +11,7 @@ import { ChromePicker } from 'react-color';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Image from '../../../../components/inputComponent/Image'
 import {
   Button,
   Card,
@@ -112,7 +113,7 @@ const Post = () => {
             breadCrumbTitle="PrintCustomization"
             breadCrumbParent="Setting"
             breadCrumbParent3="PrintCustomization"
-            breadCrumbActive={params.series ? params.series : 'New'}
+            breadCrumbActive={params.series ? params.series : "New"}
             Series={params.series}
             breadCrumbActiveLink="/Setting/PrintCustomization"
           />
@@ -128,9 +129,7 @@ const Post = () => {
           <Row className="mt-1 mb-50">
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Print Name")}
-                </Label>
+                <Label>{t("Print Name")}</Label>
                 <Input
                   placeholder="print Name"
                   value={printName}
@@ -142,14 +141,12 @@ const Post = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Doctype")}
-                </Label>
+                <Label>{t("Doctype")}</Label>
                 <CustomSelect
                   valueName="Series"
                   textName="DocTypeName"
                   value={doctype}
-                  onChange={async (e) => { }}
+                  onChange={async (e) => {}}
                   isDisabled={true}
                   options={Doctypes}
                 />
@@ -157,9 +154,7 @@ const Post = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Copy Count")}
-                </Label>
+                <Label>{t("Copy Count")}</Label>
                 <Input
                   placeholder="Copy Count"
                   value={copyCount}
@@ -171,9 +166,7 @@ const Post = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Font Size")}
-                </Label>
+                <Label>{t("Font Size")}</Label>
                 <Input
                   placeholder="Font Size"
                   value={fontSize}
@@ -185,9 +178,7 @@ const Post = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Font Family")}
-                </Label>
+                <Label>{t("Font Family")}</Label>
                 <CustomSelect
                   valueName="value"
                   textName="label"
@@ -201,13 +192,16 @@ const Post = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>
-                  {t("Table Headers Color")}
-                </Label>
+                <Label>{t("Table Headers Color")}</Label>
                 <div className="color-container">
                   <div
                     className="swatch"
-                    onClick={() => dispatch({ type: "setDisplayColorPicker", payload: !displayColorPicker })}
+                    onClick={() =>
+                      dispatch({
+                        type: "setDisplayColorPicker",
+                        payload: !displayColorPicker,
+                      })
+                    }
                   >
                     <div className="color" style={{ background: color }} />
                   </div>
@@ -216,7 +210,10 @@ const Post = () => {
                       <div
                         className="cover"
                         onClick={() =>
-                          dispatch({ type: "setDisplayColorPicker", payload: !displayColorPicker })
+                          dispatch({
+                            type: "setDisplayColorPicker",
+                            payload: !displayColorPicker,
+                          })
                         }
                       />
                       <ChromePicker
@@ -224,7 +221,8 @@ const Post = () => {
                         onChangeComplete={(e) => {
                           dispatch({ type: "setColor", payload: e.hex });
                           dispatch({
-                            type: "setTableHeadersColor", payload: e.hex
+                            type: "setTableHeadersColor",
+                            payload: e.hex,
                           });
                         }}
                       />
@@ -233,15 +231,30 @@ const Post = () => {
                 </div>
               </FormGroup>
             </Col>
-            <Col md="1" >
-              <Button.Ripple color="primary" onClick={() => setTempHTML(editorRef.current.getContent())}>
+            <Col md="1">
+              <Button.Ripple
+                color="primary"
+                onClick={() => setTempHTML(editorRef.current.getContent())}
+              >
                 {t("Table")}
               </Button.Ripple>
             </Col>
-            <Col md="2" className="d-flex justify-content-between align-items-center">
-              <ImageInput title={"Footer"} onChange={(e) => changeFile(e, "Footer")} />
-              <ImageInput title={"WaterMark"} onChange={(e) => changeFile(e, "WaterMark")} />
-              <ImageInput title={"Header"} onChange={(e) => changeFile(e, "Header")} />
+            <Col
+              md="2"
+              className="d-flex justify-content-between align-items-center"
+            >
+              <Image
+                title={"Footer"}
+                onChange={(e) => changeFile(e, "Footer")}
+              />
+              <Image
+                title={"WaterMark"}
+                onChange={(e) => changeFile(e, "WaterMark")}
+              />
+              <Image
+                title={"Header"}
+                onChange={(e) => changeFile(e, "Header")}
+              />
             </Col>
           </Row>
           <Row>
@@ -268,7 +281,10 @@ const Post = () => {
                     style={{ marginRight: "1rem" }}
                     checked={isReceipt}
                     onChange={(e) => {
-                      dispatch({ type: "setIsReceipt", payload: e.target.checked });
+                      dispatch({
+                        type: "setIsReceipt",
+                        payload: e.target.checked,
+                      });
                     }}
                   />
                   {t("isReceipt")}
@@ -284,7 +300,10 @@ const Post = () => {
                     style={{ marginRight: "1rem" }}
                     checked={isDefault}
                     onChange={(e) => {
-                      dispatch({ type: "setIsDefault", payload: e.target.checked });
+                      dispatch({
+                        type: "setIsDefault",
+                        payload: e.target.checked,
+                      });
                     }}
                   />
                   {t("isDefault")}
@@ -300,7 +319,10 @@ const Post = () => {
                     checked={PrintOnSubmit}
                     style={{ marginRight: "1rem" }}
                     onChange={(e) => {
-                      dispatch({ type: "setPrintOnSubmit", payload: e.target.checked });
+                      dispatch({
+                        type: "setPrintOnSubmit",
+                        payload: e.target.checked,
+                      });
                     }}
                   />
                   {t("printOnSubmit")}
@@ -318,7 +340,7 @@ const Post = () => {
               setup: (localEditor) => {
                 registerEmoji(localEditor);
                 registerAutocompleter(localEditor, PrintKeys);
-              }
+              },
             }}
             initialValue={htmlData}
           />
@@ -328,7 +350,9 @@ const Post = () => {
         Doctype={doctype}
         row={tempHTML}
         onToggle={() => setTempHTML(null)}
-        onComplete={(values) => { applyTable(values) }}
+        onComplete={(values) => {
+          applyTable(values);
+        }}
       />
     </Fragment>
   );
