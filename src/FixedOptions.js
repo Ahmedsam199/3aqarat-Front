@@ -200,39 +200,55 @@ export const GenderOptions = [
 ];
 
 export const Tables = {
-  "DT-11":
-    [
-      {
-        label: 'ItemsTbl',
-        value: 'ItemsTbl',
-        attributes: [
-          { label: 'itemSeries', value: "itemSeries" },
-          { label: 'cost', value: "cost" },
-          { label: 'quantity', value: "quantity" },
-          { label: 'description', value: "description" },
-          { label: 'uom', value: "uom" },
-        ]
-      },
-      {
-        label: 'PaymentTermInfo',
-        value: 'PaymentTermInfo',
-        attributes: [
-          { label: 'BasedOn', value: "BasedOn" },
-          { label: 'Portion', value: "Portion" },
-          { label: 'DueDate', value: "DueDate" },
-          { label: 'Amount', value: "Amount" },
-          { label: 'Description', value: "Description" },
-        ]
-      },
-      {
-        label: 'ChargesInfo',
-        value: 'ChargesInfo',
-        attributes: [
-          { label: 'ChargeName', value: "ChargeName" },
-          { label: 'Currency', value: "Currency" },
-          { label: 'Amount', value: "Amount" },
-        ]
-      },
-
-    ]
+  "DT-1": [
+    {
+      label: "Attribute",
+      value: "Attribute",
+      attributes: [
+        { label: "Attribute", value: "Attribute" },
+        { label: "Value", value: "Value" },
+      ],
+    },
+    {
+      label: "Furniture",
+      value: "Furniture",
+      attributes: [
+        { label: "Subject", value: "Subject" },
+        { label: "Statue", value: "Statue" },
+        { label: "Price", value: "Price" },
+        { label: "Currency", value: "Currency" },
+        { label: "Quantity", value: "Quantity" },
+      ],
+    },
+    {
+      label: "ExtraPayment",
+      value: "ExtraPayment",
+      attributes: [
+        { label: "Purpose", value: "Purpose" },
+        { label: "PaidAmount", value: "PaidAmount" },
+        { label: "PaidCurrency", value: "PaidCurrency" },
+      ],
+    },
+  ],
+  "DT-8": [
+    {
+      label: "Attribute",
+      value: "Attribute",
+      attributes: [
+        { label: "Attribute", value: "Attribute" },
+        { label: "Value", value: "Value" },
+      ],
+    },
+    {
+      label: "Furniture",
+      value: "Furniture",
+      attributes: [
+        { label: "Subject", value: "Subject" },
+        { label: "Statue", value: "Statue" },
+        { label: "Price", value: "Price" },
+        { label: "Currency", value: "Currency" },
+        { label: "Quantity", value: "Quantity" },
+      ],
+    },
+  ],
 };
