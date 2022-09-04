@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { CustomInput } from 'reactstrap'
+import { CustomInput } from "reactstrap";
 import Routes from '@Routes'
 const defaultImage = require('@src/assets/images/default.png').default
 
@@ -26,14 +26,24 @@ const CustomImageInput = ({ Accept = "image/*", setFile, src, onClear = () => { 
     setSrcImage(src ?? null)
   }, [src])
   return (
-    <div className='position-relative'>
+    <div className="position-relative">
       {!!srcImage && <DeleteIcon onClick={() => clearImage()}>X</DeleteIcon>}
       <label htmlFor="image-input">
-        <img src={srcImage ? srcImage : defaultImage} width="100%" height={height} />
+        <img
+          src={srcImage ? srcImage : "defaultImage"}
+          width="100%"
+          height={height}
+        />
       </label>
-      <CustomInput innerRef={ref} type="file" id='image-input' accept={Accept} onChange={handleFileChange} />
+      <CustomFormInput
+        innerRef={ref}
+        type="file"
+        id="image-input"
+        accept={Accept}
+        onChange={handleFileChange}
+      />
     </div>
-  )
+  );
 }
 const DeleteIcon = styled.a`
     position: absolute;

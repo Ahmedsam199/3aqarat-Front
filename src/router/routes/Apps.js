@@ -141,10 +141,7 @@ const AppRoutes = [
       appLayout: true,
     },
   },
-  {
-    element: <NewPer />,
-    path: "/Setup/UpdatePer/:seriues",
-  },
+ 
   {
     element: <Permissions_POST />,
     path: "/App/UpdatePermissions/:series",

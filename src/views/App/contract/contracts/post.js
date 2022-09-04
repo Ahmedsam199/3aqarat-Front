@@ -6,6 +6,7 @@ import Breadcrumbs from "@components/breadcrumbs";
 import { isObjEmpty, toBoolean, sendAttachment } from "@utils";
 
 // ** Third Party Components
+// import CustomImageInput from "@Component/Form/CustomImageInput";
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
 import CustomFormRadioInput from "@Component/Form/CustomFormRadioInput";
@@ -62,7 +63,7 @@ const POST = (props) => {
     control,
     handleSubmit,
   } = methods;
-  const Attachment = useSelector((state) => state.Attachment);
+  const Attachments = useSelector((state) => state.Attachment);
   const _dataForm = useWatch({ control });
     const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   // ** Function to handle form submit
@@ -85,14 +86,16 @@ const POST = (props) => {
         .then((res) => {
           
           toast.success();
-          console.log(Attachment);
-          if (Attachment.length > 0) {
+          console.log(Attachments);
+          if (Attachments.length > 0) {
           sendAttachment({
-            files: Attachment,
+            files: Attachments,
             refDoctype: "Data",
             refSeries: res?.Series,
           });
-          console.log(Attachment)
+          console.log(Attachments)
+          navigate("/App/Contract/Contract");
+        }else{
           navigate("/App/Contract/Contract");
         }})
         .catch((err) => {
@@ -190,7 +193,7 @@ const POST = (props) => {
                   <CustomFormSelect name="SecondParty" options={PartyOpt} />
                   <CustomFormInput
                     name="ContractStarts"
-                    textName="Currency"
+                    
                     type="Date"
                   />
                 </Col>
@@ -311,6 +314,7 @@ const POST = (props) => {
         >
           Attachment
         </Button>
+        
         <AttachmentComponent
           isModalOpen={isAttachmentModalOpen}
           handleToggleModel={setIsAttachmentModalOpen}

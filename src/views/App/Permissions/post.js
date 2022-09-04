@@ -9,7 +9,7 @@ import { toasty } from '@toast';
 import { Lock, Plus, Trash2 } from 'react-feather';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import {
   Button, Col, Input, Row, Spinner, Table
 } from 'reactstrap';
@@ -39,7 +39,7 @@ const initialState = {
 };
 const POST = (props) => {
   const dispatchRedux = useDispatch()
-  const { Roles, Doctypes, Permission } = useSelector(state => state)
+  const { Roles,  Doctype, Permission } = useSelector(state => state)
   const theadRef = useRef(null)
   const [{ RoleSeries, originRole, loading, data, activeRoles }, dispatch] =
     useReducer(reducer, initialState);
@@ -110,7 +110,7 @@ const POST = (props) => {
             textName="DocTypeName"
             valueName="Series"
             onChange={(e) => setDocType(e, index)}
-            options={Doctypes?.filter(x => data?.findIndex(y => y.DoctypeId === x.Series) === -1 || x.Series === row.DoctypeId)}
+            options={Doctype?.filter(x => data?.findIndex(y => y.DoctypeId === x.Series) === -1 || x.Series === row.DoctypeId)}
             value={row.DoctypeId}
             className="w-100"
           />
