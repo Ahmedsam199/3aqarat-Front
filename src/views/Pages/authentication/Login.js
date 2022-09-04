@@ -7,19 +7,9 @@ import { useSkin } from "@hooks/useSkin";
 import useJwt from "@src/auth/jwt/useJwt";
 
 // ** Third Party Components
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
-import {
-  Facebook,
-  Twitter,
-  Mail,
-  GitHub,
-  UserCheck,
-  HelpCircle,
-  Coffee,
-  X,
-} from "react-feather";
 
 // ** Actions
 import { handleLogin } from "@store/actions/auth";
@@ -28,29 +18,21 @@ import { handleLogin } from "@store/actions/auth";
 import { AbilityContext } from "@src/utility/context/Can";
 
 // ** Custom Components
-import Avatar from "@components/avatar";
 import InputPasswordToggle from "@components/input-password-toggle";
 
 // ** Utils
 import { getHomeRouteForLoggedInUser } from "@utils";
 
 // ** Reactstrap Imports
+import themeConfig from "@configs/themeConfig";
 import {
-  Row,
-  Col,
+  Button, CardTitle, Col,
   Form,
   Input,
-  Label,
-  Alert,
-  Button,
-  CardText,
-  CardTitle,
-  UncontrolledTooltip,
+  Label, Row
 } from "reactstrap";
-import themeConfig from "@configs/themeConfig";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
-import { useState } from "preact/hooks";
 // Login Toast Container
 const ToastContent = ({ t, name, role }) => {
   return (
@@ -94,8 +76,12 @@ const Login = () => {
         .then((res) => {
           const data = {
             ...res.data,
-            
+            ability: [{
+              action: "manage",
+              subject: "all",
+            }],
             accessToken: res.data.accessToken,
+            role: "admin"
           };
           dispatch(handleLogin(data));
           ability.update([
@@ -113,8 +99,9 @@ const Login = () => {
             />
           ));
         })
-        .catch((err) => {console.log(err)
-        // toast.error(err.response.data.message);
+        .catch((err) => {
+          console.log(err)
+          // toast.error(err.response.data.message);
         });
     } else {
       for (const key in data) {

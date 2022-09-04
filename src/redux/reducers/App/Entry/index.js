@@ -7,7 +7,9 @@ import Territory from "./Property/Terrority";
 import Branches from "./Setup/Branch";
 import ContractType from "./Setup/ContractType";
 import Permission from "./Setup/Permission";
-import  Contract_Template  from './Setup/Contract_Template';
+import Contract_Template from './Setup/Contract_Template';
+import PrintKeys from './Setup/PrintKeys';
+import PrintCustomization from './Setup/PrintCustomization';
 import Purpose from "./Setup/Purpose";
 import Setup_User from './Setup/User';
 import Roles from "./Setup/UserRole";
@@ -29,4 +31,6 @@ export default {
   Setup_User,
   Roles,
   DocType,
+  PrintKeys,
+  PrintCustomization,
 };

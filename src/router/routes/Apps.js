@@ -5,25 +5,27 @@ import { lazy } from 'react'
 
 const Permissions = lazy(() => import('../../views/App/Permissions'))
 const Permissions_POST = lazy(() => import('../../views/App/Permissions/post'))
-const Contract_contract=lazy(()=>import('../../views/App/contract/contracts'))
-const Contract_Payment=lazy(()=>import('../../views/App/contract/payment'))
-const Contract_New=lazy(()=>import('../../views/App/contract/contracts/post'))
-const Contract_Payment_New=lazy(()=>import('../../views/App/contract/payment/post'))
-const Properity_Owner=lazy(()=>import('../../views/App/Property/party'))
-const Properity_Attribute=lazy(()=>import('../../views/App/Property/Property_Attribute'))
-const Properity_Property=lazy(()=>import('../../views/App/Property/Property'))
-const Properity_Property_New=lazy(()=>import('../../views/App/Property/Property/post'))
-const Properity_Terrority=lazy(()=>import('../../views/App/Property/Terrority'))
-const Setup_Branches=lazy(()=>import('../../views/App/Setup/Branches'))
-const NewPer=lazy(()=>import('../../views/App/Setup/Permissions/post'))
-const Setup_Template=lazy(()=>import('../../views/App/Setup/contractTemplate'))
-const Setup_ContractType=lazy(()=>import('../../views/App/Setup/ContractType'))
-const Setup_Permission=lazy(()=>import('../../views/App/Setup/Permissions'))
-const Setup_Purpose=lazy(()=>import('../../views/App/Setup/Purpose'))
-const Setup_User_Role=lazy(()=>import('../../views/App/Setup/UserRole'))
-const Setup_User=lazy(()=>import('../../views/App/Setup/User'))
-const Editor=lazy(()=>import('../../views/App/Setup/contractTemplate/post'))
-const Dashboad=lazy(()=>import('../../views/App/Dashboard/index'))
+const Contract_contract = lazy(() => import('../../views/App/contract/contracts'))
+const Contract_Payment = lazy(() => import('../../views/App/contract/payment'))
+const Contract_New = lazy(() => import('../../views/App/contract/contracts/post'))
+const Contract_Payment_New = lazy(() => import('../../views/App/contract/payment/post'))
+const Properity_Owner = lazy(() => import('../../views/App/Property/party'))
+const Properity_Attribute = lazy(() => import('../../views/App/Property/Property_Attribute'))
+const Properity_Property = lazy(() => import('../../views/App/Property/Property'))
+const Properity_Property_New = lazy(() => import('../../views/App/Property/Property/post'))
+const Properity_Terrority = lazy(() => import('../../views/App/Property/Terrority'))
+const Setup_Branches = lazy(() => import('../../views/App/Setup/Branches'))
+const NewPer = lazy(() => import('../../views/App/Setup/Permissions/post'))
+const Setup_Template = lazy(() => import('../../views/App/Setup/contractTemplate'))
+const Setup_ContractType = lazy(() => import('../../views/App/Setup/ContractType'))
+const Setup_Permission = lazy(() => import('../../views/App/Setup/Permissions'))
+const Setup_Purpose = lazy(() => import('../../views/App/Setup/Purpose'))
+const Setup_User_Role = lazy(() => import('../../views/App/Setup/UserRole'))
+const Setup_User = lazy(() => import('../../views/App/Setup/User'))
+const Editor = lazy(() => import('../../views/App/Setup/contractTemplate/post'))
+const Dashboad = lazy(() => import('../../views/App/Dashboard/index'))
+const PrintCustomization = lazy(() => import('../../views/App/Setup/PrintCustomization/index'))
+const PrintCustomizationPOST = lazy(() => import('../../views/App/Setup/PrintCustomization/post'))
 const AppRoutes = [
   {
     element: <Dashboad />,
@@ -143,7 +145,7 @@ const AppRoutes = [
   },
   {
     element: <NewPer />,
-    path: "/Setup/UpdatePer/:seriues",
+    path: "/Setup/UpdatePer/:series",
   },
   {
     element: <Permissions_POST />,
@@ -151,6 +153,18 @@ const AppRoutes = [
     meta: {
       appLayout: true,
     },
+  },
+  {
+    element: <PrintCustomization />,
+    path: "/Setup/PrintCustomization/",
+  },
+  {
+    element: <PrintCustomizationPOST />,
+    path: "/Setup/NewPrintCustomization/:name/:doctype/:isRtl/:isLandscape",
+  },
+  {
+    element: <PrintCustomizationPOST />,
+    path: "/Setup/UpdatePrintCustomization/:series/:name/:doctype/:isRtl/:isReceipt/:isDefault/:isLandscape",
   },
 ];
 

@@ -49,6 +49,9 @@
   "DocType": {
     "root": "http://192.168.1.22:8080/DocTypes"
   },
+  "PrintKeys": {
+    "root": "http://192.168.1.22:8080/PrintKeys"
+  },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {

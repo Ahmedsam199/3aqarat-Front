@@ -18,7 +18,7 @@
     "@popperjs/core": "^2.11.3",
     "@react-leaflet/core": "^2.0.0",
     "@reduxjs/toolkit": "^1.2.5",
-    "@tinymce/tinymce-react": "^4.1.0",
+    "@tinymce/tinymce-react": "^4.2.0",
     "animate.css": "4.1.1",
     "apexcharts": "^3.35.2",
     "apexcharts-clevision": "^3.28.5",
