@@ -20,9 +20,11 @@ export const statusSocket = (status) => {
 const SocketProvider = () => {
   const {
     tempData: { network },
-    auth: { userData },
+    auth:  {userData} ,
     // AccountInfo: { Series: AccountSeries },
   } = useSelector((state) => state);
+  
+  
   // * check status of network
   useEffect(() => {
     //! check first time if it's not  login
@@ -38,13 +40,13 @@ const SocketProvider = () => {
   const ref = useRef(null);
   const join = () => {
     clearTimeout(ref.current);
-    // ref.current = setTimeout(() => {
-    //   Emit.join(AccountSeries);
-    // }, 500);
+    ref.current = setTimeout(() => {
+      Emit.join(userData.userSeries);
+    }, 500);
   };
-  // useEffect(() => {
-  //   if (!!socket.connected && !!AccountSeries) join();
-  // }, [socket.connected, AccountSeries]);
+  useEffect(() => {
+    if (!!socket.connected && !!userData.userSeries) join();
+  }, [socket.connected, userData.userSeries]);
   useEffect(() => {
     Listener.Add(store.dispatch);
     Listener.Update(store.dispatch);

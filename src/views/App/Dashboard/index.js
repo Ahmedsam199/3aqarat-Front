@@ -1,125 +1,179 @@
-import { UOM as createColumns } from "@columns";
-import Breadcrumbs from "@components/breadcrumbs";
-import { AbilityContext } from "@src/utility/context/Can";
-import { deleteItem } from "@store/actions/data";
-import { toasty } from "@toast";
-import CustomTable from "@Component/CustomTable";
-import React, { useContext, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { Map, Marker } from "pigeon-maps";
-import {DollarSign, Home, TrendingUp, User} from 'react-feather'
+// ** React Imports
+import { useContext } from "react";
 
+// ** Icons Imports
+import { List } from "react-feather";
 
-import {
-  Button,
-  Card,
-  CardBody,
-  Col,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-} from "reactstrap";
+// ** Custom Components
+import Avatar from "@components/avatar";
+import Timeline from "@components/timeline";
+import AvatarGroup from "@components/avatar-group";
 
-import { Link } from "react-router-dom";
-const Index = () => {
-  const { t } = useTranslation();
-  const { UOM } = useSelector((state) => state);
-  const ability = useContext(AbilityContext);
-  const dispatch = useDispatch();
-  const [currentRow, setCurrentRow] = useState(undefined);
-  const toggleFunc = useRef(null);
-  const [filters, setFilters] = useState({
-    Series: {
-      value: "",
-      op: "like",
+// ** Utils
+import { kFormatter } from "@utils";
+
+// ** Context
+import { ThemeColors } from "@src/utility/context/ThemeColors";
+
+// ** Reactstrap Imports
+import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+
+// ** Demo Components
+import InvoiceList from "@src/views/apps/invoice/list";
+import Sales from "@src/views/ui-elements/cards/analytics/Sales";
+import AvgSessions from "@src/views/ui-elements/cards/analytics/AvgSessions";
+import CardAppDesign from "@src/views/ui-elements/cards/advance/CardAppDesign";
+import SupportTracker from "@src/views/ui-elements/cards/analytics/SupportTracker";
+import OrdersReceived from "@src/views/ui-elements/cards/statistics/OrdersReceived";
+import SubscribersGained from "@src/views/ui-elements/cards/statistics/SubscribersGained";
+import CardCongratulations from "@src/views/ui-elements/cards/advance/CardCongratulations";
+
+// ** Images
+import jsonImg from "@src/assets/images/icons/json.png";
+import ceo from "@src/assets/images/portrait/small/avatar-s-9.jpg";
+
+// ** Styles
+import "@styles/react/libs/charts/apex-charts.scss";
+
+const AnalyticsDashboard = () => {
+  // ** Context
+  const { colors } = useContext(ThemeColors);
+
+  // ** Vars
+  const avatarGroupArr = [
+    {
+      imgWidth: 33,
+      imgHeight: 33,
+      title: "Billy Hopkins",
+      placement: "bottom",
+      img: require("@src/assets/images/portrait/small/avatar-s-9.jpg").default,
     },
-    UOM: {
-      value: "",
-      op: "like",
+    {
+      imgWidth: 33,
+      imgHeight: 33,
+      title: "Amy Carson",
+      placement: "bottom",
+      img: require("@src/assets/images/portrait/small/avatar-s-6.jpg").default,
     },
-  });
-  const ref = useRef();
+    {
+      imgWidth: 33,
+      imgHeight: 33,
+      title: "Brandon Miles",
+      placement: "bottom",
+      img: require("@src/assets/images/portrait/small/avatar-s-8.jpg").default,
+    },
+    {
+      imgWidth: 33,
+      imgHeight: 33,
+      title: "Daisy Weber",
+      placement: "bottom",
+      img: require("@src/assets/images/portrait/small/avatar-s-7.jpg").default,
+    },
+    {
+      imgWidth: 33,
+      imgHeight: 33,
+      title: "Jenny Looper",
+      placement: "bottom",
+      img: require("@src/assets/images/portrait/small/avatar-s-20.jpg").default,
+    },
+  ];
+  const data = [
+    {
+      title: "12 Invoices have been paid",
+      content: "Invoices have been paid to the company.",
+      meta: "",
+      metaClassName: "me-1",
+      customContent: (
+        <div className="d-flex align-items-center">
+          <img className="me-1" src={jsonImg} alt="data.json" height="23" />
+          <span>data.json</span>
+        </div>
+      ),
+    },
+    {
+      title: "Client Meeting",
+      content: "Project meeting with john @10:15am.",
+      meta: "",
+      metaClassName: "me-1",
+      color: "warning",
+      customContent: (
+        <div className="d-flex align-items-center">
+          <Avatar img={ceo} />
+          <div className="ms-50">
+            <h6 className="mb-0">John Doe (Admin)</h6>
+            <span>CEO of Infibeam</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "Create a new project for client",
+      content: "Add files to new design folder",
+      color: "info",
+      meta: "",
+      metaClassName: "me-1",
+      customContent: <AvatarGroup data={avatarGroupArr} />,
+    },
+    {
+      title: "Create a new project for client",
+      content: "Add files to new design folder",
+      color: "danger",
+      meta: "",
+      metaClassName: "me-1",
+    },
+  ];
 
-  const handleFiltersChange = (key, value) => {
-    let _filter = value;
-    setFilters((prev) => {
-      return { ...prev, [key]: { value: _filter, op: prev[key].op } };
-    });
-  };
-
-  const onDelete = (Series) => {
-    dispatch(deleteItem("UOM", Series))
-      .then((res) => {
-        ref.current?.refresh();
-        toasty({ type: "success", msg: "Delete Successfully!" });
-      })
-      .catch((err) => {
-        console.log("hacker_it_error", err);
-      });
-  };
-
-  const Columns = useMemo(
-    () => createColumns({ onDelete, onEdit: (row) => setCurrentRow(row) }),
-    []
-  );
   return (
-    <>
-      <Card>
-        <CardBody>
-          {" "}
-          <Row>
-            <Col>
-              <TrendingUp />
-              Rented<br></br>122
-            </Col>
-
-            <Col>
-              <DollarSign />
-              Sold<br></br>122
-            </Col>
-            <Col>
-              <User />
-              Customers<br></br>122
-            </Col>
-            <Col>
-              <Home />
-              Property<br></br>122
-            </Col>
-          </Row>
-          <hr></hr>
-          <Row>
-            <Col>
-              <Card>
-                <CardBody>
-                  Total Rent<br></br>100IQD
-                </CardBody>
-              </Card>
-            </Col>
-            <Col>
-              <Card>
-                <CardBody>
-                  Total Sales<br></br>200IQD
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </CardBody>
-        <hr></hr>
-        <Map height={300} defaultCenter={[36.1901, 43.993]} defaultZoom={11}>
-          <Marker width={50} anchor={[36.1901, 43.993]} />
-        </Map>
-        <hr></hr>
-        <CustomTable
-          ref={ref}
-          offlineData={UOM}
-          columns={Columns}
-          filters={filters}
-        />
-      </Card>
-    </>
+    <div id="dashboard-analytics">
+      <Row className="match-height">
+        <Col lg="6" sm="12">
+          <CardCongratulations />
+        </Col>
+        <Col lg="3" sm="6">
+          <SubscribersGained kFormatter={kFormatter} />
+        </Col>
+        <Col lg="3" sm="6">
+          <OrdersReceived
+            kFormatter={kFormatter}
+            warning={colors.warning.main}
+          />
+        </Col>
+      </Row>
+      <Row className="match-height">
+        <Col lg="6" xs="12">
+          <AvgSessions primary={colors.primary.main} />
+        </Col>
+        <Col lg="6" xs="12">
+          <SupportTracker
+            primary={colors.primary.main}
+            danger={colors.danger.main}
+          />
+        </Col>
+      </Row>
+      <Row className="match-height">
+        <Col lg="4" xs="12">
+          <Card className="card-user-timeline">
+            <CardHeader>
+              <div className="d-flex align-items-center">
+                <List className="user-timeline-title-icon" />
+                <CardTitle tag="h4">User Timeline</CardTitle>
+              </div>
+            </CardHeader>
+            <CardBody>
+              <Timeline className="ms-50 mb-0" data={data} />
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg="4" md="6" xs="12">
+          <Sales primary={colors.primary.main} info={colors.info.main} />
+        </Col>
+        <Col lg="4" md="6" xs="12">
+          <CardAppDesign />
+        </Col>
+      </Row>
+      
+    </div>
   );
 };
 
-export default Index;
+export default AnalyticsDashboard;

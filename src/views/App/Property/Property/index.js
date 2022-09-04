@@ -28,7 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Index = () => {
   const { t } = useTranslation();
   const {
-     Property_Property,
+    Property,
     tempData: { network },
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
@@ -56,12 +56,13 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem("Property_Property", Series))
+    dispatch(deleteItem("Property", Series))
       .then((res) => {
-        toast.success('Deleted')
+        toast.success("Item " + Series + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
   const Columns = createColumns({
@@ -72,9 +73,7 @@ const Index = () => {
   return (
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         {ability.can("create", "DT-6") && (
           <div>
             <Link to="/Properity/Property/New">
@@ -83,7 +82,7 @@ const Index = () => {
           </div>
         )}
       </div>
-<br></br>
+      <br></br>
       <Card>
         <CardBody>
           <Row>
@@ -103,7 +102,7 @@ const Index = () => {
 
         <CustomTable
           ref={ref}
-          offlineData={Property_Property}
+          offlineData={Property}
           filters={filters}
           columns={Columns}
         />

@@ -1,14 +1,17 @@
 import Core from "../../core";
 export default Core.Object({
-  PayParty: Core.String(),
-  ReciveParty: Core.String(),
+  PayParty: Core.String(false),
+  ReceiveParty: Core.String(false),
+  Amount: Core.Number({more:-1}),
+  Currency: Core.String(),
   PostingDate: Core.String(),
-  Reference_Contract: Core.String(),
-  Property: Core.String(),
-  Pourpose: Core.String(),
-  FromDate: Core.Date(),
-  PaidAmount: Core.String(),
-  ToDate: Core.Date(),
+  Reference: Core.String(),
+  
+  Purpose: Core.String(),
+  
+  
+  
+  
   For: Core.String(),
-  Remark:Core.String(),
+  Remarks: Core.String(),
 });

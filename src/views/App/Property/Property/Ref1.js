@@ -2,6 +2,7 @@
 
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
+import CustomFormInput from "@Component/Form/CustomFormInput";
 import { sleep, toBoolean } from "@utils";
 import { useRef } from "react";
 import { Plus, Trash2 } from "react-feather";
@@ -21,11 +22,11 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Reference",
+    name: "Attribute",
   });
   return (
     <>
-      <h5 className="mb-1 text-center">{t("Reference")}</h5>
+      <h5 className="mb-1 text-center">{t("Attribute")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>
@@ -39,44 +40,32 @@ const RefsList = ({ loading }) => {
               return (
                 <div key={x.id}>
                   <tr>
-                    <th style={{ width: "5%" }} scope="row">
-                      {index + 1}
-                    </th>
-                    <td style={{ width: "30%" }}>
-                      <CustomFormSelect
-                        menuPosition={"fixed"}
+                    <th scope="row">{index + 1}</th>
+                    <td>
+                      <CustomFormInput
+                        menuPosition="fixed"
+                        menuShouldBlockScroll
+                        hiddenTitle
+                        autoFocus={index === fields.length - 1}
+                        name={`Attribute.${index}.Attribute`}
+                      />
+                    </td>
+                    <td>
+                      <CustomFormInput
+                        hiddenTitle
+                        name={`Attribute.${index}.AttributeValue`}
+                        menuPosition="fixed"
                         menuShouldBlockScroll
                         autoFocus={index === fields.length - 1}
-                        hiddenTitle
-                        name={`Reference.${index}.currencySeries`}
-                        options={[]}
-                        valueName="Series"
-                        textName="Currency"
                       />
                     </td>
-                    <td style={{ width: "25%" }}>
-                      <CustomFormNumberInput
-                        name={`Reference.${index}.amount`}
-                        hiddenTitle
-                      />
-                    </td>
-                    <td style={{ width: "25%" }}>
-                      <CustomFormNumberInput
-                        name={`Reference.${index}.rate`}
-                        IsDisabled={true}
-                        hiddenTitle
-                      />
-                    </td>
-                    <td style={{ width: "10%" }}>
+
+                    <td>
                       <Button.Ripple
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([
-                            refreshPaidAmount(null, index),
-                            deleteOptions(index),
-                            remove(index),
-                          ]);
+                          await Promise.all([remove(index)]);
                         }}
                       >
                         <Trash2 size="15" />
@@ -86,7 +75,7 @@ const RefsList = ({ loading }) => {
                   <input
                     className="d-none"
                     defaultValue={x.id ?? ""}
-                    {...register(`Items.${index}.id`)}
+                    {...register(`Attribute.${index}.id`)}
                   />
                 </div>
               );
@@ -94,7 +83,34 @@ const RefsList = ({ loading }) => {
           </tbody>
         </Table>
       </div>
-      <Row></Row>
+      <Row>
+        <Col>
+          <small className="my-1 text-danger d-block">
+            <ul>
+              {Array.isArray(errors[`priceListCountries`]) &&
+                errors[`priceListCountries`].map((x, i) =>
+                  Object.keys(x)?.map((e) => <li> </li>)
+                )}
+            </ul>
+          </small>
+          {toBoolean(getValues("_write")) && (
+            <Button
+              className="btn-icon"
+              color="success"
+              onClick={() => {
+                append({});
+                // wait until add the row then scroll to down
+                // sleep(100).then(
+                //   () => (ref.current.scrollTop = ref.current.scrollHeight)
+                // );
+              }}
+            >
+              <Plus size={14} />
+            </Button>
+          )}
+        </Col>
+      </Row>
+      
     </>
   );
 };

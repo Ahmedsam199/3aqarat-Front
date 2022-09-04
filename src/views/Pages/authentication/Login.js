@@ -51,7 +51,7 @@ import themeConfig from "@configs/themeConfig";
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
 import { useState } from "preact/hooks";
-
+// Login Toast Container
 const ToastContent = ({ t, name, role }) => {
   return (
     <div>
@@ -94,7 +94,8 @@ const Login = () => {
         .then((res) => {
           const data = {
             ...res.data,
-            accessToken: res.data ,
+            
+            accessToken: res.data.accessToken,
           };
           dispatch(handleLogin(data));
           ability.update([
@@ -112,7 +113,9 @@ const Login = () => {
             />
           ));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {console.log(err)
+        // toast.error(err.response.data.message);
+        });
     } else {
       for (const key in data) {
         if (data[key].length === 0) {
@@ -208,7 +211,7 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to AlJazary RealState 👋
+              Welcome to Al-Jazary RealState 👋
             </CardTitle>
             <Form
               className="auth-login-form mt-2"

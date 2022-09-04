@@ -57,16 +57,17 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     setLoading(true);
     dispatch(
       values.Series
-        ? updateItem("Property_Attribute", values)
-        : insertItem("Property_Attribute", values)
+        ? updateItem("PropertyAttr", values)
+        : insertItem("PropertyAttr", values)
     )
       .then((res) => {
-        toast.success('')
+        toast.success("");
         clear();
         toggle();
       })
       .catch((err) => {
         console.log("hacker_it_err", err);
+        toast.error(err.response.data.message);
       });
     setLoading(false);
   };

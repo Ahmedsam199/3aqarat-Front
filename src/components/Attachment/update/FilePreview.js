@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import { shell } from 'electron';
+// import { shell } from 'electron';
 import Routes from '@Routes';
 
 const FilePreview = ({ previewFile, setIsPreviewFile }) => {
   let fileType = previewFile?.FileType;
   let fileOriginaltype = fileType?.split('/')[0];
 
-  if (fileType == 'application/pdf') {
-    shell.openPath(`${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`);
-    setIsPreviewFile(false);
-    return <p></p>;
-  }
+  // if (fileType == 'application/pdf') {
+  //   shell.openPath(`${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`);
+  //   setIsPreviewFile(false);
+  //   return <p></p>;
+  // }
 
-  if (fileOriginaltype == 'application') {
-    shell.openPath(
-      `https://docs.google.com/viewer?url=${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`
-    );
-    setIsPreviewFile(false);
-    return <p></p>;
-  }
+  // if (fileOriginaltype == 'application') {
+  //   shell.openPath(
+  //     `https://docs.google.com/viewer?url=${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`
+  //   );
+  //   setIsPreviewFile(false);
+  //   return <p></p>;
+  // }
 
   if (fileOriginaltype == 'image')
     return (

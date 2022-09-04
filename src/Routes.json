@@ -4,48 +4,55 @@
     "signUp": "http://193.47.189.15:3004/signup",
     "logout": "http://193.47.189.15:3004/Logout"
   },
-  "Contract_Contract": {
-    "root": "http://192.168.1.12:8080/Contracts"
+  "Contracts": {
+    "root": "http://192.168.1.22:8080/Contracts"
   },
-  "Contract_Payment": {
-    "root": "http://192.168.1.12:8080/Payments"
+  "Payments": {
+    "root": "http://192.168.1.22:8080/Payments"
   },
-  "Property_Party": {
-    "root": "http://192.168.1.12:8080/Party"
+  "Party": {
+    "root": "http://192.168.1.22:8080/Party"
   },
-  "Property_Property": {
-    "root": "http://192.168.1.12:8080/Property"
+  "Property": {
+    "root": "http://192.168.1.22:8080/Property"
   },
-  "Property_Attribute": {
-    "root": "http://192.168.1.12:8080/PropertyAttr"
+  "PropertyAttr": {
+    "root": "http://192.168.1.22:8080/PropertyAttr"
   },
-  "Property_Terrority": {
-    "root": "http://192.168.1.12:8080/Territory"
+  "Territory": {
+    "root": "http://192.168.1.22:8080/Territory"
   },
-  "Setup_Branch": {
-    "root": "http://192.168.1.12:8080/Branches"
+  "Branches": {
+    "root": "http://192.168.1.22:8080/Branches"
   },
-  "Contract_Template":{
-    "root":"http://192.168.1.12:8080/ContractTemplates"
+  "Contract_Template": {
+    "root": "http://192.168.1.22:8080/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://192.168.1.12:8080/ContractType"
+    "root": "http://192.168.1.22:8080/ContractType"
   },
-  "Setup_Permission": {
-    "root": "http://192.168.1.12:8080/Permission"
+  "Permission": {
+    "root": "http://192.168.1.22:8080/Permission"
   },
-  "Setup_Purpose": {
-    "root": "http://192.168.1.12:8080/Purpose"
+  "Purpose": {
+    "root": "http://192.168.1.22:8080/Purpose"
   },
   "Setup_User": {
-    "root": "http://192.168.1.12:8080/Users"
+    "root": "http://192.168.1.22:8080/Users"
   },
-  "Setup_UserRole": {
-    "root": "http://192.168.1.12:8080/Roles"
+  "Roles": {
+    "root": "http://192.168.1.22:8080/Roles"
   },
+  "Currency": {
+    "root": "http://192.168.1.22:8080/Currency/"
+  },
+  "DocType": {
+    "root": "http://192.168.1.22:8080/DocTypes"
+  },
+
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://193.47.189.15:3004",
-    "check": "http://193.47.189.15:8000"
+    "data": "http://192.168.1.22:8080",
+    "check": "http://192.168.1.22:8080"
   }
 }

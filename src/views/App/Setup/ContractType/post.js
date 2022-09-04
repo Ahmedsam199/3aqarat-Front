@@ -68,6 +68,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
       })
       .catch((err) => {
         console.log("hacker_it_err", err);
+        toast.error(err.response.data.message);
       });
     setLoading(false);
   };

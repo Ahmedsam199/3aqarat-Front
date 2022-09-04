@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
-import { isObjEmpty, toBoolean } from "@utils";
-import {Currency} from '@FixedOptions'
+import { isObjEmpty, toBoolean, sendAttachment } from "@utils";
+
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
+import CustomFormRadioInput from "@Component/Form/CustomFormRadioInput";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { PartyTypeOptions } from "@FixedOptions";
@@ -23,15 +24,27 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import ReferenceList from './ReferenceList'
-import Ref2 from './Ref2'
-import Ref3 from './Ref3'
-import { toast } from "react-toastify";
+import ReferenceList from "./ReferenceList";
+import Ref2 from "./Ref2";
+import AttachmentComponent from "@Component/Attachment";
+import Ref3 from "./Ref3";
+import toast from "react-hot-toast";
+// register lottie and define custom element
+
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Contract_Contract, ContractType, Property_Property, Property_Party } =
-    useSelector((state) => state);
+  const {
+    Contracts,
+    ContractType,
+    Property,
+    Party,
+    Currency,
+    
+    tempData: { network },
+    Offline,
+  } = useSelector((state) => state);
+  
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -49,27 +62,42 @@ const POST = (props) => {
     control,
     handleSubmit,
   } = methods;
+  const Attachment = useSelector((state) => state.Attachment);
   const _dataForm = useWatch({ control });
+    const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   // ** Function to handle form submit
-useEffect(()=>{
-  console.log('testing',errors);
-},[errors])
+  useEffect(() => {
+    console.log("testing", errors);
+  }, [errors]);
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
       setLoading(true);
-      
+      const idenfier=        network
+          ? values.Series
+          : values.ID
+
       dispatch(
-        values.Series
-          ? updateItem("Contract_Contract", values)
-          : insertItem("Contract_Contract", values)
+        idenfier
+          ? updateItem("Contracts", values)
+          : insertItem("Contracts", values)
       )
         .then((res) => {
-          toast.success('')
-          navigate("");
-        })
+          
+          toast.success();
+          console.log(Attachment);
+          if (Attachment.length > 0) {
+          sendAttachment({
+            files: Attachment,
+            refDoctype: "Data",
+            refSeries: res?.Series,
+          });
+          console.log(Attachment)
+          navigate("/App/Contract/Contract");
+        }})
         .catch((err) => {
           console.log("hacker_it_err", err);
+          toast.error(err.response.data.message)
         })
         .finally(() => {
           setLoading(false);
@@ -83,40 +111,53 @@ useEffect(()=>{
 
   useEffect(async () => {
     if (params.series) {
-      if (!Contract_Contract.length) return;
-      // const _ = Party.find((x) => x.Series === params.series);
-      const { data } = await axios.get(
-        `${Routes.Contract_Contract.root}/${params.series}`
-      );
-
-      console.log("joseph data ", data);
-
-      reset({
-        ...data,
-        // IsDefault: `${_.IsDefault}`,
-        // Disabled: `${_.Disabled}`,
-        _loading: false,
-        _write,
-      });
+      if (!Contracts.length) return;
+      if (network) {
+        const { data } = network
+          ? await axios.get(`${Routes.Contracts.root}/${params.series}`)
+          : _;
+        reset({
+          ...data,
+          _loading: false,
+          _write,
+        });
+      } else {
+        const _ = Offline.Contracts.find((x) => x.ID == params.series);
+        console.log(_);
+        reset({
+          ..._,
+          _loading: false,
+          _write,
+        });
+      }
     } else
       reset({
         _write: true,
         _loading: false,
       });
-  }, [Contract_Contract]);
+  }, [Contracts]);
   let TypeOpt = [];
   ContractType.forEach((x) => {
     TypeOpt.push({ value: x.Series, label: x.Series + " " + x.ContractType });
   });
   let PropOpt = [];
-  Property_Property.forEach((x) => {
+  Property.forEach((x) => {
     PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
   });
   let PartyOpt = [];
-  Property_Party.forEach((x) => {
+  Party.forEach((x) => {
     PartyOpt.push({ value: x.Series, label: x.Series + " " + x.FullName });
   });
-  
+  let CurrencyOpt = [];
+  Currency.forEach((x) => {
+    CurrencyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.CurrencyName,
+    });
+  });
+
+  const _watchChooseTheTable = useWatch({ control, name: "Property" });
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -140,7 +181,12 @@ useEffect(()=>{
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect name="FirstParty" options={PartyOpt} />
+                  <CustomFormSelect
+                    name="FirstParty"
+                    options={Property?.filter(
+                      (x) => x.Series === _watchChooseTheTable
+                    ).map((x) => ({ label: x.Party, value: x.Party }))}
+                  />
                   <CustomFormSelect name="SecondParty" options={PartyOpt} />
                   <CustomFormInput
                     name="ContractStarts"
@@ -183,10 +229,7 @@ useEffect(()=>{
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormInput
-                    name="ContractDate"                    
-                    type="Date"
-                  />
+                  <CustomFormInput name="ContractDate" type="Date" />
                   <CustomFormInput name="HandoverDate" type="Date" />
                   <CustomFormNumberInput name="PaidAmt" />
                 </Col>
@@ -197,22 +240,25 @@ useEffect(()=>{
                     textName="Currency"
                     valueName="Series"
                   />
-                  <CustomFormSelect name="PaidCurrency" options={Currency} />
+                  <CustomFormSelect name="PaidCurrency" options={CurrencyOpt} />
                 </Col>
               </Row>
               <Row>
                 <Col sm="6">
                   <CustomFormInput name="RentFor" />
                 </Col>
-              </Row>
-              <Row className="mt-1">
-                <Col>
-                  <CustomFormInputCheckbox name="IsSale" />
+                <Col sm="6">
+                  <CustomFormSelect name="RentCurrency" options={CurrencyOpt} />
                 </Col>
-                <Col>
-                  <CustomFormInputCheckbox name="IsRent" />
-                </Col>
+
+                <Row>
+                  <Col style={{ display: "flex", marginTop: "1rem" }}>
+                    <CustomFormInputCheckbox name="IsSale" />
+                    <CustomFormInputCheckbox name="IsRent" />
+                  </Col>
+                </Row>
               </Row>
+              <Row className="mt-1"></Row>
             </CardBody>
           </Card>
         </Row>
@@ -227,13 +273,16 @@ useEffect(()=>{
                     options={PartyTypeOptions}
                   />
                   <CustomFormInput name="Lawyer" />
-                  <CustomFormSelect name="AdvanceCurrency" options={Currency} />
+                  <CustomFormSelect
+                    name="AdvanceCurrency"
+                    options={CurrencyOpt}
+                  />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput type="number" name="InsuranceAmt" />
                   <CustomFormSelect
                     name="InsuranceCurrency"
-                    options={Currency}
+                    options={CurrencyOpt}
                   />
                 </Col>
               </Row>
@@ -255,6 +304,20 @@ useEffect(()=>{
             </CardBody>
           </Card>
         </Row>
+        <Button
+          className="ml-1"
+          color="primary"
+          onClick={() => setIsAttachmentModalOpen(true)}
+        >
+          Attachment
+        </Button>
+        <AttachmentComponent
+          isModalOpen={isAttachmentModalOpen}
+          handleToggleModel={setIsAttachmentModalOpen}
+          series={params?.Series}
+          refDoctype="Data"
+          
+        />
       </Form>
     </FormProvider>
   );

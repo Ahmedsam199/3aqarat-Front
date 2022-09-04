@@ -1,5 +1,5 @@
 import Routes from "@Routes";
-// import db from '@src/utility/api/cacheDB';
+import db from '@src/utility/api/cacheDB';
 import { store } from "../../storeConfig/store";
 import Types from "@Types";
 import axios from "axios";
@@ -22,22 +22,17 @@ export const insertItem = (name, values) => {
     return new Promise(async (resolve, reject) => {
       try {
         if (networkStatus()) {
-          // dispatch({
-          //   type: Types[name]?.insert,
-          //   payload: {
-          //     value: { ...values, Series: "Hello World" },
-          //   },
-          // });
-
           const _ = await axios.post(Routes[name].root, values);
           console.log('testing',_);
           if ( _.status ==201) {
-            dispatch({
-              type: Types[name]?.insert,
-              payload: {
-                value: { ...values,Series:_.data.Series},
-              },
-            });
+   //Cause IHAVE DATA FROM SOCKET I COMMENT THIS FUNCTION 
+
+            // dispatch({
+            //   type: Types[name]?.insert,
+            //   payload: {
+            //     value: { ...values,Series:_.data.Series},
+            //   },
+            // });
             resolve({ Series: _?.data?.Series ?? true });
           } else {
             reject(_);
@@ -54,7 +49,8 @@ export const insertItem = (name, values) => {
             response: undefined,
             url: Routes[name].root,
           };
-          // const res = await db.table('request').add(request);
+          const res = await db.table('request').add(request);
+          console.log("testing", Types.Offline[name]?.insert);
           dispatch({
             type: Types.Offline[name]?.insert,
             payload: {

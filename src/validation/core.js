@@ -7,9 +7,9 @@ const String = (req = true) =>
     ? yup.string().required()
     : yup
         .string()
-        .nullable(true)
-        .default('')
-        .transform((v) => v ?? '');
+        // .nullable(true)
+        // .default('')
+        // .transform((v) => v ?? '');
 
 const Boolean = () =>
   yup

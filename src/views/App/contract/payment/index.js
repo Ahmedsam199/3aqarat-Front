@@ -5,7 +5,7 @@ import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import {
   Alert,
   Button,
@@ -34,7 +34,8 @@ import { useDispatch, useSelector } from "react-redux";
 const Index = () => {
   const { t } = useTranslation();
   const {
-    Contract_Payment,
+    Payments,
+    Offline: { Payments: OfflinePayment },
     tempData: { network },
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
@@ -61,26 +62,28 @@ const Index = () => {
     });
   };
 
-  const onDelete = async (Series) => {
-    dispatch(deleteItem("Contract_Payment", Series))
+  const onDelete = async (Series,ID) => {
+    dispatch(deleteItem("Payments", network ? Series : ID))
       .then((res) => {
-        toast.success('') 
+        network
+          ? toast.success("Item " + Series + " has been Deleted")
+          : toast.success("Item " + ID + " has been Deleted")
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) => navigate(`/Payment/Update/${row?.Series}`),
+    onEdit: (row) =>
+      navigate(`/Payment/Update/${network ? row?.Series : row.ID}`),
   });
 
   return (
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         {ability.can("create", "DT-6") && (
           <div>
             <Link to="/App/Contract/Payment/new">
@@ -89,7 +92,7 @@ const Index = () => {
           </div>
         )}
       </div>
-<br></br>
+      <br></br>
       <Card>
         <CardBody>
           <Row>
@@ -109,7 +112,7 @@ const Index = () => {
 
         <CustomTable
           ref={ref}
-          offlineData={Contract_Payment}
+          offlineData={network ? Payments : OfflinePayment}
           filters={filters}
           columns={Columns}
         />

@@ -1,5 +1,6 @@
 // ** React Import
 import React, { useEffect, useReducer, useRef } from "react";
+import Routes from "@Routes";
 // ** Custom Components
 import CustomSelect from "@Component/CustomSelect";
 import { SuccessToast } from "@Component/SuccessToast";
@@ -11,13 +12,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTransition } from "react";
+import { deepCopy } from "@utils";
 import { Button, Col, Input, Row, Spinner, Table } from "reactstrap";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 const reducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case "setRoleID":
-      return { ...state, roleID: payload };
+    case "setRoleSeries":
+      return { ...state, RoleSeries: payload };
     case "setOriginRole":
       return { ...state, originRole: payload };
     case "changeLoading":
@@ -32,7 +35,7 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
-  roleID: null,
+  RoleSeries: null,
   originRole: null,
   loading: false,
   data: [],
@@ -41,32 +44,33 @@ const initialState = {
 const POST = (props) => {
   const { t } = useTranslation();
   const dispatchRedux = useDispatch();
-  const { Roles, Doctypes,  Setup_Permission } = useSelector((state) => state);
+  const { Roles, DocType, Permission } = useSelector((state) => state);
+
   const theadRef = useRef(null);
-  const [{ roleID, originRole, loading, data, activeRoles }, dispatch] =
+  const [{ RoleSeries, originRole, loading, data, activeRoles }, dispatch] =
     useReducer(reducer, initialState);
   const navigate = useNavigate();
   const params = useParams();
   // ** Function to handle form submit
   useEffect(async () => {
-    // const { data } = await apiClient.get(Routes.Permission.read)
     dispatch({
       type: "setActiveRoles",
-      payload: Setup_Permission.map((x) => x.RoleID),
+      payload: deepCopy(Permission).map((x) => x.RoleSeries),
     });
-    if (params.series) {
-      if (!Setup_Permission.length) return;
-      const _ = Setup_Permission.find((x) => x.Series === params.series);
-      // return
-      const { Permissions, JsonData, RoleID } = _;
-      dispatch({ type: "setData", payload: Permissions ?? JsonData });
-      dispatch({ type: "setRoleID", payload: RoleID });
-      dispatch({ type: "setOriginRole", payload: RoleID });
+    if (params?.series) {
+      const { data } = await axios.get(
+        `${Routes.Permission.root}/${params.series}`
+      );
+      return console.log("testing", data);
+      const { Permission, JsonData, RoleSeries } = _;
+      // dispatch({ type: "setData", payload: Permissions ?? JsonData });
+      // dispatch({ type: "setRoleSeries", payload: RoleSeries });
+      // dispatch({ type: "setOriginRole", payload: RoleSeries });
     }
-  }, [Setup_Permission]);
+  }, []);
   //#region role
   const changeRole = (e) => {
-    dispatch({ type: "setRoleID", payload: e.value });
+    dispatch({ type: "setRoleSeries", payload: e.value });
   };
   //#endregion role
   //#region Permission
@@ -77,7 +81,7 @@ const POST = (props) => {
   };
   const addPermission = (e) => {
     const _ = {
-      DoctypeId: "_",
+      DocTypeID: "_",
       Read: true,
       Write: true,
       Create: true,
@@ -89,7 +93,7 @@ const POST = (props) => {
   };
   const setDocType = ({ value, label }, index) => {
     const _ = data.map((x, i) =>
-      i === index ? { ...x, DoctypeId: value, DocTypeName: label } : x
+      i === index ? { ...x, DocTypeID: value, DocTypeName: label } : x
     );
     dispatch({ type: "setData", payload: [..._] });
   };
@@ -109,15 +113,16 @@ const POST = (props) => {
       <tr key={`row-${index}`}>
         <td style={{ width: "40%" }}>
           <CustomSelect
-            textName="DocTypeName"
-            valueName="Series"
+            textName="DocType"
+            valueName="series"
             onChange={(e) => setDocType(e, index)}
-            options={Doctypes?.filter(
-              (x) =>
-                data?.findIndex((y) => y.DoctypeId === x.Series) === -1 ||
-                x.Series === row.DoctypeId
-            )}
-            value={row.DoctypeId}
+            // options={DocType?.filter(
+            //   (x) =>
+            //     data?.findIndex((y) => y.DocTypeID === x.Series) === -1 ||
+            //     x.Series === row.DocTypeID
+            // )}
+            options={DocType}
+            value={row.DocTypeID}
             className="w-100"
           />
         </td>
@@ -202,8 +207,8 @@ const POST = (props) => {
       dispatch({ type: "changeLoading" });
       const request = {
         Series: params.series ?? "",
-        RoleID: roleID,
-        JsonData: data.filter((x) => x.DoctypeId !== "_"),
+        RoleSeries: RoleSeries,
+        JsonData: data.filter((x) => x.DocTypeID !== "_"),
       };
       if (!request.JsonData.length) {
         throw new Error("Tables empty");
@@ -274,12 +279,12 @@ const POST = (props) => {
                     activeRoles?.findIndex((y) => y === x.Series) === -1
                 )}
                 // options={Roles}
-                value={roleID}
+                value={RoleSeries}
                 className="w-25"
               />
               <Button
                 color="primary"
-                disabled={!roleID || !data.length || loading}
+                disabled={!RoleSeries || !data.length || loading}
                 onClick={onSubmit}
               >
                 {loading && (

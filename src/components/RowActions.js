@@ -16,6 +16,7 @@ const RowActions = ({ rowId, onEdit, onDelete, subject }) => {
       {
         <>
           <Button
+          
             className="mr-1 btn-icon"
             color="flat-primary"
             id={rowId + '-edit-btn'}
@@ -23,7 +24,7 @@ const RowActions = ({ rowId, onEdit, onDelete, subject }) => {
               if (onEdit) onEdit(rowId);
             }}
           >
-            <Edit size="15" />
+            <Edit size="15"  />
           </Button>
         </>
       }

@@ -9,11 +9,7 @@ export const ActivityTypes = [
   { label: "Update", value: 1 },
   { label: "Delete", value: 2 },
 ];
-export const Currency = [
-  { label: "USD", value: "USD" },
-  { label: "IQD", value: "IQD" },
-  { label: "TLE", value: "TLE" },
-];
+
 export const Doctype = [
   { Series: "DT-1", DocTypeName: "Branches" },
   { Series: "DT-2", DocTypeName: "Contract" },

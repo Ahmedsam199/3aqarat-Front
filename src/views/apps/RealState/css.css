@@ -1,0 +1,35 @@
+.form-control{
+
+}
+ .dark{
+  color: #fff !important;
+}
+.FirstRow{
+  display: flex;
+
+
+ width: 100%;
+  gap: 30px;
+}
+.all{
+  width: 100%;
+}
+.App{
+    width: 100%;
+}
+.Table{
+  
+}
+.SecondRow{
+      display: flex;
+  justify-content: space-between;
+ width: 66%;
+  gap: 30px;
+  
+}
+.footer{
+    display: none;
+}
+.FirstRow2{
+  display: inline !important;
+}

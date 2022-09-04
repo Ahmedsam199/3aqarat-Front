@@ -26,7 +26,7 @@ import POST from "./post";
 import toast from "react-hot-toast";
 const Index = () => {
   const { t } = useTranslation();
-  const { Property_Terrority: Terrority } = useSelector((state) => state);
+  const { Territory: Territory } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -51,13 +51,14 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("Terrority", Series))
+    dispatch(deleteItem("Territory", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success("Deleted")
+        toast.success("Item " + Series + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 
@@ -68,9 +69,7 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
@@ -121,7 +120,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={Terrority}
+          offlineData={Territory}
           columns={Columns}
           filters={filters}
         />

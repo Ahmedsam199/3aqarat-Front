@@ -29,7 +29,7 @@ const getLayout = {
 const TemplateTitle = '%s - Vuexy React Admin Template'
 
 // ** Default Route
-const DefaultRoute = '/App/Customer'
+const DefaultRoute = "/DashBoard";
 
 // ** Merge Routes
 const Routes = [

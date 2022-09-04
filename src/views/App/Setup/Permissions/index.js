@@ -34,7 +34,7 @@ import toast from "react-hot-toast";
 const Index = () => {
   const { t } = useTranslation();
   const {
-    Setup_Permission,
+    Permission,
     tempData: { network },
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
@@ -62,12 +62,13 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem("Setup_Permission", Series))
+    dispatch(deleteItem("Permission", Series))
       .then((res) => {
-        toast.success("Deleted");
+        toast.success("Item " + Series + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
   const Columns = createColumns({
@@ -107,7 +108,7 @@ const Index = () => {
 
         <CustomTable
           ref={ref}
-          offlineData={Setup_Permission}
+          offlineData={Permission}
           filters={filters}
           columns={Columns}
         />

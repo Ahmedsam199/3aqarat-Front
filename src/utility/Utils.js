@@ -795,3 +795,4 @@ export const getAttributFromObject = (x,arr) => {
     })
     .reduce((x, s) => ({ ...s, ...x }), {});
 };
+

@@ -1,13 +1,14 @@
 // Joseph : Look at findRate functino please
-
+import { useSelector } from "react-redux";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
+import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { sleep, toBoolean } from "@utils";
 import { useRef } from "react";
 import { Plus, Trash2 } from "react-feather";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button, Col, Row, Table } from "reactstrap";
+import { Alert, Button, Col, Row, Table } from "reactstrap";
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -19,13 +20,51 @@ const RefsList = ({ loading }) => {
     formState: { errors },
     reset,
   } = useFormContext();
+  const { Currency } = useSelector((state) => state);
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Reference",
+    name: "Furnitures",
   });
+  const refreshTotalQty = (_, ignoreIndex) => {
+    setValue(
+      "TotalQty",
+      getValues().Furnitures.reduce(
+        (sum, x, currIndex) =>
+          sum + +(x.Qty) * (currIndex !== ignoreIndex),
+        0
+      )
+    );
+  };
+  
+  const refreshTotalPrice = (_, ignoreIndex) => {
+    setValue(
+      "TotalPrice",
+      getValues().Furnitures.reduce(
+        (sum, x, currIndex) =>
+          x.Qty
+            ? sum + (x.Qty * x.Price) * (currIndex !== ignoreIndex)
+            : sum + (x.Qty || 1 * x.Price) * (currIndex !== ignoreIndex),
+        0
+      )
+    );
+   };
+  const DoubleChange = () => {
+    refreshTotalQty();
+    refreshTotalPrice();
+  };
+  let CurrencyOpt = [];
+  Currency.forEach((x) => {
+    CurrencyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.CurrencyName,
+    });
+  });
+  
+  
   return (
     <>
-      <h5 className="mb-1 text-center">{t("Reference")}</h5>
+      <h5 className="mb-1 text-center">{t("Furniture")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>
@@ -46,27 +85,50 @@ const RefsList = ({ loading }) => {
                       {index + 1}
                     </th>
                     <td style={{ width: "30%" }}>
+                      <CustomFormInput
+                        hiddenTitle
+                        name={`Furnitures.${index}.Subject`}
+                      />
+                    </td>
+                    <td style={{ width: "25%" }}>
                       <CustomFormSelect
-                        menuPosition={"fixed"}
+                        menuPosition="fixed"
                         menuShouldBlockScroll
+                        hiddenTitle
                         autoFocus={index === fields.length - 1}
-                        hiddenTitle
-                        name={`Reference.${index}.currencySeries`}
-                        options={[]}
-                        valueName="Series"
-                        textName="Currency"
+                        name={`Furnitures.${index}.Statue`}
+                        options={[
+                          { value: 0, label: "Brand New" },
+                          { value: 1, label: "Very Good" },
+                          { value: 2, label: "Good" },
+                          { value: 3, label: "Acceptable" },
+                          { value: 4, label: "Bad" },
+                          { value: 5, label: "Poor" },
+                        ]}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
-                      <CustomFormNumberInput
-                        name={`Reference.${index}.amount`}
+                      <CustomFormInput
+                        name={`Furnitures.${index}.Price`}
                         hiddenTitle
+                        extraOnChangeFun={refreshTotalPrice}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
-                      <CustomFormNumberInput
-                        name={`Reference.${index}.rate`}
-                        IsDisabled={true}
+                      <CustomFormSelect
+                        name={`Furnitures.${index}.Currency`}
+                        options={CurrencyOpt}
+                        menuPosition="fixed"
+                        menuShouldBlockScroll
+                        hiddenTitle
+                        autoFocus={index === fields.length - 1}
+                      />
+                    </td>
+                    <td style={{ width: "25%" }}>
+                      <CustomFormInput
+                        name={`Furnitures.${index}.Qty`}
+                        extraOnChangeFun={refreshTotalQty}
+                        extraOnChangeFun2={refreshTotalPrice}
                         hiddenTitle
                       />
                     </td>
@@ -75,11 +137,9 @@ const RefsList = ({ loading }) => {
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([
-                            refreshPaidAmount(null, index),
-                            deleteOptions(index),
-                            remove(index),
-                          ]);
+                          await Promise.all([remove(index)]);
+                          refreshTotalQty();
+                          refreshTotalPrice();
                         }}
                       >
                         <Trash2 size="15" />
@@ -89,7 +149,7 @@ const RefsList = ({ loading }) => {
                   <input
                     className="d-none"
                     defaultValue={x.id ?? ""}
-                    {...register(`Items.${index}.id`)}
+                    {...register(`Furnitures.${index}.id`)}
                   />
                 </div>
               );
@@ -97,7 +157,39 @@ const RefsList = ({ loading }) => {
           </tbody>
         </Table>
       </div>
-      <Row></Row>
+      <Row>
+        <Col>
+          <small className="my-1 text-danger d-block">
+            <ul>
+              {Array.isArray(errors[`priceListCountries`]) &&
+                errors[`priceListCountries`].map((x, i) =>
+                  Object.keys(x)?.map((e) => <li> </li>)
+                )}
+            </ul>
+          </small>
+          {toBoolean(getValues("_write")) && (
+            <Button
+              className="btn-icon"
+              color="success"
+              onClick={() => {
+                append({});
+                // wait until add the row then scroll to down
+                // sleep(100).then(
+                //   () => (ref.current.scrollTop = ref.current.scrollHeight)
+                // );
+              }}
+            >
+              <Plus size={14} />
+            </Button>
+          )}
+        </Col>
+      </Row>
+      <div style={{ width: "25%" }}>
+        <br></br>
+        <CustomFormNumberInput name="TotalPrice" IsDisabled={true} />
+        <br></br>
+        <CustomFormNumberInput name="TotalQty" IsDisabled={true} />
+      </div>
     </>
   );
 };

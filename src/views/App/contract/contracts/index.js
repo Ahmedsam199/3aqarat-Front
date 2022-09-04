@@ -34,7 +34,9 @@ import toast from "react-hot-toast";
 const Index = () => {
   const { t } = useTranslation();
   const {
-    Contract_Contract,
+    Contracts,
+
+    Offline: { Contracts: OfflineContract },
     tempData: { network },
   } = useSelector((state) => state);
     const ability = useContext(AbilityContext);
@@ -61,27 +63,28 @@ const Index = () => {
     });
   };
 
-  const onDelete = async (Series) => {
-    dispatch(deleteItem("Contract_Contract", Series))
+  const onDelete = async (Series,ID) => {
+    dispatch(deleteItem("Contracts", network ? Series : ID))
       .then((res) => {
-        toast.success("Deleted")
+                network
+                  ? toast.success("Item " + Series + " has been Deleted")
+                  : toast.success("Item " + ID + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) => navigate(`/UpdateContract/${row?.Series}`),
+    onEdit: (row) => navigate(`/UpdateContract/${ network? row?.Series:row.ID }`),
   });
 
 
   return (
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         {ability.can("create", "DT-6") && (
           <div>
             <Link to="/contract/New">
@@ -90,7 +93,7 @@ const Index = () => {
           </div>
         )}
       </div>
-<br></br>
+      <br></br>
       <Card>
         <CardBody>
           <Row>
@@ -110,7 +113,7 @@ const Index = () => {
 
         <CustomTable
           ref={ref}
-          offlineData={Contract_Contract}
+          offlineData={network ? Contracts : OfflineContract}
           filters={filters}
           columns={Columns}
         />

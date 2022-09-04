@@ -4,14 +4,15 @@ import { stringToCapitalize } from "@utils";
 import { Badge } from "reactstrap";
 import { create, sortSeries } from "../../core";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 export default ({ onEdit, onDelete }) => {
   const { t } = useTranslation();
   const Actions = (row) => (
     <RowActions
       subject="DT-13"
-      rowId={row?.Series}
+      rowId={(row?.Series, row?.ID)}
       onEdit={() => onEdit(row)}
-      onDelete={() => onDelete(row?.Series)}
+      onDelete={() => onDelete(row?.Series, row?.ID)}
     />
   );
   const readIsRent = (row) => (

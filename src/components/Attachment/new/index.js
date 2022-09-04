@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, Button } from 'reactstrap';
 import CustomTable from '../../CustomTable';
 import RowActionsFile from '../../RowActionsFile';
 import { v4 as uuidv4 } from 'uuid';
@@ -200,7 +200,7 @@ const index = ({ isModalOpen, handleToggleModel }) => {
         </ModalContainer>
         <h6 style={{ color: 'gray' }}>
           <UploadCloud size="20" /> Drop files here to attach or{' '}
-          <BrowseText onClick={open}>browse</BrowseText>
+          <BrowseText onClick={open}><Button>Browse</Button></BrowseText>
         </h6>
       </ModalBody>
     </Modal>

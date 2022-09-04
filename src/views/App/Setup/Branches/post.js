@@ -11,7 +11,7 @@ import { toasty } from "@toast";
 import { toBoolean } from "@utils";
 import { Setup_Branch as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -21,14 +21,16 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
-  const { Setup_Branch } = useSelector((state) => state);
+  const { Branches } = useSelector((state) => state);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
+    control,
   } = methods;
+  const _dataForm = useWatch({ control });
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const _write = useMemo(
@@ -58,31 +60,40 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     console.log("hacker_it", errors);
   }, [errors]);
   const onSubmit = async (values) => {
-    setLoading(true);
-    console.log(values);
-    dispatch(
-      values.Series
-        ? updateItem("Setup_Branch", values)
-        : insertItem("Setup_Branch", values) 
-    )
-      .then((res) => {
-        toast.success("");
-        clear();
-        toggle();
-      })
-      .catch((err) => {
-        console.log("hacker_it_err", err);
-      });
-    setLoading(false);
+    if (values.isGroup == true && values.ParentBranch == null) {
+      toast.error("Parent Branch is Required");
+    } else {
+      setLoading(true);
+      console.log(values);
+      dispatch(
+        values.Series
+          ? updateItem("Branches", values)
+          : insertItem("Branches", values)
+      )
+        .then((res) => {
+          toast.success("");
+          clear();
+          toggle();
+        })
+        .catch((err) => {
+          console.log("hacker_it_err", err);
+          toast.error(err.response.data.message);
+        });
+      setLoading(false);
+    }
   };
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  console.log(Setup_Branch);
+  
   let BranchOpt = [];
-  Setup_Branch.forEach((x) => {
-    BranchOpt.push({ value: x.Series, label: x.Series + " " + x.BranchName });
+  Branches.forEach((x) => {
+    if (x.isGroup == true) {
+      BranchOpt.push({ value: x.Series, label: x.Series + " " + x.BranchName });
+    }
   });
+  const _watchIsGroup = useWatch({ control, name: "isGroup" });
+  console.log(_watchIsGroup);
   return (
     <>
       <Sidebar
@@ -97,8 +108,9 @@ const POST = ({ onToggle, row, toggleFunc }) => {
           <Form onSubmit={handleSubmit(onSubmit)}>
             {/* s</ModalHeader> */}
             <CustomFormInput name="BranchName" />
+            
             <CustomFormInputCheckbox name="isGroup" />
-            <CustomFormSelect options={BranchOpt} name="ParentBranch" />
+            {_watchIsGroup?<CustomFormSelect options={BranchOpt} name="ParentBranch" />:""}
 
             <div className="mt-1">
               <Button

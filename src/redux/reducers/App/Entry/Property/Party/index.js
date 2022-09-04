@@ -3,10 +3,10 @@ import Types from "@Types";
 const reducer = (state = [], action) => {
   switch (action.type) {
     //? inset UOM
-    case Types.Property_Party.insert:
+    case Types.Party.insert:
       return [...state, action.payload.value];
     //? update UOM
-    case Types.Property_Party.update:
+    case Types.Party.update:
       return [
         ...state.map((x) => {
           if (x.Series === action.payload.Series) return action.payload.value;
@@ -14,13 +14,13 @@ const reducer = (state = [], action) => {
         }),
       ];
     //? delete UOM
-    case Types.Property_Party.delete:
+    case Types.Party.delete:
       return [...state.filter((x) => x.Series !== action.payload.Series)];
     // ? clear all data
     case Types.clear:
       return [];
     //? set UOM
-    case Types.Property_Party.set:
+    case Types.Party.set:
       return action.payload ?? [];
     // ? default
     default:

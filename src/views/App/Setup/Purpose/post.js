@@ -7,6 +7,7 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { toasty } from "@toast";
+import { useSelector } from "react-redux";
 import { toBoolean } from "@utils";
 import { Setup_Purpose as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -18,6 +19,8 @@ import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { Currency } =
+    useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
@@ -58,22 +61,30 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     setLoading(true);
     dispatch(
       values.Series
-        ? updateItem("Setup_Purpose", values)
-        : insertItem("Setup_Purpose", values)
+        ? updateItem("Purpose", values)
+        : insertItem("Purpose", values)
     )
       .then((res) => {
-        toast.success('')
+        toast.success("");
         clear();
         toggle();
       })
       .catch((err) => {
         console.log("hacker_it_err", err);
+        toast.error(err.response.data.message);
       });
     setLoading(false);
   };
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
+   let CurrencyOpt = [];
+   Currency.forEach((x) => {
+     CurrencyOpt.push({
+       value: x.Series,
+       label: x.Series + " " + x.CurrencyName,
+     });
+   });
   return (
     <>
       <Sidebar
@@ -90,7 +101,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             <CustomFormInput name="Purpose" />
             <CustomFormInputCheckbox name="IsPayable" />
             <CustomFormInput name="DefaultAmt" />
-            <CustomFormSelect name="DefaultCurrency" />
+            <CustomFormSelect name="DefaultCurrency" options={CurrencyOpt} />
             <div className="mt-1">
               <Button
                 color="primary"

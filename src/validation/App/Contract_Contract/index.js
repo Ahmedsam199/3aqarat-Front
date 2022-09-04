@@ -5,6 +5,7 @@ export default Core.Object({
   ContractDate: Core.String(),
   Property: Core.String(),
   ContractType: Core.String(),
+  RentCurrency:Core.String(),
   IsFurnished: Core.Boolean(),
   ContractStarts: Core.String(),
   HandoverDate: Core.String(),

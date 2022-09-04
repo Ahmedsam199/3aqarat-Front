@@ -4,9 +4,9 @@ export default ({ onEdit, onDelete }) => {
   const Actions = (row) => (
     <RowActions
       subject="DT-13"
-      rowId={row?.Series}
+      rowId={(row?.Series, row?.ID)}
       onEdit={() => onEdit(row)}
-      onDelete={() => onDelete(row?.Series)}
+      onDelete={() => onDelete(row?.Series, row?.ID)}
     />
   );
   const selectors = ["Series", "Reference", "Purpose", "Amount", "Currency","Active"];

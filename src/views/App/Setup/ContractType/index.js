@@ -27,7 +27,10 @@ import POST from "./post";
 import { Link } from "react-router-dom";
 const Index = () => {
   const { t } = useTranslation();
-  const { ContractType: ContractType } = useSelector((state) => state);
+  const {
+    ContractType: ContractType,
+    Offline: { ContractType: OfflineContractType },
+  } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -62,11 +65,12 @@ const Index = () => {
     dispatch(deleteItem("ContractType", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success("Item Removed");
+        toast.success("Item " + Series + " has been Deleted");
         console.log(toasty);
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 
@@ -77,9 +81,7 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
@@ -130,7 +132,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={ContractType}
+          offlineData={[...ContractType]}
           columns={Columns}
           filters={filters}
         />

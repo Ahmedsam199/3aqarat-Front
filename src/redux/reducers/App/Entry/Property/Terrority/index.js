@@ -3,10 +3,10 @@ import Types from "@Types";
 const reducer = (state = [], action) => {
   switch (action.type) {
     //? inset UOM
-    case Types.Property_Terrority.insert:
+    case Types.Territory.insert:
       return [...state, action.payload.value];
     //? update UOM
-    case Types.Property_Terrority.update:
+    case Types.Territory.update:
       return [
         ...state.map((x) => {
           if (x.Series === action.payload.Series) return action.payload.value;
@@ -14,13 +14,13 @@ const reducer = (state = [], action) => {
         }),
       ];
     //? delete UOM
-    case Types.Property_Terrority.delete:
+    case Types.Territory.delete:
       return [...state.filter((x) => x.Series !== action.payload.Series)];
     // ? clear all data
     case Types.clear:
       return [];
     //? set UOM
-    case Types.Property_Terrority.set:
+    case Types.Territory.set:
       return action.payload ?? [];
     // ? default
     default:

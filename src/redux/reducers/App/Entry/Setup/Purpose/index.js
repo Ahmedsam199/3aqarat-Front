@@ -3,10 +3,10 @@ import Types from "@Types";
 const reducer = (state = [], action) => {
   switch (action.type) {
     //? inset Customer
-    case Types.Setup_Purpose.insert:
+    case Types.Purpose.insert:
       return [...state, action.payload.value];
     //? update Customer
-    case Types.Setup_Purpose.update:
+    case Types.Purpose.update:
       return [
         ...state.map((x) => {
           if (x.Series === action.payload.Series) return action.payload.value;
@@ -14,13 +14,13 @@ const reducer = (state = [], action) => {
         }),
       ];
     //? delete Customer
-    case Types.Setup_Purpose.delete:
+    case Types.Purpose.delete:
       return [...state.filter((x) => x.Series !== action.payload.Series)];
     // ? clear all data
     case Types.clear:
       return [];
     //? set Customer
-    case Types.Setup_Purpose.set:
+    case Types.Purpose.set:
       return action.payload ?? [];
     // ? default
     default:

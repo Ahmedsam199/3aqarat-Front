@@ -16,51 +16,55 @@ import {
 const reducer = (state, action) => {
   const { type, payload } = action
   switch (type) {
-    case "setRoleID":
-      return { ...state, roleID: payload }
+    case "setRoleSeries":
+      return { ...state, RoleSeries: payload };
     case "setOriginRole":
-      return { ...state, originRole: payload }
+      return { ...state, originRole: payload };
     case "changeLoading":
-      return { ...state, loading: !state.loading }
+      return { ...state, loading: !state.loading };
     case "setData":
-      return { ...state, data: payload }
+      return { ...state, data: payload };
     case "setActiveRoles":
-      return { ...state, activeRoles: payload }
+      return { ...state, activeRoles: payload };
     default:
-      return state
+      return state;
   }
 }
 const initialState = {
-  roleID: null,
+  RoleSeries: null,
   originRole: null,
   loading: false,
   data: [],
-  activeRoles: []
-}
+  activeRoles: [],
+};
 const POST = (props) => {
   const dispatchRedux = useDispatch()
   const { Roles, Doctypes, Permission } = useSelector(state => state)
   const theadRef = useRef(null)
-  const [{ roleID, originRole, loading, data, activeRoles }, dispatch] = useReducer(reducer, initialState)
+  const [{ RoleSeries, originRole, loading, data, activeRoles }, dispatch] =
+    useReducer(reducer, initialState);
   const navigate = useNavigate();
   const params = useParams();
   // ** Function to handle form submit
   useEffect(async () => {
     // const { data } = await apiClient.get(Routes.Permission.read)
-    dispatch({ type: "setActiveRoles", payload: Permission.map(x => x.RoleID) })
+    dispatch({
+      type: "setActiveRoles",
+      payload: Permission.map((x) => x.RoleSeries),
+    });
     if (params.series) {
       if (!Permission.length) return
       const _ = Permission.find(x => x.Series === params.series)
       // return
-      const { Permissions, JsonData, RoleID } = _
+      const { Permission, JsonData, RoleSeries } = _;
       dispatch({ type: "setData", payload: Permissions ?? JsonData })
-      dispatch({ type: "setRoleID", payload: RoleID })
-      dispatch({ type: "setOriginRole", payload: RoleID })
+      dispatch({ type: "setRoleSeries", payload: RoleSeries });
+      dispatch({ type: "setOriginRole", payload: RoleSeries });
     }
   }, [Permission]);
   //#region role
   const changeRole = (e) => {
-    dispatch({ type: "setRoleID", payload: e.value })
+    dispatch({ type: "setRoleSeries", payload: e.value });
 
   }
   //#endregion role
@@ -150,9 +154,9 @@ const POST = (props) => {
       dispatch({ type: "changeLoading" })
       const request = {
         Series: params.series ?? "",
-        RoleID: roleID,
-        JsonData: data.filter(x => x.DoctypeId !== '_')
-      }
+        RoleSeries: RoleSeries,
+        JsonData: data.filter((x) => x.DoctypeId !== "_"),
+      };
       if (!request.JsonData.length) {
         throw new Error("Tables empty")
       }
@@ -199,30 +203,40 @@ const POST = (props) => {
         breadCrumbActiveLink="//Permissions"
       />
       <Row>
-        <Col sm='12'>
-          <div className='mt-1 permissions'>
-            <div className='d-flex justify-content-between align-items-center'>
+        <Col sm="12">
+          <div className="mt-1 permissions">
+            <div className="d-flex justify-content-between align-items-center">
               <CustomSelect
                 textName="RoleName"
                 valueName="Series"
                 onChange={(e) => changeRole(e)}
-                options={Roles?.filter(x => (x.Series === originRole || activeRoles?.findIndex(y => y === x.Series) === -1))}
+                options={Roles?.filter(
+                  (x) =>
+                    x.Series === originRole ||
+                    activeRoles?.findIndex((y) => y === x.Series) === -1
+                )}
                 // options={Roles}
-                value={roleID}
+                value={RoleSeries}
                 className="w-25"
               />
-              <Button color="primary" disabled={!roleID || !data.length || loading} onClick={onSubmit} >
-                {loading && <Spinner color="white" size="sm" className="mr-1" />}
+              <Button
+                color="primary"
+                disabled={!RoleSeries || !data.length || loading}
+                onClick={onSubmit}
+              >
+                {loading && (
+                  <Spinner color="white" size="sm" className="mr-1" />
+                )}
                 {t("Save")}
               </Button>
             </div>
-            <h6 className='py-1 mx-1 mb-0 font-medium-2' id="icon-permission">
-              <Lock size={18} className='mr-25' />
-              <span className='align-middle'>{t("Permissions")}</span>
+            <h6 className="py-1 mx-1 mb-0 font-medium-2" id="icon-permission">
+              <Lock size={18} className="mr-25" />
+              <span className="align-middle">{t("Permissions")}</span>
             </h6>
             <div className="permission-table">
-              <Table borderless striped >
-                <thead className='thead-light' ref={theadRef}>
+              <Table borderless striped>
+                <thead className="thead-light" ref={theadRef}>
                   <tr>
                     <th style={{ width: "40%" }}>{t("DocType")}</th>
                     <th style={{ width: "10%" }}>{t("Read")}</th>
@@ -234,12 +248,16 @@ const POST = (props) => {
                     <th style={{ width: "10%" }}>{t("Actions")}</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {data.map((x, index) => renderRow(x, index))}
-                </tbody>
+                <tbody>{data.map((x, index) => renderRow(x, index))}</tbody>
               </Table>
             </div>
-            <Button onClick={addPermission} color="flat-primary" style={{ margin: "0rem 0rem 7rem 0rem" }}><Plus size={18} /></Button>
+            <Button
+              onClick={addPermission}
+              color="flat-primary"
+              style={{ margin: "0rem 0rem 7rem 0rem" }}
+            >
+              <Plus size={18} />
+            </Button>
           </div>
         </Col>
       </Row>

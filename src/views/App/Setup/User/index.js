@@ -54,10 +54,11 @@ const Index = () => {
     dispatch(deleteItem("Setup_User", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success("Deleted")
+        toast.success("Item " + Series + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 

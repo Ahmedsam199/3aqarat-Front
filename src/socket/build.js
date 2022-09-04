@@ -10,7 +10,7 @@ const SocketBuild = () => {
     //     socket?.close()
     // }, [socket])
     const stopSocket = (tempSocket) => {
-        console.log("hacker_it", tempSocket)
+        console.log("hacker_it tempSocket", tempSocket);
         tempSocket?.close()
     }
     // it's faked component so return null

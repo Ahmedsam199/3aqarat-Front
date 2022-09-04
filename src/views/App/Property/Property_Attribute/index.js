@@ -25,7 +25,7 @@ import {
 import POST from "./post";
 const Index = () => {
   const { t } = useTranslation();
-  const { Property_Attribute: Attribute } = useSelector((state) => state);
+  const { PropertyAttr: Attribute } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -50,13 +50,15 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("Property_Attribute", Series))
+    dispatch(deleteItem("PropertyAttr", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success("Deleted")
+        toast.success("Item " + Series + " has been Deleted");
+        console.log(res)
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 

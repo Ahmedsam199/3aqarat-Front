@@ -1,6 +1,6 @@
 // ** React Import
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Currency } from "@FixedOptions";
+
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
@@ -15,7 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Routes from "@Routes";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
-import { toast } from "react-toastify";
+
 import { Contract_Payment as Schema } from "@validation";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
@@ -23,13 +23,22 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-
+import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Contract_Payment, Property_Property, Setup_Purpose } = useSelector(
-    (state) => state
-  );
+  const {
+    Payments,
+    Property,
+    Purpose,
+    Currency,
+    Contracts,
+    Party,
+    Offline,
+    
+    tempData: { network },
+  } = useSelector((state) => state);
+  console.log(Offline)
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -49,22 +58,27 @@ const POST = (props) => {
   } = methods;
   const _dataForm = useWatch({ control });
   // ** Function to handle form submit
-
+useEffect(()=>{
+console.log(errors);
+},[errors])
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
       setLoading(true);
+      const idenfier = network ? values.Series : values.ID;
+
       dispatch(
-        values.Series
-          ? updateItem("Contract_Payment", values)
-          : insertItem("Contract_Payment", values)
+        idenfier
+          ? updateItem("Payments", values)
+          : insertItem("Payments", values)
       )
         .then((res) => {
-          toasty({ type: "success" });
+          toast.success();
           navigate("/App/Contract/Payment");
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
+          toast.error(err.response.data.message);
         })
         .finally(() => {
           setLoading(false);
@@ -77,35 +91,63 @@ const POST = (props) => {
   );
   useEffect(async () => {
     if (params.series) {
-      if (!Contract_Payment.length) return;
-      // const _ = Party.find((x) => x.Series === params.series);
-      const { data } = await axios.get(
-        `${Routes.Contract_Payment.root}/${params.series}`
-      );
-
-      
-      reset({
-        ...data,
-        // IsDefault: `${_.IsDefault}`,
-        // Disabled: `${_.Disabled}`,
-        
-        _loading: false,
-        _write,
-      });
+      if (!Payments.length) return;
+      if (network) {
+        const { data } = network
+          ? await axios.get(`${Routes.Payments.root}/${params.series}`)
+          : _;
+        reset({
+          ...data,
+          _loading: false,
+          _write,
+        });
+      } else {
+        const _ = Offline.Payments.find((x) => x.ID == params.series);
+        console.log(_);
+        reset({
+          ..._,
+          _loading: false,
+          _write,
+        });
+      }
     } else
       reset({
         _write: true,
         _loading: false,
       });
-  }, [Contract_Payment]);
+  }, [Payments]);
   let PropOpt = [];
-  Property_Property.forEach((x) => {
+  Property.forEach((x) => {
     PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
   });
   let PurpOpt = [];
-  Setup_Purpose.forEach((x) => {
+  Purpose.forEach((x) => {
     PurpOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
   });
+  let CurrencyOpt = [];
+  Currency.forEach((x) => {
+    CurrencyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.CurrencyName,
+    });
+  });
+  let ContractOpt = [];
+  Contracts.forEach((x) => {
+    ContractOpt.push({
+      value: x.Series,
+      label: x.Series,
+    });
+  });
+  let PartyOpt = [];
+
+  const _watchChooseTheTable = useWatch({ control, name: "Reference" });
+const _ = Contracts?.filter((x) => x.Series === _watchChooseTheTable).map((x) =>
+  PartyOpt.push(
+    { label: x.FirstParty, value: x.FirstParty },
+    { label: x.SecondParty, value: x.SecondParty }
+  )
+);
+                    console.log(_)
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -122,20 +164,13 @@ const POST = (props) => {
             </Button>
           </Col>
         </Row>
-
         <Row>
           <Card>
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect
-                    name="PayParty"
-                    options={PartyTypeOptions}
-                  />
-                  <CustomFormSelect
-                    name="ReciveParty"
-                    options={PartyTypeOptions}
-                  />
+                  <CustomFormSelect name="PayParty" options={PartyOpt} />
+                  <CustomFormSelect name="ReceiveParty" options={PartyOpt} />
                   <CustomFormInput
                     name="PostingDate"
                     textName="Currency"
@@ -144,12 +179,8 @@ const POST = (props) => {
                   />
                 </Col>
                 <Col sm="6">
-                  <CustomFormSelect
-                    name="Reference"
-                    textName="Currency"
-                    valueName="Series"
-                  />
-                  <CustomFormSelect name="Property" options={PropOpt} />
+                  <CustomFormSelect name="Reference" options={ContractOpt} />
+                  <CustomFormSelect name="Currency" options={CurrencyOpt} />
                 </Col>
               </Row>
             </CardBody>
@@ -162,21 +193,10 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect name="Pourpose" options={PurpOpt} />
-                  <CustomFormInput name="FromDate" type="Date" />
-                  <CustomFormSelect
-                    name="PaidCurrency"
-                    options={Currency}
-                  />
+                  <CustomFormSelect name="Purpose" options={PurpOpt} />
                 </Col>
                 <Col sm="6">
-                  <CustomFormInput name="PaidAmount" />
-                  <CustomFormInput
-                    type="Date"
-                    name="ToDate"
-                    textName="Currency"
-                    valueName="Series"
-                  />
+                  <CustomFormInput name="Amount" />
                 </Col>
               </Row>
             </CardBody>
@@ -192,7 +212,7 @@ const POST = (props) => {
                 </Col>
                 <Col>
                   {/* Table Go Here */}
-                  <CustomFormInput name="Remark" type="textarea" />
+                  <CustomFormInput name="Remarks" type="textarea" />
                 </Col>
               </Row>
             </CardBody>

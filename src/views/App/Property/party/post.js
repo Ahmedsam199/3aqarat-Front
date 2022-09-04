@@ -14,7 +14,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-import { toast } from "react-toastify";
+import  toast  from "react-hot-toast";
 import { GenderOptions } from "@FixedOptions";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
@@ -65,9 +65,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     setLoading(true);
     console.log(values);
     dispatch(
-      values.Series
-        ? updateItem("Property_Party", values)
-        : insertItem("Property_Party", values)
+      values.Series ? updateItem("Party", values) : insertItem("Party", values)
     )
       .then((res) => {
         console.log(res);
@@ -77,6 +75,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
       })
       .catch((err) => {
         console.log("hacker_it_err", err);
+        toast.error(err.response.data.message);
       });
     setLoading(false);
   };

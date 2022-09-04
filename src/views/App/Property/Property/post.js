@@ -16,23 +16,22 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
 import { Properites_Property as Schema } from "@validation";
-import {Currency} from '@FixedOptions'
+import {Alert} from 'reactstrap'
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import { Map, Marker } from "pigeon-maps";
+import { Map, Marker ,GeoJson,GeoJsonFeature,Point,} from "pigeon-maps";
 import Ref2 from "./Ref2";
 import Ref1 from "./Ref1";
-import { toast } from "react-toastify";
+import  toast  from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Property_Property, Property_Terrority, Setup_Purpose } = useSelector(
-    (state) => state
-  );
+  const { Property, Party, Territory, Purpose, Currency, PropertyAttr } =
+    useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -46,6 +45,7 @@ const POST = (props) => {
     register,
     reset,
     getValues,
+    setValue,
     formState: { errors },
     control,
     handleSubmit,
@@ -56,24 +56,34 @@ useEffect(() => {
   console.log("testing", errors);
 }, [errors]);
   const onSubmit = (values) => {
-    if (isObjEmpty(errors)) {
-      values.PartyType = toBoolean(values.PartyType);
-      setLoading(true);
-      dispatch(
-        values.Series
-          ? updateItem("Property_Property", values)
-          : insertItem("Property_Property", values)
-      )
-        .then((res) => {
-          toast.success('')
-          navigate("/Properity/Properity");
-        })
-        .catch((err) => {
-          console.log("hacker_it_err", err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    console.log(values.IsFurnished, values.Furnitures);
+    if (values.IsFurnished == true && values.Furnitures.length ==0) {
+      toast.error("You Must Add Furnitures");
+      
+    }else if (values.Attribute == undefined || values.Attribute.length == 0) {
+      toast.error("You must Add 1 Attribute At least");
+    } else {
+      console.log("first", values);
+      if (isObjEmpty(errors)) {
+        values.PartyType = toBoolean(values.PartyType);
+        setLoading(true);
+        dispatch(
+          values.Series
+            ? updateItem("Property", values)
+            : insertItem("Property", values)
+        )
+          .then((res) => {
+            toast.success("");
+            navigate("/Properity/Properity");
+          })
+          .catch((err) => {
+            console.log("hacker_it_err", err);
+            toast.error(err.response.data.message);
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }
     }
   };
   const _write = useMemo(
@@ -82,14 +92,12 @@ useEffect(() => {
   );
   useEffect(async () => {
     if (params.series) {
-      if (!Property_Property.length) return;
+      if (!Property.length) return;
       // const _ = Party.find((x) => x.Series === params.series);
       const { data } = await axios.get(
-        `${Routes.Property_Property.root}/${params.series}`
+        `${Routes.Property.root}/${params.series}`
       );
-
-      console.log("testing ", data);
-
+      
       reset({
         ...data,
         // IsDefault: `${_.IsDefault}`,
@@ -102,81 +110,141 @@ useEffect(() => {
         _write: true,
         _loading: false,
       });
-  }, [Property_Property]);
+  }, [Property]);
   let TerrOpt=[]
-Property_Terrority.forEach((x)=>{
-    TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
-  });
+Territory.forEach((x) => {
+  TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
+});
   let PurposeOpt = [];
-  Setup_Purpose.forEach((x) => {
-    PurposeOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
+  Purpose.forEach((x) => {
+
+    if (x.IsPayable===false) {
+
+      PurposeOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
+    }
   });
-  return (
-    <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row>
-          <Col sm="10"></Col>
-          <Col sm="2" className="d-flex justify-content-end align-items-center">
-            <Button
-              color="primary"
-              type="submit"
-              className="mr-1 mb-2"
-              disabled={loading || (params.series && !_write)}
-            >
-              {loading && <Spinner color="white" size="sm" className="mr-1" />}
-              {t("Save")}
-            </Button>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col sm="12">
-            <Card>
-              <CardBody>
-                <Row>
-                  <Col sm="6">
-                    <CustomFormSelect name="Party" options={PartyTypeOptions} />
-                    <CustomFormSelect options={TerrOpt} name="Territory" />
-                    <CustomFormSelect name="Currency" options={Currency} />
-                  </Col>
-                  <Col sm="6">
-                    <CustomFormSelect options={PurposeOpt} name="Purpose" />
-                    <CustomFormInput name="RequestedAmt" />
-
-                    <Row>
-                      <Col sm="6" style={{ marginTop: "2rem" }}>
-                        <CustomFormInputCheckbox
-                          name="IsFurnished"
-                          IsDisabled={_dataForm.Disabled}
-                        />
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </Col>
+  let CurrencyOpt = [];
+  Currency.forEach((x) => {
+    CurrencyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.CurrencyName,
+    });
+  });
+  let PartyOpt = [];
+  Party.forEach((x) => {
+    PartyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.FullName,
+    });
+  });
+  let AttributeOpt = [];
+  PropertyAttr.forEach((x) => {
+    AttributeOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.Attribute,
+    });
+  });
+  const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
+    return (
+      <FormProvider {...methods}>
+        <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
           <Row>
+            <Col sm="10"></Col>
+            <Col
+              sm="2"
+              className="d-flex justify-content-end align-items-center"
+            >
+              <Button
+                color="primary"
+                type="submit"
+                className="mr-1 mb-2"
+                disabled={loading || (params.series && !_write)}
+              >
+                {loading && (
+                  <Spinner color="white" size="sm" className="mr-1" />
+                )}
+                {t("Save")}
+              </Button>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col sm="12">
+              <Card>
+                <CardBody>
+                  <Row>
+                    <Col sm="6">
+                      <CustomFormSelect name="Party" options={PartyOpt} />
+                      <CustomFormSelect options={TerrOpt} name="Territory" />
+                      <CustomFormSelect name="Currency" options={CurrencyOpt} />
+                    </Col>
+                    <Col sm="6">
+                      <Col>
+                        <CustomFormInput name="RequestedAmt" />
+                        <CustomFormSelect name="Purpose" options={PurposeOpt} />
+                      </Col>
+                      <Row>
+                        <Col>
+                          <CustomFormSelect
+                            options={AttributeOpt}
+                            name="Attributes"
+                          />
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col>
+                      <br></br>
+                      <CustomFormInputCheckbox name="IsFurnished" />
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col sm="8">
+              <hr />
+              {_watchIsFurnished ? (
+                <Ref2 {...{ loading }} />
+              ) : (
+                <Alert className="p-5" color="danger">
+                  Is Not Furnished
+                </Alert>
+              )}
+            </Col>
             <Col sm="4">
               <hr />
               <Ref1 {...{ loading }} />
-              <hr />
-            </Col>
-            <Col sm="8">
-              <hr />
-              <Ref2 {...{ loading }} />
-              <hr />
             </Col>
           </Row>
-        </Row>
-        <Col sm="12">
-          <Map height={300} defaultCenter={[36.1901, 43.993]} defaultZoom={11}>
-            <Marker width={50} anchor={[36.1901, 43.993]} />
-          </Map>
-        </Col>
-      </Form>
-    </FormProvider>
-  );
+
+          <Row>
+            <Col>
+              <CustomFormInput IsDisabled={true} name="Longitude" />
+            </Col>
+            <Col>
+              <CustomFormInput IsDisabled={true} name="Latitude" />
+            </Col>
+          </Row>
+          <br></br>
+          <Col sm="12">
+            <Map
+              onClick={(event) => {
+                setValue("Longitude", event.latLng[0]);
+                setValue("Latitude", event.latLng[1]);
+              }}
+              height={300}
+              defaultCenter={[36.1901, 43.993]}
+              defaultZoom={11}
+            >
+              <Marker
+                width={50}
+                anchor={[getValues("Longitude"), getValues("Latitude")]}
+              />
+            </Map>
+          </Col>
+        </Form>
+      </FormProvider>
+    );
 };
 
 export default POST;

@@ -20,7 +20,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
-  const { Property_Terrority } = useSelector((state) => state);
+  const { Territory } = useSelector((state) => state);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
@@ -60,16 +60,18 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     setLoading(true);
     dispatch(
       values.Series
-        ? updateItem("Property_Terrority", values)
-        : insertItem("Property_Terrority", values)
+        ? updateItem("Territory", values)
+        : insertItem("Territory", values)
     )
       .then((res) => {
-        toast.success('')
+        toast.success("");
         clear();
         toggle();
       })
       .catch((err) => {
-        console.log("hacker_it_err", err);
+        console.log("hacker_it_err", err.response.data.message);
+        toast.error(err.response.data.message);
+        
       });
     setLoading(false);
   };
@@ -77,7 +79,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     toggleFunc.current = toggle;
   }, []);
   let TerrOpt = [];
-  Property_Terrority.forEach((x) => {
+  Territory.forEach((x) => {
     TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
   });
   return (

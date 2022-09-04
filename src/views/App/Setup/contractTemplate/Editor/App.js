@@ -34,7 +34,7 @@ const editorConfig = {
         insertdatetime media table paste code imagetools  wordcount testBTN`,
   toolbar: `|undo redo  wizardExample | h1 h2 h3 h4 h5 h6  |  bold italic backcolor table | \
         alignleft aligncenter alignright alignjustify | \
-        bullist numlist outdent indent |  removeformat  | image |imagetools \ export print   myCustomToolbarButton  | `,
+        bullist numlist outdent indent |code  removeformat  | image |imagetools \ export print   myCustomToolbarButton  | `,
   a11y_advanced_options: true,
   image_caption: true,
   images_upload_credentials: true,
@@ -246,6 +246,7 @@ const toggle3 = () => setModal4(!modal4);
       `<style>
  html{
   height: 100%;
+  
 }
 body{
   position: relative;
@@ -268,7 +269,7 @@ body:before{
 </style>`
     );
     windows.document
-      .write(`<table style="width: 96.4286%; border: none; height: 234.4px;">
+      .write(`<table style="width: 96.4286%; border: none; height: 234.4px; ">
 <thead>
 <tr style="height: 150px;">
 <td style="width: 98.7654%; height: 150px;"><center><img style="position: fixed;
@@ -285,9 +286,7 @@ body:before{
 <tr style="height: 54.4px;">
 <td style="width: 98.7654%; height: 54.4px;">
 <p><span style="font-size: 36pt;">
-
 ${newString}
-
 </span></p>
 </td>
 </tr>

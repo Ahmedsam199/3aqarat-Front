@@ -26,9 +26,7 @@ import POST from "./post";
 import { Link } from "react-router-dom";
 const Index = () => {
   const { t } = useTranslation();
-  const { Setup_Branch: Branch} = useSelector(
-    (state) => state
-  );
+  const { Branches: Branch } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -53,14 +51,15 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("Setup_Branch", Series))
+    dispatch(deleteItem("Branches", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success('Deleted')
-        console.log(toasty)
+        toast.success("Item " + Series + " has been Deleted");
+        console.log(toasty);
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 

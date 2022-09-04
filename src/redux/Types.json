@@ -4,11 +4,17 @@
   "Error": "Error",
   "Offline": {
     "clear": "OFFline_clear",
-    "Doctype": {
-      "insert": "Offline_Insert_Doctype",
-      "update": "Offline_Update_Doctype",
-      "delete": "Offline_Delete_Doctype",
-      "clear": "Offline_Clear_Doctype"
+    "Contracts": {
+      "insert": "Offline_Insert_Contracts",
+      "update": "Offline_Update_Contracts",
+      "delete": "Offline_Delete_Contracts",
+      "clear": "Offline_Clear_Contracts"
+    },
+    "Payments": {
+      "insert": "Offline_Insert_Payments",
+      "update": "Offline_Update_Payments",
+      "delete": "Offline_Delete_Payments",
+      "clear": "Offline_Clear_Payments"
     }
   },
 
@@ -19,54 +25,54 @@
     "delete": "Delete_Customer",
     "clear": "Clear_Customer"
   },
-  "Contract_Contract": {
-    "set": "Set_Contract",
-    "insert": "Insert_Contract",
-    "update": "Update_Contract",
-    "delete": "Delete_Contract",
-    "clear": "Clear_Contract"
+  "Contracts": {
+    "set": "Set_Contracts",
+    "insert": "Insert_Contracts",
+    "update": "Update_Contracts",
+    "delete": "Delete_Contracts",
+    "clear": "Clear_Contracts"
   },
-  "Contract_Payment": {
-    "set": "Set_Contract_Payment",
-    "insert": "Insert_Contract_Payment",
-    "update": "Update_Contract_Payment",
-    "delete": "Delete_Contract_Payment",
-    "clear": "Clear_Contract_Payment"
+  "Payments": {
+    "set": "Set_Payments",
+    "insert": "Insert_Payments",
+    "update": "Update_Payments",
+    "delete": "Delete_Payments",
+    "clear": "Clear_Payments"
   },
-  "Property_Party": {
-    "set": "Set_Property_Party",
-    "insert": "Insert_Property_Party",
-    "update": "Update_Property_Party",
-    "delete": "Delete_Property_Party",
-    "clear": "Clear_Property_Party"
+  "Party": {
+    "set": "Set_Party",
+    "insert": "Insert_Party",
+    "update": "Update_Party",
+    "delete": "Delete_Party",
+    "clear": "Clear_Party"
   },
-  "Property_Property": {
+  "Property": {
     "set": "Set_Property_Property",
     "insert": "Insert_Property_Property",
     "update": "Update_Property_Property",
     "delete": "Delete_Property_Property",
     "clear": "Clear_Property_Property"
   },
-  "Property_Attribute": {
-    "set": "Set_Property_Attribute",
-    "insert": "Insert_Property_Attribute",
-    "update": "Update_Property_Attribute",
-    "delete": "Delete_Property_Attribute",
-    "clear": "Clear_Property_Attribute"
+  "PropertyAttr": {
+    "set": "Set_PropertyAttr",
+    "insert": "Insert_PropertyAttr",
+    "update": "Update_PropertyAttr",
+    "delete": "Delete_PropertyAttr",
+    "clear": "Clear_PropertyAttr"
   },
-  "Property_Terrority": {
-    "set": "Set_Property_Terrority",
-    "insert": "Insert_Property_Terrority",
-    "update": "Update_Property_Terrority",
-    "delete": "Delete_Property_Terrority",
-    "clear": "Clear_Property_Terrority"
+  "Territory": {
+    "set": "Set_Territory",
+    "insert": "Insert_Territory",
+    "update": "Update_Territory",
+    "delete": "Delete_Territory",
+    "clear": "Clear_Territory"
   },
-  "Setup_Branch": {
-    "set": "Set_Setup_Branch",
-    "insert": "Insert_Setup_Branch",
-    "update": "Update_Setup_Branch",
-    "delete": "Delete_Setup_Branch",
-    "clear": "Clear_Setup_Branch"
+  "Branches": {
+    "set": "Set_Branch",
+    "insert": "Insert_Branches",
+    "update": "Update_Branches",
+    "delete": "Delete_Branches",
+    "clear": "Clear_Branches"
   },
   "Contract_Template": {
     "set": "Set_Contract_Template",
@@ -82,19 +88,26 @@
     "delete": "Delete_ContractType",
     "clear": "Clear_ContractType"
   },
-  "Setup_Permission": {
-    "set": "Set_Setup_Permission",
-    "insert": "Insert_Setup_Permission",
-    "update": "Update_Setup_Permission",
-    "delete": "Delete_Setup_Permission",
-    "clear": "Clear_Setup_Permission"
+  "Permission": {
+    "set": "Set_Permission",
+    "insert": "Insert_Permission",
+    "update": "Update_Permission",
+    "delete": "Delete_Permission",
+    "clear": "Clear_Permission"
   },
-  "Setup_Purpose": {
-    "set": "Set_Setup_Purpose",
-    "insert": "Insert_Setup_Purpose",
-    "update": "Update_Setup_Purpose",
-    "delete": "Delete_Setup_Purpose",
-    "clear": "Clear_Setup_Purpose"
+  "Purpose": {
+    "set": "Set_Purpose",
+    "insert": "Insert_Purpose",
+    "update": "Update_Purpose",
+    "delete": "Delete_Purpose",
+    "clear": "Clear_Purpose"
+  },
+  "Currency": {
+    "set": "Set_Currency",
+    "insert": "Insert_Currency",
+    "update": "Update_Currency",
+    "delete": "Delete_Currency",
+    "clear": "Clear_Currency"
   },
   "Setup_User": {
     "set": "Set_Setup_User",
@@ -103,11 +116,25 @@
     "delete": "Delete_Setup_User",
     "clear": "Clear_Setup_User"
   },
-  "Setup_UserRole": {
-    "set": "Set_Setup_UserRole",
-    "insert": "Insert_Setup_UserRole",
-    "update": "Update_Setup_UserRole",
-    "delete": "Delete_Setup_UserRole",
-    "clear": "Clear_Setup_UserRole"
+  "Roles": {
+    "set": "Set_Roles",
+    "insert": "Insert_Roles",
+    "update": "Update_Roles",
+    "delete": "Delete_Roles",
+    "clear": "Clear_Roles"
+  },
+
+  "DocType": {
+    "set": "Set_DocType",
+    "insert": "Insert_DocType",
+    "update": "Update_DocType",
+    "delete": "Delete_DocType",
+    "clear": "Clear_DocType"
+  },
+  "Attachments": {
+    "set": "Set_Attachments",
+    "add": "Add_Attachments",
+    "delete": "Delete_Attachments",
+    "clear": "clear_Attachments"
   }
 }

@@ -28,7 +28,10 @@ import { Link } from "react-router-dom";
   import OneSignal from 'react-onesignal';
 const Index = () => {
   const { t } = useTranslation();
-  const { Property_Party: Party } = useSelector((state) => state);
+  const {
+    Party,
+    tempData: { network },
+  } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -54,13 +57,14 @@ const Index = () => {
 
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("Property_Party", Series))
+    dispatch(deleteItem("Party", Series))
       .then((res) => {
         ref.current?.refresh();
-        toast.success("Deleted")
+        toast.success("Item " + Series + " has been Deleted");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
+        toast.error(err.response.data.message);
       });
   };
 
@@ -72,9 +76,7 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-          
-        </div>
+        <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
@@ -88,7 +90,7 @@ const Index = () => {
           </div>
         )}
       </div>
-      
+
       <Card>
         <div>
           <POST
@@ -127,7 +129,7 @@ const Index = () => {
           <CustomTable
             className="react-dataTable"
             ref={ref}
-            offlineData={Party}
+            offlineData={network ? Party : []}
             columns={Columns}
             filters={filters}
           />
