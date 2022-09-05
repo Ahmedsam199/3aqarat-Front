@@ -148,6 +148,8 @@ export default [
         title: "PrintCustomization",
         icon: <Users size={12} />,
         navLink: "/Setup/PrintCustomization",
+        action: "read",
+        resource: "DT-14",
       },
     ],
   },
