@@ -85,13 +85,17 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  
   let BranchOpt = [];
-  Branches.forEach((x) => {
-    if (x.isGroup == true) {
-      BranchOpt.push({ value: x.Series, label: x.Series + " " + x.BranchName });
-    }
-  });
+  
+    Branches?.forEach((x) => {
+      if (x.isGroup == true) {
+        BranchOpt.push({
+          value: x.Series,
+          label: x.Series + " " + x.BranchName,
+        });
+      }
+    });
+  
   const _watchIsGroup = useWatch({ control, name: "isGroup" });
   console.log(_watchIsGroup);
   return (

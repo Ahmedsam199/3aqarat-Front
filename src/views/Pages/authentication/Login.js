@@ -74,22 +74,16 @@ const Login = () => {
       useJwt
         .login({ UserName: data.UserName, Password: data.Password })
         .then((res) => {
+          console.log("HELLO",res.data.Permissions);
           const data = {
             ...res.data,
-            ability: [{
-              action: "manage",
-              subject: "all",
-            }],
+            ability: res.data.Permissions,
+
             accessToken: res.data.accessToken,
-            role: "admin"
+            role: "admin",
           };
           dispatch(handleLogin(data));
-          ability.update([
-            {
-              action: "manage",
-              subject: "all",
-            },
-          ]);
+           ability.update(res.data.Permissions);
           navigate(getHomeRouteForLoggedInUser("admin"));
           toast((t) => (
             <ToastContent

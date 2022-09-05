@@ -61,7 +61,6 @@ const Index = () => {
         toast.error(err.response.data.message);
       });
   };
-
   const Columns = createColumns({
     onDelete,
     onEdit: (row) => setCurrentRow(row),

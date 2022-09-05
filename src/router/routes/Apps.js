@@ -30,6 +30,10 @@ const AppRoutes = [
   {
     element: <Dashboad />,
     path: "/DashBoard",
+    meta: {
+      action: "read",
+      resource: "DASH",
+    },
   },
   {
     element: <Editor />,
@@ -38,22 +42,42 @@ const AppRoutes = [
   {
     element: <Contract_New />,
     path: "/contract/New",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
   },
   {
     element: <Contract_New />,
     path: "/UpdateContract/:series",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
   },
   {
     element: <Setup_User />,
     path: "/Setup/User",
+    meta: {
+      action: "read",
+      resource: "DT-14",
+    },
   },
   {
     element: <Setup_User_Role />,
     path: "/Setup/UserRole",
+    meta: {
+      action: "read",
+      resource: "DT-12",
+    },
   },
   {
     element: <Setup_Purpose />,
     path: "/Setup/Purpose",
+    meta: {
+      action: "read",
+      resource: "DT-11",
+    },
   },
   {
     element: <Setup_Permission />,
@@ -62,38 +86,74 @@ const AppRoutes = [
   {
     element: <Setup_ContractType />,
     path: "/Setup/ContractType",
+    meta: {
+      action: "read",
+      resource: "DT-4",
+    },
   },
   {
     element: <Setup_Template />,
     path: "/Setup/Template",
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
   },
   {
     element: <Properity_Terrority />,
     path: "/Properity/Terrority",
+    meta: {
+      action: "read",
+      resource: "DT-13",
+    },
   },
   {
     element: <Properity_Property_New />,
     path: "/Properity/Property/New",
+    meta: {
+      action: "read",
+      resource: "DT-8",
+    },
   },
   {
     element: <Properity_Property_New />,
     path: "/Properity/Property/Update/:series",
+    meta: {
+      action: "read",
+      resource: "DT-8",
+    },
   },
   {
     element: <Properity_Property />,
     path: "/Properity/Properity",
+    meta: {
+      action: "read",
+      resource: "DT-8",
+    },
   },
   {
     element: <Properity_Owner />,
     path: "/Properity/Owner",
+    meta: {
+      action: "read",
+      resource: "DT-5",
+    },
   },
   {
     element: <Properity_Attribute />,
     path: "/Properity/Attribute",
+    meta: {
+      action: "read",
+      resource: "DT-9",
+    },
   },
   {
     element: <Setup_Branches />,
     path: "/Setup/Branchies",
+    meta: {
+      action: "read",
+      resource: "DT-1",
+    },
   },
   {
     element: <NewPer />,
@@ -103,15 +163,28 @@ const AppRoutes = [
   {
     element: <Contract_contract />,
     path: "/App/Contract/Contract",
+
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
   },
 
   {
     element: <Contract_Payment_New />,
     path: "/App/Contract/Payment/new",
+    meta: {
+      action: "read",
+      resource: "DT-6",
+    },
   },
   {
     element: <Contract_Payment_New />,
     path: "/Payment/Update/:series",
+    meta: {
+      action: "read",
+      resource: "DT-6",
+    },
   },
   {
     element: <NewPer />,
@@ -121,6 +194,10 @@ const AppRoutes = [
   {
     element: <Contract_Payment />,
     path: "/App/Contract/Payment",
+    meta: {
+      action: "read",
+      resource: "DT-6",
+    },
   },
   // {
   //   element: lazy(() => import('../../views/App/GeneralLedger')),
@@ -133,38 +210,57 @@ const AppRoutes = [
     element: <Permissions />,
     path: "/App/Permissions",
     meta: {
-      appLayout: true,
+      action: "read",
+      resource: "DT-7",
     },
   },
   {
     element: <Permissions_POST />,
     path: "/App/NewPermissions",
     meta: {
-      appLayout: true,
+      action: "read",
+      resource: "DT-7",
     },
   },
   {
     element: <NewPer />,
     path: "/Setup/UpdatePer/:series",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
   {
     element: <Permissions_POST />,
     path: "/App/UpdatePermissions/:series",
     meta: {
-      appLayout: true,
+      action: "read",
+      resource: "DT-7",
     },
   },
   {
     element: <PrintCustomization />,
     path: "/Setup/PrintCustomization/",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
   {
     element: <PrintCustomizationPOST />,
     path: "/Setup/NewPrintCustomization/:name/:doctype/:isRtl/:isLandscape",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
   {
     element: <PrintCustomizationPOST />,
     path: "/Setup/UpdatePrintCustomization/:series/:name/:doctype/:isRtl/:isReceipt/:isDefault/:isLandscape",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
 ];
 

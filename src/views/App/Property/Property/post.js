@@ -207,7 +207,7 @@ Territory.forEach((x) => {
                 <Ref2 {...{ loading }} />
               ) : (
                 <Alert className="p-5" color="danger">
-                  Is Not Furnished
+                  Is Not Furnished...
                 </Alert>
               )}
             </Col>

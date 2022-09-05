@@ -200,7 +200,7 @@ export const GenderOptions = [
 ];
 
 export const Tables = {
-  "DT-1": [
+  "DT-2": [
     {
       label: "Attribute",
       value: "Attribute",
@@ -230,8 +230,8 @@ export const Tables = {
       ],
     },
   ],
-  "DT-8": [
-    {
+  "DT-8":[
+{
       label: "Attribute",
       value: "Attribute",
       attributes: [
@@ -250,5 +250,5 @@ export const Tables = {
         { label: "Quantity", value: "Quantity" },
       ],
     },
-  ],
+  ]
 };

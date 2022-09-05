@@ -72,7 +72,7 @@ const getStyle = (WaterMark) => (
         }
     </style>`
 )
-const makeHTML = ({ Header, Footer, Html, WaterMark }) => (
+const makeHTML = ({ Header, Footer, Html, WaterMark }) =>
   `   
    <div class="page-header" style="text-align:center">
     <img style="width:100%;height:100%" id="Header-html" src="${Header}" />
@@ -80,7 +80,7 @@ const makeHTML = ({ Header, Footer, Html, WaterMark }) => (
     <div class="page-footer" style="text-align:center">
       <img style="width:100%;height:100%" id="Footer-html" src="${Footer}">
     </div>
-    <div style="display:none;" id="WaterMark-html" data-waterMark="${WaterMark}"></div>
+    
     <table style='width:100%'>
       <thead>
         <tr>
@@ -93,8 +93,9 @@ const makeHTML = ({ Header, Footer, Html, WaterMark }) => (
       <tbody style="margin:150px 0 50px 0">
           <tr>
             <td id="Body-start-html">
+            <div style="display:none;" id="WaterMark-html" data-waterMark="${WaterMark}">
               ${Html}
-              <div style="display:none;" id="Body-end-html"></div>
+              <div style="display:none;" id="Body-end-html"></div></div>
             </td>
           </tr>
       </tbody>
@@ -107,8 +108,7 @@ const makeHTML = ({ Header, Footer, Html, WaterMark }) => (
         </tr>
       </tfoot>
       </table>
-      `
-)
+      `;
 export const makeTemplateHtml = ({ WaterMark, Header, Footer, Html }) => {
   return `
          <html>

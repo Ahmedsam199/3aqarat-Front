@@ -21,8 +21,7 @@ import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-    const { Currency } =
-    useSelector((state) => state);
+    const { Currency, Roles } = useSelector((state) => state);
 
   const ability = useContext(AbilityContext);
   const methods = useForm({ resolver: yupResolver(Schema) });
@@ -94,6 +93,13 @@ toast.error("To Date Cannot be smaller than From Date");
       label: x.Series + " " + x.CurrencyName,
     });
   });
+  let RolesOpt = [];
+  Roles.forEach((x) => {
+    RolesOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.RoleName,
+    });
+  });
   let lang=[
                 { value: 0, label: "Kurdish" },
                 { value: 1, label: "Arabic" },
@@ -122,6 +128,7 @@ toast.error("To Date Cannot be smaller than From Date");
               options={lang}
             />
             <CustomFormSelect name="DefaultCurrency" options={CurrencyOpt} />
+            <CustomFormSelect name="RoleID" options={RolesOpt} />
             <CustomFormInput name="FromDate" type="Date" />
             <CustomFormInput name="ToDate" type="Date" />
             <CustomFormInputCheckbox name="Disabled" />

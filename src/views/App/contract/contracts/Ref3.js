@@ -21,18 +21,18 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Extra Payment",
+    name: "ExtraPayment",
   });
   return (
     <>
-      <h5 className="">{t("Extra Payment")}</h5>
+      <h5 className="">{t("ExtraPayment")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>
             <tr>
               <th style={{ width: "30%" }}>{t("Puropose")}</th>
-              <th style={{ width: "25%" }}>{t("Paid Amount")}</th>
-              <th style={{ width: "25%" }}>{t("Paid Currency")}</th>
+              <th style={{ width: "25%" }}>{t("PaidAmount")}</th>
+              <th style={{ width: "25%" }}>{t("PaidCurrency")}</th>
             </tr>
           </thead>
           <tbody {...{ ref }}>
@@ -49,7 +49,7 @@ const RefsList = ({ loading }) => {
                         menuShouldBlockScroll
                         autoFocus={index === fields.length - 1}
                         hiddenTitle
-                        name={`Reference.${index}.currencySeries`}
+                        name={`ExtraPayment.${index}.Puropose`}
                         options={[]}
                         valueName="Series"
                         textName="Currency"
@@ -57,13 +57,13 @@ const RefsList = ({ loading }) => {
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormNumberInput
-                        name={`Reference.${index}.amount`}
+                        name={`ExtraPayment.${index}.PaidAmount`}
                         hiddenTitle
                       />
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormNumberInput
-                        name={`Reference.${index}.rate`}
+                        name={`ExtraPayment.${index}.PaidCurrency`}
                         IsDisabled={true}
                         hiddenTitle
                       />
@@ -87,7 +87,7 @@ const RefsList = ({ loading }) => {
                   <input
                     className="d-none"
                     defaultValue={x.id ?? ""}
-                    {...register(`Items.${index}.id`)}
+                    {...register(`ExtraPayment.${index}.id`)}
                   />
                 </div>
               );
@@ -95,7 +95,33 @@ const RefsList = ({ loading }) => {
           </tbody>
         </Table>
       </div>
-      <Row></Row>
+      <Row>
+        <Col>
+          <small className="my-1 text-danger d-block">
+            <ul>
+              {Array.isArray(errors[`priceListCountries`]) &&
+                errors[`priceListCountries`].map((x, i) =>
+                  Object.keys(x)?.map((e) => <li> </li>)
+                )}
+            </ul>
+          </small>
+          {toBoolean(getValues("_write")) && (
+            <Button
+              className="btn-icon"
+              color="success"
+              onClick={() => {
+                append({});
+                // wait until add the row then scroll to down
+                // sleep(100).then(
+                //   () => (ref.current.scrollTop = ref.current.scrollHeight)
+                // );
+              }}
+            >
+              <Plus size={14} />
+            </Button>
+          )}
+        </Col>
+      </Row>
     </>
   );
 };

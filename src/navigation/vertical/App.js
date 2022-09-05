@@ -6,7 +6,10 @@ export default [
   {
     id: "DashBoard",
     title: "DashBoard",
+    action: "read",
+    resource: "DASH",
     icon: <PieChart size={12} />,
+
     permissions: ["admin", "editor"],
     navLink: "/DashBoard",
   },
@@ -14,18 +17,22 @@ export default [
     id: "Contract",
     title: "Contract",
     icon: <Edit size={12} />,
-    permissions: ["admin", "editor"],
+
     children: [
       {
         id: "Contract",
         title: "Contract",
         icon: <Edit2 size={12} />,
+        action: "read",
+        resource: "DT-2",
         navLink: "/App/Contract/Contract",
       },
       {
         id: "Payment",
         title: "Payment",
         icon: <CreditCard size={12} />,
+        action: "read",
+        resource: "DT-6",
         navLink: "/App/Contract/Payment",
       },
     ],
@@ -34,19 +41,23 @@ export default [
     id: "Properites",
     title: "Properties",
     icon: <Target size={20} />,
-    
+
     badge: "light-warning",
     children: [
       {
         id: "Properites",
-        title: "Properity",
+        title: "Property",
         icon: <BookOpen size={12} />,
+        action: "read",
+        resource: "DT-8",
         navLink: "/Properity/Properity",
       },
       {
         id: "Properites-Attributes",
         title: "Attributes",
         icon: <Dribbble size={12} />,
+        action: "read",
+        resource: "DT-9",
         navLink: "/Properity/Attribute",
       },
       {
@@ -54,12 +65,16 @@ export default [
         title: "Owners",
         icon: <Users size={12} />,
         navLink: "/Properity/Owner",
+        action: "read",
+        resource: "DT-5",
       },
       {
         id: "Territory",
         title: "Territory",
         icon: <Flag size={12} />,
         navLink: "/Properity/Terrority",
+        action: "read",
+        resource: "DT-13",
       },
     ],
   },
@@ -74,6 +89,8 @@ export default [
         title: "Contract Type",
         icon: <Type size={12} />,
         navLink: "/Setup/ContractType",
+        action: "read",
+        resource: "DT-4",
       },
 
       {
@@ -81,18 +98,24 @@ export default [
         title: "Contract Template",
         icon: <BookOpen size={12} />,
         navLink: "/Setup/Template",
+        action: "read",
+        resource: "DT-3",
       },
       {
         id: "",
         title: "Purpose",
         icon: <Bookmark size={12} />,
         navLink: "/Setup/Purpose",
+        action: "read",
+        resource: "DT-11",
       },
       {
         id: "",
         title: "Branches",
         icon: <Circle size={12} />,
         navLink: "/Setup/Branchies",
+        action: "read",
+        resource: "DT-1",
       },
 
       {
@@ -100,12 +123,16 @@ export default [
         title: "User Roles",
         icon: <User size={12} />,
         navLink: "/Setup/UserRole",
+        action: "read",
+        resource: "DT-12",
       },
       {
         id: "",
         title: "Permissions",
         icon: <UserCheck size={12} />,
-        navLink: "/Setup/Permission",
+        navLink: "/App/Permissions",
+        action: "read",
+        resource: "DT-7",
       },
 
       {
@@ -113,6 +140,8 @@ export default [
         title: "Users",
         icon: <Users size={12} />,
         navLink: "/Setup/User",
+        action: "read",
+        resource: "DT-14",
       },
       {
         id: "",

@@ -58,16 +58,20 @@ const POST = (props) => {
       payload: deepCopy(Permission).map((x) => x.RoleSeries),
     });
     if (params?.series) {
-      const { data } = await axios.get(
+      const { data: JsonData, RoleSeries } = await axios.get(
         `${Routes.Permission.root}/${params.series}`
       );
-      return console.log("testing", data);
-      const { Permission, JsonData, RoleSeries } = _;
-      // dispatch({ type: "setData", payload: Permissions ?? JsonData });
-      // dispatch({ type: "setRoleSeries", payload: RoleSeries });
-      // dispatch({ type: "setOriginRole", payload: RoleSeries });
+
+      
+      dispatch({
+        type: "setData",
+        payload: Permission ?? JSON.parse(JsonData),
+      });
+      dispatch({ type: "setRoleSeries", payload: RoleSeries });
+      dispatch({ type: "setOriginRole", payload: RoleSeries });
     }
   }, []);
+
   //#region role
   const changeRole = (e) => {
     dispatch({ type: "setRoleSeries", payload: e.value });
@@ -108,6 +112,7 @@ const POST = (props) => {
       }),
     });
   };
+  
   const renderRow = (row, index) => {
     return (
       <tr key={`row-${index}`}>
