@@ -8,8 +8,8 @@ import CustomTable from "@Component/CustomTable";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import '@styles/react/apps/app-invoice.scss'
-import '@styles/react/libs/tables/react-dataTable-component.scss'
+import "@styles/react/apps/app-invoice.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 
@@ -25,7 +25,7 @@ import {
 } from "reactstrap";
 import POST from "./post";
 import { Link } from "react-router-dom";
-  import OneSignal from 'react-onesignal';
+import OneSignal from "react-onesignal";
 const Index = () => {
   const { t } = useTranslation();
   const {
@@ -55,7 +55,6 @@ const Index = () => {
     });
   };
 
-
   const onDelete = (Series) => {
     dispatch(deleteItem("Party", Series))
       .then((res) => {
@@ -72,7 +71,7 @@ const Index = () => {
     onDelete,
     onEdit: (row) => setCurrentRow(row),
   });
- 
+
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">

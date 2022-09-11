@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 // ** Routes Imports
 import AppRoutes from './Apps'
 import PagesRoutes from './Pages'
+import RealState from './App'
 import AuthenticationRoutes from './Authentication'
 
 // ** Layouts
@@ -36,7 +37,8 @@ const Routes = [
   ...AuthenticationRoutes,
   ...AppRoutes,
   ...PagesRoutes,
-]
+  ...RealState,
+];
 
 const getRouteMeta = route => {
   if (isObjEmpty(route?.element?.props ?? {})) {

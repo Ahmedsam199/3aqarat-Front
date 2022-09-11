@@ -77,7 +77,10 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) => navigate(`/UpdateContract/${ network? row?.Series:row.ID }`),
+    onEdit: (row) =>
+      navigate(
+        `/App/Contract/UpdateContract/${network ? row?.Series : row.ID}`
+      ),
   });
 
 
@@ -85,10 +88,10 @@ const Index = () => {
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between">
         <div className="flex-grow-1"></div>
-        
+
         {ability.can("create", "DT-2") && (
           <div>
-            <Link to="/contract/New">
+            <Link to="/App/Contract/NewContract">
               <Button.Ripple color="primary">{t("New")}</Button.Ripple>
             </Link>
           </div>
@@ -98,7 +101,6 @@ const Index = () => {
       <Card>
         <CardBody>
           <Row>
-            
             <Col md="2">
               <FormGroup>
                 <Label>{t("Series")}</Label>

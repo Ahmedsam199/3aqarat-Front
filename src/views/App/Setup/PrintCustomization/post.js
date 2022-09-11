@@ -28,7 +28,12 @@ const Post = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatchRedux = useDispatch();
-  const { PrintKeys: AllPrintKeys, Doctypes, tempData: { network }, contractTemplate } = useSelector((state) => state);
+  const {
+    PrintKeys: AllPrintKeys,
+    Doctype,
+    tempData: { network },
+    contractTemplate,
+  } = useSelector((state) => state);
   const PrintKeys = useMemo(() =>
     AllPrintKeys.
       filter(x => x.Doctype == params?.doctype).

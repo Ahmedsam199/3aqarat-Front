@@ -67,7 +67,8 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) => navigate(`/Properity/Property/Update/${row?.Series}`),
+    onEdit: (row) =>
+      navigate(`/Properties/Property/Update/${row?.Series}`),
   });
 
   return (
@@ -76,7 +77,7 @@ const Index = () => {
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-6") && (
           <div>
-            <Link to="/Properity/Property/New">
+            <Link to="/Properties/Property/New">
               <Button.Ripple color="primary">{t("New")}</Button.Ripple>
             </Link>
           </div>

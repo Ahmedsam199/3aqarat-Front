@@ -20,7 +20,8 @@ import {
 import CustomSelect from '../../../../components/CustomSelect';
 import Modal from './modal';
 const Index = () => {
-  const { contractTemplate, Doctypes } = useSelector((state) => state);
+  const { ContractTemplates, DocType } = useSelector((state) => state);
+  console.log("testing", DocType);
   const { t } = useTranslation()
   const [open, setOpen] = useState()
   const dispatch = useDispatch();
@@ -87,7 +88,7 @@ const Index = () => {
               <FormGroup>
                 <Label>{t("Series")}</Label>
                 <Input
-                  placeholder={t('Series')}
+                  placeholder={t("Series")}
                   onChange={(e) =>
                     handleFiltersChange("Series", e.target.value)
                   }
@@ -96,17 +97,15 @@ const Index = () => {
             </Col>
             <Col md="2">
               <FormGroup>
-                <Label>
-                  {t("Doctype")}
-                </Label>
+                <Label>{t("Doctype")}</Label>
                 <CustomSelect
                   isClearable={true}
-                  valueName="Series"
-                  textName="DocTypeName"
+                  valueName="series"
+                  textName="DocType"
                   value={filters.Doctype.value}
-                  options={Doctypes}
+                  options={DocType}
                   onChange={(e) => {
-                    handleFiltersChange('Doctype', e?.value ?? null);
+                    handleFiltersChange("Doctype", e?.value ?? null);
                   }}
                 />
               </FormGroup>
@@ -115,7 +114,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={contractTemplate}
+          offlineData={ContractTemplates}
           columns={Columns}
           filters={filters}
         />

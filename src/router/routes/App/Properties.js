@@ -1,8 +1,10 @@
+import { lazy } from 'react'
+
 const Owner = lazy(() => import('../../../views/App/Property/Owner'))
 const Attribute = lazy(() => import('../../../views/App/Property/Property_Attribute'))
 const Property = lazy(() => import('../../../views/App/Property/Property'))
 const PropertyPOST = lazy(() => import('../../../views/App/Property/Property/post'))
-const Territory = lazy(() => import('../../../views/App/Property/Territory'))
+const Territory = lazy(() => import('../../../views/App/Property/Property/index'))
 
 
 export default [

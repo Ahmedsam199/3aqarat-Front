@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 
 const Contract = lazy(() => import('../../../views/App/contract/contracts'))
 const ContractPOST = lazy(() => import('../../../views/App/contract/contracts/post'))

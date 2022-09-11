@@ -14,7 +14,7 @@ const initState = {
   isReceipt: false,
 }
 const PrintModal = ({ open, onModalClose }) => {
-  const DocTypes = useSelector(state => state.Doctypes)
+  const { DocType } = useSelector((state) => state);
   const [values, setValues] = useState(initState);
   const handleChange = (key, value) => {
     setValues((prev) => {
@@ -22,37 +22,38 @@ const PrintModal = ({ open, onModalClose }) => {
     });
   };
   return (
-    <Modal isOpen={open} toggle={() => { onModalClose(!open); setValues(initState) }} centered={true}>
-      <ModalHeader>
-        {t("New Contract Template")}
-      </ModalHeader>
+    <Modal
+      isOpen={open}
+      toggle={() => {
+        onModalClose(!open);
+        setValues(initState);
+      }}
+      centered={true}
+    >
+      <ModalHeader>{t("New Contract Template")}</ModalHeader>
       <ModalBody>
         <Col>
           <FormGroup>
-            <Label>
-              {t("Print Name")} :
-            </Label>
+            <Label>{t("Print Name")} :</Label>
             <Input
               placeholder="print Name"
               value={values.printName}
               onChange={(e) => {
-                handleChange("printName", e.target.value)
+                handleChange("printName", e.target.value);
               }}
             />
           </FormGroup>
         </Col>
         <Col>
           <FormGroup>
-            <Label>
-              {t("Doctype")} :
-            </Label>
+            <Label>{t("Doctype")} :</Label>
             <CustomSelect
-              options={DocTypes}
-              textName="DocTypeName"
-              valueName="Series"
+              options={DocType}
+              textName="DocType"
+              valueName="series"
               value={values.doctype}
               onChange={async (e) => {
-                handleChange("doctype", e.value)
+                handleChange("doctype", e.value);
               }}
             />
           </FormGroup>
@@ -84,7 +85,10 @@ const PrintModal = ({ open, onModalClose }) => {
         <Link
           to={`/Setting/NewPrintCustomization/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
         >
-          <Button color="primary" disabled={!values.doctype || !values.printName}>
+          <Button
+            color="primary"
+            disabled={!values.doctype || !values.printName}
+          >
             {t("Next")}
           </Button>
         </Link>
