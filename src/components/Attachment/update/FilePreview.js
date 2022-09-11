@@ -24,7 +24,7 @@ const FilePreview = ({ previewFile, setIsPreviewFile }) => {
       <PreviewConatiner>
         <div className="preview-container">
           <img
-            src={`${Routes.Attachments.AmazonS3}/${previewFile?.FilePath}`}
+            src={`${Routes.Attachments.root}/${previewFile?.FilePath}`}
           />
         </div>
         <div className="overlay" onClick={() => setIsPreviewFile(false)}></div>

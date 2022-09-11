@@ -45,7 +45,7 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem('contractTemplate', Series))
+    dispatch(deleteItem("ContractTemplates", Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: "success" });
@@ -57,7 +57,9 @@ const Index = () => {
   const Columns = createColumns({
     onDelete,
     onEdit: (row) => { console.log('hacker_it', row.isReceipt); },
+
   });
+  console.log('testing',"aa");
   return (
     <>
       <div className="d-flex justify-content-between">

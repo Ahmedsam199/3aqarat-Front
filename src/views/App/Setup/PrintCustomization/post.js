@@ -85,12 +85,12 @@ const Post = () => {
     return
     dispatchRedux(
       params.series
-        ? updateItem('contractTemplate', request)
-        : insertItem('contractTemplate', request)
+        ? updateItem("ContractTemplates", request)
+        : insertItem("ContractTemplates", request)
     )
       .then((res) => {
         toasty({ type: "success" });
-        navigate('/Setup/contractTemplate');
+        navigate("/Setup/contractTemplate");
       })
       .catch((err) => {
         console.log("hacker_it_err", err);
@@ -157,7 +157,7 @@ const Post = () => {
                   textName="DocTypeName"
                   value={doctype}
                   isDisabled={true}
-                  options={Doctypes}
+                  options={Doctype}
                 />
               </FormGroup>
             </Col>

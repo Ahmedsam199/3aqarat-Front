@@ -1,5 +1,6 @@
 import Routes from '@Routes';
 import { AbilityContext } from '@src/utility/context/Can';
+import axios from 'axios';
 import fileDownload from 'js-file-download';
 import React, { useContext } from 'react';
 import { Download, Edit, Eye, Trash2 } from 'react-feather';
@@ -20,13 +21,18 @@ const RowActionsFile = ({
   const { t } = useTranslation()
   const ability = useContext(AbilityContext);
 
-  const handleDownload = async () => {
-    const data = await fetch(`${Routes.Attachments.root}download/${row?.id}`, {
-      responseType: "arraybuffer",
-    }).then((data) => data.blob());
-    console.log(data,"DOWNDATA")
-    fileDownload(data, row.name);
-  };
+  // const handleDownload = async () => {
+  //   const data = await fetch(`${Routes.Attachments.root}download/${row?.id}`, {
+  //     responseType: "arraybuffer",
+  //   }).then((data) => data.blob());
+  //   console.log(data,"DOWNDATA")
+  //   fileDownload(data, row.name);
+  // };
+  const handleDownload=()=>{
+axios.get(`${Routes.Attachments.root}download/${row?.id}`).then((res)=>{
+  window.location.assign(res.data)
+})
+  }
 
   return (
     <>

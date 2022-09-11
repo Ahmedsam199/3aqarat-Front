@@ -22,7 +22,11 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
     () => attachments?.map((att) => att?.name),
     [attachments]
   );
-  
+  const onPreviewV2=(row)=>{
+    axios.get(`${Routes.Attachments.root}view/${row?.id}`).then((res) => {
+      window.open(res.data)
+    });
+  }
 
   const sendAttachment = (acceptedFiles) => {
     let formData = new FormData();
@@ -305,12 +309,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   ];
 
   _columns.push({
-    name: 'activity',
-    maxWidth: '165px',
+    name: "activity",
+    maxWidth: "165px",
     cell: (row) => (
       <RowActionsFile
         row={row}
-        onPreview={() => setIsPreviewFile(row)}
+        onPreview={() => onPreviewV2(row)}
         onDownload={() => true}
         onDelete={() => onDelete(row)}
       />
@@ -352,17 +356,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
           )}
           <CustomTable offlineData={attachments} columns={_columns} />
         </ModalContainer>
-        <h6 style={{ color: 'gray' }}>
-          <UploadCloud size="20" /> Drop files here to attach or{' '}
+        <h6 style={{ color: "gray" }}>
+          <UploadCloud size="20" /> Drop files here to attach or{" "}
           <BrowseText onClick={open}>browse</BrowseText>
         </h6>
       </ModalBody>
-      {previewFile && (
-        <FilePreview
-          previewFile={previewFile}
-          setIsPreviewFile={setIsPreviewFile}
-        />
-      )}
+      {previewFile && <FilePreview previewFile={previewFile} />}
     </Modal>
   );
 };

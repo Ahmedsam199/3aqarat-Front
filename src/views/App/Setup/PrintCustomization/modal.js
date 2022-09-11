@@ -83,7 +83,7 @@ const PrintModal = ({ open, onModalClose }) => {
       </ModalBody>
       <ModalFooter>
         <Link
-          to={`/Setting/NewPrintCustomization/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
+          to={`/Setup/NewPrintCustomization/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
         >
           <Button
             color="primary"
