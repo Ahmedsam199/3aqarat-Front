@@ -1,4 +1,4 @@
-import Attachment from './attachments';
+import Attachment from "./attachments";
 export default {
   Attachment,
 };

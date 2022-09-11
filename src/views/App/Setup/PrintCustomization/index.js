@@ -1,4 +1,4 @@
-import { PrintCustomization as createColumns } from '@columns';
+import { Contract_Template as createColumns } from '@columns';
 import CustomTable from '@Component/CustomTable';
 import Breadcrumbs from '@components/breadcrumbs';
 import { AbilityContext } from '@src/utility/context/Can';
@@ -20,7 +20,7 @@ import {
 } from 'reactstrap';
 import Modal from './modal';
 const Index = () => {
-  const { PrintCustomization } = useSelector((state) => state);
+  const { ContractTemplates } = useSelector((state) => state);
   const [open, setOpen] = useState()
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
@@ -40,13 +40,13 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem('PrintCustomization', Series))
+    dispatch(deleteItem("ContractTemplates", Series))
       .then((res) => {
         ref.current?.refresh();
-        toasty({ type: 'success' })
+        toasty({ type: "success" });
       })
       .catch((err) => {
-        console.log('hacker_it_error', err);
+        console.log("hacker_it_error", err);
       });
   };
   const Columns = createColumns({
@@ -66,9 +66,14 @@ const Index = () => {
             breadCrumbActive="PrintCustomization"
           />
         </div>
-        {ability.can('create', 'DT-9') && (
+        {ability.can("create", "DT-9") && (
           <div>
-            <Button.Ripple color="primary" onClick={() => { setOpen(true); }} >
+            <Button.Ripple
+              color="primary"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               {t("New")}
             </Button.Ripple>
           </div>
@@ -79,13 +84,11 @@ const Index = () => {
           <Row form className="mt-1 mb-50">
             <Col md="2">
               <FormGroup>
-                <Label>
-                  {t("Series")}
-                </Label>
+                <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
                   onChange={(e) =>
-                    handleFiltersChange('Series', e.target.value)
+                    handleFiltersChange("Series", e.target.value)
                   }
                 />
               </FormGroup>
@@ -94,7 +97,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={PrintCustomization}
+          offlineData={ContractTemplates}
           columns={Columns}
           filters={filters}
         />

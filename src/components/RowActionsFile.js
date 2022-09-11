@@ -21,13 +21,11 @@ const RowActionsFile = ({
   const ability = useContext(AbilityContext);
 
   const handleDownload = async () => {
-    const data = await fetch(
-      `${Routes.Attachments.AmazonS3}/${row?.FilePath}`,
-      {
-        responseType: 'arraybuffer',
-      }
-    ).then((data) => data.blob());
-    fileDownload(data, row.OriginalFileName);
+    const data = await fetch(`${Routes.Attachments.root}download/${row?.id}`, {
+      responseType: "arraybuffer",
+    }).then((data) => data.blob());
+    console.log(data,"DOWNDATA")
+    fileDownload(data, row.name);
   };
 
   return (

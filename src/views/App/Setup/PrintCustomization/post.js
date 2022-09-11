@@ -79,15 +79,15 @@ const Post = () => {
     };
     dispatchRedux(
       params.series
-        ? updateItem('PrintCustomization', request)
-        : insertItem('PrintCustomization', request)
+        ? updateItem("ContractTemplates", request)
+        : insertItem("ContractTemplates", request)
     )
       .then((res) => {
         toasty({ type: "success" });
-        navigate('/Setting/PrintCustomization');
+        navigate("/Setup/PrintCustomization");
       })
       .catch((err) => {
-        console.log('hacker_it_err', err);
+        console.log("hacker_it_err", err);
       });
   };
   const changeFile = (e, name) => {

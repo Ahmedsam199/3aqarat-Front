@@ -747,11 +747,19 @@ export const sendAttachment = ({
   files.forEach((img) => {
     formData.append("image", img);
   });
-
+const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      
   axios.post(
-    `${Routes.Attachments.upload}?refDoctype=${refDoctype}&refSeries=${refSeries}`,
-    formData
+    `${Routes.Attachments.root}?refDoctype=${refDoctype}&refSeries=${refSeries}`,
+    formData,
+    config
   );
+  
+
 };
 
 export const listFonts = () => {

@@ -1,7 +1,7 @@
-import Types from '@Types';
-import { toast } from 'react-toastify';
-import { v4 as uuidv4 } from 'uuid';
-import { SuccessToast } from '../../../SuccessToast';
+import Types from "@Types";
+import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
+import { SuccessToast } from "../../../SuccessToast";
 
 export const deleteAttachments = (Series) => {
   return async (dispatch) => {
@@ -14,7 +14,7 @@ export const deleteAttachments = (Series) => {
         hideProgressBar: true,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -27,7 +27,7 @@ export const addAttachments = (attachment) => {
         payload: attachment,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -39,7 +39,7 @@ export const clearAttachments = () => {
         type: Types.Attachments.clear,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -52,7 +52,7 @@ export const setAttachments = (attachments) => {
         payload: attachments,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -74,7 +74,7 @@ export const replaceSignleAttachment = (newFile) => {
         payload: Attachment,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -82,13 +82,13 @@ export const renameSignleAttachment = ({ attachmentNames, acceptedFile }) => {
   return async (dispatch) => {
     let blob = acceptedFile.slice(0, acceptedFile.size, acceptedFile.type);
     let fileIndex = 2;
-    let newFileName = `${acceptedFile.name.split('.')[0]}(${fileIndex}).${
-      acceptedFile.name.split('.')[1]
+    let newFileName = `${acceptedFile.name.split(".")[0]}(${fileIndex}).${
+      acceptedFile.name.split(".")[1]
     }`;
 
     while (attachmentNames.includes(newFileName)) {
-      newFileName = `${acceptedFile.name.split('.')[0]}(${fileIndex}).${
-        acceptedFile.name.split('.')[1]
+      newFileName = `${acceptedFile.name.split(".")[0]}(${fileIndex}).${
+        acceptedFile.name.split(".")[1]
       }`;
       fileIndex++;
     }
@@ -105,7 +105,7 @@ export const renameSignleAttachment = ({ attachmentNames, acceptedFile }) => {
         payload: newFile,
       });
     } catch (e) {
-      console.log('Joseph error');
+      console.log("Joseph error");
     }
   };
 };
@@ -135,7 +135,7 @@ export const replaceMultipleAttachments = ({ duplicateNames, newFiles }) => {
         payload: Attachment,
       });
     } catch (e) {
-      console.error('Joseph error', e);
+      console.error("Joseph error", e);
     }
   };
 };
@@ -158,13 +158,13 @@ export const renameMultipleAttachments = ({
     tempRenames.forEach((elem, index) => {
       let blob = [elem][0].slice(0, elem.size, elem.type);
       let fileIndex = 2;
-      let newFileName = `${elem.name.split('.')[0]}(${fileIndex}).${
-        elem.name.split('.')[1]
+      let newFileName = `${elem.name.split(".")[0]}(${fileIndex}).${
+        elem.name.split(".")[1]
       }`;
 
       while (attachmentNames.includes(newFileName)) {
-        newFileName = `${elem.name.split('.')[0]}(${fileIndex}).${
-          elem.name.split('.')[1]
+        newFileName = `${elem.name.split(".")[0]}(${fileIndex}).${
+          elem.name.split(".")[1]
         }`;
         fileIndex++;
       }
@@ -188,7 +188,7 @@ export const renameMultipleAttachments = ({
         payload: Attachment,
       });
     } catch (e) {
-      console.log('Joseph error');
+      console.log("Joseph error");
     }
   };
 };

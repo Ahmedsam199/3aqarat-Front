@@ -5,57 +5,61 @@
     "logout": "http://193.47.189.15:3004/Logout"
   },
   "Contracts": {
-    "root": "http://192.168.1.14:8080/Contracts"
+    "root": "http://192.168.1.24:8080/Contracts"
   },
   "Payments": {
-    "root": "http://192.168.1.14:8080/Payments"
+    "root": "http://192.168.1.24:8080/Payments"
   },
   "Party": {
-    "root": "http://192.168.1.14:8080/Party"
+    "root": "http://192.168.1.24:8080/Party"
   },
   "Property": {
-    "root": "http://192.168.1.14:8080/Property"
+    "root": "http://192.168.1.24:8080/Property"
   },
   "PropertyAttr": {
-    "root": "http://192.168.1.14:8080/PropertyAttr"
+    "root": "http://192.168.1.24:8080/PropertyAttr"
   },
   "Territory": {
-    "root": "http://192.168.1.14:8080/Territory"
+    "root": "http://192.168.1.24:8080/Territory"
   },
   "Branches": {
-    "root": "http://192.168.1.14:8080/Branches"
+    "root": "http://192.168.1.24:8080/Branches"
   },
-  "Contract_Template": {
-    "root": "http://192.168.1.14:8080/ContractTemplates"
+  "Attachments":{
+"root":"http://192.168.1.24:8080/Attachment/"
+  },
+  "ContractTemplates": {
+    "root": "http://192.168.1.24:8080/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://192.168.1.14:8080/ContractType"
+    "root": "http://192.168.1.24:8080/ContractType"
   },
   "Permission": {
-    "root": "http://192.168.1.14:8080/Permission"
+    "root": "http://192.168.1.24:8080/Permission"
   },
   "Purpose": {
-    "root": "http://192.168.1.14:8080/Purpose"
+    "root": "http://192.168.1.24:8080/Purpose"
   },
   "Setup_User": {
-    "root": "http://192.168.1.14:8080/Users"
+    "root": "http://192.168.1.24:8080/Users"
   },
   "Roles": {
-    "root": "http://192.168.1.14:8080/Roles"
+    "root": "http://192.168.1.24:8080/Roles"
   },
+    
   "Currency": {
-    "root": "http://192.168.1.14:8080/Currency/"
+    "root": "http://192.168.1.24:8080/Currency/"
   },
   "DocType": {
-    "root": "http://192.168.1.14:8080/DocTypes"
+    "root": "http://192.168.1.24:8080/DocTypes"
   },
   "PrintKeys": {
-    "root": "http://192.168.1.14:8080/PrintKeys"
+    "root": "http://192.168.1.24:8080/PrintKeys"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://192.168.1.14:8080",
-    "check": "http://192.168.1.14:8080"
+    "data": "http://192.168.1.24:8080",
+    "check": "http://192.168.1.24:8080"
   }
 }

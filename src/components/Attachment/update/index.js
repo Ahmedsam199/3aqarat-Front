@@ -17,10 +17,12 @@ import { AlertTriangle } from 'react-feather';
 const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   const [attachments, setAttachments] = useState([]);
   const [previewFile, setIsPreviewFile] = useState(false);
+  console.log("attachments", attachments);
   let attachmentNames = useMemo(
-    () => attachments?.map((att) => att?.OriginalFileName),
+    () => attachments?.map((att) => att?.name),
     [attachments]
   );
+  
 
   const sendAttachment = (acceptedFiles) => {
     let formData = new FormData();
@@ -30,27 +32,26 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
     axios
       .post(
-        `${Routes.Attachments.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
+        `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
         formData
       )
-      .then(({ data }) => {
-        setAttachments((prev) => [...prev, ...data]);
+      .then(({data}) => {
+
+        setAttachments((prev) => [...prev, data]);
       })
-      .catch((err) => console.log('Joseph err', err));
+      .catch((err) => console.log("Joseph err", err));
   };
 
   const onDelete = (row) => {
     axios
       .delete(
-        `${Routes.Attachments.delete}?filePath=${row?.FilePath}&filePath=`
+        `${Routes.Attachments.root}${row?.id}/${row?.refSeries}`
       )
-      .then(() => {
+      .then((res) => {
         toast.success(<SuccessToast msg="Deleted Successfully!" />, {
           hideProgressBar: true,
         });
-        setAttachments((prev) =>
-          prev.filter((att) => att?.Series !== row?.Series)
-        );
+        setAttachments((prev) => prev.filter((att) => att?.id !== row?.id));
       })
       .catch((err) => {
         console.log('Joseph err', err);
@@ -66,7 +67,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
         if (acceptedFiles.length === 1) {
           if (attachmentNames.includes(acceptedFiles[0]?.name)) {
             Swal.fire({
-              title: 'There is already this file exist!',
+              title: 'This File Is Already exist!',
               showDenyButton: true,
               showCancelButton: true,
               confirmButtonText: 'Replace File',
@@ -237,7 +238,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
                 axios
                   .post(
-                    `${Routes.Attachments.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
+                    `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
                     formData
                   )
                   .then(({ data }) => {
@@ -265,10 +266,10 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   useEffect(() => {
     axios
       .get(
-        `${Routes.Attachments.read}?RefDoctype=${RefDocType}&RefSeries=${ItemSeries}`
+        `${Routes.Attachments.root}${ItemSeries}`
       )
-      .then(({ data }) => {
-        setAttachments(data?.rows);
+      .then((data) => {
+        setAttachments(data?.data);
       })
       .catch((err) => console.log('Joseph err attachment'));
   }, [ItemSeries]);
@@ -299,7 +300,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   const _columns = [
     {
       name: 'File',
-      cell: (row) => <p>{row?.OriginalFileName}</p>,
+      cell: (row) => <p>{row?.name}</p>,
     },
   ];
 

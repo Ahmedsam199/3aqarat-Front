@@ -80,7 +80,7 @@ const Index = () => {
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between">
         <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-7") && (
+        {ability.can("create", "DT-2") && (
           <div>
             <Link to="/Setup/NewPer">
               <Button.Ripple color="primary">{t("New")}</Button.Ripple>
