@@ -9,7 +9,7 @@ const Contract_contract = lazy(() => import('../../views/App/contract/contracts'
 const Contract_Payment = lazy(() => import('../../views/App/contract/payment'))
 const Contract_New = lazy(() => import('../../views/App/contract/contracts/post'))
 const Contract_Payment_New = lazy(() => import('../../views/App/contract/payment/post'))
-const Properity_Owner = lazy(() => import('../../views/App/Property/party'))
+const Properity_Owner = lazy(() => import('../../views/App/Property/Owner'))
 const Properity_Attribute = lazy(() => import('../../views/App/Property/Property_Attribute'))
 const Properity_Property = lazy(() => import('../../views/App/Property/Property'))
 const Properity_Property_New = lazy(() => import('../../views/App/Property/Property/post'))

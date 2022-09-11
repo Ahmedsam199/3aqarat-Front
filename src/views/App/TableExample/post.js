@@ -17,7 +17,7 @@ import React, { memo, useContext, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import {
   Button,
   Card,
@@ -32,7 +32,7 @@ const POST = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const ability = useContext(AbilityContext);
-  const history = useHistory();
+  const navigate = useNavigate();
   const params = useParams();
 
   const methods = useForm({
@@ -70,7 +70,7 @@ const POST = () => {
           });
         }
         toasty({ type: 'success' });
-        history.push('/Entry/Payment');
+        navigate('/Entry/Payment');
         setLoading(false);
       })
       .catch((err) => {

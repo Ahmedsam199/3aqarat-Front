@@ -1,13 +1,12 @@
-import { PrintCustomization as createColumns } from '@columns';
+import { contractTemplate as createColumns } from '@columns';
 import CustomTable from '@Component/CustomTable';
 import Breadcrumbs from '@components/breadcrumbs';
 import { AbilityContext } from '@src/utility/context/Can';
 import { deleteItem } from '@store/actions/data';
 import { toasty } from '@toast';
-import { t } from 'i18next';
-import { useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -18,9 +17,11 @@ import {
   Label,
   Row
 } from 'reactstrap';
+import CustomSelect from '../../../../components/CustomSelect';
 import Modal from './modal';
 const Index = () => {
-  const { PrintCustomization } = useSelector((state) => state);
+  const { contractTemplate, Doctypes } = useSelector((state) => state);
+  const { t } = useTranslation()
   const [open, setOpen] = useState()
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
@@ -29,8 +30,11 @@ const Index = () => {
       value: '',
       op: 'like',
     },
+    Doctype: {
+      value: '',
+      op: 'eq',
+    },
   });
-  const navigate = useNavigate();
   const ref = useRef();
   const handleFiltersChange = (key, value) => {
     let _filter = value;
@@ -40,7 +44,7 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem('PrintCustomization', Series))
+    dispatch(deleteItem('contractTemplate', Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: 'success' })
@@ -51,19 +55,16 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) =>
-      navigate(
-        `/Setup/UpdatePrintCustomization/${row.Series}/${row.Name}/${row.Doctype}/${row.isRtl}/${row.isReceipt}/${row.isDefault}/${row.isLandscape}`
-      ),
+    onEdit: (row) => { console.log('hacker_it', row.isReceipt); },
   });
   return (
     <>
       <div className="d-flex justify-content-between">
         <div className="flex-grow-1">
           <Breadcrumbs
-            breadCrumbTitle="PrintCustomization"
-            breadCrumbParent="Setting"
-            breadCrumbActive="PrintCustomization"
+            breadCrumbTitle="contractTemplate"
+            breadCrumbParent="Setup"
+            breadCrumbActive="contractTemplate"
           />
         </div>
         {ability.can('create', 'DT-9') && (
@@ -76,17 +77,34 @@ const Index = () => {
       </div>
       <Card>
         <CardBody>
-          <Row form className="mt-1 mb-50">
+          <Row className="mt-1 mb-50">
             <Col md="2">
               <FormGroup>
                 <Label>
                   {t("Series")}
                 </Label>
                 <Input
-                  placeholder={t("Series")}
+                  placeholder={t('Series')}
                   onChange={(e) =>
                     handleFiltersChange('Series', e.target.value)
                   }
+                />
+              </FormGroup>
+            </Col>
+            <Col md="2">
+              <FormGroup>
+                <Label>
+                  {t("Doctype")}
+                </Label>
+                <CustomSelect
+                  isClearable={true}
+                  valueName="Series"
+                  textName="DocTypeName"
+                  value={filters.Doctype.value}
+                  options={Doctypes}
+                  onChange={(e) => {
+                    handleFiltersChange('Doctype', e?.value ?? null);
+                  }}
                 />
               </FormGroup>
             </Col>
@@ -94,7 +112,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={PrintCustomization}
+          offlineData={contractTemplate}
           columns={Columns}
           filters={filters}
         />

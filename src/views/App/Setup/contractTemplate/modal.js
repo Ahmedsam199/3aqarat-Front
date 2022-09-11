@@ -24,7 +24,7 @@ const PrintModal = ({ open, onModalClose }) => {
   return (
     <Modal isOpen={open} toggle={() => { onModalClose(!open); setValues(initState) }} centered={true}>
       <ModalHeader>
-        {t("New Contract Template")}
+        {t("New Print Customization")}
       </ModalHeader>
       <ModalBody>
         <Col>

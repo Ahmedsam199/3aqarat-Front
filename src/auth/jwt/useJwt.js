@@ -1,12 +1,8 @@
 // ** Core JWT Import
 import useJwt from "@src/@core/auth/jwt/useJwt";
 /* Login Auth Api */
-const Link = "http://192.168.1.14:8080/Users/login";
-
+import Routes from '@Routes'
 const { jwt } = useJwt({
-  loginEndpoint: Link,
-  registerEndpoint: Link,
-  refreshEndpoint: Link,
-  logoutEndpoint: Link,
+  loginEndpoint: Routes.Auth.login,
 });
 export default jwt;

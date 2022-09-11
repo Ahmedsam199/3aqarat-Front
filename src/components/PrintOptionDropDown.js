@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledButtonDropdown } from 'reactstrap';
 const { ipcRenderer } = require('electron');
 const PrintOptionDropDown = ({ options, doctype, party }) => {
+    const { t } = useTranslation()
     const [isPrintReceiptDisabled, setIsPrintReceiptDisabled] = useState()
     const handlePrintA4Request = (e) => {
         setIsPrintReceiptDisabled(true);
@@ -228,17 +229,17 @@ const PrintOptionDropDown = ({ options, doctype, party }) => {
                 caret
                 disabled={isPrintReceiptDisabled}
             >
-                <FormattedMessage id="Print" />
+                {t('Print')}
             </DropdownToggle>
             <DropdownMenu>
                 <DropdownItem tag="a" onClick={handlePrintRequest}>
-                    <FormattedMessage id="Print Default Receipt" />
+                    {t("Print Default Receipt")}
                 </DropdownItem>
                 <DropdownItem
                     tag="a"
                     onClick={handlePrintA4Request}
                 >
-                    <FormattedMessage id="Print Default Receipt A4" />
+                    {t("Print Default Receipt A4")}
                 </DropdownItem>
                 {options?.map((x) => {
                     return (

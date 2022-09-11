@@ -1,6 +1,6 @@
 import Breadcrumbs from '@components/breadcrumbs';
 import { FormattedMessage } from 'react-intl';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -56,7 +56,7 @@ const Index = () => {
       op: 'range',
     },
   });
-  const history = useHistory();
+  const navigate = useNavigate();
   const ref = useRef();
 
   const handleFiltersChange = (key, value) => {
@@ -80,7 +80,7 @@ const Index = () => {
         PartyMap,
         onDelete,
         onEdit: (row) =>
-          history.push(
+          navigate(
             `/Entry/UpdatePayment/${isEmpty(row?.Series) ? row.ID : row?.Series
             }`
           ),

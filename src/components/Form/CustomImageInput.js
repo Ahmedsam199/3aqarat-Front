@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
-import { CustomInput } from "reactstrap";
-import Routes from '@Routes'
+import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 const defaultImage = require('@src/assets/images/default.png').default
 
 const CustomImageInput = ({ Accept = "image/*", setFile, src, onClear = () => { }, height = "150px" }) => {
