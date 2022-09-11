@@ -7,7 +7,7 @@ import Territory from "./Property/Terrority";
 import Branches from "./Setup/Branch";
 import ContractType from "./Setup/ContractType";
 import Permission from "./Setup/Permission";
-import Contract_Template from './Setup/Contract_Template';
+import ContractTemplates from "./Setup/Contract_Template";
 import PrintKeys from './Setup/PrintKeys';
 import PrintCustomization from './Setup/PrintCustomization';
 import Purpose from "./Setup/Purpose";
@@ -22,7 +22,7 @@ export default {
   Party,
   Property,
   PropertyAttr,
-  Contract_Template,
+  ContractTemplates,
   Territory,
   Branches,
   ContractType,

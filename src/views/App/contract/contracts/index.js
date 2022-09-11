@@ -98,6 +98,7 @@ const Index = () => {
       <Card>
         <CardBody>
           <Row>
+            
             <Col md="2">
               <FormGroup>
                 <Label>{t("Series")}</Label>

@@ -27,7 +27,7 @@ const [isActive, setIsActive] = useState(false);
   return (
     <ul className="nav navbar-nav align-items-center ms-auto">
       <IntlDropdown />
-      <NavItem className="d-none d-lg-block">
+      <NavItem className=" d-lg-block">
         <NavLink >
           <ThemeToggler />
         </NavLink>

@@ -47,7 +47,7 @@ const Index = () => {
           subject="Permissions"
           rowId={row.Series}
           onEdit={() => {
-            navigate(`/Apps/UpdatePermissions/${row.Series}`)
+            navigate(`/App/UpdatePermissions/${row.Series}`);
           }}
           onDelete={() => onDelete(row.Series)}
         />
@@ -79,50 +79,43 @@ const Index = () => {
 
   return (
     <>
-      <div className='d-flex justify-content-between'>
-        <div className='flex-grow-1'>
+      <div className="d-flex justify-content-between">
+        <div className="flex-grow-1">
           <Breadcrumbs
             breadCrumbTitle="Permissions"
             breadCrumbParent="Permissions"
             breadCrumbActive="Permissions"
           />
         </div>
-        {
-          ability.can("create", "Permissions") &&
+        {ability.can("create", "DT-7") && (
           <div>
-            <Link to="/Apps/NewPermissions">
-              <Button.Ripple color="primary">
-                {t("New")}
-              </Button.Ripple>
+            <Link to="/App/NewPermissions">
+              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
             </Link>
           </div>
-        }
+        )}
       </div>
       <Card>
         <CardBody>
           <Row form className="mt-1 mb-50">
             <Col md="3">
               <FormGroup>
-                <Label>
-                  {t("Series")}
-                </Label>
+                <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
                   onChange={(e) =>
-                    handleFiltersChange('Series', e.target.value)
+                    handleFiltersChange("Series", e.target.value)
                   }
                 />
               </FormGroup>
             </Col>
             <Col md="3">
               <FormGroup>
-                <Label>
-                  {t("Role")}
-                </Label>
+                <Label>{t("Role")}</Label>
                 <Input
                   placeholder={t("Role")}
                   onChange={(e) =>
-                    handleFiltersChange('RoleName', e.target.value)
+                    handleFiltersChange("RoleName", e.target.value)
                   }
                 />
               </FormGroup>

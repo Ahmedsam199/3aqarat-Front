@@ -88,7 +88,7 @@ const Post = () => {
         navigate('/Setup/contractTemplate');
       })
       .catch((err) => {
-        console.log('hacker_it_err', err);
+        console.log("hacker_it_err", err);
       });
   };
   const changeFile = (e, name) => {

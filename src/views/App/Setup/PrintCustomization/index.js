@@ -47,10 +47,10 @@ const Index = () => {
     dispatch(deleteItem('contractTemplate', Series))
       .then((res) => {
         ref.current?.refresh();
-        toasty({ type: 'success' })
+        toasty({ type: "success" });
       })
       .catch((err) => {
-        console.log('hacker_it_error', err);
+        console.log("hacker_it_error", err);
       });
   };
   const Columns = createColumns({
@@ -67,9 +67,14 @@ const Index = () => {
             breadCrumbActive="contractTemplate"
           />
         </div>
-        {ability.can('create', 'DT-9') && (
+        {ability.can("create", "DT-9") && (
           <div>
-            <Button.Ripple color="primary" onClick={() => { setOpen(true); }} >
+            <Button.Ripple
+              color="primary"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               {t("New")}
             </Button.Ripple>
           </div>
@@ -80,13 +85,11 @@ const Index = () => {
           <Row className="mt-1 mb-50">
             <Col md="2">
               <FormGroup>
-                <Label>
-                  {t("Series")}
-                </Label>
+                <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t('Series')}
                   onChange={(e) =>
-                    handleFiltersChange('Series', e.target.value)
+                    handleFiltersChange("Series", e.target.value)
                   }
                 />
               </FormGroup>

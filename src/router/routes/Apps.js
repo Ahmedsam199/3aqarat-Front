@@ -18,7 +18,7 @@ const Setup_Branches = lazy(() => import('../../views/App/Setup/Branches'))
 const NewPer = lazy(() => import('../../views/App/Setup/Permissions/post'))
 const Setup_Template = lazy(() => import('../../views/App/Setup/contractTemplate'))
 const Setup_ContractType = lazy(() => import('../../views/App/Setup/ContractType'))
-const Setup_Permission = lazy(() => import('../../views/App/Setup/Permissions'))
+const Setup_Permission = lazy(() => import('../../views/App/Setup/Permissions/index'))
 const Setup_Purpose = lazy(() => import('../../views/App/Setup/Purpose'))
 const Setup_User_Role = lazy(() => import('../../views/App/Setup/UserRole'))
 const Setup_User = lazy(() => import('../../views/App/Setup/User'))
@@ -81,7 +81,10 @@ const AppRoutes = [
   },
   {
     element: <Setup_Permission />,
-    path: "/Setup/Permission",
+    path: "/Setup/Permission",meta: {
+      action: "read",
+      resource: "DT-4",
+    },
   },
   {
     element: <Setup_ContractType />,
@@ -158,6 +161,10 @@ const AppRoutes = [
   {
     element: <NewPer />,
     path: "/Setup/NewPer",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
 
   {
@@ -189,6 +196,10 @@ const AppRoutes = [
   {
     element: <NewPer />,
     path: "/Setup/UpdatePer/:series",
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
   },
 
   {
@@ -243,7 +254,7 @@ const AppRoutes = [
     path: "/Setup/PrintCustomization/",
     meta: {
       action: "read",
-      resource: "DT-7",
+      resource: "DT-3",
     },
   },
   {
@@ -251,7 +262,7 @@ const AppRoutes = [
     path: "/Setup/NewPrintCustomization/:name/:doctype/:isRtl/:isLandscape",
     meta: {
       action: "read",
-      resource: "DT-7",
+      resource: "DT-3",
     },
   },
   {
@@ -259,7 +270,7 @@ const AppRoutes = [
     path: "/Setup/UpdatePrintCustomization/:series/:name/:doctype/:isRtl/:isReceipt/:isDefault/:isLandscape",
     meta: {
       action: "read",
-      resource: "DT-7",
+      resource: "DT-3",
     },
   },
 ];

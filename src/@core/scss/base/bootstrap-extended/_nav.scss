@@ -146,7 +146,7 @@
     padding: 0.61rem 1.2rem;
     border-radius: 0;
     position: relative;
-    overflow: hidden;
+    
 
     &:after {
       content: '';
@@ -199,7 +199,7 @@
 
 // Nav Tabs Vertical
 .nav-vertical {
-  overflow: hidden;
+
   .nav.nav-tabs {
     // nav item styles for vertical nav tabs
     .nav-item {
@@ -258,7 +258,7 @@
 
       ~ .tab-content {
         .tab-pane {
-          display: none;
+
           overflow-y: auto;
           padding-right: 1rem;
           &.active {

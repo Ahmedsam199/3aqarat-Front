@@ -79,19 +79,22 @@ const RefsList = ({ loading }) => {
           <tbody {...{ ref }}>
             {fields.map((x, index) => {
               return (
-                <div key={x.id}>
+                <div key={x.id} style={{overflow:"hidden"}}>
                   <tr>
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
                     <td style={{ width: "30%" }}>
                       <CustomFormInput
+                        menuShouldBlockScroll
                         hiddenTitle
+                        menuPosition="fixed"
                         name={`Furnitures.${index}.Subject`}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormSelect
+                      style={{overflow:"hidden"}}
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
@@ -109,8 +112,10 @@ const RefsList = ({ loading }) => {
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormInput
+                        menuPosition="fixed"
                         name={`Furnitures.${index}.Price`}
                         hiddenTitle
+                        menuShouldBlockScroll
                         extraOnChangeFun={refreshTotalPrice}
                       />
                     </td>
@@ -126,10 +131,12 @@ const RefsList = ({ loading }) => {
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormInput
+                        menuPosition="fixed"
                         name={`Furnitures.${index}.Qty`}
                         extraOnChangeFun={refreshTotalQty}
                         extraOnChangeFun2={refreshTotalPrice}
                         hiddenTitle
+                        menuShouldBlockScroll
                       />
                     </td>
                     <td style={{ width: "10%" }}>

@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 const reducer = (state, action) => {
   const { type, payload } = action;
+  
   switch (type) {
     case "setRoleSeries":
       return { ...state, RoleSeries: payload };
@@ -55,7 +56,7 @@ const POST = (props) => {
   useEffect(async () => {
     dispatch({
       type: "setActiveRoles",
-      payload: deepCopy(Permission).map((x) => x.RoleSeries),
+      payload: deepCopy(Permission).map((x) => JSON.parse(x.JsonData)),
     });
     if (params?.series) {
       const { data: JsonData, RoleSeries } = await axios.get(
@@ -65,10 +66,11 @@ const POST = (props) => {
       
       dispatch({
         type: "setData",
-        payload: Permission ?? JSON.parse(JsonData),
+        payload: JSON.parse(JsonData.JsonData),
       });
-      dispatch({ type: "setRoleSeries", payload: RoleSeries });
-      dispatch({ type: "setOriginRole", payload: RoleSeries });
+      console.log("testo", JSON.parse(JsonData.JsonData));
+      dispatch({ type: "setRoleSeries", payload: JsonData.RoleSeries });
+      dispatch({ type: "setOriginRole", payload: JsonData.RoleSeries });
     }
   }, []);
 
@@ -120,6 +122,7 @@ const POST = (props) => {
           <CustomSelect
             textName="DocType"
             valueName="series"
+            
             onChange={(e) => setDocType(e, index)}
             // options={DocType?.filter(
             //   (x) =>
@@ -207,9 +210,11 @@ const POST = (props) => {
   };
   //#endregion dataTable
   //#region Submit
+  
   const onSubmit = async () => {
     try {
       dispatch({ type: "changeLoading" });
+      console.log("2",data)
       const request = {
         Series: params.series ?? "",
         RoleSeries: RoleSeries,
@@ -219,7 +224,7 @@ const POST = (props) => {
         throw new Error("Tables empty");
       }
       dispatchRedux(
-        params.Series
+        params.series
           ? updateItem("Permission", request)
           : insertItem("Permission", request)
       )

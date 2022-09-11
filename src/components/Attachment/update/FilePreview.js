@@ -7,19 +7,17 @@ const FilePreview = ({ previewFile, setIsPreviewFile }) => {
   let fileType = previewFile?.FileType;
   let fileOriginaltype = fileType?.split('/')[0];
 
-  // if (fileType == 'application/pdf') {
-  //   shell.openPath(`${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`);
-  //   setIsPreviewFile(false);
-  //   return <p></p>;
-  // }
+  if (fileType == 'application/pdf') {
+    window.open(`${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`);
+    setIsPreviewFile(false);
+    return <p></p>;
+  }
 
-  // if (fileOriginaltype == 'application') {
-  //   shell.openPath(
-  //     `https://docs.google.com/viewer?url=${Routes.Attachments.AmazonS3}/${previewFile.FilePath}`
-  //   );
-  //   setIsPreviewFile(false);
-  //   return <p></p>;
-  // }
+  if (fileOriginaltype == 'application') {
+    window.open("Hello")
+    setIsPreviewFile(false);
+    return <p></p>;
+  }
 
   if (fileOriginaltype == 'image')
     return (

@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
-import { isObjEmpty, toBoolean } from "@utils";
+import { isObjEmpty, toBoolean, sendAttachment } from "@utils";
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
@@ -22,6 +22,7 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import AttachmentComponent from "@Component/Attachment";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
@@ -39,7 +40,9 @@ const POST = (props) => {
     tempData: { network },
   } = useSelector((state) => state);
   console.log(Offline)
+  const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   const ability = useContext(AbilityContext);
+  const Attachment = useSelector((state) => state.Attachment);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,11 +77,20 @@ console.log(errors);
       )
         .then((res) => {
           toast.success();
-          navigate("/App/Contract/Payment");
+          if (Attachment.length > 0) {
+            sendAttachment({
+              files: Attachment,
+              refDoctype: "Payment",
+              refSeries: res?.Series,
+            })
+            console.log(Attachment);
+          
+        }
         })
+
         .catch((err) => {
           console.log("hacker_it_err", err);
-          toast.error(err.response.data.message);
+          toast.error(err.response.data.message)
         })
         .finally(() => {
           setLoading(false);
@@ -218,6 +230,20 @@ const _ = Contracts?.filter((x) => x.Series === _watchChooseTheTable).map((x) =>
             </CardBody>
           </Card>
         </Row>
+        <Button
+          className="ml-1"
+          color="primary"
+          onClick={() => setIsAttachmentModalOpen(true)}
+        >
+          Attachment
+        </Button>
+
+        <AttachmentComponent
+          isModalOpen={isAttachmentModalOpen}
+          handleToggleModel={setIsAttachmentModalOpen}
+          series={params?.series}
+          refDoctype="Payment"
+        />
       </Form>
     </FormProvider>
   );
