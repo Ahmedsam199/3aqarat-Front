@@ -111,40 +111,8 @@ useEffect(() => {
         _loading: false,
       });
   }, [Property]);
-  let TerrOpt=[]
-Territory.forEach((x) => {
-  TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
-});
-  let PurposeOpt = [];
-  Purpose.forEach((x) => {
-
-    if (x.IsPayable===false) {
-
-      PurposeOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
-    }
-  });
-  let CurrencyOpt = [];
-  Currency.forEach((x) => {
-    CurrencyOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.CurrencyName,
-    });
-  });
-  let PartyOpt = [];
-  Party.forEach((x) => {
-    PartyOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.FullName,
-    });
-  });
-  let AttributeOpt = [];
-  PropertyAttr.forEach((x) => {
-    AttributeOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.Attribute,
-    });
-  });
-  const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
+  
+    const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
     return (
       <FormProvider {...methods}>
         <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -174,19 +142,43 @@ Territory.forEach((x) => {
                 <CardBody>
                   <Row>
                     <Col sm="6">
-                      <CustomFormSelect name="Party" options={PartyOpt} />
-                      <CustomFormSelect options={TerrOpt} name="Territory" />
-                      <CustomFormSelect name="Currency" options={CurrencyOpt} />
+                      <CustomFormSelect
+                        name="Party"
+                        textName="FullName"
+                        valueName="Series"
+                        options={Party}
+                      />
+                      <CustomFormSelect
+                        options={Territory}
+                        textName="Territory"
+                        valueName="Series"
+                        name="Territory"
+                      />
+                      <CustomFormSelect
+                        name="Currency"
+                        textName="CurrencyName"
+                        valueName="Series"
+                        options={Currency}
+                      />
                     </Col>
                     <Col sm="6">
                       <Col>
                         <CustomFormInput name="RequestedAmt" />
-                        <CustomFormSelect name="Purpose" options={PurposeOpt} />
+                        <CustomFormSelect
+                          name="Purpose"
+                          textName="Purpose"
+                          valueName="Series"
+                          options={Purpose.filter((x) => {
+                            return x.IsPayable;
+                          })}
+                        />
                       </Col>
                       <Row>
                         <Col>
                           <CustomFormSelect
-                            options={AttributeOpt}
+                            options={PropertyAttr}
+                            textName="Attribute"
+                            valueName="Series"
                             name="Attributes"
                           />
                         </Col>

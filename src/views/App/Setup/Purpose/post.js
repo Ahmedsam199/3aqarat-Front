@@ -101,7 +101,12 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             <CustomFormInput name="Purpose" />
             <CustomFormInputCheckbox name="IsPayable" />
             <CustomFormInput name="DefaultAmt" />
-            <CustomFormSelect name="DefaultCurrency" options={CurrencyOpt} />
+            <CustomFormSelect
+              name="DefaultCurrency"
+              textName="CurrencyName"
+              valueName="Series"
+              options={Currency}
+            />
             <div className="mt-1">
               <Button
                 color="primary"

@@ -87,14 +87,6 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   }, []);
   let BranchOpt = [];
   
-    Branches?.forEach((x) => {
-      if (x.isGroup == true) {
-        BranchOpt.push({
-          value: x.Series,
-          label: x.Series + " " + x.BranchName,
-        });
-      }
-    });
   
   const _watchIsGroup = useWatch({ control, name: "isGroup" });
   console.log(_watchIsGroup);
@@ -112,9 +104,20 @@ const POST = ({ onToggle, row, toggleFunc }) => {
           <Form onSubmit={handleSubmit(onSubmit)}>
             {/* s</ModalHeader> */}
             <CustomFormInput name="BranchName" />
-            
+
             <CustomFormInputCheckbox name="isGroup" />
-            {_watchIsGroup?<CustomFormSelect options={BranchOpt} name="ParentBranch" />:""}
+            {_watchIsGroup ? (
+              <CustomFormSelect
+                options={Branches?.filter((x)=>{
+                  return x.isGroup
+                })}
+                textName="BranchName"
+                valueName="Series"
+                name="ParentBranch"
+              />
+            ) : (
+              ""
+            )}
 
             <div className="mt-1">
               <Button

@@ -62,5 +62,5 @@ export default [
         resource: "DT-13",
       },
     ],
-}
+  },
 ];

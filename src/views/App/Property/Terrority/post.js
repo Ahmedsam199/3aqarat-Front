@@ -78,10 +78,6 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  let TerrOpt = [];
-  Territory.forEach((x) => {
-    TerrOpt.push({ value: x.Series, label: x.Series + " " + x.Territory });
-  });
   return (
     <>
       <Sidebar
@@ -98,7 +94,12 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             <CustomFormInput name="Territory" />
             <CustomFormInputCheckbox name="isGroup" />
 
-            <CustomFormSelect options={TerrOpt} name="Parent" />
+            <CustomFormSelect
+              options={Territory}
+              textName="Territory"
+              valueName="Series"
+              name="Parent"
+            />
             <div className="mt-1">
               <Button
                 color="primary"

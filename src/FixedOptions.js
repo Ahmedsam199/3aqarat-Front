@@ -1,9 +1,10 @@
-export const LangOptions = [
-  { value: "en", label: "English" },
-  { value: "ar", label: "Arabic" },
-  { value: "kr", label: "Kurdish" },
-  { value: "tr", label: "Turkish" },
+export const Lang = [
+  { value: 0, label: "Kurdish" },
+  { value: 1, label: "Arabic" },
+  { value: 2, label: "English" },
+  { value: 3, label: "Turkish" },
 ];
+
 export const ActivityTypes = [
   { label: "Add", value: 0 },
   { label: "Update", value: 1 },
@@ -230,8 +231,8 @@ export const Tables = {
       ],
     },
   ],
-  "DT-8":[
-{
+  "DT-8": [
+    {
       label: "Attribute",
       value: "Attribute",
       attributes: [
@@ -250,5 +251,5 @@ export const Tables = {
         { label: "Quantity", value: "Quantity" },
       ],
     },
-  ]
+  ],
 };

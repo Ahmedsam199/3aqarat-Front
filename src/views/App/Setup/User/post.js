@@ -21,8 +21,8 @@ import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-    const { Currency, Roles } = useSelector((state) => state);
-
+    const { Currency, Roles,Branches } = useSelector((state) => state);
+console.log("testing", Branches);
   const ability = useContext(AbilityContext);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
@@ -86,26 +86,14 @@ toast.error("To Date Cannot be smaller than From Date");
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  let CurrencyOpt = [];
-  Currency.forEach((x) => {
-    CurrencyOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.CurrencyName,
-    });
-  });
-  let RolesOpt = [];
-  Roles.forEach((x) => {
-    RolesOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.RoleName,
-    });
-  });
-  let lang=[
-                { value: 0, label: "Kurdish" },
-                { value: 1, label: "Arabic" },
-                { value: 2, label: "English" },
-                { value: 3, label: "Turkish" },
-              ]
+  
+  const Lang = [
+    { value: 0, label: "Kurdish" },
+    { value: 1, label: "Arabic" },
+    { value: 2, label: "English" },
+    { value: 3, label: "Turkish" },
+  ];
+
   return (
     <>
       <Sidebar
@@ -122,13 +110,25 @@ toast.error("To Date Cannot be smaller than From Date");
             <CustomFormInput name="FullName" />
             <CustomFormInput name="UserName" />
             <CustomFormInput type="password" name="Password" />
+            <CustomFormSelect name="DefaultLanguage" options={Lang} />
             <CustomFormSelect
-              name="DefaultLanguage"
-              values={lang[0]}
-              options={lang}
+              name="DefaultCurrency"
+              textName="CurrencyName"
+              valueName="Series"
+              options={Currency}
             />
-            <CustomFormSelect name="DefaultCurrency" options={CurrencyOpt} />
-            <CustomFormSelect name="RoleID" options={RolesOpt} />
+            <CustomFormSelect
+              name="RoleID"
+              textName="RoleName"
+              valueName="Series"
+              options={Roles}
+            />
+            <CustomFormSelect
+              name="Branch"
+              textName="BranchName"
+              valueName="Series"
+              options={Branches}
+            />
             <CustomFormInput name="FromDate" type="Date" />
             <CustomFormInput name="ToDate" type="Date" />
             <CustomFormInputCheckbox name="Disabled" />
