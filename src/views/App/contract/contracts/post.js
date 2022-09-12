@@ -1,38 +1,34 @@
 // ** React Import
 import React, { useContext, useEffect, useMemo, useState } from "react";
 // ** Custom Components
-import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
-import { isObjEmpty, toBoolean, sendAttachment } from "@utils";
+import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
 
 // ** Third Party Components
 // import CustomImageInput from "@Component/Form/CustomImageInput";
+import AttachmentComponent from "@Component/Attachment";
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
-import CustomFormRadioInput from "@Component/Form/CustomFormRadioInput";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
+import PrintDropDown from "@Component/PrintDropDown";
 import { PartyTypeOptions } from "@FixedOptions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Routes from "@Routes";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
-import { toasty } from "@toast";
 import { Contract as Schema } from "@validation";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import ReferenceList from "./ReferenceList";
 import Ref2 from "./Ref2";
-import AttachmentComponent from "@Component/Attachment";
 import Ref3 from "./Ref3";
-import toast from "react-hot-toast";
-// register lottie and define custom element
-
-// import { confirmAlert2 } from '../../../utility/alert';
+import ReferenceList from "./ReferenceList";
+import getPrintDate from '@Print/getData/Contract';
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -41,11 +37,11 @@ const POST = (props) => {
     Property,
     Party,
     Currency,
-    
+
     tempData: { network },
     Offline,
   } = useSelector((state) => state);
-  
+
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -65,7 +61,7 @@ const POST = (props) => {
   } = methods;
   const Attachments = useSelector((state) => state.Attachment);
   const _dataForm = useWatch({ control });
-    const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
+  const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   // ** Function to handle form submit
   useEffect(() => {
     console.log("testing", errors);
@@ -74,30 +70,31 @@ const POST = (props) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
       setLoading(true);
-      const idenfier=        network
-          ? values.Series
-          : values.ID
+      const identifier = network
+        ? values.Series
+        : values.ID
 
       dispatch(
-        idenfier
+        identifier
           ? updateItem("Contracts", values)
           : insertItem("Contracts", values)
       )
         .then((res) => {
-          
+
           toast.success();
           console.log(Attachments);
           if (Attachments.length > 0) {
-          sendAttachment({
-            files: Attachments,
-            refDoctype: "Data",
-            refSeries: res?.Series,
-          });
-          console.log(Attachments)
-          navigate("/App/Contract/Contract");
-        }else{
-          navigate("/App/Contract/Contract");
-        }})
+            sendAttachment({
+              files: Attachments,
+              refDoctype: "Data",
+              refSeries: res?.Series,
+            });
+            console.log(Attachments)
+            navigate("/App/Contract/Contract");
+          } else {
+            navigate("/App/Contract/Contract");
+          }
+        })
         .catch((err) => {
           console.log("hacker_it_err", err);
           toast.error(err.response.data.message)
@@ -108,25 +105,23 @@ const POST = (props) => {
     }
   };
   const _write = useMemo(
-    () => toBoolean(ability.can("write", "DT-6")),
-    [ability.can("write", "DT-6")]
+    () => toBoolean(ability.can("write", "DT-2")),
+    [ability.can("write", "DT-2")]
   );
 
   useEffect(async () => {
     if (params.series) {
-      if (!Contracts.length) return;
       if (network) {
-        const { data } = network
-          ? await axios.get(`${Routes.Contracts.root}/${params.series}`)
-          : _;
+        const { data } = await axios.get(`${Routes.Contracts.root}/${params.series}`)
+        return
         reset({
           ...data,
           _loading: false,
           _write,
         });
       } else {
+        if (!Contracts.length) return;
         const _ = Offline.Contracts.find((x) => x.ID == params.series);
-        console.log(_);
         reset({
           ..._,
           _loading: false,
@@ -176,6 +171,9 @@ const POST = (props) => {
               {loading && <Spinner color="white" size="sm" className="mr-1 " />}
               {t("Save")}
             </Button>
+            {params.series && (
+              <PrintDropDown Doctype={["DT-2"]} getDate={async () => await getPrintDate({ data: deepCopy(getValues()) })} />
+            )}
           </Col>
         </Row>
 
@@ -193,7 +191,7 @@ const POST = (props) => {
                   <CustomFormSelect name="SecondParty" options={PartyOpt} />
                   <CustomFormInput
                     name="ContractStarts"
-                    
+
                     type="Date"
                   />
                 </Col>
@@ -314,13 +312,13 @@ const POST = (props) => {
         >
           Attachment
         </Button>
-        
+
         <AttachmentComponent
           isModalOpen={isAttachmentModalOpen}
           handleToggleModel={setIsAttachmentModalOpen}
           series={params?.Series}
           refDoctype="Data"
-          
+
         />
       </Form>
     </FormProvider>

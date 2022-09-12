@@ -20,6 +20,7 @@ module.exports = {
       '@assets': path.resolve(__dirname, 'src/@core/assets'),
       '@components': path.resolve(__dirname, 'src/@core/components'),
       '@Component': path.resolve(__dirname, 'src/components'),
+      '@Print': path.resolve(__dirname, 'src/print'),
       '@layouts': path.resolve(__dirname, 'src/@core/layouts'),
       '@store': path.resolve(__dirname, 'src/redux'),
       '@styles': path.resolve(__dirname, 'src/@core/scss'),

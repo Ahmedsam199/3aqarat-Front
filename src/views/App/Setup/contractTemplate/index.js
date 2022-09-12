@@ -20,7 +20,7 @@ import {
 import CustomSelect from '../../../../components/CustomSelect';
 import Modal from './modal';
 const Index = () => {
-  const { contractTemplate, Doctypes } = useSelector((state) => state);
+  const { ContractTemplate, DocType } = useSelector((state) => state);
   const { t } = useTranslation()
   const [open, setOpen] = useState()
   const dispatch = useDispatch();
@@ -101,7 +101,7 @@ const Index = () => {
                   valueName="Series"
                   textName="DocTypeName"
                   value={filters.Doctype.value}
-                  options={Doctypes}
+                  options={DocType}
                   onChange={(e) => {
                     handleFiltersChange('Doctype', e?.value ?? null);
                   }}
@@ -112,7 +112,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={contractTemplate}
+          offlineData={ContractTemplate}
           columns={Columns}
           filters={filters}
         />

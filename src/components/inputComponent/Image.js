@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react'
-import { Input, FormGroup } from 'reactstrap'
+import React, { useMemo } from 'react';
+import { Image } from 'react-feather';
+import { useTranslation } from 'react-i18next';
+import { Input } from 'reactstrap';
 import { v4 as uuidv4 } from 'uuid';
-
-const Image = ({ title, Icon, onChange, base64 = true }) => {
+const InputImage = ({ title, Icon, onChange, base64 = true }) => {
+    const { t } = useTranslation()
     const id = useMemo(() => uuidv4(), [])
     const getBase64 = (e, cb) => {
         let blob = e.target.files[0];
@@ -14,14 +16,21 @@ const Image = ({ title, Icon, onChange, base64 = true }) => {
         };
     }
     return (
-        <FormGroup>
-            <label for={id} style={{ background: "red" }}>{title ?? <Icon size={40} />} </label>
+        <>
+            <label for={id} >{
+                title ?
+                    <div className='d-flex flex-column align-items-center'>
+                        <Image />
+                        {t(title)}
+                    </div>
+                    : <Icon size={40} />}
+            </label>
             <Input id={id} type="file" style={{ display: "none" }} onChange={e => {
                 base64 ?
                     getBase64(e, onChange) : onChange(e)
             }} />
-        </FormGroup>
+        </>
     )
 }
 
-export default Image
+export default InputImage

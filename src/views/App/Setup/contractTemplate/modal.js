@@ -14,7 +14,7 @@ const initState = {
   isReceipt: false,
 }
 const PrintModal = ({ open, onModalClose }) => {
-  const DocTypes = useSelector(state => state.Doctypes)
+  const { DocType } = useSelector(state => state)
   const [values, setValues] = useState(initState);
   const handleChange = (key, value) => {
     setValues((prev) => {
@@ -47,8 +47,8 @@ const PrintModal = ({ open, onModalClose }) => {
               {t("Doctype")} :
             </Label>
             <CustomSelect
-              options={DocTypes}
-              textName="DocTypeName"
+              options={DocType}
+              textName="DocType"
               valueName="Series"
               value={values.doctype}
               onChange={async (e) => {
@@ -82,7 +82,7 @@ const PrintModal = ({ open, onModalClose }) => {
       </ModalBody>
       <ModalFooter>
         <Link
-          to={`/Setting/NewContractTemplate/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
+          to={`/Setup/NewContractTemplate/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
         >
           <Button color="primary" disabled={!values.doctype || !values.printName}>
             {t("Next")}

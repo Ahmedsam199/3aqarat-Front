@@ -9,6 +9,8 @@ NOTE:
 ------
 PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
 WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+@import '/src/@core/scss/base/colors.scss';
+
 .react-dataTable{
 	background-color: transparent !important;
 }
@@ -45,4 +47,46 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .tox-statusbar__branding {
   display: none !important;
 
+}
+.color-container {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+
+  .swatch {
+    padding: 5px;
+    box-sizing: border-box;
+    width: 250px;
+    height: 100%;
+    border: 1px solid $border-color;
+    background-color: $body-bg;
+    // border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+
+    .color {
+      width: 100%;
+      height: 100%;
+      // border-radius: 50%;
+      margin: auto;
+    }
+  }
+
+  .popover {
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    z-index: 2;
+
+    .cover {
+      position: fixed;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+    }
+  }
 }

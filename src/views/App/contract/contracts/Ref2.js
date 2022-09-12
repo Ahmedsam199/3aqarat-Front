@@ -20,24 +20,25 @@ const RefsList = ({ loading }) => {
     formState: { errors },
     reset,
   } = useFormContext();
-    const {
+  const {
 
-      Currency,
+    Currency,
 
 
 
-    } = useSelector((state) => state);
-  
+  } = useSelector((state) => state);
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "Furniture",
   });
-    let CurrencyOpt = [];
+  let CurrencyOpt = [];
   Currency.forEach((x) => {
     CurrencyOpt.push({
       value: x.Series,
       label: x.Series + " " + x.CurrencyName,
-    })})
+    })
+  })
   return (
     <>
       <h5 className="mb-1 text-center">{t("Furniture")}</h5>
@@ -45,25 +46,27 @@ const RefsList = ({ loading }) => {
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "30%" }}>{t("Subject")}</th>
-              <th style={{ width: "25%" }}>{t("Statue")}</th>
-              <th style={{ width: "25%" }}>{t("Price")}</th>
-              <th style={{ width: "25%" }}>{t("Currency")}</th>
-              <th style={{ width: "25%" }}>{t("Qty")}</th>
+              <th style={{ width: "5%" }}>{t("#")}</th>
+              <th style={{ width: "16%" }}>{t("Subject")}</th>
+              <th style={{ width: "16%" }}>{t("Statue")}</th>
+              <th style={{ width: "16%" }}>{t("Price")}</th>
+              <th style={{ width: "16%" }}>{t("Currency")}</th>
+              <th style={{ width: "16%" }}>{t("Qty")}</th>
+              <th style={{ width: "15%" }}>{t("Actions")}</th>
             </tr>
           </thead>
           <tbody {...{ ref }}>
             {fields.map((x, index) => {
               return (
                 <div key={x.id}>
-                  <tr>
+                  <tr className="d-flex">
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
-                    <td style={{ width: "30%" }}>
+                    <td style={{ width: "16%" }}>
                       <CustomFormInput hiddenTitle name={`Subject`} />
                     </td>
-                    <td style={{ width: "25%" }}>
+                    <td style={{ width: "16%" }}>
                       <CustomFormSelect
                         name={`Statue`}
                         options={[
@@ -77,20 +80,24 @@ const RefsList = ({ loading }) => {
                         hiddenTitle
                       />
                     </td>
-                    <td style={{ width: "25%" }}>
-                      <CustomFormInput  name={`Price`} hiddenTitle />
+                    <td style={{ width: "16%" }}>
+                      <CustomFormInput name={`Price`} hiddenTitle />
                     </td>
-                    <td style={{ width: "25%" }}>
+                    <td style={{ width: "16%" }}>
                       <CustomFormSelect
                         name={`Currency`}
-                        options={CurrencyOpt}
+                        options={Currency}
+                        valueName="Series"
+                        textName="CurrencyName"
+                        menuPosition="fixed"
+                        menuShouldBlockScroll
                         hiddenTitle
                       />
                     </td>
-                    <td style={{ width: "25%" }}>
+                    <td style={{ width: "16%" }}>
                       <CustomFormInput name={`Qty`} hiddenTitle />
                     </td>
-                    <td style={{ width: "10%" }}>
+                    <td style={{ width: "15%" }}>
                       <Button.Ripple
                         className="btn-icon"
                         color="flat-danger"
