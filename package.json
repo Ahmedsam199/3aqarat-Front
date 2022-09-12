@@ -93,6 +93,7 @@
     "react-simple-maps": "^3.0.0",
     "react-slidedown": "^2.4.7",
     "react-sortablejs": "6.0.0",
+    "react-to-print": "^2.14.7",
     "react-toastify": "7.0.3",
     "react-useanimations": "^2.0.8",
     "reactstrap": "9.0.1",

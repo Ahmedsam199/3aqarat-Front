@@ -48,7 +48,7 @@ export default [
         id: "",
         title: "User Roles",
         icon: <User size={12} />,
-        navLink: "/Setup/UserRole",
+        navLink: "/Setup/Role",
         action: "read",
         resource: "DT-12",
       },

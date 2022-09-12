@@ -1,18 +1,17 @@
-import { ContractType as createColumns } from "@columns";
+import { Role as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
-import "@styles/react/apps/app-invoice.scss";
-import "@styles/react/libs/tables/react-dataTable-component.scss";
-import "@styles/react/libs/react-select/_react-select.scss";
-import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import { toasty } from "@toast";
-import toast from "react-hot-toast";
-import { Toast, ToastBody, ToastHeader } from "reactstrap";
+ import "@styles/react/apps/app-invoice.scss";
+ import "@styles/react/libs/tables/react-dataTable-component.scss";
+ import "@styles/react/libs/react-select/_react-select.scss";
+ import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import CustomTable from "@Component/CustomTable";
 import React, { useContext, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import {
   Button,
   Card,
@@ -27,10 +26,7 @@ import POST from "./post";
 import { Link } from "react-router-dom";
 const Index = () => {
   const { t } = useTranslation();
-  const {
-    ContractType: ContractType,
-    Offline: { ContractType: OfflineContractType },
-  } = useSelector((state) => state);
+  const { Roles: Role } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -40,7 +36,7 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    ContractType: {
+    RoleName: {
       value: "",
       op: "like",
     },
@@ -53,27 +49,18 @@ const Index = () => {
       return { ...prev, [key]: { value: _filter, op: prev[key].op } };
     });
   };
-  const ToastContent = ({ t, name, role }) => {
-    return (
-      <div className="p-3 bg-success my-2 rounded">
-        Item Deleted Succsesfuly
-      </div>
-    );
-  };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("ContractType", Series))
+    dispatch(deleteItem("Roles", Series))
       .then((res) => {
         ref.current?.refresh();
         toast.success("Item " + Series + " has been Deleted");
-        console.log(toasty);
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
         toast.error(err.response.data.message);
       });
   };
-
   const Columns = createColumns({
     onDelete,
     onEdit: (row) => setCurrentRow(row),
@@ -81,9 +68,11 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
+        <div className="flex-grow-1">
+          
+        </div>
         <div className="flex-grow-1"></div>
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-4") && (
+        {ability.can("create", "DT-12") && (
           <div>
             <Button.Ripple
               className="mb-1"
@@ -97,12 +86,13 @@ const Index = () => {
       </div>
       <Card>
         <div>
-          {" "}
-          <POST
-            row={currentRow}
-            toggleFunc={toggleFunc}
-            onToggle={() => setCurrentRow(undefined)}
-          />
+          <div>
+            <POST
+              row={currentRow}
+              toggleFunc={toggleFunc}
+              onToggle={() => setCurrentRow(undefined)}
+            />
+          </div>
         </div>
         <CardBody>
           <Row>
@@ -119,11 +109,11 @@ const Index = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>{t("ContractType")}</Label>
+                <Label>{t("RoleName")}</Label>
                 <Input
-                  placeholder={t("ContractType")}
+                  placeholder={t("RoleName")}
                   onChange={(e) =>
-                    handleFiltersChange("ContractType", e.target.value)
+                    handleFiltersChange("RoleName", e.target.value)
                   }
                 />
               </FormGroup>
@@ -132,7 +122,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={[...ContractType]}
+          offlineData={Role}
           columns={Columns}
           filters={filters}
         />

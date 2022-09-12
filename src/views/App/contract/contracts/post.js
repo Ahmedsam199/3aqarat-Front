@@ -29,6 +29,7 @@ import Ref2 from "./Ref2";
 import Ref3 from "./Ref3";
 import ReferenceList from "./ReferenceList";
 import getPrintDate from '@Print/getData/Contract';
+import ReactToPrint from "react-to-print";
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -104,36 +105,36 @@ const POST = (props) => {
         });
     }
   };
+  console.log("testing",network,params?.series)
   const _write = useMemo(
     () => toBoolean(ability.can("write", "DT-2")),
     [ability.can("write", "DT-2")]
   );
-
-  useEffect(async () => {
-    if (params.series) {
-      if (network) {
-        const { data } = await axios.get(`${Routes.Contracts.root}/${params.series}`)
-        return
-        reset({
-          ...data,
-          _loading: false,
-          _write,
-        });
-      } else {
-        if (!Contracts.length) return;
-        const _ = Offline.Contracts.find((x) => x.ID == params.series);
-        reset({
-          ..._,
-          _loading: false,
-          _write,
-        });
-      }
-    } else
-      reset({
-        _write: true,
-        _loading: false,
-      });
-  }, [Contracts]);
+   useEffect(async () => {
+     if (params?.series) {
+       if (network) {
+         const { data } =  await axios.get(`${Routes.Contracts.root}/${params.series}`)
+         reset({
+           ...data,
+           _loading: false,
+           _write,
+         });
+       } else {
+         const _ = Offline.Contracts.find((x) => x.ID == params.series);
+         console.log(_);
+         reset({
+           ..._,
+           _loading: false,
+           _write,
+         });
+       }
+     } else
+       reset({
+         _write: true,
+         _loading: false,
+       });
+   }, [Contracts]);
+ 
   let TypeOpt = [];
   ContractType.forEach((x) => {
     TypeOpt.push({ value: x.Series, label: x.Series + " " + x.ContractType });
@@ -160,7 +161,10 @@ const POST = (props) => {
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
         <Row>
-          <Col sm="10"></Col>
+          <Col sm="10">
+            
+            
+          </Col>
           <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
               color="primary"
@@ -172,7 +176,10 @@ const POST = (props) => {
               {t("Save")}
             </Button>
             {params.series && (
-              <PrintDropDown Doctype={["DT-2"]} getDate={async () => await getPrintDate({ data: deepCopy(getValues()) })} />
+              <PrintDropDown
+                Doctype={["DT-2"]}
+                getDate={async () => await getPrintDate({ data: getValues() })}
+              />
             )}
           </Col>
         </Row>
@@ -189,11 +196,7 @@ const POST = (props) => {
                     ).map((x) => ({ label: x.Party, value: x.Party }))}
                   />
                   <CustomFormSelect name="SecondParty" options={PartyOpt} />
-                  <CustomFormInput
-                    name="ContractStarts"
-
-                    type="Date"
-                  />
+                  <CustomFormInput name="ContractStarts" type="Date" />
                 </Col>
                 <Col sm="6">
                   <CustomFormSelect options={PropOpt} name="Property" />
@@ -318,7 +321,6 @@ const POST = (props) => {
           handleToggleModel={setIsAttachmentModalOpen}
           series={params?.Series}
           refDoctype="Data"
-
         />
       </Form>
     </FormProvider>

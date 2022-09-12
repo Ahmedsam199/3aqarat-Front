@@ -1,3 +1,5 @@
+import { replaceMentions, replaceTables } from "./Utils";
+import {PrintWithoutPopUp} from "@utils";
 export const printFun = ({ data, tools, ...rest }) => {
     return new Promise((resolve, reject) => {
         const PrintKeys =
@@ -16,7 +18,7 @@ export const printFun = ({ data, tools, ...rest }) => {
             data,
             template: firstStep,
         });
-        ipcRenderer.send("asynchronous-message-Print", { html: secondStep, landscape: false });
+  PrintWithoutPopUp(secondStep);
         resolve()
     })
 }

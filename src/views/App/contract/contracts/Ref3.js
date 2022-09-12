@@ -74,7 +74,7 @@ const RefsList = ({ loading }) => {
                         color="flat-danger"
                         onClick={async () => {
                           await Promise.all([
-                            refreshPaidAmount(null, index),
+                            
                             deleteOptions(index),
                             remove(index),
                           ]);

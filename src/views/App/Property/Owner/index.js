@@ -77,7 +77,7 @@ const Index = () => {
       <div className="d-flex justify-content-between align-items-start">
         <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-13") && (
+        {ability.can("create", "DT-5") && (
           <div>
             <Button.Ripple
               color="primary"

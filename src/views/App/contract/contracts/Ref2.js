@@ -6,9 +6,9 @@ import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { sleep, toBoolean } from "@utils";
 import { useRef } from "react";
 import { Plus, Trash2 } from "react-feather";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button, Col, Row, Table } from "reactstrap";
+import { Alert, Button, Col, Row, Table } from "reactstrap";
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -20,25 +20,46 @@ const RefsList = ({ loading }) => {
     formState: { errors },
     reset,
   } = useFormContext();
-  const {
-
-    Currency,
-
-
-
-  } = useSelector((state) => state);
+  const { Currency } = useSelector((state) => state);
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Furniture",
+    name: "Furnitures",
   });
+  const refreshTotalQty = (_, ignoreIndex) => {
+    setValue(
+      "TotalQty",
+      getValues().Furnitures.reduce(
+        (sum, x, currIndex) => sum + +x.Qty * (currIndex !== ignoreIndex),
+        0
+      )
+    );
+  };
+
+  const refreshTotalPrice = (_, ignoreIndex) => {
+    setValue(
+      "TotalPrice",
+      getValues().Furnitures.reduce(
+        (sum, x, currIndex) =>
+          x.Qty
+            ? sum + x.Qty * x.Price * (currIndex !== ignoreIndex)
+            : sum + (x.Qty || 1 * x.Price) * (currIndex !== ignoreIndex),
+        0
+      )
+    );
+  };
+  const DoubleChange = () => {
+    refreshTotalQty();
+    refreshTotalPrice();
+  };
   let CurrencyOpt = [];
   Currency.forEach((x) => {
     CurrencyOpt.push({
       value: x.Series,
       label: x.Series + " " + x.CurrencyName,
-    })
-  })
+    });
+  });
+
   return (
     <>
       <h5 className="mb-1 text-center">{t("Furniture")}</h5>
@@ -46,29 +67,37 @@ const RefsList = ({ loading }) => {
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "5%" }}>{t("#")}</th>
-              <th style={{ width: "16%" }}>{t("Subject")}</th>
-              <th style={{ width: "16%" }}>{t("Statue")}</th>
-              <th style={{ width: "16%" }}>{t("Price")}</th>
-              <th style={{ width: "16%" }}>{t("Currency")}</th>
-              <th style={{ width: "16%" }}>{t("Qty")}</th>
-              <th style={{ width: "15%" }}>{t("Actions")}</th>
+              <th style={{ width: "30%" }}>{t("Subject")}</th>
+              <th style={{ width: "25%" }}>{t("Statue")}</th>
+              <th style={{ width: "25%" }}>{t("Price")}</th>
+              <th style={{ width: "25%" }}>{t("Currency")}</th>
+              <th style={{ width: "25%" }}>{t("Qty")}</th>
             </tr>
           </thead>
           <tbody {...{ ref }}>
             {fields.map((x, index) => {
               return (
-                <div key={x.id}>
-                  <tr className="d-flex">
+                <div key={x.id} style={{ overflow: "hidden" }}>
+                  <tr>
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
-                    <td style={{ width: "16%" }}>
-                      <CustomFormInput hiddenTitle name={`Subject`} />
+                    <td style={{ width: "30%" }}>
+                      <CustomFormInput
+                        menuShouldBlockScroll
+                        hiddenTitle
+                        menuPosition="fixed"
+                        name={`Furnitures.${index}.Subject`}
+                      />
                     </td>
-                    <td style={{ width: "16%" }}>
+                    <td style={{ width: "25%" }}>
                       <CustomFormSelect
-                        name={`Statue`}
+                        style={{ overflow: "hidden" }}
+                        menuPosition="fixed"
+                        menuShouldBlockScroll
+                        hiddenTitle
+                        autoFocus={index === fields.length - 1}
+                        name={`Furnitures.${index}.Statue`}
                         options={[
                           { value: 0, label: "Brand New" },
                           { value: 1, label: "Very Good" },
@@ -77,32 +106,45 @@ const RefsList = ({ loading }) => {
                           { value: 4, label: "Bad" },
                           { value: 5, label: "Poor" },
                         ]}
-                        hiddenTitle
                       />
                     </td>
-                    <td style={{ width: "16%" }}>
-                      <CustomFormInput name={`Price`} hiddenTitle />
+                    <td style={{ width: "25%" }}>
+                      <CustomFormInput
+                        menuPosition="fixed"
+                        name={`Furnitures.${index}.Price`}
+                        hiddenTitle
+                        menuShouldBlockScroll
+                        extraOnChangeFun={refreshTotalPrice}
+                      />
                     </td>
-                    <td style={{ width: "16%" }}>
+                    <td style={{ width: "25%" }}>
                       <CustomFormSelect
-                        name={`Currency`}
-                        options={Currency}
-                        valueName="Series"
-                        textName="CurrencyName"
+                        name={`Furnitures.${index}.Currency`}
+                        options={CurrencyOpt}
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
+                        autoFocus={index === fields.length - 1}
                       />
                     </td>
-                    <td style={{ width: "16%" }}>
-                      <CustomFormInput name={`Qty`} hiddenTitle />
+                    <td style={{ width: "25%" }}>
+                      <CustomFormInput
+                        menuPosition="fixed"
+                        name={`Furnitures.${index}.Qty`}
+                        extraOnChangeFun={refreshTotalQty}
+                        extraOnChangeFun2={refreshTotalPrice}
+                        hiddenTitle
+                        menuShouldBlockScroll
+                      />
                     </td>
-                    <td style={{ width: "15%" }}>
+                    <td style={{ width: "10%" }}>
                       <Button.Ripple
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
                           await Promise.all([remove(index)]);
+                          refreshTotalQty();
+                          refreshTotalPrice();
                         }}
                       >
                         <Trash2 size="15" />
@@ -112,7 +154,7 @@ const RefsList = ({ loading }) => {
                   <input
                     className="d-none"
                     defaultValue={x.id ?? ""}
-                    {...register(`Items.${index}.id`)}
+                    {...register(`Furnitures.${index}.id`)}
                   />
                 </div>
               );
@@ -147,6 +189,12 @@ const RefsList = ({ loading }) => {
           )}
         </Col>
       </Row>
+      <div style={{ width: "25%" }}>
+        <br></br>
+        <CustomFormNumberInput name="TotalPrice" IsDisabled={true} />
+        <br></br>
+        <CustomFormNumberInput name="TotalQty" IsDisabled={true} />
+      </div>
     </>
   );
 };

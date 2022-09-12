@@ -121,8 +121,7 @@ const POST = (props) => {
         <td style={{ width: "40%" }}>
           <CustomSelect
             textName="DocType"
-            valueName="series"
-            
+            valueName="Series"
             onChange={(e) => setDocType(e, index)}
             // options={DocType?.filter(
             //   (x) =>

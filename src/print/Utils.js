@@ -2,59 +2,6 @@ import { t } from "i18next";
 import format from 'number-format.js';
 import { FormatNumber } from '../FixedOptions';
 
-import { BrowserWindow } from 'electron';
-export const print = ({
-    html,
-    copies = 1,
-    silent = true,
-    printBackground = true,
-    landscape = true,
-    pageSize = 'A4',
-}) => {
-    let windows;
-    windows = new BrowserWindow({
-        show: false,
-    });
-    // ? print or show windows for testing
-    windows
-        .loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(html))
-        .then(() => {
-            windows.webContents.print(
-                {
-                    silent,
-                    printBackground,
-                    copies,
-                    landscape,
-                    pageSize
-                },
-                (success) => {
-                    setTimeout(() => windows.destroy(), 2000);
-                }
-            )
-            if (
-                process.env.NODE_ENV === 'development' ||
-                process.env.DEBUG_PROD === 'true'
-            ) {
-                windows.show();
-            } else {
-                windows.webContents.print(
-                    {
-                        silent,
-                        printBackground,
-                        copies,
-                        landscape,
-                        pageSize
-                    },
-                    (success) => {
-                        setTimeout(() => windows.destroy(), 2000);
-                    }
-                );
-            }
-        })
-        .catch((e) => {
-            windows.destroy();
-        });
-}
 export const buildPage = ({ content, title }) => `
   <head>
    <style>
@@ -85,7 +32,7 @@ export const buildPage = ({ content, title }) => `
          font-size:.8rem;
          font-weight:400;
          
-       }
+           }
        table tbody td:nth-child(2){
          min-width: 126px;
        }

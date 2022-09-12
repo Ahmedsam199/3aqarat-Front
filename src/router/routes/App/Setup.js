@@ -16,7 +16,7 @@ const PermissionPOST = lazy(() =>
 );
 const Permission = lazy(() => import("../../../views/App/Setup/Permissions"));
 const Purpose = lazy(() => import("../../../views/App/Setup/Purpose"));
-const Role = lazy(() => import("../../../views/App/Setup/UserRole"));
+const Role = lazy(() => import("../../../views/App/Setup/Role"));
 const User = lazy(() => import("../../../views/App/Setup/User"));
 export default [
   {
@@ -60,7 +60,7 @@ export default [
     },
   },
   {
-    path: "/Setup/UserRole",
+    path: "/Setup/Role",
     element: <Role />,
     meta: {
       action: "read",

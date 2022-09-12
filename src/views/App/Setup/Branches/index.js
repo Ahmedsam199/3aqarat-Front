@@ -74,7 +74,7 @@ const Index = () => {
           
         </div>
         <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-13") && (
+        {ability.can("create", "DT-1") && (
           <div>
             <Button.Ripple
               color="primary"
