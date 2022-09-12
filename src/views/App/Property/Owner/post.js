@@ -8,13 +8,13 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
 import { toBoolean } from "@utils";
-import { Properites_Party as Schema } from "@validation";
+import { Party as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-import  toast  from "react-hot-toast";
+import toast from "react-hot-toast";
 import { GenderOptions } from "@FixedOptions";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();

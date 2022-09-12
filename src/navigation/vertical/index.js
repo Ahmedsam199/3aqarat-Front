@@ -1,10 +1,24 @@
 // ** Navigation imports
+import {
+    PieChart
+} from "react-feather";
 
-import pages from './pages'
-import uiElements from './ui-elements'
-import Contract from './Contract'
-import Properites from './Properites'
-import Setup from './setup'
-import DashBoard from './DashBoard'
+import Contract from './Contract';
+import Properties from './Properties';
+import Setup from './Setup';
 // ** Merge & Export
-export default [...DashBoard, ...Contract, , ...Properites, ...Setup];
+export default [
+    {
+        id: "DashBoard",
+        title: "DashBoard",
+        action: "read",
+        resource: "DASH",
+        icon: <PieChart size={12} />,
+
+        permissions: ["admin", "editor"],
+        navLink: "/DashBoard",
+    },
+    ...Contract,
+    ...Properties,
+    ...Setup
+];

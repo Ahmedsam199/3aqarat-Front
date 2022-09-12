@@ -1,13 +1,10 @@
 import { lazy } from "react";
 
 const ContractTemplate = lazy(() =>
-  import("../../../views/App/Setup/contractTemplate")
+  import("../../../views/App/Setup/ContractTemplate")
 );
-const PrintCustomization = lazy(() =>
-  import("../../../views/App/Setup/PrintCustomization/index")
-);
-const PrintCustomizationPOST = lazy(() =>
-  import("../../../views/App/Setup/PrintCustomization/post")
+const ContractTemplatePOST = lazy(() =>
+  import("../../../views/App/Setup/ContractTemplate/post")
 );
 
 const ContractType = lazy(() =>
@@ -23,24 +20,24 @@ const Role = lazy(() => import("../../../views/App/Setup/UserRole"));
 const User = lazy(() => import("../../../views/App/Setup/User"));
 export default [
   {
-    element: <PrintCustomization />,
-    path: "/Setup/PrintCustomization/",
+    element: <ContractTemplate />,
+    path: "/Setup/ContractTemplate/",
     meta: {
       action: "read",
       resource: "DT-3",
     },
   },
   {
-    element: <PrintCustomizationPOST />,
-    path: "/Setup/NewPrintCustomization/:name/:doctype/:isRtl/:isLandscape",
+    element: <ContractTemplatePOST />,
+    path: "/Setup/NewContractTemplate/:name/:doctype/:isRtl/:isLandscape",
     meta: {
       action: "read",
       resource: "DT-3",
     },
   },
   {
-    element: <PrintCustomizationPOST />,
-    path: "/Setup/UpdatePrintCustomization/:series/:name/:doctype/:isRtl/:isReceipt/:isDefault/:isLandscape",
+    element: <ContractTemplatePOST />,
+    path: "/Setup/UpdateContractTemplate/:series/:name/:doctype/:isRtl/:isReceipt/:isDefault/:isLandscape",
     meta: {
       action: "read",
       resource: "DT-3",

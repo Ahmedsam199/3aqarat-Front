@@ -1,17 +1,16 @@
-import { User as createColumns } from "@columns";
-import Breadcrumbs from "@components/breadcrumbs";
+import { Territory as createColumns } from "@columns";
+import CustomTable from "@Component/CustomTable";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
-import "@styles/react/apps/app-invoice.scss";
-import "@styles/react/libs/tables/react-dataTable-component.scss";
-import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
-import { toasty } from "@toast";
-import CustomTable from "@Component/CustomTable";
-import React, { useContext, useMemo, useRef, useState } from "react";
+import "@styles/react/apps/app-invoice.scss";
+import "@styles/react/libs/react-select/_react-select.scss";
+import "@styles/react/libs/tables/react-dataTable-component.scss";
+import React, { useContext, useRef, useState } from "react";
+
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
 import {
   Button,
   Card,
@@ -20,13 +19,12 @@ import {
   FormGroup,
   Input,
   Label,
-  Row,
+  Row
 } from "reactstrap";
 import POST from "./post";
-import { Link } from "react-router-dom";
 const Index = () => {
   const { t } = useTranslation();
-  const { User } = useSelector((state) => state);
+  const { Territory } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -36,7 +34,7 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    UserName: {
+    Territory: {
       value: "",
       op: "like",
     },
@@ -51,7 +49,7 @@ const Index = () => {
   };
 
   const onDelete = (Series) => {
-    dispatch(deleteItem("User", Series))
+    dispatch(deleteItem("Territory", Series))
       .then((res) => {
         ref.current?.refresh();
         toast.success("Item " + Series + " has been Deleted");
@@ -69,14 +67,13 @@ const Index = () => {
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-        </div>
+        <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-13") && (
           <div>
             <Button.Ripple
-              className="mb-1"
               color="primary"
+              className="mb-2"
               onClick={() => toggleFunc.current()}
             >
               {t("New")}
@@ -86,13 +83,12 @@ const Index = () => {
       </div>
       <Card>
         <div>
-          <div>
-            <POST
-              row={currentRow}
-              toggleFunc={toggleFunc}
-              onToggle={() => setCurrentRow(undefined)}
-            />
-          </div>
+          {" "}
+          <POST
+            row={currentRow}
+            toggleFunc={toggleFunc}
+            onToggle={() => setCurrentRow(undefined)}
+          />
         </div>
         <CardBody>
           <Row>
@@ -109,11 +105,11 @@ const Index = () => {
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
-                <Label>{t("UserName")}</Label>
+                <Label>{t("Territory")}</Label>
                 <Input
-                  placeholder={t("UserName")}
+                  placeholder={t("Territory")}
                   onChange={(e) =>
-                    handleFiltersChange("UserName", e.target.value)
+                    handleFiltersChange("Territory", e.target.value)
                   }
                 />
               </FormGroup>
@@ -122,7 +118,7 @@ const Index = () => {
         </CardBody>
         <CustomTable
           ref={ref}
-          offlineData={User}
+          offlineData={Territory}
           columns={Columns}
           filters={filters}
         />

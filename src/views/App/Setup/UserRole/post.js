@@ -1,20 +1,16 @@
 import CustomFormInput from "@Component/Form/CustomFormInput";
-import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
-import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
 import Sidebar from "@components/sidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
-import CustomFormSelect from "@Component/Form/CustomFormSelect";
-import { toasty } from "@toast";
 import { toBoolean } from "@utils";
-import { UserRole as Schema } from "@validation";
+import { Role as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
-import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();

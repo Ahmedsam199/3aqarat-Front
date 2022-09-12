@@ -109,12 +109,12 @@
     "delete": "Delete_Currency",
     "clear": "Clear_Currency"
   },
-  "Setup_User": {
-    "set": "Set_Setup_User",
-    "insert": "Insert_Setup_User",
-    "update": "Update_Setup_User",
-    "delete": "Delete_Setup_User",
-    "clear": "Clear_Setup_User"
+  "User": {
+    "set": "Set_User",
+    "insert": "Insert_User",
+    "update": "Update_User",
+    "delete": "Delete_User",
+    "clear": "Clear_User"
   },
   "Roles": {
     "set": "Set_Roles",

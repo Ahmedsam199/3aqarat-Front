@@ -1,28 +1,23 @@
 import CustomFormInput from "@Component/Form/CustomFormInput";
-import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
-import CustomFormDateInput from "@Component/Form/CustomFormDateInput";
+import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import Sidebar from "@components/sidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
-import Select from "react-select";
-import CustomFormSelect from "@Component/Form/CustomFormSelect";
-import { toasty } from "@toast";
 import { toBoolean } from "@utils";
-import { Setup_User as Schema } from "@validation";
+import { User as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { Button, Form, Spinner } from "reactstrap";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Form, Spinner } from "reactstrap";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-    const { Currency, Roles,Branches } = useSelector((state) => state);
-console.log("testing", Branches);
+  const { Currency, Roles, Branches } = useSelector((state) => state);
+  console.log("testing", Branches);
   const ability = useContext(AbilityContext);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
@@ -56,37 +51,38 @@ console.log("testing", Branches);
     onToggle();
     clear();
   };
- 
+
   const onSubmit = async (values) => {
     let FromDate = Date.parse(values.FromDate);
-    let ToDate = Date.parse(values.ToDate); 
-    if(FromDate>ToDate){
-toast.error("From Date Cannot Be Bigger Than To Date");
-    }else if (ToDate<FromDate){
-toast.error("To Date Cannot be smaller than From Date");
-    }else{
-    setLoading(true);
-    console.log(values)
-    dispatch(
-      values.Series
-        ? updateItem("Setup_User", values)
-        : insertItem("Setup_User", values)
-    )
-      .then((res) => {
-        toast.success("")
-        clear();
-        toggle();
-      })
-      .catch((err) => {
-        console.log("hacker_it_err", err);
-        // toast.error(err.response.data.message);
-      });
-    setLoading(false);
-  }};
+    let ToDate = Date.parse(values.ToDate);
+    if (FromDate > ToDate) {
+      toast.error("From Date Cannot Be Bigger Than To Date");
+    } else if (ToDate < FromDate) {
+      toast.error("To Date Cannot be smaller than From Date");
+    } else {
+      setLoading(true);
+      console.log(values)
+      dispatch(
+        values.Series
+          ? updateItem("User", values)
+          : insertItem("User", values)
+      )
+        .then((res) => {
+          toast.success("")
+          clear();
+          toggle();
+        })
+        .catch((err) => {
+          console.log("hacker_it_err", err);
+          // toast.error(err.response.data.message);
+        });
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  
+
   const Lang = [
     { value: 0, label: "Kurdish" },
     { value: 1, label: "Arabic" },

@@ -15,18 +15,18 @@ import Routes from "@Routes";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
-import { Properites_Property as Schema } from "@validation";
-import {Alert} from 'reactstrap'
+import { Property as Schema } from "@validation";
+import { Alert } from 'reactstrap'
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import { Map, Marker ,GeoJson,GeoJsonFeature,Point,} from "pigeon-maps";
+import { Map, Marker, GeoJson, GeoJsonFeature, Point, } from "pigeon-maps";
 import Ref2 from "./Ref2";
 import Ref1 from "./Ref1";
-import  toast  from "react-hot-toast";
+import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
@@ -52,15 +52,15 @@ const POST = (props) => {
   } = methods;
   const _dataForm = useWatch({ control });
   // ** Function to handle form submit
-useEffect(() => {
-  console.log("testing", errors);
-}, [errors]);
+  useEffect(() => {
+    console.log("testing", errors);
+  }, [errors]);
   const onSubmit = (values) => {
     console.log(values.IsFurnished, values.Furnitures);
-    if (values.IsFurnished == true && values.Furnitures.length ==0) {
+    if (values.IsFurnished == true && values.Furnitures.length == 0) {
       toast.error("You Must Add Furnitures");
-      
-    }else if (values.Attribute == undefined || values.Attribute.length == 0) {
+
+    } else if (values.Attribute == undefined || values.Attribute.length == 0) {
       toast.error("You must Add 1 Attribute At least");
     } else {
       console.log("first", values);
@@ -97,7 +97,7 @@ useEffect(() => {
       const { data } = await axios.get(
         `${Routes.Property.root}/${params.series}`
       );
-      
+
       reset({
         ...data,
         // IsDefault: `${_.IsDefault}`,
@@ -111,143 +111,143 @@ useEffect(() => {
         _loading: false,
       });
   }, [Property]);
-  
-    const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
-    return (
-      <FormProvider {...methods}>
-        <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-          <Row>
-            <Col sm="10"></Col>
-            <Col
-              sm="2"
-              className="d-flex justify-content-end align-items-center"
-            >
-              <Button
-                color="primary"
-                type="submit"
-                className="mr-1 mb-2"
-                disabled={loading || (params.series && !_write)}
-              >
-                {loading && (
-                  <Spinner color="white" size="sm" className="mr-1" />
-                )}
-                {t("Save")}
-              </Button>
-            </Col>
-          </Row>
 
-          <Row>
-            <Col sm="12">
-              <Card>
-                <CardBody>
-                  <Row>
-                    <Col sm="6">
+  const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
+  return (
+    <FormProvider {...methods}>
+      <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
+        <Row>
+          <Col sm="10"></Col>
+          <Col
+            sm="2"
+            className="d-flex justify-content-end align-items-center"
+          >
+            <Button
+              color="primary"
+              type="submit"
+              className="mr-1 mb-2"
+              disabled={loading || (params.series && !_write)}
+            >
+              {loading && (
+                <Spinner color="white" size="sm" className="mr-1" />
+              )}
+              {t("Save")}
+            </Button>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm="12">
+            <Card>
+              <CardBody>
+                <Row>
+                  <Col sm="6">
+                    <CustomFormSelect
+                      name="Party"
+                      textName="FullName"
+                      valueName="Series"
+                      options={Party}
+                    />
+                    <CustomFormSelect
+                      options={Territory}
+                      textName="Territory"
+                      valueName="Series"
+                      name="Territory"
+                    />
+                    <CustomFormSelect
+                      name="Currency"
+                      textName="CurrencyName"
+                      valueName="Series"
+                      options={Currency}
+                    />
+                  </Col>
+                  <Col sm="6">
+                    <Col>
+                      <CustomFormInput name="RequestedAmt" />
                       <CustomFormSelect
-                        name="Party"
-                        textName="FullName"
+                        name="Purpose"
+                        textName="Purpose"
                         valueName="Series"
-                        options={Party}
-                      />
-                      <CustomFormSelect
-                        options={Territory}
-                        textName="Territory"
-                        valueName="Series"
-                        name="Territory"
-                      />
-                      <CustomFormSelect
-                        name="Currency"
-                        textName="CurrencyName"
-                        valueName="Series"
-                        options={Currency}
+                        options={Purpose.filter((x) => {
+                          return x.IsPayable;
+                        })}
                       />
                     </Col>
-                    <Col sm="6">
+                    <Row>
                       <Col>
-                        <CustomFormInput name="RequestedAmt" />
                         <CustomFormSelect
-                          name="Purpose"
-                          textName="Purpose"
+                          options={PropertyAttr}
+                          textName="Attribute"
                           valueName="Series"
-                          options={Purpose.filter((x) => {
-                            return x.IsPayable;
-                          })}
+                          name="Attributes"
                         />
                       </Col>
-                      <Row>
-                        <Col>
-                          <CustomFormSelect
-                            options={PropertyAttr}
-                            textName="Attribute"
-                            valueName="Series"
-                            name="Attributes"
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                    <Col>
-                      <br></br>
-                      <CustomFormInputCheckbox name="IsFurnished" />
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-
-            <Col sm="8">
-              <hr />
-              {_watchIsFurnished ? (
-                <Ref2 {...{ loading }} />
-              ) : (
-                <div>
-                  <Alert className="p-5" color="danger">
-                    <center>
-                      <p
-                        style={{
-                          alignContent: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        Is Not Furnished...
-                      </p>
-                    </center>
-                  </Alert>
-                </div>
-              )}
-            </Col>
-            <Col sm="4">
-              <hr />
-              <Ref1 {...{ loading }} />
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <CustomFormInput IsDisabled={true} name="Longitude" />
-            </Col>
-            <Col>
-              <CustomFormInput IsDisabled={true} name="Latitude" />
-            </Col>
-          </Row>
-          <br></br>
-          <Col sm="12">
-            <Map
-              onClick={(event) => {
-                setValue("Longitude", event.latLng[0]);
-                setValue("Latitude", event.latLng[1]);
-              }}
-              height={300}
-              defaultCenter={[36.1901, 43.993]}
-              defaultZoom={11}
-            >
-              <Marker
-                width={50}
-                anchor={[getValues("Longitude"), getValues("Latitude")]}
-              />
-            </Map>
+                    </Row>
+                  </Col>
+                  <Col>
+                    <br></br>
+                    <CustomFormInputCheckbox name="IsFurnished" />
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
           </Col>
-        </Form>
-      </FormProvider>
-    );
+
+          <Col sm="8">
+            <hr />
+            {_watchIsFurnished ? (
+              <Ref2 {...{ loading }} />
+            ) : (
+              <div>
+                <Alert className="p-5" color="danger">
+                  <center>
+                    <p
+                      style={{
+                        alignContent: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Is Not Furnished...
+                    </p>
+                  </center>
+                </Alert>
+              </div>
+            )}
+          </Col>
+          <Col sm="4">
+            <hr />
+            <Ref1 {...{ loading }} />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col>
+            <CustomFormInput IsDisabled={true} name="Longitude" />
+          </Col>
+          <Col>
+            <CustomFormInput IsDisabled={true} name="Latitude" />
+          </Col>
+        </Row>
+        <br></br>
+        <Col sm="12">
+          <Map
+            onClick={(event) => {
+              setValue("Longitude", event.latLng[0]);
+              setValue("Latitude", event.latLng[1]);
+            }}
+            height={300}
+            defaultCenter={[36.1901, 43.993]}
+            defaultZoom={11}
+          >
+            <Marker
+              width={50}
+              anchor={[getValues("Longitude"), getValues("Latitude")]}
+            />
+          </Map>
+        </Col>
+      </Form>
+    </FormProvider>
+  );
 };
 
 export default POST;

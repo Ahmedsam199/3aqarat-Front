@@ -2,20 +2,19 @@
 import { Fragment } from 'react'
 
 // ** Routes Imports
-import AppRoutes from './Apps'
-import PagesRoutes from './Pages'
 import RealState from './App'
 import AuthenticationRoutes from './Authentication'
+import PagesRoutes from './Pages'
 
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
-import VerticalLayout from '@src/layouts/VerticalLayout'
-import HorizontalLayout from '@src/layouts/HorizontalLayout'
 import LayoutWrapper from '@src/@core/layouts/components/layout-wrapper'
+import HorizontalLayout from '@src/layouts/HorizontalLayout'
+import VerticalLayout from '@src/layouts/VerticalLayout'
 
 // ** Route Components
-import PublicRoute from '@components/routes/PublicRoute'
 import PrivateRoute from '@components/routes/PrivateRoute'
+import PublicRoute from '@components/routes/PublicRoute'
 
 // ** Utils
 import { isObjEmpty } from '@utils'
@@ -35,7 +34,6 @@ const DefaultRoute = "/DashBoard";
 // ** Merge Routes
 const Routes = [
   ...AuthenticationRoutes,
-  ...AppRoutes,
   ...PagesRoutes,
   ...RealState,
 ];
@@ -112,3 +110,4 @@ const getRoutes = layout => {
 }
 
 export { DefaultRoute, TemplateTitle, Routes, getRoutes }
+

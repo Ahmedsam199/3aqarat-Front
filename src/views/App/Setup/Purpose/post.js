@@ -9,7 +9,7 @@ import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { toasty } from "@toast";
 import { useSelector } from "react-redux";
 import { toBoolean } from "@utils";
-import { Setup_Purpose as Schema } from "@validation";
+import { Purpose as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -78,13 +78,13 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-   let CurrencyOpt = [];
-   Currency.forEach((x) => {
-     CurrencyOpt.push({
-       value: x.Series,
-       label: x.Series + " " + x.CurrencyName,
-     });
-   });
+  let CurrencyOpt = [];
+  Currency.forEach((x) => {
+    CurrencyOpt.push({
+      value: x.Series,
+      label: x.Series + " " + x.CurrencyName,
+    });
+  });
   return (
     <>
       <Sidebar

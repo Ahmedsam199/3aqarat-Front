@@ -1,7 +1,6 @@
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
-
 import Sidebar from "@components/sidebar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AbilityContext } from "@src/utility/context/Can";
@@ -9,7 +8,7 @@ import { insertItem, updateItem } from "@store/actions/data";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { toasty } from "@toast";
 import { toBoolean } from "@utils";
-import { Branch as Schema } from "@validation";
+import { Territory as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -21,7 +20,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
-  const { Branches } = useSelector((state) => state);
+  const { Territory } = useSelector((state) => state);
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
@@ -30,8 +29,8 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     reset,
     control,
   } = methods;
-  const _dataForm = useWatch({ control });
   const [modal, setModal] = useState(false);
+  const _dataForm = useWatch({ control });
   const [loading, setLoading] = useState(false);
   const _write = useMemo(
     () => toBoolean(ability.can("write", "DT-13")),
@@ -60,15 +59,14 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     console.log("hacker_it", errors);
   }, [errors]);
   const onSubmit = async (values) => {
-    if (values.isGroup == true && values.ParentBranch == null) {
-      toast.error("Parent Branch is Required");
+    if (values.isGroup == true && values.Parent == null) {
+      toast.error("Parent Territory is Required While is Group");
     } else {
       setLoading(true);
-      console.log(values);
       dispatch(
         values.Series
-          ? updateItem("Branches", values)
-          : insertItem("Branches", values)
+          ? updateItem("Territory", values)
+          : insertItem("Territory", values)
       )
         .then((res) => {
           toast.success("");
@@ -76,7 +74,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
           toggle();
         })
         .catch((err) => {
-          console.log("hacker_it_err", err);
+          console.log("hacker_it_err", err.response.data.message);
           toast.error(err.response.data.message);
         });
       setLoading(false);
@@ -85,11 +83,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
-  let BranchOpt = [];
-
-
   const _watchIsGroup = useWatch({ control, name: "isGroup" });
-  console.log(_watchIsGroup);
   return (
     <>
       <Sidebar
@@ -103,27 +97,22 @@ const POST = ({ onToggle, row, toggleFunc }) => {
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)}>
             {/* s</ModalHeader> */}
-            <CustomFormInput name="BranchName" />
-
+            <CustomFormInput name="Territory" />
             <CustomFormInputCheckbox name="isGroup" />
-            {_watchIsGroup ? (
+            {_watchIsGroup ?
               <CustomFormSelect
-                options={Branches?.filter((x) => {
+                options={Territory.filter((x) => {
                   return x.isGroup
                 })}
-                textName="BranchName"
+                textName="Territory"
                 valueName="Series"
-                name="ParentBranch"
-              />
-            ) : (
-              ""
-            )}
-
+                name="Parent"
+              /> : ""}
             <div className="mt-1">
               <Button
                 color="primary"
                 type="submit"
-                className="mr-1"
+                className="mr-1 "
                 disabled={loading || (row && !_write)}
               >
                 {loading && (

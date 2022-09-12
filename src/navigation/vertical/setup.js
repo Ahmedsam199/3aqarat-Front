@@ -1,25 +1,7 @@
 // ** Icons Import
 import {
-  FileText,
-  Type,
-  Settings,
-  Flag,
-  Users,
-  CreditCard,
-  Dribbble,
-  Circle,
-  Target,
-  Square,
-  Edit,
-  Edit2,
-  BookOpen,
-  DollarSign,
-  PieChart,
-  Bookmark,
-  UserCheck,
-  User,
+  Bookmark, Circle, Settings, Type, User, UserCheck, Users
 } from "react-feather";
-import { useSelector } from "react-redux";
 
 export default [
   {
@@ -41,7 +23,7 @@ export default [
         id: "",
         title: "Contract Template",
         icon: <Users size={12} />,
-        navLink: "/Setup/PrintCustomization",
+        navLink: "/Setup/ContractTemplate",
         action: "read",
         resource: "DT-3",
       },

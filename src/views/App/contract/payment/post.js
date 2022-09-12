@@ -2,29 +2,25 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 
 // ** Custom Components
-import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
-import { isObjEmpty, toBoolean, sendAttachment } from "@utils";
+import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
-import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
-import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
-import { PartyTypeOptions } from "@FixedOptions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Routes from "@Routes";
 import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 
-import { Contract_Payment as Schema } from "@validation";
+import AttachmentComponent from "@Component/Attachment";
+import { Payment as Schema } from "@validation";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import AttachmentComponent from "@Component/Attachment";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
@@ -36,7 +32,7 @@ const POST = (props) => {
     Contracts,
     Party,
     Offline,
-    
+
     tempData: { network },
   } = useSelector((state) => state);
   console.log(Offline)
@@ -61,9 +57,9 @@ const POST = (props) => {
   } = methods;
   const _dataForm = useWatch({ control });
   // ** Function to handle form submit
-useEffect(()=>{
-console.log(errors);
-},[errors])
+  useEffect(() => {
+    console.log(errors);
+  }, [errors])
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
@@ -84,7 +80,7 @@ console.log(errors);
               refSeries: res?.Series,
             })
             navigate("/App/Contract/Payment");
-          }else{
+          } else {
             navigate("/App/Contract/Payment");
           }
         })
@@ -155,13 +151,13 @@ console.log(errors);
   let PartyOpt = [];
 
   const _watchChooseTheTable = useWatch({ control, name: "Reference" });
-const _ = Contracts?.filter((x) => x.Series === _watchChooseTheTable).map((x) =>
-  PartyOpt.push(
-    { label: x.FirstParty, value: x.FirstParty },
-    { label: x.SecondParty, value: x.SecondParty }
-  )
-);
-                    console.log(_)
+  const _ = Contracts?.filter((x) => x.Series === _watchChooseTheTable).map((x) =>
+    PartyOpt.push(
+      { label: x.FirstParty, value: x.FirstParty },
+      { label: x.SecondParty, value: x.SecondParty }
+    )
+  );
+  console.log(_)
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">

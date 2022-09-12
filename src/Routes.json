@@ -37,7 +37,7 @@
   "Purpose": {
     "root": "http://192.168.1.25:8080/Purpose"
   },
-  "Setup_User": {
+  "User": {
     "root": "http://192.168.1.25:8080/Users"
   },
   "Roles": {

@@ -24,7 +24,7 @@ const PrintModal = ({ open, onModalClose }) => {
   return (
     <Modal isOpen={open} toggle={() => { onModalClose(!open); setValues(initState) }} centered={true}>
       <ModalHeader>
-        {t("New Print Customization")}
+        {t("New Contract Template")}
       </ModalHeader>
       <ModalBody>
         <Col>
@@ -82,7 +82,7 @@ const PrintModal = ({ open, onModalClose }) => {
       </ModalBody>
       <ModalFooter>
         <Link
-          to={`/Setting/NewPrintCustomization/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
+          to={`/Setting/NewContractTemplate/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
         >
           <Button color="primary" disabled={!values.doctype || !values.printName}>
             {t("Next")}

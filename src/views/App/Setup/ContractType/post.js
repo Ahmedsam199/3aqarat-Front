@@ -8,7 +8,7 @@ import { insertItem, updateItem } from "@store/actions/data";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { toasty } from "@toast";
 import { toBoolean } from "@utils";
-import { Setup_ContractType as Schema } from "@validation";
+import { ContractType as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";

@@ -6,8 +6,8 @@ import { List } from "react-feather";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
-import Timeline from "@components/timeline";
 import AvatarGroup from "@components/avatar-group";
+import Timeline from "@components/timeline";
 
 // ** Utils
 import { kFormatter } from "@utils";
@@ -16,17 +16,16 @@ import { kFormatter } from "@utils";
 import { ThemeColors } from "@src/utility/context/ThemeColors";
 
 // ** Reactstrap Imports
-import { Row, Col, Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+import { Card, CardBody, CardHeader, CardTitle, Col, Row } from "reactstrap";
 
 // ** Demo Components
-import InvoiceList from "@src/views/apps/invoice/list";
-import Sales from "@src/views/ui-elements/cards/analytics/Sales";
-import AvgSessions from "@src/views/ui-elements/cards/analytics/AvgSessions";
 import CardAppDesign from "@src/views/ui-elements/cards/advance/CardAppDesign";
+import CardCongratulations from "@src/views/ui-elements/cards/advance/CardCongratulations";
+import AvgSessions from "@src/views/ui-elements/cards/analytics/AvgSessions";
+import Sales from "@src/views/ui-elements/cards/analytics/Sales";
 import SupportTracker from "@src/views/ui-elements/cards/analytics/SupportTracker";
 import OrdersReceived from "@src/views/ui-elements/cards/statistics/OrdersReceived";
 import SubscribersGained from "@src/views/ui-elements/cards/statistics/SubscribersGained";
-import CardCongratulations from "@src/views/ui-elements/cards/advance/CardCongratulations";
 
 // ** Images
 import jsonImg from "@src/assets/images/icons/json.png";
