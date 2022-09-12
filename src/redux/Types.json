@@ -74,12 +74,12 @@
     "delete": "Delete_Branches",
     "clear": "Clear_Branches"
   },
-  "ContractTemplates": {
-    "set": "Set_ContractTemplates",
-    "insert": "Insert_ContractTemplates",
-    "update": "Update_ContractTemplates",
-    "delete": "Delete_ContractTemplates",
-    "clear": "Clear_ContractTemplates"
+  "ContractTemplate": {
+    "set": "Set_ContractTemplate",
+    "insert": "Insert_ContractTemplate",
+    "update": "Update_ContractTemplate",
+    "delete": "Delete_ContractTemplate",
+    "clear": "Clear_ContractTemplate"
   },
   "ContractType": {
     "set": "Set_ContractType",

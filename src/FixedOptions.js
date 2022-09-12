@@ -14,7 +14,7 @@ export const ActivityTypes = [
 export const Doctype = [
   { Series: "DT-1", DocTypeName: "Branches" },
   { Series: "DT-2", DocTypeName: "Contract" },
-  { Series: "DT-3", DocTypeName: "ContractTemplates" },
+  { Series: "DT-3", DocTypeName: "ContractTemplate" },
   { Series: "DT-4", DocTypeName: "ContractType" },
   { Series: "DT-5", DocTypeName: "Party" },
   { Series: "DT-6", DocTypeName: "Payment" },
