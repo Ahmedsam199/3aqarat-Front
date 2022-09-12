@@ -10,7 +10,7 @@ import { toasty } from "@toast";
 import { toBoolean } from "@utils";
 import { Property_Terrority as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -27,8 +27,10 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     formState: { errors },
     handleSubmit,
     reset,
+    control,
   } = methods;
   const [modal, setModal] = useState(false);
+  const _dataForm = useWatch({ control });
   const [loading, setLoading] = useState(false);
   const _write = useMemo(
     () => toBoolean(ability.can("write", "DT-13")),
@@ -57,27 +59,30 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     console.log("hacker_it", errors);
   }, [errors]);
   const onSubmit = async (values) => {
-    setLoading(true);
-    dispatch(
-      values.Series
-        ? updateItem("Territory", values)
-        : insertItem("Territory", values)
-    )
-      .then((res) => {
-        toast.success("");
-        clear();
-        toggle();
-      })
-      .catch((err) => {
-        console.log("hacker_it_err", err.response.data.message);
-        toast.error(err.response.data.message);
-        
-      });
-    setLoading(false);
-  };
+    if (values.isGroup == true && values.Parent == null) {
+      toast.error("Parent Territory is Required While is Group");
+    } else {
+      setLoading(true);
+      dispatch(
+        values.Series
+          ? updateItem("Territory", values)
+          : insertItem("Territory", values)
+      )
+        .then((res) => {
+          toast.success("");
+          clear();
+          toggle();
+        })
+        .catch((err) => {
+          console.log("hacker_it_err", err.response.data.message);
+          toast.error(err.response.data.message);
+        });
+      setLoading(false);
+    } };
   useEffect(() => {
     toggleFunc.current = toggle;
   }, []);
+  const _watchIsGroup = useWatch({ control, name: "isGroup" });
   return (
     <>
       <Sidebar
@@ -93,13 +98,15 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             {/* s</ModalHeader> */}
             <CustomFormInput name="Territory" />
             <CustomFormInputCheckbox name="isGroup" />
-
+{_watchIsGroup?
             <CustomFormSelect
-              options={Territory}
+              options={Territory.filter((x)=>{
+                return x.isGroup
+              })}
               textName="Territory"
               valueName="Series"
               name="Parent"
-            />
+            />:""}
             <div className="mt-1">
               <Button
                 color="primary"

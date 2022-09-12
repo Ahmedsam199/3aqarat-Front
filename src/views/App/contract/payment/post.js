@@ -83,9 +83,10 @@ console.log(errors);
               refDoctype: "Payment",
               refSeries: res?.Series,
             })
-            console.log(Attachment);
-          
-        }
+            navigate("/App/Contract/Payment");
+          }else{
+            navigate("/App/Contract/Payment");
+          }
         })
 
         .catch((err) => {
@@ -94,6 +95,7 @@ console.log(errors);
         })
         .finally(() => {
           setLoading(false);
+          navigate("/App/Contract/Payment");
         });
     }
   };

@@ -90,7 +90,7 @@ const Index = () => {
         {ability.can("create", "DT-7") && (
           <div>
             <Link to="/App/NewPermissions">
-              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
+              <Button.Ripple color="primary">{t("Newww")}</Button.Ripple>
             </Link>
           </div>
         )}

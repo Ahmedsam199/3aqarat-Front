@@ -79,7 +79,7 @@ const RefsList = ({ loading }) => {
           <tbody {...{ ref }}>
             {fields.map((x, index) => {
               return (
-                <div key={x.id} style={{overflow:"hidden"}}>
+                <div key={x.id} style={{ overflow: "hidden" }}>
                   <tr>
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
@@ -94,7 +94,7 @@ const RefsList = ({ loading }) => {
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormSelect
-                      style={{overflow:"hidden"}}
+                        style={{ overflow: "hidden" }}
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle

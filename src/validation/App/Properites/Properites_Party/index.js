@@ -1,4 +1,4 @@
-import Core from "../../core";
+import Core from "../../../core";
 export default Core.Object({
   FullName: Core.String(),
   Cell: Core.String(false),

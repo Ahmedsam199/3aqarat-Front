@@ -1,4 +1,4 @@
-import Core from "../../core";
+import Core from "../../../core";
 export default Core.Object({
   PayParty: Core.String(false),
   ReceiveParty: Core.String(false),
@@ -6,12 +6,7 @@ export default Core.Object({
   Currency: Core.String(),
   PostingDate: Core.String(),
   Reference: Core.String(),
-  
   Purpose: Core.String(),
-  
-  
-  
-  
   For: Core.String(),
   Remarks: Core.String(),
 });

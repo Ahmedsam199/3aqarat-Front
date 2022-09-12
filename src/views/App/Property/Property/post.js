@@ -198,9 +198,20 @@ useEffect(() => {
               {_watchIsFurnished ? (
                 <Ref2 {...{ loading }} />
               ) : (
-                <Alert className="p-5" color="danger">
-                  Is Not Furnished...
-                </Alert>
+                <div>
+                  <Alert className="p-5" color="danger">
+                    <center>
+                      <p
+                        style={{
+                          alignContent: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Is Not Furnished...
+                      </p>
+                    </center>
+                  </Alert>
+                </div>
               )}
             </Col>
             <Col sm="4">
