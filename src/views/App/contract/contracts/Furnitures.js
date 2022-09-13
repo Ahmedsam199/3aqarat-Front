@@ -9,6 +9,7 @@ import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Alert, Button, Col, Row, Table } from "reactstrap";
+import { parseNumber } from "../../../../utility/Utils";
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -30,7 +31,7 @@ const RefsList = ({ loading }) => {
     setValue(
       "TotalQty",
       getValues().Furnitures.reduce(
-        (sum, x, currIndex) => sum + +x.Qty * (currIndex !== ignoreIndex),
+        (sum, x, currIndex) => sum + parseNumber(x.Qty) * (currIndex !== ignoreIndex),
         0
       )
     );
@@ -41,9 +42,10 @@ const RefsList = ({ loading }) => {
       "TotalPrice",
       getValues().Furnitures.reduce(
         (sum, x, currIndex) =>
-          x.Qty
-            ? sum + x.Qty * x.Price * (currIndex !== ignoreIndex)
-            : sum + (x.Qty || 1 * x.Price) * (currIndex !== ignoreIndex),
+          sum +
+          parseNumber(x.Qty) *
+            parseNumber(x.Price) *
+            (currIndex !== ignoreIndex),
         0
       )
     );
@@ -109,19 +111,18 @@ const RefsList = ({ loading }) => {
                       />
                     </td>
                     <td style={{ width: "25%" }}>
-                      <CustomFormInput
-                        menuPosition="fixed"
-                        type="number"
+                      <CustomFormNumberInput
                         name={`Furnitures.${index}.Price`}
                         hiddenTitle
-                        menuShouldBlockScroll
-                        extraOnChangeFun={refreshTotalPrice}
+                        extraOnChangeFun={DoubleChange}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormSelect
                         name={`Furnitures.${index}.Currency`}
-                        options={CurrencyOpt}
+                        options={Currency}
+                        textName="CurrencyName"
+                        valueName="Series"
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
@@ -129,14 +130,11 @@ const RefsList = ({ loading }) => {
                       />
                     </td>
                     <td style={{ width: "25%" }}>
-                      <CustomFormInput
+                      <CustomFormNumberInput
                         menuPosition="fixed"
                         name={`Furnitures.${index}.Qty`}
-                        extraOnChangeFun={refreshTotalQty}
-                        extraOnChangeFun2={refreshTotalPrice}
+                        extraOnChangeFun={DoubleChange}
                         hiddenTitle
-                        type="number"
-                        menuShouldBlockScroll
                       />
                     </td>
                     <td style={{ width: "10%" }}>
@@ -145,7 +143,7 @@ const RefsList = ({ loading }) => {
                         color="flat-danger"
                         onClick={async () => {
                           await Promise.all([remove(index)]);
-                          refreshTotalQty();
+                          DoubleChange();
                           refreshTotalPrice();
                         }}
                       >

@@ -5,7 +5,7 @@ import {
 
 import Contract from './Contract';
 import Properties from './Properties';
-import Setup from './Setup';
+import Setup from './setup';
 // ** Merge & Export
 export default [
     {

@@ -33,7 +33,6 @@ export const FormatOptions = [
   { label: "#.###,##", value: "#.###,##" },
   { label: "#,###.##", value: "#,###.##" },
   { label: "# ###.##", value: "# ###.##" },
-  { label: "# ###.##", value: "# ###.##" },
   { label: "#.###", value: "#.###" },
   { label: "#,##,###.##", value: "#,##,###.##" },
   { label: "#,###", value: "#,###" },
@@ -211,14 +210,14 @@ export const Tables = {
       ],
     },
     {
-      label: "Furniture",
-      value: "Furniture",
+      label: "Furnitures",
+      value: "Furnitures",
       attributes: [
         { label: "Subject", value: "Subject" },
         { label: "Statue", value: "Statue" },
         { label: "Price", value: "Price" },
         { label: "Currency", value: "Currency" },
-        { label: "Quantity", value: "Quantity" },
+        { label: "Qty", value: "Qty" },
       ],
     },
     {
@@ -241,14 +240,14 @@ export const Tables = {
       ],
     },
     {
-      label: "Furniture",
-      value: "Furniture",
+      label: "Furnitures",
+      value: "Furnitures",
       attributes: [
         { label: "Subject", value: "Subject" },
         { label: "Statue", value: "Statue" },
         { label: "Price", value: "Price" },
         { label: "Currency", value: "Currency" },
-        { label: "Quantity", value: "Quantity" },
+        { label: "Qty", value: "Qty" },
       ],
     },
   ],

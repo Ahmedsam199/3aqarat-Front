@@ -1,6 +1,6 @@
 // ** Icons Import
 import {
-  Bookmark, Circle, Settings, Type, User, UserCheck, Users
+  Bookmark, Circle, TrendingUp,Settings,DollarSign, Type, User, UserCheck, Users
 } from "react-feather";
 
 export default [
@@ -43,7 +43,22 @@ export default [
         action: "read",
         resource: "DT-1",
       },
-
+      {
+        id: "Currency",
+        title: "Currency",
+        icon: <DollarSign />,
+        navLink: "/Setup/Currency",
+        action: "read",
+        resource: "DT-14",
+      },
+      {
+        id: "CurrencyExchange",
+        title: "Currency Exchange",
+        icon: <TrendingUp />,
+        navLink: "/Setup/CurrencyExchange",
+        action: "read",
+        resource: "DT-14",
+      },
       {
         id: "",
         title: "Roles",

@@ -43,10 +43,10 @@ const RefsList = ({ loading }) => {
                     <th scope="row">{index + 1}</th>
                     <td>
                       <CustomFormInput
+                        menuShouldBlockScroll
                         hiddenTitle
-                        
-                        name={`Attribute`}
-                        menuPosition={"fixed"}
+                        menuPosition="fixed"
+                        name={`Attribute.${index}.Attribute`}
                       />
                     </td>
                     <td>
@@ -54,7 +54,7 @@ const RefsList = ({ loading }) => {
                         hiddenTitle
                         valueName="Series"
                         textName="Currency"
-                        name={`Attribute Value`}
+                        name={`Attribute.${index}.AttributeValue`}
                         menuPosition={"fixed"}
                       />
                     </td>

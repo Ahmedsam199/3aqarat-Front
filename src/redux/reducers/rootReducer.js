@@ -5,11 +5,11 @@ import auth from './auth';
 import layout from './layout';
 import tempData from './tempData';
 import Offline from './App/Offline';
-import Entry from './App/Entry'
+import Online from "./App/Online";
 import Attachment from "@Component/Attachment/store/reducer/attachments";
 
 const rootReducer = combineReducers({
-  ...Entry,
+  ...Online,
   Offline,
   auth,
   layout,

@@ -5,7 +5,7 @@ import React from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import Skeleton from 'react-loading-skeleton';
-import { FormGroup, Label } from 'reactstrap';
+import { FormGroup, InputGroup, Label } from 'reactstrap';
 import { ErrorMessage } from '../ErrorMessage';
 
 function CustomFormNumberInput({
@@ -33,9 +33,7 @@ function CustomFormNumberInput({
   return (
     <>
       {!IsHidden && !hiddenTitle && (
-        <Label for={`${name}`}>
-          {t(`${title ?? name}`)}
-        </Label>
+        <Label for={`${name}`}>{t(`${title ?? name}`)}</Label>
       )}
       {!_loading ? (
         <Controller
@@ -52,10 +50,11 @@ function CustomFormNumberInput({
                 onChange(e);
                 extraOnChangeFun?.(e);
               }}
-              className={classnames('form-control', {
-                'is-invalid': errors[`${name}`],
-                'd-none': IsHidden,
+              className={classnames("form-control", {
+                "is-invalid": errors[`${name}`],
+                "d-none": IsHidden,
               })}
+              
               readOnly={IsDisabled || !_write}
             />
           )}

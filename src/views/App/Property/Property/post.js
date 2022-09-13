@@ -17,10 +17,12 @@ import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
 import { Property as Schema } from "@validation";
 import { Alert } from 'reactstrap'
+import PrintDropDown from "@Component/PrintDropDown";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import getPrintDate from "@Print/getData/Property";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import { Map, Marker, GeoJson, GeoJsonFeature, Point, } from "pigeon-maps";
@@ -116,18 +118,20 @@ const POST = (props) => {
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row>
+        <Row style={{ justifyContent: "end", marginBottom: "1rem" }}>
           <Col sm="10"></Col>
           <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
+              style={{ marginRight: "1rem" }}
               color="primary"
               type="submit"
-              className="mr-1 mb-2"
+              className="mr-1 "
               disabled={loading || (params.series && !_write)}
             >
               {loading && <Spinner color="white" size="sm" className="mr-1" />}
               {t("Save")}
             </Button>
+            
           </Col>
         </Row>
 
@@ -201,12 +205,12 @@ const POST = (props) => {
             )}
           </Col>
         </Row>
-          <Row>
-            <Col sm="12">
-              <hr />
-              <Ref1 {...{ loading }} />
-            </Col>
-          </Row>
+        <Row>
+          <Col sm="12">
+            <hr />
+            <Ref1 {...{ loading }} />
+          </Col>
+        </Row>
 
         <Row>
           <Col>

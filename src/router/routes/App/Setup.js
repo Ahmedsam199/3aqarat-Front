@@ -1,3 +1,4 @@
+import { read } from "fs";
 import { lazy } from "react";
 
 const ContractTemplate = lazy(() =>
@@ -18,6 +19,8 @@ const Permission = lazy(() => import("../../../views/App/Setup/Permissions"));
 const Purpose = lazy(() => import("../../../views/App/Setup/Purpose"));
 const Role = lazy(() => import("../../../views/App/Setup/Role"));
 const User = lazy(() => import("../../../views/App/Setup/User"));
+const Currency =lazy(()=>import('../../../views/App/Setup/Currency'))
+const CurrencyExchange = lazy(() => import("../../../views/App/Setup/CurrencyExchange"));
 export default [
   {
     element: <ContractTemplate />,
@@ -115,4 +118,20 @@ export default [
   //         resource: "DT-3",
   //     },
   // },
+  {
+    path: "/Setup/Currency",
+    element: <Currency />,
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
+  },
+  {
+    path: "/Setup/CurrencyExchange",
+    element: <CurrencyExchange />,
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
+  },
 ];

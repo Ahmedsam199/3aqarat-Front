@@ -150,5 +150,13 @@
     "delete": "Delete_PrintKeys",
     "set": "Set_PrintKeys",
     "clear": "Clear_PrintKeys"
-  }
+  },
+    "CurrencyExchange":{
+      "insert": "Insert_CurrencyExchange",
+      "update": "Update_CurrencyExchange",
+      "delete": "Delete_CurrencyExchange",
+      "set": "Set_CurrencyExchange",
+      "clear": "Clear_CurrencyExchange"
+    }
+  
 }

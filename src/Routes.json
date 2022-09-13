@@ -45,17 +45,19 @@
   },
     
   "Currency": {
-    "root": "http://192.168.1.25:8080/Currency/"
+    "root": "http://192.168.1.25:8080/Currency"
   },
   
   "Attachments": {
     "root": "http://192.168.1.25:8080/Attachment/"
   },
   "DocType": {
-    "root": "http://192.168.1.25:8080/DocTypes"
+    "root": "http://192.168.1.25:8080/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://192.168.1.25:8080/PrintKeys"
+    "root": "http://192.168.1.25:8080/PrintKeys/"
+  },"CurrencyExchange":{
+"root":"http://192.168.1.25:8080/CurrencyExchange"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",

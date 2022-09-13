@@ -21,23 +21,23 @@ export default ({ onEdit, onDelete }) => {
     "IsRtl",
     "IsReceipt",
     "IsDefault",
-    "PrintOnSubmit",
+    
     "Active"
   ]
   const readIsRtl = row => <Badge color={BooleanColors[row.IsRtl]}>{stringToCapitalize(`${row.IsRtl}`)}</Badge>
   const readIsReceipt = row => <Badge color={BooleanColors[row.IsReceipt]}>{stringToCapitalize(`${row.IsReceipt}`)}</Badge>
   const readIsDefault = row => <Badge color={BooleanColors[row.IsDefault]}>{stringToCapitalize(`${row.IsDefault}`)}</Badge>
-  const readPrintOnSubmit = row => <Badge color={BooleanColors[row.PrintOnSubmit]}>{stringToCapitalize(`${row.PrintOnSubmit}`)}</Badge>
+  // const readPrintOnSubmit = row => <Badge color={BooleanColors[row.PrintOnSubmit]}>{stringToCapitalize(`${row.PrintOnSubmit}`)}</Badge>
 
   const sortable = [...Array.from({ length: 9 }, () => true), false]
   const sortFunctions = [sortSeries, ...Array.from({ length: 8 }, () => null)];
-  const minWidths = Array.from({ length: 9 }, () => "10%")
+  const minWidths = Array.from({ length: 9 }, () => "5%")
   const cells = [
     ...Array.from({ length: 4 }, () => null),
     readIsRtl,
     readIsReceipt,
     readIsDefault,
-    readPrintOnSubmit,
+    // readPrintOnSubmit,
     Actions
   ]
   return create({

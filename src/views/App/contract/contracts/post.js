@@ -25,9 +25,9 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import Ref2 from "./Ref2";
-import Ref3 from "./Ref3";
-import ReferenceList from "./ReferenceList";
+import Furnitures from "./Furnitures";
+import ExtraPayment from "./ExtraPayment";
+import Attribute from "./Attribute";
 import getPrintDate from '@Print/getData/Contract';
 const POST = (props) => {
   const { t } = useTranslation();
@@ -37,11 +37,11 @@ const POST = (props) => {
     Property,
     Party,
     Currency,
-
+CurrencyExchange,
     tempData: { network },
     Offline,
   } = useSelector((state) => state);
-
+console.log(CurrencyExchange);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -159,16 +159,13 @@ const POST = (props) => {
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row>
-          <Col sm="10">
-            
-            
-          </Col>
+        <Row style={{ justifyContent: "end", marginBottom: "1rem" }}>
           <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
+              style={{ marginRight: "1rem" }}
               color="primary"
               type="submit"
-              className="mr-1 mb-2 "
+              className="mr-1  "
               disabled={loading || (params.series && !_write)}
             >
               {loading && <Spinner color="white" size="sm" className="mr-1 " />}
@@ -215,14 +212,14 @@ const POST = (props) => {
           </Card>
         </Row>
         <Row>
-          <Col sm="4">
+          <Col sm="12">
             <hr />
-            <ReferenceList {...{ loading }} />
+            <Furnitures {...{ loading }} />
             <hr />
           </Col>
-          <Col sm="8">
+          <Col sm="12">
             <hr />
-            <Ref2 {...{ loading }} />
+            <Attribute {...{ loading }} />
             <hr />
           </Col>
         </Row>
@@ -297,7 +294,7 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="7">
-                  <Ref3 {...{ loading }} />
+                  <ExtraPayment {...{ loading }} />
                 </Col>
                 <Col>
                   {/* Table Go Here */}

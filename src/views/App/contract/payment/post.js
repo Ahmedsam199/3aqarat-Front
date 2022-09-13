@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-import getPrintDate from '@Print/getData/Contract';
+import getPrintDate from '@Print/getData/Payment';
 import PrintDropDown from "@Component/PrintDropDown";
 
 const POST = (props) => {
@@ -163,15 +163,15 @@ const POST = (props) => {
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row>
+        <Row style={{justifyContent:"end",marginBottom:"1rem", }}>
           <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
               color="primary "
               type="submit"
-              className="mr-1 mb-2"
+              style={{marginRight:"1rem"}}
               disabled={loading || (params.series && !_write)}
             >
-              {loading && <Spinner color="white" size="sm" className="mr-1" />}
+              {loading && <Spinner color="white" size="sm" className="mr-1"  />}
               {t("Save")}
             </Button>
             {params.series && (
