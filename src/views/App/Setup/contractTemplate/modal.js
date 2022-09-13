@@ -1,20 +1,27 @@
-import { t } from 'i18next';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { t } from "i18next";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
-  Button, Col, FormGroup, Input, Label, Modal, ModalBody,
-  ModalFooter, ModalHeader
-} from 'reactstrap';
-import CustomSelect from '../../../../components/CustomSelect';
+  Button,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
+import CustomSelect from "../../../../components/CustomSelect";
 const initState = {
   printName: "",
   doctype: "",
   isRtl: false,
   isReceipt: false,
-}
+};
 const PrintModal = ({ open, onModalClose }) => {
-  const { DocType } = useSelector(state => state)
+  const DocTypes = useSelector((state) => state.DocType);
   const [values, setValues] = useState(initState);
   const handleChange = (key, value) => {
     setValues((prev) => {
@@ -22,37 +29,38 @@ const PrintModal = ({ open, onModalClose }) => {
     });
   };
   return (
-    <Modal isOpen={open} toggle={() => { onModalClose(!open); setValues(initState) }} centered={true}>
-      <ModalHeader>
-        {t("New Contract Template")}
-      </ModalHeader>
+    <Modal
+      isOpen={open}
+      toggle={() => {
+        onModalClose(!open);
+        setValues(initState);
+      }}
+      centered={true}
+    >
+      <ModalHeader>{t("New Contract Template")}</ModalHeader>
       <ModalBody>
         <Col>
           <FormGroup>
-            <Label>
-              {t("Print Name")} :
-            </Label>
+            <Label>{t("Print Name")} :</Label>
             <Input
               placeholder="print Name"
               value={values.printName}
               onChange={(e) => {
-                handleChange("printName", e.target.value)
+                handleChange("printName", e.target.value);
               }}
             />
           </FormGroup>
         </Col>
         <Col>
           <FormGroup>
-            <Label>
-              {t("Doctype")} :
-            </Label>
+            <Label>{t("Doctype")} :</Label>
             <CustomSelect
-              options={DocType}
+              options={DocTypes}
               textName="DocType"
               valueName="Series"
               value={values.doctype}
               onChange={async (e) => {
-                handleChange("doctype", e.value)
+                handleChange("doctype", e.value);
               }}
             />
           </FormGroup>
@@ -84,7 +92,10 @@ const PrintModal = ({ open, onModalClose }) => {
         <Link
           to={`/Setup/NewContractTemplate/${values.printName}/${values.doctype}/${values.isRtl}/${values.isReceipt}`}
         >
-          <Button color="primary" disabled={!values.doctype || !values.printName}>
+          <Button
+            color="primary"
+            disabled={!values.doctype || !values.printName}
+          >
             {t("Next")}
           </Button>
         </Link>

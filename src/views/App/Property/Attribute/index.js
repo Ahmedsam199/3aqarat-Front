@@ -1,13 +1,11 @@
-import { Property_Attribute as createColumns } from "@columns";
+import { Attribute as createColumns } from "@columns";
 import CustomTable from "@Component/CustomTable";
-import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
 import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { toasty } from "@toast";
 import React, { useContext, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -71,7 +69,7 @@ const Index = () => {
       <div className="w-100">
         <div className="w-100 d-flex justify-content-between">
           <div className="flex-grow-1"></div>
-          
+
           {ability.can("create", "DT-9") && (
             <div>
               <Button.Ripple

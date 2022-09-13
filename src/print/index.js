@@ -1,5 +1,5 @@
 import { replaceMentions, replaceTables } from "./Utils";
-import {PrintWithoutPopUp} from "@utils";
+import { PrintWithoutPopUp } from "./Utils";
 export const printFun = ({ data, tools, ...rest }) => {
     return new Promise((resolve, reject) => {
         const PrintKeys =
@@ -18,7 +18,7 @@ export const printFun = ({ data, tools, ...rest }) => {
             data,
             template: firstStep,
         });
-  PrintWithoutPopUp(secondStep);
+        PrintWithoutPopUp(secondStep);
         resolve()
     })
 }

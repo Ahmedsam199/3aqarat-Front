@@ -212,7 +212,7 @@ export const registerEmoji = (editor) => {
 // second
 function getMatchedChars(pattern, mentions) {
   return mentions.filter((char) => {
-    return char.includes(pattern);
+    return char.toLowerCase().includes(pattern.toLowerCase());
   });
 }
 export const registerAutocompleter = (editor, mentions) => {

@@ -22,7 +22,6 @@ const initState = {
 };
 const PrintModal = ({ open, onModalClose }) => {
   const DocTypes = useSelector((state) => state.DocType);
-  console.log("testing", DocTypes);
   const [values, setValues] = useState(initState);
   const handleChange = (key, value) => {
     setValues((prev) => {

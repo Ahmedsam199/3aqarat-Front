@@ -78,7 +78,7 @@ const Index = () => {
     onDelete,
     onEdit: (row) =>
       navigate(
-        `/App/Contract/UpdatePayment/${network ? row?.Series : row.ID}`
+        `/Contract/UpdatePayment/${network ? row?.Series : row.ID}`
       ),
   });
 
@@ -88,7 +88,7 @@ const Index = () => {
         <div className="flex-grow-1"></div>
         {ability.can("create", "DT-6") && (
           <div>
-            <Link to="/App/Contract/NewPayment">
+            <Link to="/Contract/NewPayment">
               <Button.Ripple color="primary">{t("New")}</Button.Ripple>
             </Link>
           </div>

@@ -7,7 +7,7 @@ const PaymentPOST = lazy(() => import('../../../views/App/contract/payment/post'
 export default [
     {
         element: <Contract />,
-        path: "/App/Contract/Contract",
+        path: "/Contract/Contract",
 
         meta: {
             action: "read",
@@ -16,7 +16,7 @@ export default [
     },
     {
         element: <ContractPOST />,
-        path: "/App/Contract/NewContract",
+        path: "/Contract/NewContract",
         meta: {
             action: "read",
             resource: "DT-2",
@@ -24,7 +24,7 @@ export default [
     },
     {
         element: <ContractPOST />,
-        path: "/App/Contract/UpdateContract/:series",
+        path: "/Contract/UpdateContract/:series",
         meta: {
             action: "read",
             resource: "DT-2",
@@ -32,7 +32,7 @@ export default [
     },
     {
         element: <Payment />,
-        path: "/App/Contract/Payment",
+        path: "/Contract/Payment",
         meta: {
             action: "read",
             resource: "DT-6",
@@ -40,7 +40,7 @@ export default [
     },
     {
         element: <PaymentPOST />,
-        path: "/App/Contract/NewPayment",
+        path: "/Contract/NewPayment",
         meta: {
             action: "read",
             resource: "DT-6",
@@ -48,7 +48,7 @@ export default [
     },
     {
         element: <PaymentPOST />,
-        path: "/App/Contract/UpdatePayment/:series",
+        path: "/Contract/UpdatePayment/:series",
         meta: {
             action: "read",
             resource: "DT-6",

@@ -74,7 +74,7 @@ const POST = (props) => {
         )
           .then((res) => {
             toast.success("");
-            navigate("/Properties/Properties");
+            navigate("/Properties/Property");
           })
           .catch((err) => {
             console.log("hacker_it_err", err);

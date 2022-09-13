@@ -10,7 +10,7 @@ const Territory = lazy(() => import('../../../views/App/Property/Territory/index
 export default [
     {
         element: <Property />,
-        path: "/Properties/Properties",
+        path: "/Properties/Property",
         meta: {
             action: "read",
             resource: "DT-8",

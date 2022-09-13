@@ -46,7 +46,7 @@ export default [
 
       {
         id: "",
-        title: "User Roles",
+        title: "Roles",
         icon: <User size={12} />,
         navLink: "/Setup/Role",
         action: "read",
