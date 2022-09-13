@@ -29,7 +29,6 @@ import Ref2 from "./Ref2";
 import Ref3 from "./Ref3";
 import ReferenceList from "./ReferenceList";
 import getPrintDate from '@Print/getData/Contract';
-import ReactToPrint from "react-to-print";
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -91,9 +90,9 @@ const POST = (props) => {
               refSeries: res?.Series,
             });
             console.log(Attachments)
-            navigate("/App/Contract/Contract");
+            navigate("/Contract/Contract");
           } else {
-            navigate("/App/Contract/Contract");
+            navigate("/Contract/Contract");
           }
         })
         .catch((err) => {

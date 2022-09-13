@@ -1,10 +1,9 @@
 
+import Contract from "./Contract";
 import Currency from "./Currecny/index";
 import DocType from "./DocType/index";
-import Setup from "./Setup";
 import Property from "./Property";
-import Contract from "./Contract";
-import PrintKeys from './Setup/PrintKeys'
+import Setup from "./Setup";
 export default {
   ...Setup,
   ...Property,

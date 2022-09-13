@@ -18,7 +18,7 @@ import {
   Row
 } from "reactstrap";
 
-import { Properity_Property as createColumns } from "@columns";
+import { Property as createColumns } from "@columns";
 import CustomTable from "@Component/CustomTable";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";

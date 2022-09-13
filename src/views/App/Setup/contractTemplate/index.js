@@ -1,4 +1,4 @@
-import { contractTemplate as createColumns } from '@columns';
+import { ContractTemplate as createColumns } from '@columns';
 import CustomTable from '@Component/CustomTable';
 import Breadcrumbs from '@components/breadcrumbs';
 import { AbilityContext } from '@src/utility/context/Can';
@@ -7,6 +7,7 @@ import { toasty } from '@toast';
 import { useContext, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -21,6 +22,7 @@ import CustomSelect from '../../../../components/CustomSelect';
 import Modal from './modal';
 const Index = () => {
   const { ContractTemplate, DocType } = useSelector((state) => state);
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const [open, setOpen] = useState()
   const dispatch = useDispatch();
@@ -44,7 +46,7 @@ const Index = () => {
   };
 
   const onDelete = async (Series) => {
-    dispatch(deleteItem('contractTemplate', Series))
+    dispatch(deleteItem('ContractTemplate', Series))
       .then((res) => {
         ref.current?.refresh();
         toasty({ type: 'success' })
@@ -55,21 +57,28 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
-    onEdit: (row) => { console.log('hacker_it', row.isReceipt); },
+    onEdit: (row) => {
+      navigate(`/Setup/UpdateContractTemplate/${row.Series}/${row.Name}/${row.Doctype}/${row.IsRtl}/${row.IsReceipt}/${row.IsDefault}/${row.IsLandscape}`);
+    },
   });
   return (
     <>
       <div className="d-flex justify-content-between">
         <div className="flex-grow-1">
           <Breadcrumbs
-            breadCrumbTitle="contractTemplate"
+            breadCrumbTitle="ContractTemplate"
             breadCrumbParent="Setup"
-            breadCrumbActive="contractTemplate"
+            breadCrumbActive="ContractTemplate"
           />
         </div>
-        {ability.can('create', 'DT-9') && (
+        {ability.can("create", "DT-9") && (
           <div>
-            <Button.Ripple color="primary" onClick={() => { setOpen(true); }} >
+            <Button.Ripple
+              color="primary"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               {t("New")}
             </Button.Ripple>
           </div>
@@ -80,30 +89,26 @@ const Index = () => {
           <Row className="mt-1 mb-50">
             <Col md="2">
               <FormGroup>
-                <Label>
-                  {t("Series")}
-                </Label>
+                <Label>{t("Series")}</Label>
                 <Input
-                  placeholder={t('Series')}
+                  placeholder={t("Series")}
                   onChange={(e) =>
-                    handleFiltersChange('Series', e.target.value)
+                    handleFiltersChange("Series", e.target.value)
                   }
                 />
               </FormGroup>
             </Col>
             <Col md="2">
               <FormGroup>
-                <Label>
-                  {t("Doctype")}
-                </Label>
+                <Label>{t("Doctype")}</Label>
                 <CustomSelect
                   isClearable={true}
                   valueName="Series"
-                  textName="DocTypeName"
+                  textName="DocType"
                   value={filters.Doctype.value}
                   options={DocType}
                   onChange={(e) => {
-                    handleFiltersChange('Doctype', e?.value ?? null);
+                    handleFiltersChange("Doctype", e?.value ?? null);
                   }}
                 />
               </FormGroup>

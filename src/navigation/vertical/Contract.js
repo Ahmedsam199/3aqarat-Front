@@ -1,28 +1,11 @@
 // ** Icons Import
 import {
-  FileText,
-  Type,
-  Settings,
-  Flag,
-  Users,
-  CreditCard,
-  Dribbble,
-  Circle,
-  Target,
-  Square,
-  Edit,
-  Edit2,
-  BookOpen,
-  DollarSign,
-  PieChart,
-  Bookmark,
-  UserCheck,
-  User,
+  CreditCard, Edit,
+  Edit2
 } from "react-feather";
-import { useSelector } from "react-redux";
 
 export default [
-  
+
   {
     id: "Contract",
     title: "Contract",
@@ -35,7 +18,7 @@ export default [
         icon: <Edit2 size={12} />,
         action: "read",
         resource: "DT-2",
-        navLink: "/App/Contract/Contract",
+        navLink: "/Contract/Contract",
       },
       {
         id: "Payment",
@@ -43,8 +26,8 @@ export default [
         icon: <CreditCard size={12} />,
         action: "read",
         resource: "DT-6",
-        navLink: "/App/Contract/Payment",
+        navLink: "/Contract/Payment",
       },
     ],
-}
+  }
 ];

@@ -1,11 +1,10 @@
 import Routes from "@Routes";
 import db from '@src/utility/api/cacheDB';
-import { store } from "../../storeConfig/store";
 import Types from "@Types";
-import axios from "axios";
 import { insertOrUpdateFormData } from "@utility/api";
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { types } from "sass";
+import { store } from "../../storeConfig/store";
 const networkStatus = () => store.getState().tempData.network;
 /*
 !  server and locale
@@ -23,10 +22,8 @@ export const insertItem = (name, values) => {
       try {
         if (networkStatus()) {
           const _ = await axios.post(Routes[name].root, values);
-          console.log('testing',_);
-          if ( _.status ==201) {
-   //Cause IHAVE DATA FROM SOCKET I COMMENT THIS FUNCTION 
-
+          if (_.status == 201) {
+            //Cause I HAVE DATA FROM SOCKET I COMMENT THIS FUNCTION 
             // dispatch({
             //   type: Types[name]?.insert,
             //   payload: {
@@ -37,7 +34,7 @@ export const insertItem = (name, values) => {
           } else {
             reject(_);
           }
-          } else {
+        } else {
           const _ = uuidv4();
           const request = {
             timestamp: new Date().toUTCString(),

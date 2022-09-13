@@ -21,7 +21,9 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
-// import { confirmAlert2 } from '../../../utility/alert';
+import getPrintDate from '@Print/getData/Contract';
+import PrintDropDown from "@Component/PrintDropDown";
+
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -79,9 +81,9 @@ const POST = (props) => {
               refDoctype: "Payment",
               refSeries: res?.Series,
             })
-            navigate("/App/Contract/Payment");
+            navigate("/Contract/Payment");
           } else {
-            navigate("/App/Contract/Payment");
+            navigate("/Contract/Payment");
           }
         })
 
@@ -91,7 +93,7 @@ const POST = (props) => {
         })
         .finally(() => {
           setLoading(false);
-          navigate("/App/Contract/Payment");
+          navigate("/Contract/Payment");
         });
     }
   };
@@ -162,7 +164,7 @@ const POST = (props) => {
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
         <Row>
-          <Col sm="0" className="d-flex justify-content-end align-items-center">
+          <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
               color="primary "
               type="submit"
@@ -172,6 +174,12 @@ const POST = (props) => {
               {loading && <Spinner color="white" size="sm" className="mr-1" />}
               {t("Save")}
             </Button>
+            {params.series && (
+              <PrintDropDown
+                Doctype={["DT-6"]}
+                getDate={async () => await getPrintDate({ data: getValues() })}
+              />
+            )}
           </Col>
         </Row>
         <Row>

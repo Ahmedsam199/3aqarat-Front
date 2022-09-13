@@ -32,7 +32,7 @@ const Post = () => {
     PrintKeys: AllPrintKeys,
     DocType,
     tempData: { network },
-    contractTemplate,
+    ContractTemplate,
   } = useSelector((state) => state);
   const PrintKeys = useMemo(() =>
     AllPrintKeys.
@@ -62,7 +62,7 @@ const Post = () => {
   // #endregion
   useEffect(() => {
     if (params.series) {
-      dispatch({ type: "initValues", payload: contractTemplate.find((x) => x.Series === params.series) })
+      dispatch({ type: "initValues", payload: ContractTemplate.find((x) => x.Series === params.series) })
     } else {
       dispatch({ type: "setHeader", payload: localStorage.getItem('imgBase64') })
     }
@@ -81,16 +81,14 @@ const Post = () => {
       CopyCount: copyCount,
       PrintOnSubmit: printOnSubmit,
     };
-    console.log('hacker_it', request);
-    return
     dispatchRedux(
       params.series
-        ? updateItem('contractTemplate', request)
-        : insertItem('contractTemplate', request)
+        ? updateItem('ContractTemplate', request)
+        : insertItem('ContractTemplate', request)
     )
       .then((res) => {
         toasty({ type: "success" });
-        navigate('/Setup/contractTemplate');
+        navigate('/Setup/ContractTemplate');
       })
       .catch((err) => {
         console.log('hacker_it_err', err);
@@ -116,12 +114,12 @@ const Post = () => {
       <div className="d-flex justify-content-between">
         <div className="flex-grow-1">
           <Breadcrumbs
-            breadCrumbTitle="contractTemplate"
+            breadCrumbTitle="ContractTemplate"
             breadCrumbParent="Setup"
-            breadCrumbParent3="contractTemplate"
+            breadCrumbParent3="ContractTemplate"
             breadCrumbActive={params.series ? params.series : 'New'}
             Series={params.series}
-            breadCrumbActiveLink="/Setup/contractTemplate"
+            breadCrumbActiveLink="/Setup/ContractTemplate"
           />
         </div>
         <div>
@@ -132,7 +130,7 @@ const Post = () => {
       </div>
       <Card>
         <CardBody>
-          <Row form className="mt-1 mb-50">
+          <Row className="mt-1 mb-50">
             <Col lg="3" md="4">
               <FormGroup>
                 <Label>
@@ -142,7 +140,7 @@ const Post = () => {
                   placeholder="print Name"
                   value={printName}
                   onChange={(e) => {
-                    dispatch({ type: "setPrintName", value: e.target.value });
+                    dispatch({ type: "setPrintName", payload: e.target.value });
                   }}
                 />
               </FormGroup>
@@ -154,7 +152,7 @@ const Post = () => {
                 </Label>
                 <CustomSelect
                   valueName="Series"
-                  textName="DocTypeName"
+                  textName="DocType"
                   value={doctype}
                   isDisabled={true}
                   options={DocType}
@@ -170,7 +168,7 @@ const Post = () => {
                   placeholder="Copy Count"
                   value={copyCount}
                   onChange={(e) => {
-                    dispatch({ type: "setCopyCount", value: e.target.value });
+                    dispatch({ type: "setCopyCount", payload: e.target.value });
                   }}
                 />
               </FormGroup>

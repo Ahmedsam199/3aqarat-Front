@@ -28,7 +28,12 @@ const Post = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatchRedux = useDispatch();
-  const { PrintKeys: AllPrintKeys, DocType, tempData: { network }, ContractTemplate ,} = useSelector((state) => state);
+  const {
+    PrintKeys: AllPrintKeys,
+    DocType,
+    tempData: { network },
+    ContractTemplate,
+  } = useSelector((state) => state);
   const PrintKeys = useMemo(() =>
     AllPrintKeys.
       filter(x => x.Doctype == params?.doctype).
@@ -135,7 +140,7 @@ const Post = () => {
                   placeholder="print Name"
                   value={printName}
                   onChange={(e) => {
-                    dispatch({ type: "setPrintName", value: e.target.value });
+                    dispatch({ type: "setPrintName", payload: e.target.value });
                   }}
                 />
               </FormGroup>
@@ -163,7 +168,7 @@ const Post = () => {
                   placeholder="Copy Count"
                   value={copyCount}
                   onChange={(e) => {
-                    dispatch({ type: "setCopyCount", value: e.target.value });
+                    dispatch({ type: "setCopyCount", payload: e.target.value });
                   }}
                 />
               </FormGroup>

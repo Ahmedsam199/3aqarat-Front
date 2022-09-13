@@ -79,7 +79,7 @@ const Index = () => {
     onDelete,
     onEdit: (row) =>
       navigate(
-        `/App/Contract/UpdateContract/${network ? row?.Series : row.ID}`
+        `/Contract/UpdateContract/${network ? row?.Series : row.ID}`
       ),
   });
 
@@ -91,7 +91,7 @@ const Index = () => {
 
         {ability.can("create", "DT-2") && (
           <div>
-            <Link to="/App/Contract/NewContract">
+            <Link to="/Contract/NewContract">
               <Button.Ripple color="primary">{t("New")}</Button.Ripple>
             </Link>
           </div>

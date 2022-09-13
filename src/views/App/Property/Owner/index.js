@@ -1,4 +1,4 @@
-import { Property_Party as createColumns } from "@columns";
+import { Party as createColumns } from "@columns";
 import Breadcrumbs from "@components/breadcrumbs";
 import { AbilityContext } from "@src/utility/context/Can";
 import { deleteItem } from "@store/actions/data";
