@@ -43,11 +43,10 @@ const RefsList = ({ loading }) => {
                     <th scope="row">{index + 1}</th>
                     <td>
                       <CustomFormInput
-                        menuPosition={"fixed"}
-                        menuShouldBlockScroll
-                        autoFocus={index === fields.length - 1}
                         hiddenTitle
+                        
                         name={`Attribute`}
+                        menuPosition={"fixed"}
                       />
                     </td>
                     <td>
@@ -65,11 +64,7 @@ const RefsList = ({ loading }) => {
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([
-                            
-                           
-                            remove(index),
-                          ]);
+                          await Promise.all([remove(index)]);
                         }}
                       >
                         <Trash2 size="15" />

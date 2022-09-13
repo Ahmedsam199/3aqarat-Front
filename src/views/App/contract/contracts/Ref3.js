@@ -73,11 +73,7 @@ const RefsList = ({ loading }) => {
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([
-                            
-                            deleteOptions(index),
-                            remove(index),
-                          ]);
+                          await Promise.all([remove(index)]);
                         }}
                       >
                         <Trash2 size="15" />

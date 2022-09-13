@@ -60,7 +60,7 @@ const POST = (props) => {
     if (values.IsFurnished == true && values.Furnitures.length == 0) {
       toast.error("You Must Add Furnitures");
 
-    } else if (values.Attribute == undefined || values.Attribute.length == 0) {
+    } else if (values.Attributes == undefined || values.Attributes.length == 0) {
       toast.error("You must Add 1 Attribute At least");
     } else {
       console.log("first", values);
@@ -118,19 +118,14 @@ const POST = (props) => {
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
         <Row>
           <Col sm="10"></Col>
-          <Col
-            sm="2"
-            className="d-flex justify-content-end align-items-center"
-          >
+          <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
               color="primary"
               type="submit"
               className="mr-1 mb-2"
               disabled={loading || (params.series && !_write)}
             >
-              {loading && (
-                <Spinner color="white" size="sm" className="mr-1" />
-              )}
+              {loading && <Spinner color="white" size="sm" className="mr-1" />}
               {t("Save")}
             </Button>
           </Col>
@@ -173,16 +168,7 @@ const POST = (props) => {
                         })}
                       />
                     </Col>
-                    <Row>
-                      <Col>
-                        <CustomFormSelect
-                          options={PropertyAttr}
-                          textName="Attribute"
-                          valueName="Series"
-                          name="Attributes"
-                        />
-                      </Col>
-                    </Row>
+                    <Row></Row>
                   </Col>
                   <Col>
                     <br></br>
@@ -193,7 +179,7 @@ const POST = (props) => {
             </Card>
           </Col>
 
-          <Col sm="8">
+          <Col sm="12">
             <hr />
             {_watchIsFurnished ? (
               <Ref2 {...{ loading }} />
@@ -214,11 +200,13 @@ const POST = (props) => {
               </div>
             )}
           </Col>
-          <Col sm="4">
-            <hr />
-            <Ref1 {...{ loading }} />
-          </Col>
         </Row>
+          <Row>
+            <Col sm="12">
+              <hr />
+              <Ref1 {...{ loading }} />
+            </Col>
+          </Row>
 
         <Row>
           <Col>

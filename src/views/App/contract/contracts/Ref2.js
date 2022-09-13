@@ -111,6 +111,7 @@ const RefsList = ({ loading }) => {
                     <td style={{ width: "25%" }}>
                       <CustomFormInput
                         menuPosition="fixed"
+                        type="number"
                         name={`Furnitures.${index}.Price`}
                         hiddenTitle
                         menuShouldBlockScroll
@@ -134,6 +135,7 @@ const RefsList = ({ loading }) => {
                         extraOnChangeFun={refreshTotalQty}
                         extraOnChangeFun2={refreshTotalPrice}
                         hiddenTitle
+                        type="number"
                         menuShouldBlockScroll
                       />
                     </td>

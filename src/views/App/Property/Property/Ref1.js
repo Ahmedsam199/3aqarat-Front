@@ -9,6 +9,7 @@ import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Table } from "reactstrap";
+import { useSelector } from "react-redux";
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -22,16 +23,18 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Attribute",
+    name: "Attributes",
   });
+  const { Property, Party, Territory, Purpose, Currency, PropertyAttr } =
+    useSelector((state) => state);
   return (
     <>
-      <h5 className="mb-1 text-center">{t("Attribute")}</h5>
+      <h5 className="mb-1 text-center">{t("Attributes")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "30%" }}>{t("Attribute")}</th>
+              <th style={{ width: "30%" }}>{t("Attributes")}</th>
               <th style={{ width: "25%" }}>{t("Value")}</th>
             </tr>
           </thead>
@@ -42,18 +45,21 @@ const RefsList = ({ loading }) => {
                   <tr>
                     <th scope="row">{index + 1}</th>
                     <td>
-                      <CustomFormInput
+                      <CustomFormSelect
+                        options={PropertyAttr}
+                        textName="Attribute"
+                        valueName="Series"
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
                         autoFocus={index === fields.length - 1}
-                        name={`Attribute.${index}.Attribute`}
+                        name={`Attributes.${index}.Attributes`}
                       />
                     </td>
                     <td>
                       <CustomFormInput
                         hiddenTitle
-                        name={`Attribute.${index}.AttributeValue`}
+                        name={`Attributes.${index}.AttributesValue`}
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         autoFocus={index === fields.length - 1}
@@ -75,7 +81,7 @@ const RefsList = ({ loading }) => {
                   <input
                     className="d-none"
                     defaultValue={x.id ?? ""}
-                    {...register(`Attribute.${index}.id`)}
+                    {...register(`Attributes.${index}.id`)}
                   />
                 </div>
               );
@@ -110,7 +116,6 @@ const RefsList = ({ loading }) => {
           )}
         </Col>
       </Row>
-      
     </>
   );
 };
