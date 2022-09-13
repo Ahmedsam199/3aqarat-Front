@@ -22,16 +22,16 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "Attribute",
+    name: "Attributes",
   });
   return (
     <>
-      <h5 className="mb-1 text-center">{t("Attribute")}</h5>
+      <h5 className="mb-1 text-center">{t("Attributes")}</h5>
       <div className={`shadow rounded table-container`}>
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "30%" }}>{t("Attribute")}</th>
+              <th style={{ width: "30%" }}>{t("Attributes")}</th>
               <th style={{ width: "25%" }}>{t("Value")}</th>
             </tr>
           </thead>
@@ -46,7 +46,7 @@ const RefsList = ({ loading }) => {
                         menuShouldBlockScroll
                         hiddenTitle
                         menuPosition="fixed"
-                        name={`Attribute.${index}.Attribute`}
+                        name={`Attributes.${index}.Attributes`}
                       />
                     </td>
                     <td>
@@ -54,7 +54,7 @@ const RefsList = ({ loading }) => {
                         hiddenTitle
                         valueName="Series"
                         textName="Currency"
-                        name={`Attribute.${index}.AttributeValue`}
+                        name={`Attributes.${index}.AttributesValue`}
                         menuPosition={"fixed"}
                       />
                     </td>

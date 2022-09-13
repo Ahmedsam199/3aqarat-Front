@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 import { Button, Col, Row, Table } from "reactstrap";
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
@@ -23,6 +24,11 @@ const RefsList = ({ loading }) => {
     control,
     name: "ExtraPayment",
   });
+    const {
+
+      Purpose,
+      Currency
+    } = useSelector((state) => state);
   return (
     <>
       <h5 className="">{t("ExtraPayment")}</h5>
@@ -50,9 +56,9 @@ const RefsList = ({ loading }) => {
                         autoFocus={index === fields.length - 1}
                         hiddenTitle
                         name={`ExtraPayment.${index}.Puropose`}
-                        options={[]}
+                        options={Purpose}
                         valueName="Series"
-                        textName="Currency"
+                        textName="Purpose"
                       />
                     </td>
                     <td style={{ width: "25%" }}>
@@ -62,10 +68,15 @@ const RefsList = ({ loading }) => {
                       />
                     </td>
                     <td style={{ width: "25%" }}>
-                      <CustomFormNumberInput
-                        name={`ExtraPayment.${index}.PaidCurrency`}
-                        IsDisabled={true}
+                      <CustomFormSelect
+                        menuPosition={"fixed"}
+                        menuShouldBlockScroll
+                        autoFocus={index === fields.length - 1}
                         hiddenTitle
+                        options={Currency}
+                        valueName="Series"
+                        textName="CurrencyName"
+                        name={`ExtraPayment.${index}.PaidCurrency`}
                       />
                     </td>
                     <td style={{ width: "10%" }}>

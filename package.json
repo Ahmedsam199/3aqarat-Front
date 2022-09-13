@@ -56,6 +56,7 @@
     "ol": "^6.15.1",
     "pigeon-maps": "^0.21.0",
     "postcss-rtl": "^1.5.0",
+    "print-js": "^1.6.0",
     "prismjs": "^1.28.0",
     "prop-types": "^15.8.1",
     "rc-input-number": "^7.3.4",

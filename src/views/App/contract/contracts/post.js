@@ -315,7 +315,7 @@ console.log(CurrencyExchange);
         <AttachmentComponent
           isModalOpen={isAttachmentModalOpen}
           handleToggleModel={setIsAttachmentModalOpen}
-          series={params?.Series}
+          series={params?.series}
           refDoctype="Data"
         />
       </Form>

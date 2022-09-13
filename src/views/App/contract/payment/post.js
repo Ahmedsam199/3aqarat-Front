@@ -20,7 +20,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+import { Alert, Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import getPrintDate from '@Print/getData/Payment';
 import PrintDropDown from "@Component/PrintDropDown";
 
@@ -152,26 +152,28 @@ const POST = (props) => {
   });
   let PartyOpt = [];
 
-  const _watchChooseTheTable = useWatch({ control, name: "Reference" });
-  const _ = Contracts?.filter((x) => x.Series === _watchChooseTheTable).map((x) =>
+  
+  const _watchReference = useWatch({ control, name: "Reference" });
+  const _ = Contracts?.filter((x) => x.Series === _watchReference).map((x) =>
     PartyOpt.push(
       { label: x.FirstParty, value: x.FirstParty },
       { label: x.SecondParty, value: x.SecondParty }
     )
   );
   console.log(_)
+  
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row style={{justifyContent:"end",marginBottom:"1rem", }}>
+        <Row style={{ justifyContent: "end", marginBottom: "1rem" }}>
           <Col sm="2" className="d-flex justify-content-end align-items-center">
             <Button
               color="primary "
               type="submit"
-              style={{marginRight:"1rem"}}
+              style={{ marginRight: "1rem" }}
               disabled={loading || (params.series && !_write)}
             >
-              {loading && <Spinner color="white" size="sm" className="mr-1"  />}
+              {loading && <Spinner color="white" size="sm" className="mr-1" />}
               {t("Save")}
             </Button>
             {params.series && (
@@ -187,18 +189,36 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect name="PayParty" options={PartyOpt} />
-                  <CustomFormSelect name="ReceiveParty" options={PartyOpt} />
-                  <CustomFormInput
-                    name="PostingDate"
-                    textName="Currency"
-                    type="Date"
+                  <CustomFormSelect
+                    name="Reference"
+                    textName="Series"
+                    valueName="Series"
+                    options={Contracts}
+                  />
+                  <CustomFormSelect
+                    name="Currency"
+                    options={Currency}
+                    textName="CurrencyName"
                     valueName="Series"
                   />
                 </Col>
                 <Col sm="6">
-                  <CustomFormSelect name="Reference" options={ContractOpt} />
-                  <CustomFormSelect name="Currency" options={CurrencyOpt} />
+                  {_watchReference ? (
+                    <div>
+                      <CustomFormSelect name="PayParty" options={PartyOpt} />
+                      <CustomFormSelect
+                        name="ReceiveParty"
+                        options={PartyOpt}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <Alert className="p-5" color="danger">
+                        <center>You Must Choose Reference First To Choose First And Second Party</center>
+                      </Alert>
+                      
+                    </div>
+                  )}
                 </Col>
               </Row>
             </CardBody>
@@ -215,6 +235,14 @@ const POST = (props) => {
                 </Col>
                 <Col sm="6">
                   <CustomFormInput name="Amount" />
+                </Col>
+                <Col sm="6">
+                  <CustomFormInput
+                    name="PostingDate"
+                    textName="Currency"
+                    type="Date"
+                    valueName="Series"
+                  />
                 </Col>
               </Row>
             </CardBody>
