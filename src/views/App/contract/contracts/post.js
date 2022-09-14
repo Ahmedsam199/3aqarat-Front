@@ -24,11 +24,12 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+import { Alert, Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import Furnitures from "./Furnitures";
 import ExtraPayment from "./ExtraPayment";
 import Attribute from "./Attribute";
 import getPrintDate from '@Print/getData/Contract';
+import { isAsyncThunkAction } from "@reduxjs/toolkit";
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -133,28 +134,20 @@ console.log(CurrencyExchange);
          _loading: false,
        });
    }, [Contracts]);
- 
-  let TypeOpt = [];
-  ContractType.forEach((x) => {
-    TypeOpt.push({ value: x.Series, label: x.Series + " " + x.ContractType });
-  });
-  let PropOpt = [];
+  const _watchProperty = useWatch({ control, name: "Property" });
+  const IsRent = useWatch({ control, name: "IsRent" });
+  const IsSale = useWatch({ control, name: "IsSale" });
+  let PayParty=[]
   Property.forEach((x) => {
-    PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
+    if (x.Series == _watchProperty) {
+      Party.filter((y) => {
+        if (y.Series == x.Party) {
+          PayParty.push({ label: y.FullName, value: y.Series });
+          console.log("TESTING",PayParty);
+        }
+      });
+    }
   });
-  let PartyOpt = [];
-  Party.forEach((x) => {
-    PartyOpt.push({ value: x.Series, label: x.Series + " " + x.FullName });
-  });
-  let CurrencyOpt = [];
-  Currency.forEach((x) => {
-    CurrencyOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.CurrencyName,
-    });
-  });
-
-  const _watchChooseTheTable = useWatch({ control, name: "Property" });
 
   return (
     <FormProvider {...methods}>
@@ -186,19 +179,41 @@ console.log(CurrencyExchange);
               <Row>
                 <Col sm="6">
                   <CustomFormSelect
-                    name="FirstParty"
-                    options={Property?.filter(
-                      (x) => x.Series === _watchChooseTheTable
-                    ).map((x) => ({ label: x.Party, value: x.Party }))}
+                    options={Property}
+                    valueName="Series"
+                    textName="Series"
+                    name="Property"
                   />
-                  <CustomFormSelect name="SecondParty" options={PartyOpt} />
+                  {/* Where BackEnd */}
+                  <CustomFormSelect
+                    name="ContractType"
+                    textName="ContractType"
+                    valueName="Series"
+                    options={ContractType}
+                  />
+
                   <CustomFormInput name="ContractStarts" type="Date" />
                 </Col>
                 <Col sm="6">
-                  <CustomFormSelect options={PropOpt} name="Property" />
-                  {/* Where BackEnd */}
-                  <CustomFormSelect name="ContractType" options={TypeOpt} />
                   <Row>
+                    {_watchProperty ? (
+                      <CustomFormSelect name="FirstParty" options={PayParty} />
+                    ) : (
+                      <div>
+                        <Alert className="p-1 mt-1" color="danger">
+                          <center>
+                            You Must Choose Property First To Choose First Party
+                          </center>
+                        </Alert>
+                      </div>
+                    )}
+
+                    <CustomFormSelect
+                      name="SecondParty"
+                      textName="FullName"
+                      valueName="Series"
+                      options={Party}
+                    />
                     <Col sm="6" style={{ marginTop: "2rem" }}>
                       <CustomFormInputCheckbox
                         name="IsFurnished"
@@ -217,7 +232,9 @@ console.log(CurrencyExchange);
             <Furnitures {...{ loading }} />
             <hr />
           </Col>
-          <Col sm="12">
+        </Row>
+        <Row>
+          <Col sm="8">
             <hr />
             <Attribute {...{ loading }} />
             <hr />
@@ -235,12 +252,13 @@ console.log(CurrencyExchange);
                 </Col>
                 <Col sm="6">
                   <CustomFormInput type="Date" name="ContractEnds" />
-                  <CustomFormNumberInput
-                    name="RequestedAmt"
-                    textName="Currency"
+                  <CustomFormNumberInput name="RequestedAmt" />
+                  <CustomFormSelect
+                    name="PaidCurrency"
+                    textName="CurrencyName"
                     valueName="Series"
+                    options={Currency}
                   />
-                  <CustomFormSelect name="PaidCurrency" options={CurrencyOpt} />
                 </Col>
               </Row>
               <Row>
@@ -248,13 +266,24 @@ console.log(CurrencyExchange);
                   <CustomFormInput name="RentFor" />
                 </Col>
                 <Col sm="6">
-                  <CustomFormSelect name="RentCurrency" options={CurrencyOpt} />
+                  <CustomFormSelect
+                    name="RentCurrency"
+                    textName="CurrencyName"
+                    valueName="Series"
+                    options={Currency}
+                  />
                 </Col>
 
                 <Row>
                   <Col style={{ display: "flex", marginTop: "1rem" }}>
-                    <CustomFormInputCheckbox name="IsSale" />
-                    <CustomFormInputCheckbox name="IsRent" />
+                    <CustomFormInputCheckbox
+                      IsDisabled={IsRent}
+                      name="IsSale"
+                    />
+                    <CustomFormInputCheckbox
+                      IsDisabled={IsSale}
+                      name="IsRent"
+                    />
                   </Col>
                 </Row>
               </Row>
@@ -268,21 +297,22 @@ console.log(CurrencyExchange);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormNumberInput
-                    name="AdvanceAmt"
-                    options={PartyTypeOptions}
-                  />
+                  <CustomFormNumberInput name="AdvanceAmt" />
                   <CustomFormInput name="Lawyer" />
                   <CustomFormSelect
                     name="AdvanceCurrency"
-                    options={CurrencyOpt}
+                    textName="CurrencyName"
+                    valueName="Series"
+                    options={Currency}
                   />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput type="number" name="InsuranceAmt" />
                   <CustomFormSelect
                     name="InsuranceCurrency"
-                    options={CurrencyOpt}
+                    textName="CurrencyName"
+                    valueName="Series"
+                    options={Currency}
                   />
                 </Col>
               </Row>

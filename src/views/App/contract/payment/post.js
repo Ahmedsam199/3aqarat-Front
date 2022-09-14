@@ -23,6 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Alert, Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import getPrintDate from '@Print/getData/Payment';
 import PrintDropDown from "@Component/PrintDropDown";
+import PreviewFormValue from "../../../../components/Form/PreviewFormValue";
 
 const POST = (props) => {
   const { t } = useTranslation();
@@ -205,8 +206,15 @@ const POST = (props) => {
                 <Col sm="6">
                   {_watchReference ? (
                     <div>
-                      <CustomFormSelect name="PayParty" options={PartyOpt} />
                       <CustomFormSelect
+                        filterOption={(x) =>
+                          getValues(`ReceiveParty`) !== x.value
+                        }
+                        name="PayParty"
+                        options={PartyOpt}
+                      />
+                      <CustomFormSelect
+                        filterOption={(x) => getValues(`PayParty`) !== x.value}
                         name="ReceiveParty"
                         options={PartyOpt}
                       />
@@ -214,9 +222,11 @@ const POST = (props) => {
                   ) : (
                     <div>
                       <Alert className="p-5" color="danger">
-                        <center>You Must Choose Reference First To Choose First And Second Party</center>
+                        <center>
+                          You Must Choose Reference First To Choose First And
+                          Second Party
+                        </center>
                       </Alert>
-                      
                     </div>
                   )}
                 </Col>
@@ -235,6 +245,7 @@ const POST = (props) => {
                 </Col>
                 <Col sm="6">
                   <CustomFormInput name="Amount" />
+                  {/* <PreviewFormValue name="Amount" /> */}
                 </Col>
                 <Col sm="6">
                   <CustomFormInput

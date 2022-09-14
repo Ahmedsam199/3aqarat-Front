@@ -39,7 +39,7 @@ const RefsList = ({ loading }) => {
             {fields.map((x, index) => {
               return (
                 <div key={x.id}>
-                  <tr>
+                  <tr className="d-flex">
                     <th scope="row">{index + 1}</th>
                     <td>
                       <CustomFormInput
@@ -52,8 +52,6 @@ const RefsList = ({ loading }) => {
                     <td>
                       <CustomFormInput
                         hiddenTitle
-                        valueName="Series"
-                        textName="Currency"
                         name={`Attributes.${index}.AttributesValue`}
                         menuPosition={"fixed"}
                       />

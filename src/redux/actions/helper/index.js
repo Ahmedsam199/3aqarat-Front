@@ -13,7 +13,9 @@ export const getCurrencyExchangeRate = ({
       const {
         CurrencyExchange,
         Currency,
-        AccountInfo: { DefaultCurrency },
+        auth: {
+          userData: { defaultCurrency: DefaultCurrency },
+        },
       } = getState();
 
       /**

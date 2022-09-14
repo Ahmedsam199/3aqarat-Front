@@ -1,5 +1,5 @@
 import { getCurrencyExchangeRate } from '@store/actions/helper';
-import { context } from 'context/AppContext';
+import { context } from '../context/AppContext';
 import React, { memo, useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { sleep } from '../utility/Utils';

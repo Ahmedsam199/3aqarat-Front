@@ -42,7 +42,7 @@ const RefsList = ({ loading }) => {
             {fields.map((x, index) => {
               return (
                 <div key={x.id}>
-                  <tr>
+                  <tr className="d-flex">
                     <th scope="row">{index + 1}</th>
                     <td>
                       <CustomFormSelect

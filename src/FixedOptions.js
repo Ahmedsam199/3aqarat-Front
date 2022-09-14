@@ -205,8 +205,8 @@ export const Tables = {
       label: "Attributes",
       value: "Attributes",
       attributes: [
-        { label: "Attribute", value: "Attribute" },
-        { label: "Value", value: "Value" },
+        { label: "Attribute", value: "Attributes" },
+        { label: "Value", value: "AttributesValue" },
       ],
     },
     {

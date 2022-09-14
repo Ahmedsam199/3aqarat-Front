@@ -26,8 +26,8 @@ import getPrintDate from "@Print/getData/Property";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 import { Map, Marker, GeoJson, GeoJsonFeature, Point, } from "pigeon-maps";
-import Ref2 from "./Ref2";
-import Ref1 from "./Ref1";
+import Furnitures from "./Furnitures";
+import Attributes from "./Attributes";
 import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
@@ -131,7 +131,6 @@ const POST = (props) => {
               {loading && <Spinner color="white" size="sm" className="mr-1" />}
               {t("Save")}
             </Button>
-            
           </Col>
         </Row>
 
@@ -186,10 +185,10 @@ const POST = (props) => {
           <Col sm="12">
             <hr />
             {_watchIsFurnished ? (
-              <Ref2 {...{ loading }} />
+              <Furnitures {...{ loading }} />
             ) : (
               <div>
-                <Alert className="p-5" color="danger">
+                <Alert className="p-4" color="danger">
                   <center>
                     <p
                       style={{
@@ -206,10 +205,12 @@ const POST = (props) => {
           </Col>
         </Row>
         <Row>
-          <Col sm="12">
-            <hr />
-            <Ref1 {...{ loading }} />
-          </Col>
+          
+            <Col sm="8">
+              <Attributes {...{ loading }} />
+            </Col>
+            
+          
         </Row>
 
         <Row>

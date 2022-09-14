@@ -80,7 +80,7 @@ const RefsList = ({ loading }) => {
             {fields.map((x, index) => {
               return (
                 <div key={x.id} style={{ overflow: "hidden" }}>
-                  <tr>
+                  <tr className="d-flex">
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>

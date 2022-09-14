@@ -182,7 +182,7 @@ export const replaceMentions = ({ template, data, PrintKeys }) => {
     try {
         let tempString = template
         for (let index = 0; index < template.length;) {
-            const [mention, end] = getSubstring({ string: template.slice(index), start: '<span data-mention="true">', end: '</span>', inner: true });
+            const [mention, end] = getSubstring({ string: template.slice(index), start: '<p data-mention="true">', end: '</p>', inner: true });
             tempString = tempString.replace(mention, getMentionValue({ mention, PrintKeys, data }))
             index += end;
         }

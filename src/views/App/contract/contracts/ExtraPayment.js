@@ -45,7 +45,7 @@ const RefsList = ({ loading }) => {
             {fields.map((x, index) => {
               return (
                 <div key={x.id}>
-                  <tr>
+                  <tr className="d-flex">
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
@@ -55,7 +55,7 @@ const RefsList = ({ loading }) => {
                         menuShouldBlockScroll
                         autoFocus={index === fields.length - 1}
                         hiddenTitle
-                        name={`ExtraPayment.${index}.Puropose`}
+                        name={`ExtraPayment.${index}.Purpose`}
                         options={Purpose}
                         valueName="Series"
                         textName="Purpose"
