@@ -56,7 +56,7 @@ const POST = (props) => {
   useEffect(async () => {
     dispatch({
       type: "setActiveRoles",
-      payload: deepCopy(Permission).map((x) => JSON.parse(x.JsonData)),
+      payload: deepCopy(Permission).map((x) => JSON.parse(x?.JsonData)),
     });
     if (params?.series) {
       const { data: JsonData, RoleSeries } = await axios.get(
@@ -92,8 +92,6 @@ const POST = (props) => {
       Write: true,
       Create: true,
       Delete: true,
-      Amend: true,
-      Cancel: true,
     };
     dispatch({ type: "setData", payload: [...data, _] });
   };
@@ -123,12 +121,12 @@ const POST = (props) => {
             textName="DocType"
             valueName="Series"
             onChange={(e) => setDocType(e, index)}
-            // options={DocType?.filter(
-            //   (x) =>
-            //     data?.findIndex((y) => y.DocTypeID === x.Series) === -1 ||
-            //     x.Series === row.DocTypeID
-            // )}
-            options={DocType}
+            options={DocType?.filter(
+              (x) =>
+                data?.findIndex((y) => y.DocTypeID == x.Series) === -1 ||
+                x.Series === row.DocTypeID
+            )}
+            // options={DocType}
             value={row.DocTypeID}
             className="w-100"
           />
@@ -173,26 +171,7 @@ const POST = (props) => {
             defaultChecked={row.Delete}
           />
         </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Amend`}
-            name="Amend"
-            label=""
-            defaultChecked={row.Amend}
-          />
-        </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Cancel`}
-            name="Cancel"
-            label=""
-            defaultChecked={row.Cancel}
-          />
-        </td>
+       
         <td style={{ width: "10%" }}>
           <Button.Ripple
             className="btn-icon"
@@ -229,7 +208,7 @@ const POST = (props) => {
       )
         .then((res) => {
           toast.success(<SuccessToast />, { hideProgressBar: true });
-          navigate("/App/Permissions");
+          navigate("/Setup/Permission");
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
@@ -282,12 +261,12 @@ const POST = (props) => {
                 textName="RoleName"
                 valueName="Series"
                 onChange={(e) => changeRole(e)}
-                options={Roles?.filter(
-                  (x) =>
-                    x.Series === originRole ||
-                    activeRoles?.findIndex((y) => y === x.Series) === -1
-                )}
-                // options={Roles}
+                // options={Roles?.filter(
+                //   (x) =>
+                //     x.Series == originRole ||
+                //     originRole?.findIndex((y) => y == x.Series) === -1
+                // )}
+                options={Roles}
                 value={RoleSeries}
                 className="w-25"
               />
@@ -315,8 +294,6 @@ const POST = (props) => {
                     <th style={{ width: "10%" }}>{t("Write")}</th>
                     <th style={{ width: "10%" }}>{t("Create")}</th>
                     <th style={{ width: "10%" }}>{t("Delete")}</th>
-                    <th style={{ width: "10%" }}>{t("Amend")}</th>
-                    <th style={{ width: "10%" }}>{t("Cancel")}</th>
                     <th style={{ width: "10%" }}>{t("Actions")}</th>
                   </tr>
                 </thead>

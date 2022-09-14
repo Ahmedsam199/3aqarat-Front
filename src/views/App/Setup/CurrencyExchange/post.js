@@ -26,6 +26,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
     register,
     formState: { errors },
     handleSubmit,
+    getValues,
     reset,
   } = methods;
   const {
@@ -97,6 +98,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
             <CustomFormInput type="Date" name="Date" />
             <CustomFormSelect
               options={Currency}
+              filterOption={(x) => getValues(`ToCurrency`) !== x.value}
               textName="CurrencyName"
               valueName="Series"
               name="FromCurrency"
@@ -106,9 +108,10 @@ const POST = ({ onToggle, row, toggleFunc }) => {
               textName="CurrencyName"
               valueName="Series"
               name="ToCurrency"
+              filterOption={(x) => getValues(`FromCurrency`) !== x.value}
             />
             <CustomFormInput name="RateExchange" />
-            
+
             <div className="mt-1">
               <Button
                 color="primary"

@@ -327,5 +327,6 @@ export const deleteItemLocal = (name, Series) => {
         Series,
       },
     });
+    console.log(Types[name]?.delete);
   };
 };

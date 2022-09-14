@@ -33,12 +33,12 @@ export default ({ onEdit, onDelete }) => {
       </Badge>
     );
 
-  const selectors = ["Series","Active"];
+  const selectors = ["Series", "RoleSeries", "Active"];
   const sortable = [...Array.from({ length: 2 }, () => true), false];
   const sortFunctions = [sortSeries, ...Array.from({ length: 3 }, () => null)];
-  const minWidths = Array.from({ length: 1 }, () => "50%");
+  const minWidths = Array.from({ length: 3 }, () => "33.3333%");
   const cells = [
-    ...Array.from({ length: 1 }, () => null),
+    ...Array.from({ length: 2 }, () => null),
     Actions,
   ];
   return create({

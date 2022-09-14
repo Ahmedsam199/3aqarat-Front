@@ -228,16 +228,16 @@ console.log(CurrencyExchange);
         </Row>
         <Row>
           <Col sm="12">
-            <hr />
+            
             <Furnitures {...{ loading }} />
-            <hr />
+            
           </Col>
         </Row>
         <Row>
           <Col sm="8">
-            <hr />
+            
             <Attribute {...{ loading }} />
-            <hr />
+            
           </Col>
         </Row>
 
