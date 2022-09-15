@@ -13,7 +13,7 @@ env:
   Branches: main
   MainBranch: main
   NPMRegistry: https://registry.npmjs.org/
-  InstallCommand: npm i
+  InstallCommand: yarn 
   BuildCommand: npm run build
   Output: ./build
 
