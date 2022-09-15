@@ -178,13 +178,22 @@ console.log(CurrencyExchange);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect
-                    options={Property}
-                    valueName="Series"
-                    textName="Series"
-                    name="Property"
-                  />
-                  {/* Where BackEnd */}
+                  {params?.series ? (
+                    <CustomFormSelect
+                      options={Property}
+                      valueName="Series"
+                      textName="Series"
+                      name="Property"
+                      IsDisabled={true}
+                    />
+                  ) : (
+                    <CustomFormSelect
+                      options={Property}
+                      valueName="Series"
+                      textName="Series"
+                      name="Property"
+                    />
+                  )}
                   <CustomFormSelect
                     name="ContractType"
                     textName="ContractType"
@@ -197,7 +206,13 @@ console.log(CurrencyExchange);
                 <Col sm="6">
                   <Row>
                     {_watchProperty ? (
-                      <CustomFormSelect name="FirstParty" options={PayParty} />
+                      <CustomFormSelect
+                        filterOption={(x) =>
+                          getValues(`SecondParty`) !== x.value
+                        }
+                        name="FirstParty"
+                        options={PayParty}
+                      />
                     ) : (
                       <div>
                         <Alert className="p-1 mt-1" color="danger">
@@ -212,6 +227,7 @@ console.log(CurrencyExchange);
                       name="SecondParty"
                       textName="FullName"
                       valueName="Series"
+                      filterOption={(x) => PayParty[0].value !== x.value}
                       options={Party}
                     />
                     <Col sm="6" style={{ marginTop: "2rem" }}>
@@ -228,19 +244,14 @@ console.log(CurrencyExchange);
         </Row>
         <Row>
           <Col sm="12">
-            
             <Furnitures {...{ loading }} />
-            
           </Col>
         </Row>
         <Row>
           <Col sm="8">
-            
             <Attribute {...{ loading }} />
-            
           </Col>
         </Row>
-
         <Row>
           <Card>
             <CardBody>

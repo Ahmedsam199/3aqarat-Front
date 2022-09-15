@@ -12,6 +12,7 @@ const CustomSelect = (
     valueName = 'value',
     className,
     onChange,
+    defaultValue,
     forceRender,
     afterFetch,
     offlineFunc,
@@ -78,11 +79,14 @@ const CustomSelect = (
   return (
     <Select
       isDisabled={isDisabled}
-      className={'react-select ' + className}
+      className={"react-select " + className}
       classNamePrefix="select"
       isLoading={loading}
+      defaultValue={defaultValue}
       isOptionDisabled={(option) => option.isDisabled} // disable an option
-      getOptionLabel={(option) => t(option.label, { defaultValue: option.lable })}
+      getOptionLabel={(option) =>
+        t(option.label, { defaultValue: option.lable })
+      }
       options={defualtOptions}
       value={val ?? null}
       onChange={(e) => {

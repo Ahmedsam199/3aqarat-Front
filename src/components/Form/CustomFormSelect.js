@@ -14,6 +14,7 @@ function CustomFormSelect({
   loading = false,
   textName = 'label',
   url,
+  defaultValue,
   options,
   isMulti,
   valueName = 'value',
@@ -48,9 +49,7 @@ function CustomFormSelect({
         <>
           <>
             {!hiddenTitle && (
-              <Label for={`${name}`}>
-                {t(`${title ?? name}`)}
-              </Label>
+              <Label for={`${name}`}>{t(`${title ?? name}`)}</Label>
             )}
             {!_loading ? (
               <Controller
@@ -62,9 +61,10 @@ function CustomFormSelect({
                     {...restCustom}
                     isClearable={isClearable}
                     className={classnames({
-                      'is-invalid': errors[`${name}`],
+                      "is-invalid": errors[`${name}`],
                     })}
                     isMulti={isMulti}
+                    defaultValue={defaultValue}
                     textName={textName}
                     valueName={valueName}
                     inputRef={ref}
@@ -81,7 +81,7 @@ function CustomFormSelect({
                           () => {
                             changeValue(val, onChange);
                           },
-                          'en'
+                          "en"
                         );
                       }
                     }}

@@ -223,7 +223,7 @@ export const registerAutocompleter = (editor, mentions) => {
     highlightOn: ["char_name"],
     onAction: function (autocompleteApi, rng, value) {
       editor.selection.setRng(rng);
-      editor.insertContent(`<p data-mention="true" >${value}</p>`);
+      editor.insertContent(`<a data-mention="true" >${value}</a>`);
       // editor.insertContent(Tag);
       // tinymce.activeEditor.execCommand("mceInsertContent", false, table);
       autocompleteApi.hide();

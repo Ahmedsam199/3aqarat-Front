@@ -129,28 +129,8 @@ const POST = (props) => {
         _loading: false,
       });
   }, [Payments]);
-  let PropOpt = [];
-  Property.forEach((x) => {
-    PropOpt.push({ value: x.Series, label: x.Series + " " + x.Attributes });
-  });
-  let PurpOpt = [];
-  Purpose.forEach((x) => {
-    PurpOpt.push({ value: x.Series, label: x.Series + " " + x.Purpose });
-  });
-  let CurrencyOpt = [];
-  Currency.forEach((x) => {
-    CurrencyOpt.push({
-      value: x.Series,
-      label: x.Series + " " + x.CurrencyName,
-    });
-  });
-  let ContractOpt = [];
-  Contracts.forEach((x) => {
-    ContractOpt.push({
-      value: x.Series,
-      label: x.Series,
-    });
-  });
+  
+  
   let PartyOpt = [];
 
   
@@ -241,7 +221,7 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect name="Purpose" options={PurpOpt} />
+                  <CustomFormSelect name="Purpose" textName="Purpose" valueName="Series" options={Purpose} />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput name="Amount" />

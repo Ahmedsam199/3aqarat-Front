@@ -53,11 +53,18 @@ const POST = (props) => {
   const navigate = useNavigate();
   const params = useParams();
   // ** Function to handle form submit
+  // Remember to Tell Mohammed To Parse The JSON Data
   useEffect(async () => {
-    dispatch({
-      type: "setActiveRoles",
-      payload: deepCopy(Permission).map((x) => JSON.parse(x?.JsonData)),
-    });
+    params.series
+      ? dispatch({
+          type: "setActiveRoles",
+          payload: deepCopy(Permission).map((x) => x?.JsonData),
+        })
+      : dispatch({
+          type: "setActiveRoles",
+          payload: deepCopy(Permission).map((x) => JSON.parse(x?.JsonData)),
+        });
+    
     if (params?.series) {
       const { data: JsonData, RoleSeries } = await axios.get(
         `${Routes.Permission.root}/${params.series}`
@@ -68,7 +75,7 @@ const POST = (props) => {
         type: "setData",
         payload: JSON.parse(JsonData.JsonData),
       });
-      console.log("testo", JSON.parse(JsonData.JsonData));
+      console.log("testo", (JsonData));
       dispatch({ type: "setRoleSeries", payload: JsonData.RoleSeries });
       dispatch({ type: "setOriginRole", payload: JsonData.RoleSeries });
     }
