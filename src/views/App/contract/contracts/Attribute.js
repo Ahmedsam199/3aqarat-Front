@@ -9,7 +9,7 @@ import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Table } from "reactstrap";
-const RefsList = ({ loading }) => {
+const RefsList = ({ loading, fields, append, remove, replace }) => {
   const { t } = useTranslation();
   const ref = useRef();
   const {
@@ -20,10 +20,6 @@ const RefsList = ({ loading }) => {
     formState: { errors },
     reset,
   } = useFormContext();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "Attributes",
-  });
   return (
     <>
       <h5 className="mb-1 text-center">{t("Attributes")}</h5>
@@ -83,16 +79,10 @@ const RefsList = ({ loading }) => {
       <Row>
         <Col>
           <small className="my-1 text-danger d-block">
-          
             <ul>
               {Array.isArray(errors[`priceListCountries`]) &&
                 errors[`priceListCountries`].map((x, i) =>
-                  Object.keys(x)?.map((e) => (
-                    <li>
-                      {" "}
-                   
-                    </li>
-                  ))
+                  Object.keys(x)?.map((e) => <li> </li>)
                 )}
             </ul>
           </small>

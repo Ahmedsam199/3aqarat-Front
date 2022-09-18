@@ -10,7 +10,13 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Alert, Button, Col, Row, Table } from "reactstrap";
 import { parseNumber } from "../../../../utility/Utils";
-const RefsList = ({ loading }) => {
+const RefsList = ({
+  loading,
+  fieldsFurnitures,
+  appendFurnitures,
+  removeFurnitures,
+  ReplaceFurniture,
+}) => {
   const { t } = useTranslation();
   const ref = useRef();
   const {
@@ -23,15 +29,12 @@ const RefsList = ({ loading }) => {
   } = useFormContext();
   const { Currency } = useSelector((state) => state);
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "Furnitures",
-  });
   const refreshTotalQty = (_, ignoreIndex) => {
     setValue(
       "TotalQty",
       getValues().Furnitures.reduce(
-        (sum, x, currIndex) => sum + parseNumber(x.Qty) * (currIndex !== ignoreIndex),
+        (sum, x, currIndex) =>
+          sum + parseNumber(x.Qty) * (currIndex !== ignoreIndex),
         0
       )
     );
@@ -61,7 +64,6 @@ const RefsList = ({ loading }) => {
       label: x.Series + " " + x.CurrencyName,
     });
   });
-
   return (
     <>
       <h5 className="mb-1 text-center">{t("Furniture")}</h5>
@@ -77,7 +79,7 @@ const RefsList = ({ loading }) => {
             </tr>
           </thead>
           <tbody {...{ ref }}>
-            {fields.map((x, index) => {
+            {fieldsFurnitures.map((x, index) => {
               return (
                 <div key={x.id} style={{ overflow: "hidden" }}>
                   <tr className="d-flex">
@@ -98,7 +100,7 @@ const RefsList = ({ loading }) => {
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
-                        autoFocus={index === fields.length - 1}
+                        autoFocus={index === fieldsFurnitures.length - 1}
                         name={`Furnitures.${index}.Statue`}
                         options={[
                           { value: 0, label: "Brand New" },
@@ -126,7 +128,7 @@ const RefsList = ({ loading }) => {
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle
-                        autoFocus={index === fields.length - 1}
+                        autoFocus={index === fieldsFurnitures.length - 1}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
@@ -142,7 +144,7 @@ const RefsList = ({ loading }) => {
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([remove(index)]);
+                          await Promise.all([removeFurnitures(index)]);
                           DoubleChange();
                           refreshTotalPrice();
                         }}
@@ -177,7 +179,7 @@ const RefsList = ({ loading }) => {
               className="btn-icon"
               color="success"
               onClick={() => {
-                append({});
+                appendFurnitures({});
                 // wait until add the row then scroll to down
                 // sleep(100).then(
                 //   () => (ref.current.scrollTop = ref.current.scrollHeight)

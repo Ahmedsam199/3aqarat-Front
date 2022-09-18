@@ -1,68 +1,68 @@
 {
   "Auth": {
-    "login": "http://192.168.1.15:8080/Users/login",
-    "signUp": "http://192.168.1.15:8080/signup",
-    "logout": "http://192.168.1.15:8080/Logout"
+    "login": "http://192.168.1.19:8083/Users/login",
+    "signUp": "http://192.168.1.19:8083/signup",
+    "logout": "http://192.168.1.19:8083/Logout"
   },
   "Contracts": {
-    "root": "http://192.168.1.15:8080/Contracts"
+    "root": "http://192.168.1.19:8083/Contracts"
   },
   "Payments": {
-    "root": "http://192.168.1.15:8080/Payments"
+    "root": "http://192.168.1.19:8083/Payments"
   },
   "Party": {
-    "root": "http://192.168.1.15:8080/Party"
+    "root": "http://192.168.1.19:8083/Party"
   },
   "Property": {
-    "root": "http://192.168.1.15:8080/Property"
+    "root": "http://192.168.1.19:8083/Property"
   },
   "PropertyAttr": {
-    "root": "http://192.168.1.15:8080/PropertyAttr"
+    "root": "http://192.168.1.19:8083/PropertyAttr"
   },
   "Territory": {
-    "root": "http://192.168.1.15:8080/Territory"
+    "root": "http://192.168.1.19:8083/Territory"
   },
   "Branches": {
-    "root": "http://192.168.1.15:8080/Branches"
+    "root": "http://192.168.1.19:8083/Branches"
   },
   "ContractTemplate": {
-    "root": "http://192.168.1.15:8080/ContractTemplates"
+    "root": "http://192.168.1.19:8083/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://192.168.1.15:8080/ContractType"
+    "root": "http://192.168.1.19:8083/ContractType"
   },
   "Permission": {
-    "root": "http://192.168.1.15:8080/Permission"
+    "root": "http://192.168.1.19:8083/Permission"
   },
   "Purpose": {
-    "root": "http://192.168.1.15:8080/Purpose"
+    "root": "http://192.168.1.19:8083/Purpose"
   },
   "User": {
-    "root": "http://192.168.1.15:8080/Users"
+    "root": "http://192.168.1.19:8083/Users"
   },
   "Roles": {
-    "root": "http://192.168.1.15:8080/Roles"
+    "root": "http://192.168.1.19:8083/Roles"
   },
     
   "Currency": {
-    "root": "http://192.168.1.15:8080/Currency"
+    "root": "http://192.168.1.19:8083/Currency"
   },
   
   "Attachments": {
-    "root": "http://192.168.1.15:8080/Attachment/"
+    "root": "http://192.168.1.19:8083/Attachment/"
   },
   "DocType": {
-    "root": "http://192.168.1.15:8080/DocTypes/"
+    "root": "http://192.168.1.19:8083/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://192.168.1.15:8080/PrintKeys/"
+    "root": "http://192.168.1.19:8083/PrintKeys/"
   },"CurrencyExchange":{
-"root":"http://192.168.1.15:8080/CurrencyExchange"
+"root":"http://192.168.1.19:8083/CurrencyExchange"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://192.168.1.15:8080",
+    "data": "http://192.168.1.19:8083",
     "check": "http://193.47.189.15:8000"
   }
 }

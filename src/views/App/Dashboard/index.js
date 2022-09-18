@@ -33,11 +33,16 @@ import ceo from "@src/assets/images/portrait/small/avatar-s-9.jpg";
 
 // ** Styles
 import "@styles/react/libs/charts/apex-charts.scss";
+import { useSelector } from "react-redux";
 
 const AnalyticsDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors);
-
+const {
+  tempData: { network },
+  
+  
+} = useSelector((state) => state);
   // ** Vars
   const avatarGroupArr = [
     {

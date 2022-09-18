@@ -19,17 +19,32 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { Contract as Schema } from "@validation";
 import axios from "axios";
-import { FormProvider, useForm, useWatch } from "react-hook-form";
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useWatch,
+} from "react-hook-form";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Alert, Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+import {
+  Alert,
+  Button,
+  Card,
+  CardBody,
+  Col,
+  Form,
+  Row,
+  Spinner,
+} from "reactstrap";
 import Furnitures from "./Furnitures";
 import ExtraPayment from "./ExtraPayment";
 import Attribute from "./Attribute";
-import getPrintDate from '@Print/getData/Contract';
+import getPrintDate from "@Print/getData/Contract";
 import { isAsyncThunkAction } from "@reduxjs/toolkit";
+import { arrToHashMap } from "../../../../utility/Utils";
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -38,11 +53,11 @@ const POST = (props) => {
     Property,
     Party,
     Currency,
-CurrencyExchange,
+    CurrencyExchange,
     tempData: { network },
     Offline,
   } = useSelector((state) => state);
-console.log(CurrencyExchange);
+  const PartyMap = useMemo(() => arrToHashMap(Party), [Party]);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -56,6 +71,7 @@ console.log(CurrencyExchange);
     register,
     reset,
     getValues,
+    setValue,
     formState: { errors },
     control,
     handleSubmit,
@@ -64,16 +80,12 @@ console.log(CurrencyExchange);
   const _dataForm = useWatch({ control });
   const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   // ** Function to handle form submit
-  useEffect(() => {
-    console.log("testing", errors);
-  }, [errors]);
+  useEffect(() => {}, [errors]);
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       values.PartyType = toBoolean(values.PartyType);
       setLoading(true);
-      const identifier = network
-        ? values.Series
-        : values.ID
+      const identifier = network ? values.Series : values.ID;
 
       dispatch(
         identifier
@@ -81,16 +93,13 @@ console.log(CurrencyExchange);
           : insertItem("Contracts", values)
       )
         .then((res) => {
-
           toast.success();
-          console.log(Attachments);
           if (Attachments.length > 0) {
             sendAttachment({
               files: Attachments,
               refDoctype: "Data",
               refSeries: res?.Series,
             });
-            console.log(Attachments)
             navigate("/Contract/Contract");
           } else {
             navigate("/Contract/Contract");
@@ -98,56 +107,88 @@ console.log(CurrencyExchange);
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
-          toast.error(err.response.data.message)
+          toast.error(err.response.data.message);
         })
         .finally(() => {
           setLoading(false);
         });
     }
   };
-  console.log("testing",network,params?.series)
   const _write = useMemo(
     () => toBoolean(ability.can("write", "DT-2")),
     [ability.can("write", "DT-2")]
   );
-   useEffect(async () => {
-     if (params?.series) {
-       if (network) {
-         const { data } =  await axios.get(`${Routes.Contracts.root}/${params.series}`)
-         reset({
-           ...data,
-           _loading: false,
-           _write,
-         });
-       } else {
-         const _ = Offline.Contracts.find((x) => x.ID == params.series);
-         console.log(_);
-         reset({
-           ..._,
-           _loading: false,
-           _write,
-         });
-       }
-     } else
-       reset({
-         _write: true,
-         _loading: false,
-       });
-   }, [Contracts]);
+  useEffect(async () => {
+    if (params?.series) {
+      if (network) {
+        const { data } = await axios.get(
+          `${Routes.Contracts.root}/${params.series}`
+        );
+        reset({
+          ...data,
+          _loading: false,
+          _write,
+        });
+      } else {
+        const _ = Offline.Contracts.find((x) => x.ID == params.series);
+        reset({
+          ..._,
+          _loading: false,
+          _write,
+        });
+      }
+    } else
+      reset({
+        _write: true,
+        _loading: false,
+      });
+  }, [Contracts]);
   const _watchProperty = useWatch({ control, name: "Property" });
   const IsRent = useWatch({ control, name: "IsRent" });
   const IsSale = useWatch({ control, name: "IsSale" });
-  let PayParty=[]
-  Property.forEach((x) => {
-    if (x.Series == _watchProperty) {
-      Party.filter((y) => {
-        if (y.Series == x.Party) {
+  let PayParty = [];
+  console.log("testing", _watchProperty);
+Property.forEach((x)=>{
+if(x.Series===_watchProperty){
+  Party.forEach((y)=>{
+      if (y.Series == x.Party) {
           PayParty.push({ label: y.FullName, value: y.Series });
-          console.log("TESTING",PayParty);
-        }
-      });
-    }
+      }
+  })
+}
+})
+
+  const {
+    fields: fieldsFurnitures,
+    append: appendFurnitures,
+    remove: removeFurnitures,
+    replace: ReplaceFurniture,
+  } = useFieldArray({
+    control,
+    name: "Furnitures",
   });
+  const { fields, append, remove, replace } = useFieldArray({
+    control,
+    name: "Attributes",
+  });
+  useEffect(() => {
+    Property.forEach((x) => {
+      if (x.Series == _watchProperty) {
+        console.log(x);
+        if (x.Furnitures.length == 0) {
+          setValue("Furnitures", []);
+        } else {
+          console.log("first", JSON.parse(x.Furnitures));
+          setValue("Furnitures", JSON.parse(x.Furnitures));
+        }
+        if (x.Attributes.length == 0) {
+setValue("Attributes", []);
+        } else {
+          setValue("Attributes", JSON.parse(x.Attributes));
+        }
+      }
+    });
+  }, [_watchProperty]);
 
   return (
     <FormProvider {...methods}>
@@ -167,7 +208,9 @@ console.log(CurrencyExchange);
             {params.series && (
               <PrintDropDown
                 Doctype={["DT-2"]}
-                getDate={async () => await getPrintDate({ data: getValues() })}
+                getDate={async () =>
+                  await getPrintDate({ data: getValues(), PartyMap })
+                }
               />
             )}
           </Col>
@@ -244,12 +287,21 @@ console.log(CurrencyExchange);
         </Row>
         <Row>
           <Col sm="12">
-            <Furnitures {...{ loading }} />
+            <Furnitures
+              {...{
+                loading,
+                fieldsFurnitures,
+                appendFurnitures,
+                removeFurnitures,
+                ReplaceFurniture,
+              }}
+            />
           </Col>
         </Row>
+        <hr />
         <Row>
-          <Col sm="8">
-            <Attribute {...{ loading }} />
+          <Col sm="12">
+            <Attribute {...{ loading, fields, append, remove, replace }} />
           </Col>
         </Row>
         <Row>
@@ -259,11 +311,11 @@ console.log(CurrencyExchange);
                 <Col sm="6">
                   <CustomFormInput name="ContractDate" type="Date" />
                   <CustomFormInput name="HandoverDate" type="Date" />
-                  <CustomFormNumberInput name="PaidAmt" />
+                  <CustomFormInput name="PaidAmt" />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput type="Date" name="ContractEnds" />
-                  <CustomFormNumberInput name="RequestedAmt" />
+                  <CustomFormInput name="RequestedAmt" />
                   <CustomFormSelect
                     name="PaidCurrency"
                     textName="CurrencyName"
@@ -308,7 +360,7 @@ console.log(CurrencyExchange);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormNumberInput name="AdvanceAmt" />
+                  <CustomFormInput name="AdvanceAmt" />
                   <CustomFormInput name="Lawyer" />
                   <CustomFormSelect
                     name="AdvanceCurrency"

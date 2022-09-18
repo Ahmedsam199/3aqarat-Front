@@ -24,6 +24,7 @@ import { Alert, Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstr
 import getPrintDate from '@Print/getData/Payment';
 import PrintDropDown from "@Component/PrintDropDown";
 import PreviewFormValue from "../../../../components/Form/PreviewFormValue";
+import { arrToHashMap } from "../../../../utility/Utils";
 
 const POST = (props) => {
   const { t } = useTranslation();
@@ -38,7 +39,7 @@ const POST = (props) => {
 
     tempData: { network },
   } = useSelector((state) => state);
-  console.log(Offline)
+  
   const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   const ability = useContext(AbilityContext);
   const Attachment = useSelector((state) => state.Attachment);
@@ -59,6 +60,8 @@ const POST = (props) => {
     handleSubmit,
   } = methods;
   const _dataForm = useWatch({ control });
+  const PartyMap = useMemo(() => arrToHashMap(Party), [Party]);
+  const PurposeMap = useMemo(() => arrToHashMap(Purpose), [Purpose]);
   // ** Function to handle form submit
   useEffect(() => {
     console.log(errors);
@@ -116,7 +119,7 @@ const POST = (props) => {
         });
       } else {
         const _ = Offline.Payments.find((x) => x.ID == params.series);
-        console.log(_);
+        
         reset({
           ..._,
           _loading: false,
@@ -136,13 +139,15 @@ const POST = (props) => {
   
   const _watchReference = useWatch({ control, name: "Reference" });
   const _ = Contracts?.filter((x) => x.Series === _watchReference).map((x) =>
-    PartyOpt.push(
-      { label: x.FirstParty, value: x.FirstParty },
-      { label: x.SecondParty, value: x.SecondParty }
-    )
+    
+    Party.forEach((y)=>{
+if(y.Series==x.FirstParty){
+  PartyOpt.push({label:y.FullName,value:y.Series})
+}if(y.Series==x.SecondParty){
+  PartyOpt.push({ label: y.FullName, value: y.Series });
+}
+    })
   );
-  console.log(_)
-  
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -160,7 +165,13 @@ const POST = (props) => {
             {params.series && (
               <PrintDropDown
                 Doctype={["DT-6"]}
-                getDate={async () => await getPrintDate({ data: getValues() })}
+                getDate={async () =>
+                  await getPrintDate({
+                    data: getValues(),
+                    PartyMap,
+                    PurposeMap,
+                  })
+                }
               />
             )}
           </Col>
@@ -221,7 +232,12 @@ const POST = (props) => {
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormSelect name="Purpose" textName="Purpose" valueName="Series" options={Purpose} />
+                  <CustomFormSelect
+                    name="Purpose"
+                    textName="Purpose"
+                    valueName="Series"
+                    options={Purpose}
+                  />
                 </Col>
                 <Col sm="6">
                   <CustomFormInput name="Amount" />

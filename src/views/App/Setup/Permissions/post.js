@@ -75,7 +75,6 @@ const POST = (props) => {
         type: "setData",
         payload: JSON.parse(JsonData.JsonData),
       });
-      console.log("testo", (JsonData));
       dispatch({ type: "setRoleSeries", payload: JsonData.RoleSeries });
       dispatch({ type: "setOriginRole", payload: JsonData.RoleSeries });
     }
