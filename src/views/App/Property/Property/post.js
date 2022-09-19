@@ -46,6 +46,7 @@ const POST = (props) => {
   const {
     register,
     reset,
+    
     getValues,
     setValue,
     formState: { errors },
@@ -115,6 +116,11 @@ const POST = (props) => {
   }, [Property]);
 
   const _watchIsFurnished = useWatch({ control, name: "IsFurnished" });
+  const _watchRequestedAmt = useWatch({ control, name: "RequestedAmt" });
+useEffect(() => {
+  setValue("RequestedAmt2", _watchRequestedAmt);
+}, [_watchRequestedAmt]);
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -205,12 +211,9 @@ const POST = (props) => {
           </Col>
         </Row>
         <Row>
-          
-            <Col sm="8">
-              <Attributes {...{ loading }} />
-            </Col>
-            
-          
+          <Col sm="8">
+            <Attributes {...{ loading }} />
+          </Col>
         </Row>
 
         <Row>
@@ -239,6 +242,11 @@ const POST = (props) => {
           </Map>
         </Col>
       </Form>
+      <input
+        className="d-none"
+        {...register("RequestedAmt2")}
+        defaultValue={getValues("RequestedAmt2")}
+      />
     </FormProvider>
   );
 };

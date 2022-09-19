@@ -7,6 +7,7 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import MultiRangeSlider from "../../../../components/Form/MultiRange";
 import {
   Button,
   Card,
@@ -35,14 +36,20 @@ const Index = () => {
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
   const toggleFunc = useRef(null);
+  // Check how the Smaller is done if you want to Make it in Other File
   const [filters, setFilters] = useState({
     Series: {
       value: "",
       op: "like",
     },
-    Attributes: {
+    RequestedAmt: {
       value: "",
-      op: "like",
+      op: "Greater",
+    },
+    RequestedAmt2: {
+      ForValue: "RequestedAmt2",
+      value: "",
+      op: "Smaller",
     },
   });
   const navigate = useNavigate();
@@ -87,16 +94,36 @@ const Index = () => {
       <Card>
         <CardBody>
           <Row>
-            <Col md="2">
-              <FormGroup>
-                <Label>{t("Series")}</Label>
-                <Input
-                  placeholder={t("Series")}
-                  onChange={(e) =>
-                    handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
+            <Col md="8 ">
+              <Row className="d-flex">
+                <Col sm="6">
+                  <Label>{t("Series")}</Label>
+                  <Input
+                    placeholder={t("Series")}
+                    onChange={(e) =>
+                      handleFiltersChange("Series", e.target.value)
+                    }
+                  />
+                </Col>
+                <Col sm="6">
+                  <Label>{t("From")}</Label>
+                  <Input
+                    placeholder={t("RequestedAmt")}
+                    onChange={(e) =>
+                      handleFiltersChange("RequestedAmt", e.target.value)
+                    }
+                  />
+                </Col>
+                <Col sm="6">
+                  <Label>{t("To")}</Label>
+                  <Input
+                    placeholder={t("RequestedAmt")}
+                    onChange={(e) =>
+                      handleFiltersChange("RequestedAmt2", e.target.value)
+                    }
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </CardBody>

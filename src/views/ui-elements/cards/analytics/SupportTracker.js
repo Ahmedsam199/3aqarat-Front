@@ -76,7 +76,7 @@ const SupportTracker = props => {
       },
       labels: ['Completed Tickets']
     },
-    series = [83]
+    series = [40]
 
   return data !== null ? (
     <Card>

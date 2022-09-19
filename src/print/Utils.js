@@ -70,7 +70,9 @@ export const fixValue = (data) => {
     return '';
 };
 export const buildHTMLTable = ({ data = [], numberedRow = false, shift = 0 }) => {
+    
     const _keys = Object.keys(data[0]);
+    
     let Table = `<table>`;
     // add header for table
     Table += '<tr>';
@@ -95,6 +97,7 @@ export const buildHTMLTable = ({ data = [], numberedRow = false, shift = 0 }) =>
 };
 export const buildHTMLTableV2 = ({ data = [], numberedRow = false }) => {
     const _keys = Object.keys(data[0]);
+    
     let Table = `<table>`;
     // add header for table
     Table += '<thead><tr>';

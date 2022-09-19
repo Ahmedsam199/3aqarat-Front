@@ -58,6 +58,10 @@
     "root": "http://192.168.1.19:8083/PrintKeys/"
   },"CurrencyExchange":{
 "root":"http://192.168.1.19:8083/CurrencyExchange"
+  },"Report":{
+"PayMonthly":"http://192.168.1.19:8083/Reports/PayMonthly/",
+"OwnerProp":"http://192.168.1.19:8083/Reports/OwnerProp/",
+"getExtraPayemnts":"http://192.168.1.19:8083/Reports/getExtraPayemnts/"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",

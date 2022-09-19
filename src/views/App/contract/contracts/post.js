@@ -147,12 +147,12 @@ const POST = (props) => {
   const IsRent = useWatch({ control, name: "IsRent" });
   const IsSale = useWatch({ control, name: "IsSale" });
   let PayParty = [];
-  console.log("testing", _watchProperty);
 Property.forEach((x)=>{
-if(x.Series===_watchProperty){
+if(x.Series==_watchProperty){
   Party.forEach((y)=>{
       if (y.Series == x.Party) {
           PayParty.push({ label: y.FullName, value: y.Series });
+          console.log(PayParty);
       }
   })
 }
@@ -411,6 +411,7 @@ setValue("Attributes", []);
           series={params?.series}
           refDoctype="Data"
         />
+        
       </Form>
     </FormProvider>
   );

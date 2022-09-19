@@ -103,6 +103,14 @@ const CustomTable = forwardRef(
                     });
                   }
                   break;
+                case "Greater":
+                  _result = filters[key].value <= item[key];
+                  break;
+                case "Smaller":
+                  //Pay Attention to The Item Plz Plz Plz 
+                  _result =
+                    filters[key].value >= item.RequestedAmt;
+                  break;
                 default:
                   break;
               }
