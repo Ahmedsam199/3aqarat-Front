@@ -40,7 +40,7 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    ContractType: {
+    CurrencyName: {
       value: "",
       op: "like",
     },
@@ -113,17 +113,6 @@ const Index = () => {
                   placeholder={t("Series")}
                   onChange={(e) =>
                     handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
-            </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("CurrencyName")}</Label>
-                <Input
-                  placeholder={t("CurrencyName")}
-                  onChange={(e) =>
-                    handleFiltersChange("CurrencyName", e.target.value)
                   }
                 />
               </FormGroup>

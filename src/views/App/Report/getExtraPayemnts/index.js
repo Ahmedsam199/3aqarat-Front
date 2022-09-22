@@ -8,6 +8,15 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { toasty } from "@toast";
 import { addMonths, checkDateValue, removeNullValue, subMonths } from "@utils";
+import Flatpickr from "react-flatpickr";
+  import '@styles/react/libs/flatpickr/flatpickr.scss';
+
+
+
+
+
+
+
 
 import { exportToCsv as exportToExcel } from "@utility/excel";
 import { exportToPdf } from "@utility/pdf";
@@ -49,7 +58,7 @@ const Index = () => {
   const handlePrint = () => {
     const data = ref.current.getData();
     data.length
-      ? PrintReport({ data, filters, title: "Pay Monthly" })
+      ? PrintReport({ data, filters, title: "Extra Payment" })
       : toasty({ type: "warning", msg: "data empty" });
   };
   const handleExcel = () => {
@@ -57,8 +66,8 @@ const Index = () => {
     data.length
       ? exportToExcel({
           data: [[checkDateValue(removeNullValue(filters))], data],
-          fileName: "Sales Reports",
-          SheetNames: ["Sales Reports"],
+          fileName: "Extra Payment",
+          SheetNames: ["Extra Payment"],
           isMutlSheets: false,
           isTwoTable: true,
         })
@@ -70,7 +79,7 @@ const Index = () => {
       ? exportToPdf({
           data: data,
           filters: checkDateValue(removeNullValue(filters)),
-          title: "Sales Reports",
+          title: "Extra Payment",
         })
       : toasty({ type: "warning", msg: "data empty" });
   };
@@ -111,39 +120,40 @@ const Index = () => {
       </div>
       <Card>
         <CardBody>
-          <Row form className="mt-1 mb-50">
-            <Col md="2">
-              <FormGroup>
+          <Row>
+            
+              <Col md="4">
+              
                 <Label>{t("From Date")}</Label>
 
-                {/* <Flatpickr
+                <Flatpickr
                   className="form-control"
                   data-enable-time
                   options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
                   value={filters.From_Date}
                   onChange={(val) =>
-                    sleep(1000).then(() => {
-                      handleFiltersChange("From_Date", val);
+                    (() => {
+                      handleFiltersChange("Contract Starts", val);
                     })
                   }
-                /> */}
-              </FormGroup>
+                />
+              
             </Col>
-            <Col md="2">
-              <FormGroup>
+            <Col md="4">
+              
                 <Label>{t("To Date")}:</Label>
-                {/* <Flatpickr
+                <Flatpickr
                   className="form-control"
                   data-enable-time
                   options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
                   value={filters.To_Date}
                   onChange={(val) =>
-                    sleep(1000).then(() => {
-                      handleFiltersChange("To_Date", val);
+                    (() => {
+                      handleFiltersChange("Contract Ends", val);
                     })
                   }
-                /> */}
-              </FormGroup>
+                />
+              
             </Col>
             {/* <Col md="2">
               <FormGroup>
@@ -259,19 +269,21 @@ const Index = () => {
               </FormGroup>
             </Col>*/}
           </Row>
+          
+            <CustomTableV2
+              ref={ref}
+              url={Routes.Report.getExtraPayemnts}
+              filters={filters}
+              // ignoreTotalKeys={[
+              //   "FirstParty",
+              //   "SecondParty",
+              //   "Remain Pay By monthly doller",
+              //   "PaidAmt",
+              //   "RemainDoller",
+              // ]}
+            />
+          
         </CardBody>
-        <CustomTableV2
-          ref={ref}
-          url={Routes.Report.getExtraPayemnts}
-          filters={filters}
-          // ignoreTotalKeys={[
-          //   "FirstParty",
-          //   "SecondParty",
-          //   "Remain Pay By monthly doller",
-          //   "PaidAmt",
-          //   "RemainDoller",
-          // ]}
-        />
       </Card>
     </>
   );

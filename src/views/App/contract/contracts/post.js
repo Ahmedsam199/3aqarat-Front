@@ -146,18 +146,6 @@ const POST = (props) => {
   const _watchProperty = useWatch({ control, name: "Property" });
   const IsRent = useWatch({ control, name: "IsRent" });
   const IsSale = useWatch({ control, name: "IsSale" });
-  let PayParty = [];
-Property.forEach((x)=>{
-if(x.Series==_watchProperty){
-  Party.forEach((y)=>{
-      if (y.Series == x.Party) {
-          PayParty.push({ label: y.FullName, value: y.Series });
-          console.log(PayParty);
-      }
-  })
-}
-})
-
   const {
     fields: fieldsFurnitures,
     append: appendFurnitures,
@@ -174,7 +162,11 @@ if(x.Series==_watchProperty){
   useEffect(() => {
     Property.forEach((x) => {
       if (x.Series == _watchProperty) {
-        console.log(x);
+        
+          
+            setValue("FirstParty", x.Party);
+          
+        
         if (x.Furnitures.length == 0) {
           setValue("Furnitures", []);
         } else {
@@ -182,14 +174,17 @@ if(x.Series==_watchProperty){
           setValue("Furnitures", JSON.parse(x.Furnitures));
         }
         if (x.Attributes.length == 0) {
-setValue("Attributes", []);
+          setValue("Attributes", []);
         } else {
           setValue("Attributes", JSON.parse(x.Attributes));
         }
       }
     });
   }, [_watchProperty]);
+  const PropertyChange = () => {
+    console.log("TEST");
 
+  };
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -221,22 +216,14 @@ setValue("Attributes", []);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  {params?.series ? (
-                    <CustomFormSelect
-                      options={Property}
-                      valueName="Series"
-                      textName="Series"
-                      name="Property"
-                      IsDisabled={true}
-                    />
-                  ) : (
-                    <CustomFormSelect
-                      options={Property}
-                      valueName="Series"
-                      textName="Series"
-                      name="Property"
-                    />
-                  )}
+                  <CustomFormSelect
+                    options={Property}
+                    valueName="Series"
+                    textName="Series"
+                    name="Property"
+                    IsDisabled={!!params?.series}
+                    // extraOnChangeFun={PropertyChange}
+                  />
                   <CustomFormSelect
                     name="ContractType"
                     textName="ContractType"
@@ -250,11 +237,14 @@ setValue("Attributes", []);
                   <Row>
                     {_watchProperty ? (
                       <CustomFormSelect
-                        filterOption={(x) =>
-                          getValues(`SecondParty`) !== x.value
-                        }
+                        // filterOption={(x) =>
+                        //   getValues(`SecondParty`) !== x.value
+                        // }
+                        // IsDisabled={true}
                         name="FirstParty"
-                        options={PayParty}
+                        options={Party}
+                        textName="FullName"
+                        valueName="Series"
                       />
                     ) : (
                       <div>
@@ -270,7 +260,7 @@ setValue("Attributes", []);
                       name="SecondParty"
                       textName="FullName"
                       valueName="Series"
-                      filterOption={(x) => PayParty[0].value !== x.value}
+                      filterOption={(x) => getValues(`FirstParty`) !== x.value}
                       options={Party}
                     />
                     <Col sm="6" style={{ marginTop: "2rem" }}>
@@ -411,7 +401,6 @@ setValue("Attributes", []);
           series={params?.series}
           refDoctype="Data"
         />
-        
       </Form>
     </FormProvider>
   );

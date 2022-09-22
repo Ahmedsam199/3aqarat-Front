@@ -96,6 +96,11 @@ const RefsList = ({ loading }) => {
                     defaultValue={x.id ?? ""}
                     {...register(`ExtraPayment.${index}.id`)}
                   />
+                  <input
+                    className="d-none"
+                    
+                    {...register(`contractSeries.${index}.id`)}
+                  />
                 </div>
               );
             })}

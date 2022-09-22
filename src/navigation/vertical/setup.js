@@ -52,7 +52,7 @@ export default [
         resource: "DT-14",
       },
       {
-        id: "CurrencyExchange",
+        id: "Currency Exchange",
         title: "Currency Exchange",
         icon: <TrendingUp />,
         navLink: "/Setup/CurrencyExchange",

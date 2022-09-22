@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 
 // ** Third Party Components
 import axios from 'axios'
-import { Package } from 'react-feather'
-
+import { Package,Home } from "react-feather";
 // ** Custom Components
 import StatsWithAreaChart from '@components/widgets/stats/StatsWithAreaChart'
+import { useSelector } from 'react-redux'
 
 const OrdersReceived = ({ kFormatter, warning }) => {
   // ** State
@@ -60,7 +60,16 @@ const OrdersReceived = ({ kFormatter, warning }) => {
       x: { show: false }
     }
   }
-
+const {
+  Contracts,
+  ContractType,
+  Property,
+  Party,
+  Currency,
+  CurrencyExchange,
+  tempData: { network },
+  Offline,
+} = useSelector((state) => state);
   useEffect(() => {
     axios.get('/card/card-statistics/orders').then(res => setData(res.data))
     return () => setData(null)
@@ -68,14 +77,14 @@ const OrdersReceived = ({ kFormatter, warning }) => {
 
   return data !== null ? (
     <StatsWithAreaChart
-      icon={<Package size={21} />}
-      color='warning'
-      stats={kFormatter(data.analyticsData.orders)}
-      statTitle='Orders Received'
+      icon={<Home size={21} />}
+      color="warning"
+      stats={Property.length}
+      statTitle="Property Had"
       options={options}
       series={data.series}
-      type='area'
+      type="area"
     />
-  ) : null
+  ) : null;
 }
 export default OrdersReceived

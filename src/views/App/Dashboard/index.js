@@ -26,7 +26,7 @@ import Sales from "@src/views/ui-elements/cards/analytics/Sales";
 import SupportTracker from "@src/views/ui-elements/cards/analytics/SupportTracker";
 import OrdersReceived from "@src/views/ui-elements/cards/statistics/OrdersReceived";
 import SubscribersGained from "@src/views/ui-elements/cards/statistics/SubscribersGained";
-
+import { Map, Marker, GeoJson, GeoJsonFeature, Point } from "pigeon-maps";
 // ** Images
 import jsonImg from "@src/assets/images/icons/json.png";
 import ceo from "@src/assets/images/portrait/small/avatar-s-9.jpg";
@@ -39,9 +39,14 @@ const AnalyticsDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors);
 const {
+  Contracts,
+  ContractType,
+  Property,
+  Party,
+  Currency,
+  CurrencyExchange,
   tempData: { network },
-  
-  
+  Offline,
 } = useSelector((state) => state);
   // ** Vars
   const avatarGroupArr = [
@@ -143,7 +148,7 @@ const {
           />
         </Col>
       </Row>
-      <Row className="match-height">
+      {/* <Row className="match-height">
         <Col lg="6" xs="12">
           <AvgSessions primary={colors.primary.main} />
         </Col>
@@ -153,29 +158,24 @@ const {
             danger={colors.danger.main}
           />
         </Col>
-      </Row>
+      </Row> */}
       <Row className="match-height">
-        <Col lg="4" xs="12">
-          <Card className="card-user-timeline">
-            <CardHeader>
-              <div className="d-flex align-items-center">
-                <List className="user-timeline-title-icon" />
-                <CardTitle tag="h4">User Timeline</CardTitle>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <Timeline className="ms-50 mb-0" data={data} />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col lg="4" md="6" xs="12">
-          <Sales primary={colors.primary.main} info={colors.info.main} />
-        </Col>
-        <Col lg="4" md="6" xs="12">
-          <CardAppDesign />
-        </Col>
+        <CardBody>
+          <Col sm="12">
+            <h3>Property On map</h3>
+            <Map
+              height={300}
+              defaultCenter={[36.1901, 43.993]}
+              defaultZoom={11}
+            >
+              $
+              {Property.map((x) => (
+                <Marker width={50} anchor={[x.Longitude, x.Latitude]} />
+              ))}
+            </Map>
+          </Col>
+        </CardBody>
       </Row>
-      
     </div>
   );
 };

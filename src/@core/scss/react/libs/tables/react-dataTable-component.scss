@@ -108,10 +108,12 @@
       display: table-row-group;
 
       .rt_TableHeadRow {
+        width:100% !important;
         background-color: $table-head-bg;
         border-top: 1px solid;
         border-color: $border-color;
         .rt_TableCol {
+          
           padding: 0.72rem 1.5rem;
           border-right: 1px solid;
           border-color: $border-color;
@@ -131,15 +133,15 @@
         }
       }
       .rt_TableRow {
-        // border-bottom: 2px solid black;
+        border-bottom: 2px solid black;
         .rt_TableCell {
           border-right: 1px solid;
           border-bottom: 1px solid;
           border-color: $border-color;
           padding: 0.72rem 1.5rem;
 
-          max-width: 300px;
-          min-width: fit-content;
+          // max-width: 300px;
+          // min-width: fit-content;
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
@@ -171,6 +173,7 @@
         }
 
         .rt_TableRow {
+          border: 1px solid !important;
           background-color: $theme-dark-table-bg;
           color: $theme-dark-body-color;
           border-color: $theme-dark-border-color;

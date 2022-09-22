@@ -88,5 +88,13 @@
   "isGroup":"ضمن مجموعة",
   "ParentTerritory":"المنطقة الرئيسية",
   "DefaultLanguage":"اللغة المختارة"
-  ,"Password":"كلمة المرور"
+  ,"Password":"كلمة المرور",
+  "Currency Exchange":"عملة التحويل",
+  "Reports":"التقارير"
+,"Pay Monthly Report":"تقارير الدفع الشهري",
+"OwnerProp":"تقارير الملاك",
+"get Extra Payments":"تقارير الاموال الاضافية",
+"Remain Pay By monthly doller":"باقي المدفوعات بل دولار",
+"RemainDoller":"الباقي بل دولار","phone":"رقم الهاتف","Series Of Property":"ترتيب الملك","":""
+  
 }

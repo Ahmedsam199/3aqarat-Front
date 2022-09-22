@@ -90,7 +90,6 @@ const POST = (props) => {
             navigate("/Contract/Payment");
           }
         })
-
         .catch((err) => {
           console.log("hacker_it_err", err);
           toast.error(err.response.data.message)

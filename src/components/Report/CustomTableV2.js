@@ -9,7 +9,7 @@ import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
-
+import "../../@core/scss/react/libs/tables/react-dataTable-component.scss";
 import React, {
   forwardRef,
   useCallback,
@@ -30,7 +30,16 @@ import {
 import Empty from "../Empty";
 const PER_PAGE = 10;
 const CustomTableReport = forwardRef(
-  ({ filters, url, ignoreTotalKeys = [], loadStyle = "normal" }, ref) => {
+  (
+    {
+      filters,
+      url,
+      ignoreTotalKeys = [],
+      calculatorKey = {},
+      loadStyle = "normal",
+    },
+    ref
+  ) => {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -92,6 +101,7 @@ const CustomTableReport = forwardRef(
       }),
       []
     );
+
     const {
       getTableProps,
       getTableBodyProps,
@@ -113,24 +123,25 @@ const CustomTableReport = forwardRef(
       useSortBy,
       usePagination
     );
-    const getKeysHasNumberVale = useCallback(
+    const getKeysHasNumberValeOrHasCalculator = useCallback(
       () =>
         Object.entries(data[0]).filter(
           ([key, val]) =>
-            !ignoreTotalKeys.includes(key) &&
-            (!!val || val === 0) &&
-            !isNaN(+val)
+            calculatorKey.hasOwnProperty(key) ||
+            (!ignoreTotalKeys.includes(key) &&
+              (!!val || val === 0) &&
+              !isNaN(+val))
         ),
       [data, ignoreTotalKeys]
     );
     const getFinalTotalRows = () => {
-      return getKeysHasNumberVale().map(function ([key, _], i) {
+      return getKeysHasNumberValeOrHasCalculator().map(function ([key, _], i) {
         return (
           <div key={i} className="col-md-3 d-flex border-left">
-            <h6 className="pr-1 font-weight-bolder">
-              {t(`${key.toString()}`)}
-            </h6>
-            {data.reduce((sum, row) => +row[key] + sum, 0).toFixed(2)}
+            <h5 className="pr-1 font-weight-bolder">{t(key.toString())}</h5>
+            {calculatorKey[key]
+              ? calculatorKey[key](data)
+              : data.reduce((sum, row) => +row[key] + sum, 0).toFixed(2)}
           </div>
         );
       });
@@ -140,84 +151,91 @@ const CustomTableReport = forwardRef(
       <Empty />
     ) : (
       <>
-        <div className="react-table-container">
-          <div {...getTableProps()} className="react-table">
-            
-              
-            <div className="divTableBody">
-              {headerGroups.map((headerGroup) => (
-                <div
-                  {...headerGroup.getHeaderGroupProps()}
-                  className="rt_TableHeadRow"
-                >
-                  {headerGroup.headers.map((column) => (
-                    <div {...column.getHeaderProps()} className="rt_TableCol">
-                      <div {...column.getSortByToggleProps()}>
-                        {column.render("Header")}
-                        <span>
-                          {column.isSorted ? (
-                            column.isSortedDesc ? (
-                              <ArrowDown className="ml-1" size={15} />
+        <div className="w-100">
+          <div className="react-table-container">
+            <div {...getTableProps()} className="react-table">
+              <div className="divTableBody">
+                {headerGroups.map((headerGroup) => (
+                  <div
+                    {...headerGroup.getHeaderGroupProps()}
+                    className="rt_TableHeadRow"
+                  >
+                    {headerGroup.headers.map((column) => (
+                      <div {...column.getHeaderProps()} className="rt_TableCol">
+                        <div {...column.getSortByToggleProps()}>
+                          {column.render("Header")}
+                          <span>
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <ArrowDown className="ml-1" size={15} />
+                              ) : (
+                                <ArrowUp className="ml-1" size={15} />
+                              )
                             ) : (
-                              <ArrowUp className="ml-1" size={15} />
-                            )
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                      {/* Use column.getResizerProps to hook up the events correctly */}
-                      <div
-                        {...column.getResizerProps()}
-                        className={`resizer ${
-                          column.isResizing ? "isResizing" : ""
-                        }`}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-            <div {...getTableBodyProps()} className="rt_TableBody">
-              {page.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <div {...row.getRowProps()} className="rt_TableRow">
-                    {row.cells.map((cell) => {
-                      return (
-                        <div {...cell.getCellProps()} className="rt_TableCell">
-                          {fixValue(cell.value)}
+                              ""
+                            )}
+                          </span>
                         </div>
-                      );
-                    })}
+                        {/* Use column.getResizerProps to hook up the events correctly */}
+                        <div
+                          {...column.getResizerProps()}
+                          className={`resizer ${
+                            column.isResizing ? "isResizing" : ""
+                          }`}
+                        />
+                      </div>
+                    ))}
                   </div>
-                );
-              })}
+                ))}
+              </div>
+              <div {...getTableBodyProps()} className="rt_TableBody">
+                {page.map((row, i) => {
+                  prepareRow(row);
+                  return (
+                    <div
+                      {...row.getRowProps()}
+                      style={{ border: "1px solid #161d32",display:"flex",padding:"1rem" }}
+                      className="rt_TableRow"
+                    >
+                      {row.cells.map((cell) => {
+                        return (
+                          <div
+                            {...cell.getCellProps()}
+                            className="rt_TableCell"
+                          >
+                            {fixValue(cell.value)}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="container">
-          <div className="p-1 row border-top border-bottom">
-            {getFinalTotalRows()}
+          <div className="container">
+            <div className="p-1 row border-top border-bottom">
+              {getFinalTotalRows()}
+            </div>
+            <ReactPaginate
+              previousLabel={""}
+              nextLabel={""}
+              pageCount={pageOptions.length}
+              initialPage={pageIndex}
+              forcePage={pageIndex}
+              activeClassName="active"
+              onPageChange={(page) => gotoPage(page.selected)}
+              pageClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              nextClassName={"page-item next"}
+              previousClassName={"page-item prev"}
+              previousLinkClassName={"page-link"}
+              pageLinkClassName={"page-link"}
+              containerClassName={
+                "pagination react-paginate justify-content-end my-2 pr-1"
+              }
+            />
           </div>
-          <ReactPaginate
-            previousLabel={""}
-            nextLabel={""}
-            pageCount={pageOptions.length}
-            initialPage={pageIndex}
-            forcePage={pageIndex}
-            activeClassName="active"
-            onPageChange={(page) => gotoPage(page.selected)}
-            pageClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            nextClassName={"page-item next"}
-            previousClassName={"page-item prev"}
-            previousLinkClassName={"page-link"}
-            pageLinkClassName={"page-link"}
-            containerClassName={
-              "pagination react-paginate justify-content-end my-2 pr-1"
-            }
-          />
         </div>
       </>
     );

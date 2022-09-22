@@ -9,8 +9,8 @@ export default [
 
     children: [
       {
-        id: "PayMonthly",
-        title: "Pay Monthly Report ",
+        id: "Pay Monthly Report",
+        title: "Pay Monthly Report",
         icon: <Edit2 size={12} />,
         action: "read",
         resource: "DT-2",
@@ -25,8 +25,8 @@ export default [
         navLink: "/Report/OwnerProp",
       },
       {
-        id: "getExtraPayemnts",
-        title: "get Extra Payemnts",
+        id: "get Extra Payments",
+        title: "get Extra Payments",
         icon: <Edit2 size={12} />,
         action: "read",
         resource: "DT-2",

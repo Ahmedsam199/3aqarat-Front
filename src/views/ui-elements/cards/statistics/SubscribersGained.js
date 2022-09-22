@@ -7,8 +7,19 @@ import { Users } from 'react-feather'
 
 // ** Custom Components
 import StatsWithAreaChart from '@components/widgets/stats/StatsWithAreaChart'
+import { useSelector } from 'react-redux'
 
 const SubscribersGained = ({ kFormatter }) => {
+const {
+  Contracts,
+  ContractType,
+  Property,
+  Party,
+  Currency,
+  CurrencyExchange,
+  tempData: { network },
+  Offline,
+} = useSelector((state) => state);
   // ** State
   const [data, setData] = useState(null)
 
@@ -21,8 +32,8 @@ const SubscribersGained = ({ kFormatter }) => {
     <StatsWithAreaChart
       icon={<Users size={21} />}
       color='primary'
-      stats={kFormatter(data.analyticsData.subscribers)}
-      statTitle='Subscribers Gained'
+      stats={Party.length}
+      statTitle='Users'
       series={data.series}
       type='area'
     />

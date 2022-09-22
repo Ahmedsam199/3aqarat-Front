@@ -1,4 +1,24 @@
 {
+  "DashBoard":"داشبورد",
+  "Parent":"ناوچەى سەرەكى",
+  "Property": "موڵک",
+  "TotalPrice": "نرخی گشتی",
+  "TotalQty": "کۆی گشتی بڕ",
+  "ContractDate": "بەرواری گرێبەست",
+  "RentCurrency": "دراوی کرێ",
+  "Lawyer": "پارێزەر",
+  "ExtraPayment": "پارەدانی زیادە",
+  "Attachment": "هاوپێچ",
+  "to": "بۆ",
+  "from": "لە",
+  "Contract Template": "قاڵبی گرێبەست",
+  "Roles": "ڕۆڵەکان",
+  "Currency Exchange": "گۆڕینەوەی دراوەکان",
+  "Reports": "ڕاپۆرتەکان",
+  "Pay Monthly Report": "ڕاپۆرتی مانگانەی مووچە",
+  "OwnerProp": "خاوەن موڵکەکان",
+  "get Extra Payments": "پارەی زیادە",
+
   "FirstParty": "لایەنی یەکەم",
   "SecondParty": "لایەنی دووەم",
   "DashBoard": "لوحة التحكم",
@@ -80,7 +100,7 @@
   "ParentTerritory": "ناوچەی سەرەکی",
   "DefaultLanguage": "زمانی پێشوەختە",
   "Password": "تێپەڕەوشە",
-  "User Roles":"ڕۆڵی بەکارهێنەر",
-  "ContractType":"جۆری گرێبەست",
-  "Attribute":"تایبەتمەندی"
+  "User Roles": "ڕۆڵی بەکارهێنەر",
+  "ContractType": "جۆری گرێبەست",
+  "Attribute": "تایبەتمەندی"
 }
