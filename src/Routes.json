@@ -1,73 +1,83 @@
 {
   "Auth": {
-    "login": "http://192.168.1.19:8083/Users/login",
-    "signUp": "http://192.168.1.19:8083/signup",
-    "logout": "http://192.168.1.19:8083/Logout"
+    "login": "http://192.168.1.14:8080/Users/login",
+    "Refresh":"http://192.168.1.14/Users/token/",
+    "signUp": "http://192.168.1.14:8080/signup",
+    "logout": "http://192.168.1.14:8080/Logout"
   },
   "Contracts": {
-    "root": "http://192.168.1.19:8083/Contracts"
+    "root": "http://192.168.1.14:8080/Contracts"
   },
   "Payments": {
-    "root": "http://192.168.1.19:8083/Payments"
+    "root": "http://192.168.1.14:8080/Payments"
   },
   "Party": {
-    "root": "http://192.168.1.19:8083/Party"
+    "root": "http://192.168.1.14:8080/Party"
   },
   "Property": {
-    "root": "http://192.168.1.19:8083/Property"
+    "root": "http://192.168.1.14:8080/Property"
   },
   "PropertyAttr": {
-    "root": "http://192.168.1.19:8083/PropertyAttr"
+    "root": "http://192.168.1.14:8080/PropertyAttr"
   },
   "Territory": {
-    "root": "http://192.168.1.19:8083/Territory"
+    "root": "http://192.168.1.14:8080/Territory"
   },
   "Branches": {
-    "root": "http://192.168.1.19:8083/Branches"
+    "root": "http://192.168.1.14:8080/Branches"
   },
   "ContractTemplate": {
-    "root": "http://192.168.1.19:8083/ContractTemplates"
+    "root": "http://192.168.1.14:8080/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://192.168.1.19:8083/ContractType"
+    "root": "http://192.168.1.14:8080/ContractType"
   },
   "Permission": {
-    "root": "http://192.168.1.19:8083/Permission"
+    "root": "http://192.168.1.14:8080/Permission"
   },
   "Purpose": {
-    "root": "http://192.168.1.19:8083/Purpose"
+    "root": "http://192.168.1.14:8080/Purpose"
   },
-  "User": {
-    "root": "http://192.168.1.19:8083/Users"
+  "Users": {
+    "root": "http://192.168.1.14:8080/Users"
   },
   "Roles": {
-    "root": "http://192.168.1.19:8083/Roles"
+    "root": "http://192.168.1.14:8080/Roles"
   },
     
   "Currency": {
-    "root": "http://192.168.1.19:8083/Currency"
+    "root": "http://192.168.1.14:8080/Currency"
   },
-  
+  "PropertyType":{
+"root":"http://192.168.1.14:8080/PropertyType"
+  },
   "Attachments": {
-    "root": "http://192.168.1.19:8083/Attachment/"
+    "root": "http://192.168.1.14:8080/Attachment/"
   },
   "DocType": {
-    "root": "http://192.168.1.19:8083/DocTypes/"
+    "root": "http://192.168.1.14:8080/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://192.168.1.19:8083/PrintKeys/"
+    "root": "http://192.168.1.14:8080/PrintKeys/"
   },"CurrencyExchange":{
-"root":"http://192.168.1.19:8083/CurrencyExchange"
+"root":"http://192.168.1.14:8080/CurrencyExchange"
+  },
+  "Lawyer":{
+"root":"http://192.168.1.14:8080/Lawyer"
   },
   "Report":{
-"PayMonthly":"http://192.168.1.19:8083/Reports/PayMonthly/",
-"OwnerProp":"http://192.168.1.19:8083/Reports/OwnerProp/",
-"getExtraPayemnts":"http://192.168.1.19:8083/Reports/getExtraPayemnts/"
+"PayMonthly":"http://192.168.1.14:8080/Reports/PayMonthly/",
+"OwnerProp":"http://192.168.1.14:8080/Reports/OwnerProp/",
+"getExtraPayemnts":"http://192.168.1.14:8080/Reports/getExtraPayemnts/",
+"ActivityLog":"http://192.168.1.14:8080/ActivityLog/",
+"collectionInsurance":"http://192.168.1.14:8080/Reports/collectionInsurance/",
+"Tenants":"http://192.168.1.14:8080/Reports/Tenants/",
+"Lawyer_Report":"http://192.168.1.14:8080/Reports/Lawyer_Report/"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://192.168.1.19:8083",
+    "data": "http://192.168.1.14:8080",
     "check": "http://193.47.189.15:8000"
   }
 }

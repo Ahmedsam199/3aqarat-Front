@@ -58,7 +58,7 @@ const VerticalMenuHeader = props => {
           </NavLink>
         </li>
         <li className='nav-item nav-toggle'>
-          <div className='nav-link modern-nav-toggle cursor-pointer'>
+          <div className='nav-link modern-nav-toggle cursor-pointer '>
             <Toggler />
             <X onClick={() => setMenuVisibility(false)} className='toggle-icon icon-x d-block d-xl-none' size={20} />
           </div>

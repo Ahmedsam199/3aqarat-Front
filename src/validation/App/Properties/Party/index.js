@@ -5,5 +5,5 @@ export default Core.Object({
   Phone: Core.String(),
   Address: Core.String(false),
   Gender: Core.Boolean(),
-  Remarks: Core.String(),
+  Remarks: Core.String(false),
 });

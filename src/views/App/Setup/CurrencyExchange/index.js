@@ -25,10 +25,12 @@ import {
 } from "reactstrap";
 import POST from "./post";
 import { Link } from "react-router-dom";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
   const {
     CurrencyExchange,
+    Currency,
     Offline: { ContractType: OfflineContractType },
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
@@ -40,7 +42,7 @@ const Index = () => {
       value: "",
       op: "like",
     },
-    CurrencyName: {
+    Date: {
       value: "",
       op: "like",
     },
@@ -53,6 +55,7 @@ const Index = () => {
       return { ...prev, [key]: { value: _filter, op: prev[key].op } };
     });
   };
+  const CurrencyMap = useMemo(() => arrToHashMap(Currency), [Currency]);
   const ToastContent = ({ t, name, role }) => {
     return (
       <div className="p-3 bg-success my-2 rounded">
@@ -76,24 +79,13 @@ const Index = () => {
 
   const Columns = createColumns({
     onDelete,
+    CurrencyMap,
     onEdit: (row) => setCurrentRow(row),
   });
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
         <div className="flex-grow-1"></div>
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-4") && (
-          <div>
-            <Button.Ripple
-              className="mb-1"
-              color="primary"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
       </div>
       <Card>
         <div>
@@ -105,17 +97,35 @@ const Index = () => {
           />
         </div>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+            {ability.can("create", "DT-4") && (
+              <div>
+                <Button.Ripple
+                  className="mb-1"
+                  color="primary"
+                  onClick={() => toggleFunc.current()}
+                >
+                  {t("New")}
+                </Button.Ripple>
+              </div>
+            )}
+          </div>
           <Row>
-            <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("Series")}</Label>
-                <Input
-                  placeholder={t("Series")}
-                  onChange={(e) =>
-                    handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
+            <Col md="3">
+              <Label>{t("Series")}</Label>
+              <Input
+                placeholder={t("Series")}
+                onChange={(e) => handleFiltersChange("Series", e.target.value)}
+              />
+            </Col>
+            <Col md="3">
+              <Label>{t("Date")}</Label>
+              <Input
+                type="date"
+                placeholder={t("date")}
+                onChange={(e) => handleFiltersChange("Date", e.target.value)}
+              />
             </Col>
           </Row>
         </CardBody>

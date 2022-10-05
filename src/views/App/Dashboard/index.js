@@ -2,7 +2,7 @@
 import { useContext } from "react";
 
 // ** Icons Imports
-import { List } from "react-feather";
+import { Home, List } from "react-feather";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
@@ -25,16 +25,18 @@ import AvgSessions from "@src/views/ui-elements/cards/analytics/AvgSessions";
 import Sales from "@src/views/ui-elements/cards/analytics/Sales";
 import SupportTracker from "@src/views/ui-elements/cards/analytics/SupportTracker";
 import OrdersReceived from "@src/views/ui-elements/cards/statistics/OrdersReceived";
+import StatsWithAreaChart from "@components/widgets/stats/StatsWithAreaChart";
 import SubscribersGained from "@src/views/ui-elements/cards/statistics/SubscribersGained";
 import { Map, Marker, GeoJson, GeoJsonFeature, Point } from "pigeon-maps";
 // ** Images
+import toast from "react-hot-toast";
 import jsonImg from "@src/assets/images/icons/json.png";
 import ceo from "@src/assets/images/portrait/small/avatar-s-9.jpg";
-
 // ** Styles
 import "@styles/react/libs/charts/apex-charts.scss";
 import { useSelector } from "react-redux";
-
+import Tooltip from "@mui/material/Tooltip";
+// import toast from "react-hot-toast";
 const AnalyticsDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors);
@@ -131,7 +133,36 @@ const {
       metaClassName: "me-1",
     },
   ];
+  const ToastContent = ({name}) => {
+    return (
+      <center>
+        <div
+          style={{
+            display: "flex",
+            alignItem: "center",
+            justifyContent: "center",
+            // padding: "10px",
+            fontSize:"15px"
+          }}
+        >
+          <div style={{ color: "#7367f0" }}>
+            <Home size={25} />
+          </div>
+          <br />
+          <p>Owner :{name}</p>
+        </div>
+      </center>
+    );
+  };
 
+const ShowPosition=(x)=>{
+
+  Party.forEach(y => {
+    if(y.Series==x.Party){
+toast((name) => <ToastContent name={y.FullName} />);
+      }
+  });
+  }
   return (
     <div id="dashboard-analytics">
       <Row className="match-height">
@@ -170,7 +201,13 @@ const {
             >
               $
               {Property.map((x) => (
-                <Marker width={50} anchor={[x.Longitude, x.Latitude]} />
+                <Marker
+                  id="TooltipExample"
+                  onClick={() => ShowPosition(x)}
+                  width={50}
+                  anchor={[x.Longitude, x.Latitude]}
+                />
+                
               ))}
             </Map>
           </Col>

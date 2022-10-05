@@ -1,10 +1,12 @@
-import { LoaderDots } from '@thumbtack/thumbprint-react';
+// import { LoaderDots } from '@thumbtack/thumbprint-react';
 import { convertObjectToParam } from '@utils';
 import { throws } from 'assert';
+import toast from 'react-hot-toast'
 import axios from 'axios';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { ChevronDown } from 'react-feather';
+
 import { useTranslation } from 'react-i18next';
 import { Spinner } from 'reactstrap';
 import { checkDateValue } from '../../utility/Utils';
@@ -21,6 +23,9 @@ const CustomTableReport = forwardRef(
     },
     ref
   ) => {
+    useImperativeHandle(ref, () => ({
+      filter: triggerFilters,
+    }));
     const { t } = useTranslation()
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
@@ -44,22 +49,26 @@ const CustomTableReport = forwardRef(
         const response = await axios.get(`${url}${params}`);
         if (response) {
           if (response.data) {
+
             // delete result value from array, come from procedure
-            response.data[0].pop()
-            if (response.data[0].length) {
-              const Keys = Object.keys(response.data[0][0]);
+            response.data.pop()
+            if (response.data.length) {
+              const Keys = Object.keys(response.data[0]);
               generateColumns(Keys.filter((x) => !ignoreColumn.includes(x)));
-              setData(response.data[0]);
+              setData(response.data);
             }
             else {
+              
               return throws(new Error())
             }
           } else {
+            toast.error("The Data Is Empty");
             setData([]);
           }
         }
       } catch (error) {
         setData([]);
+        toast.error("The Data Is Empty")
       } finally {
         setLoading(false);
       }
@@ -75,7 +84,7 @@ const CustomTableReport = forwardRef(
     };
     useEffect(() => {
       triggerFilters();
-    }, [filters]);
+    }, []);
     return !data.length || !columns.length ? null : (
       <DataTable
         noHeader
@@ -86,25 +95,20 @@ const CustomTableReport = forwardRef(
         paginationPerPage={10}
         onRowClicked={handleClickEvent}
         className="react-dataTable"
+        style={{ width: "100%"  }}
         progressPending={loading}
         progressComponent={(() => {
-          if (loadStyle === 'spinner')
+          if (loadStyle === "spinner")
             return (
               <Spinner
                 size="xl"
                 color="secondary"
-                style={{ width: '10rem', height: '10rem' }}
+                style={{ width: "7", height: "10rem" }}
                 className="float-left"
               />
             );
-          else if (loadStyle === 'dots')
-            return <LoaderDots size="medium" theme="muted" />;
-          else
-            return (
-              <h3 className="p-5">
-                {t("Loading...")}
-              </h3>
-            );
+          else if (loadStyle === "dots") return;
+          else return <h3 className="p-5">{t("Loading...")}</h3>;
         })()}
         sortIcon={<ChevronDown size={10} />}
         data={data}

@@ -13,6 +13,7 @@ import { File as FileIcon, UploadCloud } from 'react-feather';
 import FilePreview from './FilePreview';
 import Swal from 'sweetalert2';
 import { AlertTriangle } from 'react-feather';
+import { useSelector } from 'react-redux';
 
 const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   const [attachments, setAttachments] = useState([]);
@@ -23,12 +24,14 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
     [attachments]
   );
   const onPreviewV2=(row)=>{
+    
     axios.get(`${Routes.Attachments.root}view/${row?.id}`).then((res) => {
       window.open(res.data)
     });
   }
 
   const sendAttachment = (acceptedFiles) => {
+    const { auth } = useSelector((state) => state);
     let formData = new FormData();
     acceptedFiles?.forEach((img) => {
       formData.append('image', img);
@@ -37,7 +40,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
     axios
       .post(
         `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
-        formData
+        formData, { headers: {"Authorization" : `Bearer ${auth.accessToken}`}}
       )
       .then(({data}) => {
 
@@ -46,11 +49,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
       .catch((err) => console.log("Joseph err", err));
   };
 
+  const { auth } = useSelector((state) => state);
   const onDelete = (row) => {
     axios
-      .delete(
-        `${Routes.Attachments.root}${row?.id}/${row?.refSeries}`
-      )
+      .delete(`${Routes.Attachments.root}${row?.id}/${row?.refSeries}`, {
+        headers: { Authorization: `Bearer ${auth.accessToken}` },
+      })
       .then((res) => {
         toast.success(<SuccessToast msg="Deleted Successfully!" />, {
           hideProgressBar: true,
@@ -58,8 +62,8 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
         setAttachments((prev) => prev.filter((att) => att?.id !== row?.id));
       })
       .catch((err) => {
-        console.log('Joseph err', err);
-        toast.error('There is an error deleting college!', {
+        console.log("Joseph err", err);
+        toast.error("There is an error deleting college!", {
           hideProgressBar: true,
         });
       });
@@ -83,10 +87,11 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                   // let fileName = att?.FilePath.split(/@(.*)/s)[1];
                   return att?.OriginalFileName === acceptedFiles[0]?.name;
                 });
-
+const { auth } = useSelector((state) => state);
                 axios
                   .delete(
-                    `${Routes.Attachments.delete}?filePath=${replacedFile?.FilePath}&filePath=`
+                    `${Routes.Attachments.delete}?filePath=${replacedFile?.FilePath}&filePath=`,
+                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
                   )
                   .then(() => {
                     setAttachments((prev) =>
@@ -129,11 +134,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                 [newFile]?.forEach((img) => {
                   formData.append('image', img);
                 });
-
+const { auth } = useSelector((state) => state);
                 axios
                   .post(
                     `${Routes.Attachments.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
-                    formData
+                    formData,
+                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
                   )
                   .then(({ data }) => {
                     setAttachments((prev) => [...prev, ...data]);
@@ -144,7 +150,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                       }
                     );
                   })
-                  .catch((err) => console.log('Joseph err', err));
+                  .catch((err) => console.log("Joseph err", err));
               }
             });
           } else {
@@ -182,7 +188,8 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
                 axios
                   .delete(
-                    `${Routes.Attachments.delete}?filePath=${customFilePaths}`
+                    `${Routes.Attachments.delete}?filePath=${customFilePaths}`,
+                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
                   )
                   .then(() => {
                     setAttachments((prev) =>
@@ -239,11 +246,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                 [...tempOriginals, ...tempRenamesDone]?.forEach((img) => {
                   formData.append('image', img);
                 });
-
+const { auth } = useSelector((state) => state);
                 axios
                   .post(
                     `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
-                    formData
+                    formData,
+                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
                   )
                   .then(({ data }) => {
                     setAttachments((prev) => [...prev, ...data]);
@@ -254,7 +262,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                       }
                     );
                   })
-                  .catch((err) => console.log('Joseph err', err));
+                  .catch((err) => console.log("Joseph err", err));
               }
             });
           } else {
@@ -269,13 +277,13 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
   useEffect(() => {
     axios
-      .get(
-        `${Routes.Attachments.root}${ItemSeries}`
-      )
+      .get(`${Routes.Attachments.root}${ItemSeries}`, {
+        headers: { Authorization: `Bearer ${auth.accessToken}` },
+      })
       .then((data) => {
         setAttachments(data?.data);
       })
-      .catch((err) => console.log('Joseph err attachment'));
+      .catch((err) => console.log("Joseph err attachment"));
   }, [ItemSeries]);
 
   const {

@@ -15,6 +15,7 @@ import Flatpickr from "react-flatpickr";
 import { exportToCsv as exportToExcel } from "@utility/excel";
 import { exportToPdf } from "@utility/pdf";
 import { useEffect, useRef, useState } from "react";
+import CustomSelectV2 from "../../../../components/CustomSelectV2";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -25,10 +26,13 @@ import {
   DropdownMenu,
   DropdownToggle,
   FormGroup,
+  Input,
   Label,
   Row,
   UncontrolledButtonDropdown,
 } from "reactstrap";
+import { useSelector } from "react-redux";
+import { Search } from "react-feather";
 const Index = () => {
   // const { Item, ItemGroup, Users, Party } = useSelector((state) => state);
   const ref = useRef();
@@ -37,8 +41,9 @@ const Index = () => {
   const [filters, setFilters] = useState({
     From_Date: [subMonths(new Date(), 1)],
     To_Date: [addMonths(new Date(), 1)],
-    BasedOn: 0,
+
   });
+  const { Purpose,Party } = useSelector((state) => state);
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
       if (Array.isArray(key))
@@ -88,9 +93,9 @@ const Index = () => {
       <div className="row align-items-center">
         <div className="col-9">
           <Breadcrumbs
-            breadCrumbTitle="Sales Reports"
+            breadCrumbTitle="Owner Property"
             breadCrumbParent="Reports"
-            breadCrumbActive="Sales Reports"
+            breadCrumbActive="Owner Property"
           />
         </div>
         <div className="col-3 d-flex justify-content-around align-items-center">
@@ -115,10 +120,9 @@ const Index = () => {
       <Card>
         <CardBody>
           <Row>
-            <Col md="4">
+            {/* <Col md="4">
               <Label>{t("From Date")}</Label>
-              <Label>{t("From Date")}</Label>
-
+              
               <Flatpickr
                 className="form-control"
                 data-enable-time
@@ -140,7 +144,28 @@ const Index = () => {
                   handleFiltersChange("To_Date", val);
                 }}
               />
+            </Col> */}
+            <Col sm="4">
+              <Label>Party</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="FullName"
+                valueName="Series"
+                value={filters.Purpose}
+                options={Party}
+                onChange={(e) => handleFiltersChange("Party", e?.value ?? null)}
+              />
             </Col>
+            <Col sm="4">
+              <Label>Phone</Label>
+              <Input
+                value={filters.Phone}
+                onChange={(e) =>
+                  handleFiltersChange("Phone", e.target.value ?? "" )
+                }
+              />
+            </Col>
+
             {/* <Col md="2">
               <FormGroup>
                 <Label for="BasedOn">
@@ -255,6 +280,13 @@ const Index = () => {
               </FormGroup>
             </Col>*/}
           </Row>
+          <Row className="mt-1">
+            <Col sm="3">
+              <Button color="primary" onClick={() => ref.current.filter()}>
+                Search <Search size={21} />{" "}
+              </Button>
+            </Col>
+          </Row>
         </CardBody>
         <Row>
           <Col sm="12">
@@ -262,7 +294,7 @@ const Index = () => {
               ref={ref}
               url={Routes.Report.OwnerProp}
               filters={filters}
-              calculatorKey={{"name of Property":(data)=>data.length}}
+              calculatorKey={{ "name of Property": (data) => data.length }}
 
               // ignoreTotalKeys={[
               //   "FirstParty",

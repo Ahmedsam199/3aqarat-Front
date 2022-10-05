@@ -1,15 +1,11 @@
-import * as yup from 'yup';
-import { parseNumber } from '../utility/Utils';
+import * as yup from "yup";
+import * as utils from "../utility/Utils";
 const Object = (obj = {}) => yup.object().shape(obj);
 
-const String = (req = true) =>
-  req
-    ? yup.string().required()
-    : yup
-        .string()
-        // .nullable(true)
-        // .default('')
-        // .transform((v) => v ?? '');
+const String = (req = true) => (req ? yup.string().required() : yup.string());
+// .nullable(true)
+// .default('')
+// .transform((v) => v ?? '');
 
 const Boolean = () =>
   yup
@@ -28,11 +24,9 @@ const Number = (
   required
     ? yup
         .number()
-        // .transform((value, originalValue) => {
-        //   console.log("testing", value);
-        //   return ;
-        //   return parseNumber(originalValue);
-        // })
+        .transform((value, originalValue) => {
+          return utils?.parseNumber(originalValue);
+        })
         .moreThan(more)
         .lessThan(less)
         .required()

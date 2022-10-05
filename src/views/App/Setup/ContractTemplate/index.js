@@ -63,29 +63,22 @@ const Index = () => {
   });
   return (
     <>
-      <div className="d-flex justify-content-between">
-        <div className="flex-grow-1">
-          <Breadcrumbs
-            breadCrumbTitle="ContractTemplate"
-            breadCrumbParent="Setup"
-            breadCrumbActive="ContractTemplate"
-          />
-        </div>
-        {ability.can("create", "DT-9") && (
-          <div>
-            <Button.Ripple
-              color="primary"
-              onClick={() => {
-                setOpen(true);
-              }}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
-      </div>
+      <div className="d-flex justify-content-between"></div>
       <Card>
         <CardBody>
+          {ability.can("create", "DT-9") && (
+            <div className="d-flex justify-content-between">
+              <div></div>
+              <Button.Ripple
+                color="primary"
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                {t("New")}
+              </Button.Ripple>
+            </div>
+          )}
           <Row className="mt-1 mb-50">
             <Col md="2">
               <FormGroup>

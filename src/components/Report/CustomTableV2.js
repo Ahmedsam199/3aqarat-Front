@@ -5,6 +5,7 @@ import {
   getTotalRows,
 } from "@utils";
 import axios from "axios";
+import toast from 'react-hot-toast'
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
@@ -55,6 +56,7 @@ const CustomTableReport = forwardRef(
               }),
             ]
           : [],
+      filter: triggerFilter,
     }));
     const generateColumns = (Keys) => {
       setColumns(
@@ -77,6 +79,7 @@ const CustomTableReport = forwardRef(
       } catch (e) {
         console.error("hacker_it error", e);
         setData([]);
+        toast.error('The Data is Empty')
       } finally {
         setLoading(false);
       }
@@ -92,11 +95,11 @@ const CustomTableReport = forwardRef(
     };
     useEffect(() => {
       triggerFilter();
-    }, [filters]);
+    }, []);
     const defaultColumn = React.useMemo(
       () => ({
         minWidth: 100,
-        width: 240,
+        width: 200,
         maxWidth: 350,
       }),
       []

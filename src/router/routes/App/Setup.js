@@ -21,6 +21,9 @@ const Role = lazy(() => import("../../../views/App/Setup/Role"));
 const User = lazy(() => import("../../../views/App/Setup/User"));
 const Currency =lazy(()=>import('../../../views/App/Setup/Currency'))
 const CurrencyExchange = lazy(() => import("../../../views/App/Setup/CurrencyExchange"));
+const PropertyType = lazy(() =>
+  import("../../../views/App/Setup/PropertyType")
+);
 export default [
   {
     element: <ContractTemplate />,
@@ -129,6 +132,14 @@ export default [
   {
     path: "/Setup/CurrencyExchange",
     element: <CurrencyExchange />,
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
+  },
+  {
+    path: "/Setup/PropertyType",
+    element: <PropertyType />,
     meta: {
       action: "read",
       resource: "DT-3",

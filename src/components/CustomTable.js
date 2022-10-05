@@ -106,6 +106,7 @@ const CustomTable = forwardRef(
                 case "Greater":
                   _result = filters[key].value <= item[key];
                   break;
+                  
                 case "Smaller":
                   //Pay Attention to The Item Plz Plz Plz 
                   _result =

@@ -6,6 +6,7 @@ import PrintKeys from "./PrintKeys";
 import Purpose from "./Purpose";
 import User from "./User";
 import Roles from "./Roles";
+import PropertyType from './PropertyType'
 export default {
   ContractTemplate,
   Branches,
@@ -15,4 +16,5 @@ export default {
   User,
   Roles,
   PrintKeys,
+  PropertyType,
 };

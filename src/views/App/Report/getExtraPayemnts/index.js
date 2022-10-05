@@ -11,8 +11,8 @@ import { addMonths, checkDateValue, removeNullValue, subMonths } from "@utils";
 import Flatpickr from "react-flatpickr";
   import '@styles/react/libs/flatpickr/flatpickr.scss';
 
-
-
+import CustomSelectV2 from '../../../../components/CustomSelectV2'
+import { useSelector } from "react-redux";
 
 
 
@@ -35,8 +35,9 @@ import {
   Row,
   UncontrolledButtonDropdown,
 } from "reactstrap";
+import { Search } from "react-feather";
 const Index = () => {
-  // const { Item, ItemGroup, Users, Party } = useSelector((state) => state);
+  const { Purpose } = useSelector((state) => state);
   const ref = useRef();
   const { t } = useTranslation();
 
@@ -94,9 +95,9 @@ const Index = () => {
       <div className="row align-items-center">
         <div className="col-9">
           <Breadcrumbs
-            breadCrumbTitle="Reports"
+            breadCrumbTitle="Extra Payments"
             breadCrumbParent="Reports"
-            breadCrumbActive="Reports"
+            breadCrumbActive="Extra Payments"
           />
         </div>
         <div className="col-3 d-flex justify-content-around align-items-center">
@@ -121,40 +122,44 @@ const Index = () => {
       <Card>
         <CardBody>
           <Row>
-            
-              <Col md="4">
-              
-                <Label>{t("From Date")}</Label>
-
-                <Flatpickr
-                  className="form-control"
-                  data-enable-time
-                  options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
-                  value={filters.From_Date}
-                  onChange={(val) =>
-                    (() => {
-                      handleFiltersChange("Contract Starts", val);
-                    })
-                  }
-                />
-              
-            </Col>
             <Col md="4">
-              
-                <Label>{t("To Date")}:</Label>
-                <Flatpickr
-                  className="form-control"
-                  data-enable-time
-                  options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
-                  value={filters.To_Date}
-                  onChange={(val) =>
-                    (() => {
-                      handleFiltersChange("Contract Ends", val);
-                    })
-                  }
-                />
-              
+              <Label>{t("Contract Starts")}</Label>
+
+              <Flatpickr
+                className="form-control"
+                data-enable-time
+                options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
+                value={filters.ContractStarts}
+                onChange={(val) => {
+                  handleFiltersChange("ContractStarts", val);
+                }}
+              />
             </Col>
+            <Col sm="4">
+              <Label>Purpose</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="Purpose"
+                valueName="Series"
+                value={filters.Purpose}
+                options={Purpose}
+                onChange={(e) =>
+                  handleFiltersChange("Purpose", e?.value ?? null)
+                }
+              />
+            </Col>
+            {/* <Col md="4">
+              <Label>{t("To Date")}:</Label>
+              <Flatpickr
+                className="form-control"
+                data-enable-time
+                options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
+                value={filters.To_Date}
+                onChange={(val) => () => {
+                  handleFiltersChange("Contract Ends", val);
+                }}
+              />
+            </Col> */}
             {/* <Col md="2">
               <FormGroup>
                 <Label for="BasedOn">
@@ -269,20 +274,19 @@ const Index = () => {
               </FormGroup>
             </Col>*/}
           </Row>
-          
-            <CustomTableV2
-              ref={ref}
-              url={Routes.Report.getExtraPayemnts}
-              filters={filters}
-              // ignoreTotalKeys={[
-              //   "FirstParty",
-              //   "SecondParty",
-              //   "Remain Pay By monthly doller",
-              //   "PaidAmt",
-              //   "RemainDoller",
-              // ]}
-            />
-          
+          <Row className="mt-1">
+            <Col sm="3">
+              <Button color="primary" onClick={() => ref.current.filter()}>
+                Search <Search size={21} />{" "}
+              </Button>
+            </Col>
+          </Row>
+          <CustomTableV2
+            ref={ref}
+            url={Routes.Report.getExtraPayemnts}
+            filters={filters}
+            ignoreTotalKeys={["id"]}
+          />
         </CardBody>
       </Card>
     </>

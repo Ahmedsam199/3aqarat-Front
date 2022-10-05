@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { toasty } from "@toast";
 
 import { DefaultRoute } from "../router/routes";
+import { useSelector } from "react-redux";
 
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = (obj) => Object.keys(obj).length === 0;
@@ -19,6 +20,7 @@ export const kFormatter = (num) =>
 export const htmlToString = (html) => html.replace(/<\/?[^>]+(>|$)/g, "");
 
 // ** Checks if the passed date is today
+
 const isToday = (date) => {
   const today = new Date();
   return (
@@ -739,10 +741,12 @@ export const deleteRecordWithAttachments = ({
 };
 
 export const sendAttachment = ({
+  
   files = [],
   refDoctype = "",
   refSeries = "",
 }) => {
+  const { auth } = useSelector((state) => state);
   let formData = new FormData();
   files.forEach((img) => {
     formData.append("image", img);
@@ -752,11 +756,11 @@ const config = {
           "Content-Type": "multipart/form-data",
         },
       };
-      
+      let tokenStr = auth.accessToken
   axios.post(
     `${Routes.Attachments.root}?refDoctype=${refDoctype}&refSeries=${refSeries}`,
     formData,
-    config
+    config, { headers: {"Authorization" : `Bearer ${tokenStr}`} }
   );
   
 

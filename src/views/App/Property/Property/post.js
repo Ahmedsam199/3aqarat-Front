@@ -32,7 +32,7 @@ import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Property, Party, Territory, Purpose, Currency, PropertyAttr } =
+  const { Property, Party, Territory, Purpose, Currency, PropertyAttr ,PropertyType} =
     useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
@@ -167,7 +167,7 @@ useEffect(() => {
                   </Col>
                   <Col sm="6">
                     <Col>
-                      <CustomFormInput name="RequestedAmt" />
+                      <CustomFormNumberInput name="RequestedAmt" />
                       <CustomFormSelect
                         name="Purpose"
                         textName="Purpose"
@@ -176,7 +176,14 @@ useEffect(() => {
                           return x.IsPayable;
                         })}
                       />
+                      <CustomFormSelect
+                        name="PropertyType"
+                        textName="TypeName"
+                        valueName="Series"
+                        options={PropertyType}
+                      />
                     </Col>
+
                     <Row></Row>
                   </Col>
                   <Col>
@@ -246,6 +253,11 @@ useEffect(() => {
         className="d-none"
         {...register("RequestedAmt2")}
         defaultValue={getValues("RequestedAmt2")}
+      />
+      <input
+        className="d-none"
+        {...register("Available")}
+        defaultValue={getValues("Available")}
       />
     </FormProvider>
   );

@@ -24,6 +24,7 @@ import {
 } from "reactstrap";
 import POST from "./post";
 import { Link } from "react-router-dom";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
   const { User } = useSelector((state) => state);
@@ -31,6 +32,9 @@ const Index = () => {
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
   const toggleFunc = useRef(null);
+    const {
+Branches
+    } = useSelector((state) => state);
   const [filters, setFilters] = useState({
     Series: {
       value: "",
@@ -42,7 +46,7 @@ const Index = () => {
     },
   });
   const ref = useRef();
-
+const BranchesMap = useMemo(() => arrToHashMap(Branches), [Branches]);
   const handleFiltersChange = (key, value) => {
     let _filter = value;
     setFilters((prev) => {
@@ -64,25 +68,12 @@ const Index = () => {
 
   const Columns = createColumns({
     onDelete,
+    BranchesMap,
     onEdit: (row) => setCurrentRow(row),
   });
   return (
     <>
       <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-        </div>
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-14") && (
-          <div>
-            <Button.Ripple
-              className="mb-1"
-              color="primary"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
       </div>
       <Card>
         <div>
@@ -95,6 +86,20 @@ const Index = () => {
           </div>
         </div>
         <CardBody>
+        <div className="w-100 d-flex justify-content-between">
+          <div className="flex-grow-1"></div>
+          {/* {ability.can("create", "DT-14") && (
+            <div>
+              <Button.Ripple
+                className="mb-1"
+                color="primary"
+                onClick={() => toggleFunc.current()}
+              >
+                {t("New")}
+              </Button.Ripple>
+            </div>
+          )} */}
+        </div>
           <Row>
             <Col lg="3" md="4">
               <FormGroup>

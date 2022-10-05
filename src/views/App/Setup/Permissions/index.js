@@ -31,10 +31,12 @@ import { AlertCircle } from "react-feather";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
   const {
     Permission,
+    Roles,
     tempData: { network },
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
@@ -71,26 +73,28 @@ const Index = () => {
         toast.error(err.response.data.message);
       });
   };
+  const RolesMap = useMemo(() => arrToHashMap(Roles), [Roles]);
   const Columns = createColumns({
     onDelete,
+    RolesMap,
     onEdit: (row) => navigate(`/Setup/UpdatePermission/${row?.Series}`),
   });
 
   return (
     <div className="w-100">
-      <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-7") && (
-          <div>
-            <Link to="/Setup/NewPermission">
-              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
-            </Link>
-          </div>
-        )}
-      </div>
-      <br></br>
+      
       <Card>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+            {ability.can("create", "DT-7") && (
+              <div>
+                <Link to="/Setup/NewPermission">
+                  <Button.Ripple color="primary">{t("New")}</Button.Ripple>
+                </Link>
+              </div>
+            )}
+          </div>
           <Row>
             <Col md="2">
               <FormGroup>

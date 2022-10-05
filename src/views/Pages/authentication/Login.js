@@ -38,7 +38,7 @@ const ToastContent = ({ t, name, role }) => {
   return (
     <div>
       <div>
-        <h4>Welcome to Al-Jazary Real State</h4>
+        <h4>Welcome to Al-Jazary Real Estate</h4>
       </div>
       <br></br>
       <div className="text-center">
@@ -178,7 +178,7 @@ const Login = () => {
               </g>
             </g>
           </svg> */}
-          <h2 className="brand-text text-primary ms-1">RealState</h2>
+          <h2 className="brand-text text-primary ms-1">Real Estate</h2>
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
@@ -192,7 +192,7 @@ const Login = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
-              Welcome to Al-Jazary RealState 👋
+              Welcome to Al-Jazary Real Estate 👋
             </CardTitle>
             <Form
               className="auth-login-form mt-2"

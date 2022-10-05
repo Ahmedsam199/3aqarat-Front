@@ -24,9 +24,10 @@ import {
 import POST from "./post";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
-  const { Purpose: Purpose } = useSelector((state) => state);
+  const { Purpose: Purpose,Currency } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -49,7 +50,7 @@ const Index = () => {
       return { ...prev, [key]: { value: _filter, op: prev[key].op } };
     });
   };
-
+const CurrencyMap = useMemo(() => arrToHashMap(Currency), [Currency]);
   const onDelete = (Series) => {
     dispatch(deleteItem("Purpose", Series))
       .then((res) => {
@@ -64,27 +65,12 @@ const Index = () => {
 
   const Columns = createColumns({
     onDelete,
+    CurrencyMap,
     onEdit: (row) => setCurrentRow(row),
   });
   return (
     <>
-      <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1">
-          
-        </div>
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-11") && (
-          <div>
-            <Button.Ripple
-              className="mb-1"
-              color="primary"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
-      </div>
+      <div className="d-flex justify-content-between align-items-start"></div>
       <Card>
         <div>
           {" "}
@@ -95,6 +81,20 @@ const Index = () => {
           />
         </div>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+            {ability.can("create", "DT-11") && (
+              <div>
+                <Button.Ripple
+                  className="mb-1"
+                  color="primary"
+                  onClick={() => toggleFunc.current()}
+                >
+                  {t("New")}
+                </Button.Ripple>
+              </div>
+            )}
+          </div>
           <Row>
             <Col lg="3" md="4">
               <FormGroup>

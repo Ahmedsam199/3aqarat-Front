@@ -5,6 +5,7 @@ import fileDownload from 'js-file-download';
 import React, { useContext } from 'react';
 import { Download, Edit, Eye, Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Button, UncontrolledTooltip } from 'reactstrap';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
@@ -28,10 +29,15 @@ const RowActionsFile = ({
   //   console.log(data,"DOWNDATA")
   //   fileDownload(data, row.name);
   // };
+  const {auth} = useSelector((state) => state);
   const handleDownload=()=>{
-axios.get(`${Routes.Attachments.root}download/${row?.id}`).then((res)=>{
-  window.location.assign(res.data)
-})
+axios
+  .get(`${Routes.Attachments.root}download/${row?.id}`, {
+    headers: { Authorization: `Bearer ${auth.accessToken}` },
+  })
+  .then((res) => {
+    window.location.assign(res.data);
+  });
   }
 
   return (

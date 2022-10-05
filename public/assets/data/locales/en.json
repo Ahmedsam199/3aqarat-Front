@@ -1,5 +1,8 @@
 {
+  "TypeOfTran":"Type of Transaction",
+  "collection Insurance": "Collection Insurance",
   "FirstParty": "First Party",
+  "RoleSeries": "Role Name",
   "SecondParty": "Second Party",
   "DashBoard": "DashBoard",
   "Contract": "Contract",

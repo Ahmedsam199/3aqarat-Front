@@ -1,10 +1,7 @@
 // ** React Imports
 import * as Icon from "react-feather";
 import { Fragment } from "react";
-import {
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import { NavItem, NavLink } from "reactstrap";
 
 // ** Custom Components
 import NavbarUser from "./NavbarUser";

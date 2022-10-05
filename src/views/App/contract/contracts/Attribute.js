@@ -39,6 +39,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
                     <th scope="row">{index + 1}</th>
                     <td>
                       <CustomFormInput
+                        IsDisabled={true}
                         menuShouldBlockScroll
                         hiddenTitle
                         menuPosition="fixed"
@@ -47,6 +48,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
                     </td>
                     <td>
                       <CustomFormInput
+                        IsDisabled={true}
                         hiddenTitle
                         name={`Attributes.${index}.AttributesValue`}
                         menuPosition={"fixed"}
@@ -86,7 +88,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
                 )}
             </ul>
           </small>
-          {toBoolean(getValues("_write")) && (
+          {/* {toBoolean(getValues("_write")) && (
             <Button
               className="btn-icon"
               color="success"
@@ -100,7 +102,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
             >
               <Plus size={14} />
             </Button>
-          )}
+          )} */}
         </Col>
       </Row>
     </>

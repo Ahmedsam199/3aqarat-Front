@@ -85,33 +85,37 @@ const HorizontalNavMenuGroup = props => {
   return (
     <li
       ref={setReferenceElement}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={() => setMenuOpen(false)}
-      className={classnames('dropdown', {
+      onClick={() => setMenuOpen(!menuOpen)}
+      // onMouseEnter={handleMouseEnter}
+      // onMouseLeave={() => setMenuOpen(false)}
+      className={classnames("dropdown", {
         show: menuOpen,
-        'nav-item': submenu === false,
-        'dropdown-submenu': submenu === true,
-        'sidebar-group-active active': hasActiveChild(item, currentURL)
+        "nav-item": submenu === false,
+        "dropdown-submenu": submenu === true,
+        "sidebar-group-active active": hasActiveChild(item, currentURL),
       })}
     >
       <Link
-        to='/'
-        onClick={e => e.preventDefault()}
-        className={classnames('dropdown-toggle d-flex align-items-center', {
-          'dropdown-item': submenu === true,
-          'nav-link': submenu === false
+        to="/"
+        onClick={(e) => e.preventDefault()}
+        className={classnames("dropdown-toggle d-flex align-items-center", {
+          "dropdown-item": submenu === true,
+          "nav-link": submenu === false,
         })}
       >
-        {item.icon}
-        <span>{t(item.title)}</span>
+        <div >{item.icon}</div>
+        <span >{t(item.title)}</span>
       </Link>
       <ul
         ref={setPopperElement}
         style={{ ...styles.popper }}
         {...attributes.popper}
-        className={classnames('dropdown-menu', { 'first-level': submenu === false })}
+        className={classnames("dropdown-menu", {
+          "first-level": submenu === true,
+        })}
       >
         <HorizontalNavMenuItems
+          
           isChild={true}
           submenu={true}
           parentItem={item}
@@ -121,7 +125,7 @@ const HorizontalNavMenuGroup = props => {
         />
       </ul>
     </li>
-  )
+  );
 }
 
 export default HorizontalNavMenuGroup

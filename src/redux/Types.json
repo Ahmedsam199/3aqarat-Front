@@ -109,12 +109,19 @@
     "delete": "Delete_Currency",
     "clear": "Clear_Currency"
   },
-  "User": {
-    "set": "Set_User",
-    "insert": "Insert_User",
-    "update": "Update_User",
-    "delete": "Delete_User",
-    "clear": "Clear_User"
+  "Users": {
+    "set": "Set_Users",
+    "insert": "Insert_Users",
+    "update": "Update_Users",
+    "delete": "Delete_Users",
+    "clear": "Clear_Users"
+  },
+  "PropertyType":{
+    "set": "Set_PropertyType",
+    "insert": "Insert_PropertyType",
+    "update": "Update_PropertyType",
+    "delete": "Delete_PropertyType",
+    "clear": "Clear_PropertyType"
   },
   "Roles": {
     "set": "Set_Roles",
@@ -157,6 +164,13 @@
       "delete": "Delete_CurrencyExchange",
       "set": "Set_CurrencyExchange",
       "clear": "Clear_CurrencyExchange"
+    },
+    "Lawyer":{
+      "insert": "Insert_Lawyer",
+      "update": "Update_Lawyer",
+      "delete": "Delete_Lawyer",
+      "set": "Set_Lawyer",
+      "clear": "Clear_Lawyer"
     }
   
 }

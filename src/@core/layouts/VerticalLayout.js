@@ -159,7 +159,9 @@ const VerticalLayout = (props) => {
           setMenuCollapsed={setMenuCollapsed}
           setMenuVisibility={setMenuVisibility}
         />
-      ) : null}
+      ) : (
+        null
+      )}
 
       <Navbar
         expand="lg"
@@ -176,15 +178,16 @@ const VerticalLayout = (props) => {
         <div className="navbar-container d-flex content">
           {navbar ? (
             navbar({ skin, setSkin, setMenuVisibility })
-          ) : (
-            <NavbarComponent
+            ) : (
+              <NavbarComponent
               setMenuVisibility={setMenuVisibility}
               skin={skin}
               setSkin={setSkin}
-            />
-          )}
+              />
+              )}
         </div>
       </Navbar>
+              
       {children}
 
       {/* Vertical Nav Menu Overlay */}

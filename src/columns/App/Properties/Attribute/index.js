@@ -3,7 +3,7 @@ import { create, sortSeries } from "../../../core";
 export default ({ onEdit, onDelete }) => {
   const Actions = (row) => (
     <RowActions
-      subject="DT-13"
+      subject="DT-9"
       rowId={row?.Series}
       onEdit={() => onEdit(row)}
       onDelete={() => onDelete(row?.Series)}

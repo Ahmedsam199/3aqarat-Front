@@ -4,7 +4,7 @@ import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import MultiRangeSlider from "../../../../components/Form/MultiRange";
@@ -26,12 +26,19 @@ import { deleteItem } from "@store/actions/data";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import CustomSelect from "../../../../components/CustomSelect";
+import CustomFormInputCheckbox from "../../../../components/Form/CustomFormInputCheckbox";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
   const {
     Property,
+    Territory,
+    Purpose,
     tempData: { network },
   } = useSelector((state) => state);
+const TerritoryMap=useMemo(()=>arrToHashMap(Territory),[Territory])
+const PurposeMap = useMemo(() => arrToHashMap(Purpose), [Purpose]);
   const ability = useContext(AbilityContext);
   const dispatch = useDispatch();
   const [currentRow, setCurrentRow] = useState(undefined);
@@ -51,6 +58,14 @@ const Index = () => {
       value: "",
       op: "Smaller",
     },
+    Territory: {
+      value: "",
+      op: "like",
+    },
+    Show:{
+      value: "",
+      op: "like",
+    }
   });
   const navigate = useNavigate();
   const ref = useRef();
@@ -74,25 +89,27 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
+TerritoryMap,
+PurposeMap,
     onEdit: (row) =>
       navigate(`/Properties/Property/Update/${row?.Series}`),
   });
 
   return (
     <div className="w-100">
-      <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-8") && (
-          <div>
-            <Link to="/Properties/Property/New">
-              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
-            </Link>
-          </div>
-        )}
-      </div>
       <br></br>
       <Card>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+            {ability.can("create", "DT-8") && (
+              <div>
+                <Link to="/Properties/Property/New">
+                  <Button.Ripple color="primary">{t("New")}</Button.Ripple>
+                </Link>
+              </div>
+            )}
+          </div>
           <Row>
             <Col md="8 ">
               <Row className="d-flex">
@@ -123,6 +140,31 @@ const Index = () => {
                     }
                   />
                 </Col>
+                <Col sm="6">
+                  <Label>{t("Territory")}</Label>
+                  <CustomSelect
+                    isClearable={true}
+                    valueName="Series"
+                    textName="Territory"
+                    value={filters.Territory.value}
+                    options={Territory}
+                    onChange={(e) => {
+                      handleFiltersChange("Territory", e?.value ?? null);
+                    }}
+                  />
+                </Col>
+                
+                {/* <Col sm="6">
+                  <Label>{t("Show")}</Label>
+                  <Input
+                    type="checkbox"
+                    placeholder={t("Show")}
+                    onChange={(e) =>
+                      // handleFiltersChange("Show", e.target.value);
+                      console.log(e.target)
+                    }
+                  />
+                </Col> */}
               </Row>
             </Col>
           </Row>

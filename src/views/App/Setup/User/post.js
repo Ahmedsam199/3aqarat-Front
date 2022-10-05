@@ -64,17 +64,17 @@ const POST = ({ onToggle, row, toggleFunc }) => {
       console.log(values)
       dispatch(
         values.Series
-          ? updateItem("User", values)
-          : insertItem("User", values)
+          ? updateItem("Users", values)
+          : insertItem("Users", values)
       )
         .then((res) => {
-          toast.success("")
+          toast.success("");
           clear();
           toggle();
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
-          // toast.error(err.response.data.message);
+          toast.error(err.response.data.message);
         });
       setLoading(false);
     }

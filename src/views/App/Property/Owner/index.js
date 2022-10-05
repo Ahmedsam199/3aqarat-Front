@@ -45,6 +45,10 @@ const Index = () => {
       value: "",
       op: "like",
     },
+    Phone: {
+      value: "",
+      op: "like",
+    },
   });
   const ref = useRef();
 
@@ -74,21 +78,7 @@ const Index = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-between align-items-start">
-        <div className="flex-grow-1"></div>
-        <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-5") && (
-          <div>
-            <Button.Ripple
-              color="primary"
-              className="mb-2"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
-      </div>
+      <div className="d-flex justify-content-between align-items-start"></div>
 
       <Card>
         <div>
@@ -99,17 +89,28 @@ const Index = () => {
           />
         </div>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+
+            {ability.can("create", "DT-5") && (
+              <div>
+                <Button.Ripple
+                  color="primary"
+                  className="mb-2"
+                  onClick={() => toggleFunc.current()}
+                >
+                  {t("New")}
+                </Button.Ripple>
+              </div>
+            )}
+          </div>
           <Row>
             <Col lg="3" md="4">
-              <FormGroup>
-                <Label>{t("Series")}</Label>
-                <Input
-                  placeholder={t("Series")}
-                  onChange={(e) =>
-                    handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
+              <Label>{t("Series")}</Label>
+              <Input
+                placeholder={t("Series")}
+                onChange={(e) => handleFiltersChange("Series", e.target.value)}
+              />
             </Col>
             <Col lg="3" md="4">
               <FormGroup>
@@ -121,6 +122,13 @@ const Index = () => {
                   }
                 />
               </FormGroup>
+            </Col>
+            <Col lg="3" md="4">
+              <Label>{t("Phone")}</Label>
+              <Input
+                placeholder={t("Phone")}
+                onChange={(e) => handleFiltersChange("Phone", e.target.value)}
+              />
             </Col>
           </Row>
         </CardBody>

@@ -3,8 +3,10 @@ import db from '@src/utility/api/cacheDB';
 import Types from "@Types";
 import { insertOrUpdateFormData } from "@utility/api";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { store } from "../../storeConfig/store";
+import { WindowScrollController } from "@fullcalendar/core";
 const networkStatus = () => store.getState().tempData.network;
 /*
 !  server and locale
@@ -253,8 +255,14 @@ export const syncData = (name) => {
           type: Types[name]?.set,
           payload: _.data,
         });
+        
         resolve(_.status);
-      } else {
+        
+      } else if (_.status===401){
+        localStorage.clear();
+        window.location.replace(`${window.location.host}/login`);
+        reject(_);
+      }else{
         reject(_);
       }
     });

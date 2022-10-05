@@ -4,11 +4,11 @@ import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { sleep, toBoolean } from "@utils";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Alert, Button, Col, Row, Table } from "reactstrap";
+import { Alert, Button, Col, Label, Row, Table } from "reactstrap";
 import { parseNumber } from "../../../../utility/Utils";
 const RefsList = ({
   loading,
@@ -16,6 +16,7 @@ const RefsList = ({
   appendFurnitures,
   removeFurnitures,
   ReplaceFurniture,
+  
 }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -64,6 +65,19 @@ const RefsList = ({
       label: x.Series + " " + x.CurrencyName,
     });
   });
+//   useEffect(()=>{
+// DoubleChange()
+//   },[setValue])
+useEffect(() => {
+  if(fieldsFurnitures.length==0){
+    setValue("TotalPrice",0)
+      setValue("TotalQty", 0);
+      
+  }else{
+
+    DoubleChange();
+  }
+}, [fieldsFurnitures]);
   return (
     <>
       <h5 className="mb-1 text-center">{t("Furniture")}</h5>
@@ -80,6 +94,7 @@ const RefsList = ({
           </thead>
           <tbody {...{ ref }}>
             {fieldsFurnitures.map((x, index) => {
+              
               return (
                 <div key={x.id} style={{ overflow: "hidden" }}>
                   <tr className="d-flex">
@@ -91,11 +106,13 @@ const RefsList = ({
                         menuShouldBlockScroll
                         hiddenTitle
                         menuPosition="fixed"
+                        IsDisabled={true}
                         name={`Furnitures.${index}.Subject`}
                       />
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormSelect
+                        IsDisabled={true}
                         style={{ overflow: "hidden" }}
                         menuPosition="fixed"
                         menuShouldBlockScroll
@@ -114,6 +131,7 @@ const RefsList = ({
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormNumberInput
+                        IsDisabled={true}
                         name={`Furnitures.${index}.Price`}
                         hiddenTitle
                         extraOnChangeFun={DoubleChange}
@@ -121,6 +139,7 @@ const RefsList = ({
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormSelect
+                        IsDisabled={true}
                         name={`Furnitures.${index}.Currency`}
                         options={Currency}
                         textName="CurrencyName"
@@ -133,6 +152,7 @@ const RefsList = ({
                     </td>
                     <td style={{ width: "25%" }}>
                       <CustomFormNumberInput
+                        IsDisabled={true}
                         menuPosition="fixed"
                         name={`Furnitures.${index}.Qty`}
                         extraOnChangeFun={DoubleChange}
@@ -174,7 +194,7 @@ const RefsList = ({
                 )}
             </ul>
           </small>
-          {toBoolean(getValues("_write")) && (
+          {/* {toBoolean(getValues("_write")) && (
             <Button
               className="btn-icon"
               color="success"
@@ -188,14 +208,20 @@ const RefsList = ({
             >
               <Plus size={14} />
             </Button>
-          )}
+          )} */}
         </Col>
       </Row>
-      <div style={{ width: "25%" }}>
-        <br></br>
-        <CustomFormNumberInput name="TotalPrice" IsDisabled={true} />
-        <br></br>
-        <CustomFormNumberInput name="TotalQty" IsDisabled={true} />
+      <div style={{ width: "100%", display: "flex" }}>
+        {/* <Label>Total Price</Label> */}
+        
+        <CustomFormNumberInput
+          
+          name="TotalPrice"
+          IsDisabled={true}
+        />
+        
+        {/* <Label>Total Qty</Label> */}
+        <CustomFormNumberInput  name="TotalQty" IsDisabled={true} />
       </div>
     </>
   );

@@ -1,8 +1,8 @@
 import { getSubstring } from '@utils'
 const processHTML = (html) => {
     const [htmlData] = getSubstring({ string: html, start: "id=\"Body-start-html\">", end: "<div style=\"display:none;\" id=\"Body-end-html\"></div>", inner: true });
-    const [Footer] = getSubstring({ string: html, start: "id=\"Footer-html\" src=\"", end: "\"", inner: true });
-    const [Header] = getSubstring({ string: html, start: "id=\"Header-html\" src=\"", end: "\"", inner: true });
+    const [Footer] = getSubstring({ string: html, start: "id=\"Footer-html\" src=\"", end: "\"", inner: true});
+    const [Header] = getSubstring({ string: html, start: "id=\"Header-html\" src=\"", end: "\"", inner: true});
     return {
         htmlData, Footer, Header
     }
@@ -11,6 +11,7 @@ export const reducer = (state, action) => {
     const { type, payload } = action;
     switch (type) {
         case 'initValues': {
+            
             const { htmlData, Footer, Header } = processHTML(payload.HTML)
             return {
                 ...state,

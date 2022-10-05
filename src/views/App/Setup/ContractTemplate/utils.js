@@ -117,7 +117,7 @@ const makeHTML = ({ Header, Footer, Html, isReceipt }) => (
     <img style="width:100%;height:100%" id="Header-html" src="${Header}" />
     </div>
     <div class="page-footer" style="text-align:center">
-      <img style="width:100%;height:100%" id="Footer-html" src="${Footer}">
+      <img style="width:100%;height:100%" id="Footer-html" src="${Footer}" />
     </div>
     <table style='width:100%'>
       <thead>

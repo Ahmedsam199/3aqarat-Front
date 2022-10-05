@@ -7,7 +7,7 @@ const ToastContent = ({ t, name, role }) => {
   return (
     <div>
       <div>
-        <h4>Welcome to Al-Jazary RealState</h4>
+        <h4>Welcome to Al-Jazary Real Estate</h4>
       </div>
       <br></br>
       <div className="text-center">

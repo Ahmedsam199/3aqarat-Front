@@ -33,7 +33,7 @@ const {
       icon={<Users size={21} />}
       color='primary'
       stats={Party.length}
-      statTitle='Users'
+      statTitle='Owners'
       series={data.series}
       type='area'
     />

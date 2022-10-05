@@ -1,6 +1,7 @@
 import axios from 'axios'
 import jwtDefaultConfig from './jwtDefaultConfig'
-
+import { useSelector } from 'react-redux'
+import Routes from "@Routes";
 export default class JwtService {
   // ** jwtConfig <= Will be used by this service
   jwtConfig = { ...jwtDefaultConfig }
@@ -29,7 +30,6 @@ export default class JwtService {
       },
       error => Promise.reject(error)
     )
-
     // ** Add request/response interceptor
     axios.interceptors.response.use(
       response => response,
@@ -37,9 +37,10 @@ export default class JwtService {
         // ** const { config, response: { status } } = error
         const { config, response } = error
         const originalRequest = config
-
+// Refresh Token
         // ** if (status === 401) {
         if (response && response.status === 401) {
+          
           // if (!this.isAlreadyFetchingAccessToken) {
           //   this.isAlreadyFetchingAccessToken = true
           //   this.refreshToken().then(r => {

@@ -31,11 +31,12 @@ import { AlertCircle } from "react-feather";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { arrToHashMap } from "../../../../utility/Utils";
 const Index = () => {
   const { t } = useTranslation();
   const {
     Contracts,
-
+Party,
     Offline: { Contracts: OfflineContract },
     tempData: { network },
   } = useSelector((state) => state);
@@ -52,6 +53,14 @@ const Index = () => {
         value: "",
         op: "like",
       },
+      ContractDate: {
+        value: "",
+        op: "like",
+      },
+      FullName: {
+        value: "",
+        op: "like",
+      },
     });
   const navigate = useNavigate();
   const ref = useRef();
@@ -62,7 +71,10 @@ const Index = () => {
       return { ...prev, [key]: { value: _filter, op: prev[key].op } };
     });
   };
-
+const PartyMap = useMemo(
+  () => arrToHashMap(Party),
+  [Party]
+);
   const onDelete = async (Series,ID) => {
     dispatch(deleteItem("Contracts", network ? Series : ID))
       .then((res) => {
@@ -77,6 +89,7 @@ const Index = () => {
   };
   const Columns = createColumns({
     onDelete,
+    PartyMap,
     onEdit: (row) =>
       navigate(
         `/Contract/UpdateContract/${network ? row?.Series : row.ID}`
@@ -86,33 +99,40 @@ const Index = () => {
 
   return (
     <div className="w-100">
-      <div className="w-100 d-flex justify-content-between">
-        <div className="flex-grow-1"></div>
-
-        {ability.can("create", "DT-2") && (
-          <div>
-            <Link to="/Contract/NewContract">
-              <Button.Ripple color="primary">{t("New")}</Button.Ripple>
-            </Link>
-          </div>
-        )}
-      </div>
+      <div className="w-100 d-flex justify-content-between"></div>
       <br></br>
       <Card>
         <CardBody>
+          <div className="w-100 d-flex justify-content-between">
+            <div className="flex-grow-1"></div>
+            {ability.can("create", "DT-2") && (
+              <div>
+                <Link to="/Contract/NewContract">
+                  <Button.Ripple color="primary">{t("New")}</Button.Ripple>
+                </Link>
+              </div>
+            )}
+          </div>
           <Row>
-            <Col md="2">
-              <FormGroup>
-                <Label>{t("Series")}</Label>
-                <Input
-                  placeholder={t("Series")}
-                  onChange={(e) =>
-                    handleFiltersChange("Series", e.target.value)
-                  }
-                />
-              </FormGroup>
+            <Col md="3">
+              <Label>{t("Series")}</Label>
+              <Input
+                placeholder={t("Series")}
+                onChange={(e) => handleFiltersChange("Series", e.target.value)}
+              />
+            </Col>
+            <Col md="3">
+              <Label>{t("Contract Date")}</Label>
+              <Input
+                type="date"
+                placeholder={t("ContractDate")}
+                onChange={(e) =>
+                  handleFiltersChange("ContractDate", e.target.value)
+                }
+              />
             </Col>
           </Row>
+          
         </CardBody>
 
         <CustomTable

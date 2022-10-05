@@ -114,70 +114,52 @@ const HorizontalLayout = (props) => {
   return (
     <div
       className={classnames(
-        `wrapper horizontal-layout horizontal-menu ${
-          navbarWrapperClasses[navbarType] || "navbar-floating"
-        } ${footerClasses[footerType] || "footer-static"} menu-expanded`
+        `wrapper horizontal-layout horizontal-menu  ${""} ${
+          footerClasses[footerType] || "footer-static"
+        } `
       )}
-      {...(isHidden ? { "data-col": "1-column" } : {})}
     >
-      <Navbar
-        expand="lg"
-        container={false}
-        className={classnames(
-          "header-navbar navbar-fixed align-items-center navbar-shadow navbar-brand-center",
-          {
-            "navbar-scrolled": navbarScrolled,
-          }
-        )}
-      >
-        {!navbar && (
-          <div className="navbar-header d-xl-block d-none">
-            <ul className="nav navbar-nav">
-              <NavItem>
-                <Link to="/" className="navbar-brand">
-                  <span className="brand-logo">
-                    <img src={themeConfig.app.appLogoImage} alt="logo" />
-                  </span>
-                  <h2 className="brand-text mb-0">{themeConfig.app.appName}</h2>
-                </Link>
-              </NavItem>
-            </ul>
+      <div className="">
+        {!isHidden ? (
+          <div className="header-navbar ">
+            <Navbar
+              tag="div"
+              expand="sm"
+              light={skin !== "dark"}
+              dark={skin === "dark" || bgColorCondition}
+              className={classnames(
+                `header-navbar navbar-horizontal navbar-shadow menu-border`,
+                {
+                  [navbarClasses[navbarType]]: navbarType !== "sticky",
+                  "sticky-nav":
+                    (!navbarClasses[navbarType] && navbarType !== "sticky") ||
+                    navbarType === "sticky",
+                }
+              )}
+            >
+              {menu ? (
+                menu({ menuData, routerProps, currentActiveItem })
+              ) : (
+                <div
+                  className="navbar-container d-flex content"
+                  style={{ justifyContent: "space-between" }}
+                >
+                  <div style={{ display: "flex" }}>
+                    <MenuComponent menuData={menuData} />
+                  </div>
+                  <div className="ml-5" style={{ marginTop: "1rem" }}>
+                    {navbar ? (
+                      navbar({ skin, setSkin })
+                    ) : (
+                      <NavbarComponent skin={skin} setSkin={setSkin} />
+                    )}
+                  </div>
+                </div>
+              )}
+            </Navbar>
           </div>
-        )}
-
-        <div className="navbar-container d-flex content">
-          {navbar ? (
-            navbar({ skin, setSkin })
-          ) : (
-            <NavbarComponent skin={skin} setSkin={setSkin} />
-          )}
-        </div>
-      </Navbar>
-      {!isHidden ? (
-        <div className="horizontal-menu-wrapper">
-          <Navbar
-            tag="div"
-            expand="sm"
-            light={skin !== "dark"}
-            dark={skin === "dark" || bgColorCondition}
-            className={classnames(
-              `header-navbar navbar-horizontal navbar-shadow menu-border`,
-              {
-                [navbarClasses[navbarType]]: navbarType !== "static",
-                "floating-nav":
-                  (!navbarClasses[navbarType] && navbarType !== "static") ||
-                  navbarType === "floating",
-              }
-            )}
-          >
-            {menu ? (
-              menu({ menuData, routerProps, currentActiveItem })
-            ) : (
-              <MenuComponent menuData={menuData} />
-            )}
-          </Navbar>
-        </div>
-      ) : null}
+        ) : null}
+      </div>
 
       {children}
       {themeConfig.layout.customizer === true ? (

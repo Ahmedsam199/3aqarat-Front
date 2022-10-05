@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
+import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Routes from "@Routes";
@@ -36,6 +37,7 @@ const POST = (props) => {
     Contracts,
     Party,
     Offline,
+    Lawyer,
 
     tempData: { network },
   } = useSelector((state) => state);
@@ -92,7 +94,7 @@ const POST = (props) => {
         })
         .catch((err) => {
           console.log("hacker_it_err", err);
-          toast.error(err.response.data.message)
+          // toast.error(err.response.data.message)
         })
         .finally(() => {
           setLoading(false);
@@ -134,19 +136,23 @@ const POST = (props) => {
   
   
   let PartyOpt = [];
-
-  
+  let ReciveParty=[]
   const _watchReference = useWatch({ control, name: "Reference" });
   const _ = Contracts?.filter((x) => x.Series === _watchReference).map((x) =>
     
     Party.forEach((y)=>{
 if(y.Series==x.FirstParty){
+
   PartyOpt.push({label:y.FullName,value:y.Series})
+  ReciveParty.push({ label: y.FullName, value: y.Series });
 }if(y.Series==x.SecondParty){
   PartyOpt.push({ label: y.FullName, value: y.Series });
+   ReciveParty.push({ label: y.FullName, value: y.Series });
 }
     })
+    
   );
+  
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -206,7 +212,7 @@ if(y.Series==x.FirstParty){
                       <CustomFormSelect
                         filterOption={(x) => getValues(`PayParty`) !== x.value}
                         name="ReceiveParty"
-                        options={PartyOpt}
+                        options={ReciveParty}
                       />
                     </div>
                   ) : (
@@ -239,7 +245,7 @@ if(y.Series==x.FirstParty){
                   />
                 </Col>
                 <Col sm="6">
-                  <CustomFormInput name="Amount" />
+                  <CustomFormNumberInput name="Amount" />
                   {/* <PreviewFormValue name="Amount" /> */}
                 </Col>
                 <Col sm="6">
@@ -260,11 +266,11 @@ if(y.Series==x.FirstParty){
             <CardBody>
               <Row>
                 <Col>
-                  <CustomFormInput name="For" type="textarea"></CustomFormInput>{" "}
+                  <CustomFormInput name="For"></CustomFormInput>{" "}
                 </Col>
                 <Col>
                   {/* Table Go Here */}
-                  <CustomFormInput name="Remarks" type="textarea" />
+                  <CustomFormInput name="Remarks" />
                 </Col>
               </Row>
             </CardBody>

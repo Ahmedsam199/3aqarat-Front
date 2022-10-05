@@ -83,17 +83,6 @@ const Index = () => {
       <div className="d-flex justify-content-between align-items-start">
         <div className="flex-grow-1"></div>
         <div className="flex-grow-1"></div>
-        {ability.can("create", "DT-4") && (
-          <div>
-            <Button.Ripple
-              className="mb-1"
-              color="primary"
-              onClick={() => toggleFunc.current()}
-            >
-              {t("New")}
-            </Button.Ripple>
-          </div>
-        )}
       </div>
       <Card>
         <div>
@@ -105,6 +94,20 @@ const Index = () => {
           />
         </div>
         <CardBody>
+          <div className="d-flex justify-content-between">
+            <div></div>
+            {ability.can("create", "DT-4") && (
+              <div>
+                <Button.Ripple
+                  className="mb-1"
+                  color="primary"
+                  onClick={() => toggleFunc.current()}
+                >
+                  {t("New")}
+                </Button.Ripple>
+              </div>
+            )}
+          </div>
           <Row>
             <Col lg="3" md="4">
               <FormGroup>

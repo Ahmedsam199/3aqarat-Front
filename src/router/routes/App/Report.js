@@ -7,6 +7,16 @@ const OwnerProp = lazy(() =>
 const GetExtraPayemnts = lazy(() =>
   import("../../../views/App/Report/getExtraPayemnts/index")
 );
+const ActivityLog = lazy(() =>
+  import("../../../views/App/Report/ActivityLog/index")
+);
+const CollectionInsurance = lazy(() =>
+  import("../../../views/App/Report/collectionInsurance/index")
+);
+const Tenants = lazy(() => import("../../../views/App/Report/Tenants/index"));
+const LawyerReport = lazy(() =>
+  import("../../../views/App/Report/LawyerReport/index")
+);
 export default [
   {
     element: <PayMonthly />,
@@ -28,6 +38,38 @@ export default [
   {
     element: <GetExtraPayemnts />,
     path: "/Report/getExtraPayemnts",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
+  },
+  {
+    element: <ActivityLog />,
+    path: "/Report/ActivityLog",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
+  },
+  {
+    element: <CollectionInsurance />,
+    path: "/Report/collectionInsurance",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
+  },
+  {
+    element: <Tenants />,
+    path: "/Report/Tenants",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
+  },
+  {
+    element: <LawyerReport />,
+    path: "/Report/LawyerReport",
     meta: {
       action: "read",
       resource: "DT-2",

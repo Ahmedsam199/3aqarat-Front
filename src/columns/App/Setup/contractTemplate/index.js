@@ -7,7 +7,7 @@ import { Badge } from "reactstrap"
 export default ({ onEdit, onDelete }) => {
   const Actions = (row) => (
     <RowActions
-      subject="DT-13"
+      subject="DT-3"
       rowId={row?.Series}
       onEdit={() => onEdit(row)}
       onDelete={() => onDelete(row?.Series)}

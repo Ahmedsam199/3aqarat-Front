@@ -73,7 +73,7 @@ const NotAuthorized = () => {
             </g>
           </g>
         </svg> */}
-        <h2 className='brand-text text-primary ms-1'>RealState</h2>
+        <h2 className='brand-text text-primary ms-1'>Real Estate</h2>
       </Link>
       <div className='misc-inner p-2 p-sm-3'>
         <div className='w-100 text-center'>

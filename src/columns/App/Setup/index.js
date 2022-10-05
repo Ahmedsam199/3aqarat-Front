@@ -7,3 +7,4 @@ export { default as User } from "./User";
 export { default as ContractTemplate } from "./contractTemplate";
 export {default as Currency} from './Currency'
 export {default as CurrencyExchange} from './CurrencyExchange'
+export {default as PropertyType} from './PropertyType'

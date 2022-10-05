@@ -48,7 +48,7 @@ const RefsList = ({ loading }) => {
                       <CustomFormSelect
                         options={PropertyAttr}
                         textName="Attribute"
-                        valueName="Series"
+                        valueName="Attribute"
                         menuPosition="fixed"
                         menuShouldBlockScroll
                         hiddenTitle

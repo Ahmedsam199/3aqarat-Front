@@ -67,21 +67,6 @@ const Index = () => {
   return (
     <>
       <div className="w-100">
-        <div className="w-100 d-flex justify-content-between">
-          <div className="flex-grow-1"></div>
-
-          {ability.can("create", "DT-9") && (
-            <div>
-              <Button.Ripple
-                color="primary"
-                className="mb-2"
-                onClick={() => toggleFunc.current()}
-              >
-                {t("New")}
-              </Button.Ripple>
-            </div>
-          )}
-        </div>
         <Card>
           <div>
             <POST
@@ -91,6 +76,21 @@ const Index = () => {
             />
           </div>
           <CardBody>
+            <div className="w-100 d-flex justify-content-between">
+              <div className="flex-grow-1"></div>
+
+              {ability.can("create", "DT-9") && (
+                <div>
+                  <Button.Ripple
+                    color="primary"
+                    className="mb-2"
+                    onClick={() => toggleFunc.current()}
+                  >
+                    {t("New")}
+                  </Button.Ripple>
+                </div>
+              )}
+            </div>
             <Row>
               <Col lg="3" md="4">
                 <FormGroup>

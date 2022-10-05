@@ -8,11 +8,12 @@ import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { toasty } from "@toast";
+
 import {
   addMonths,
   checkDateValue,
-  removeNullValue,
-  subMonths
+  removeNuremoveNullValuellValue,
+  subMonths,
 } from "@utils";
 import Flatpickr from "react-flatpickr";
   import "@styles/react/libs/flatpickr/flatpickr.scss";
@@ -32,15 +33,16 @@ import {
   Row,
   UncontrolledButtonDropdown
 } from "reactstrap";
+import { Search } from "react-feather";
 const Index = () => {
   // const { Item, ItemGroup, Users, Party } = useSelector((state) => state);
   const ref = useRef();
   const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
-    From_Date: [subMonths(new Date(), 1)],
-    To_Date: [addMonths(new Date(), 1)],
-    BasedOn: 0,
+    ContractStarts: [subMonths(new Date(), 1)],
+    ContractEnds: [addMonths(new Date(), 1)],
+    // BasedOn: 0,
   });
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
@@ -91,9 +93,9 @@ const Index = () => {
       <div className="row align-items-center">
         <div className="col-9">
           <Breadcrumbs
-            breadCrumbTitle="Sales Reports"
+            breadCrumbTitle="Pay Monthly"
             breadCrumbParent="Reports"
-            breadCrumbActive="Sales Reports"
+            breadCrumbActive="Pay Monthly"
           />
         </div>
         <div className="col-3 d-flex justify-content-around align-items-center">
@@ -117,39 +119,31 @@ const Index = () => {
       </div>
       <Card>
         <CardBody>
-          <Row   className="">
+          <Row className="">
             <Col md="4">
-              
-                <Label>{t("From Date")}</Label>
-
-                <Flatpickr
-                  className="form-control"
-                  data-enable-time
-                  options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
-                  value={filters.From_Date}
-                  onChange={(val) =>
-                    (() => {
-                      handleFiltersChange("ContractStarts", val);
-                    })
-                  }
-                />
-              
+              <Label>{t("Contract Starts")}</Label>
+              <Flatpickr
+                className="form-control"
+                data-enable-time
+                options={{ dateFormat: "Y/m/d H:i", enableTime: true }}
+                value={filters.ContractStarts}
+                onChange={(val) => {
+                  console.log(val);
+                  handleFiltersChange("ContractStarts", val);
+                }}
+              />
             </Col>
             <Col md="4">
-              
-                <Label>{t("To Date")}:</Label>
-                <Flatpickr
-                  className="form-control"
-                  data-enable-time
-                  options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
-                  value={filters.To_Date}
-                  onChange={(val) =>
-                    (() => {
-                      handleFiltersChange("ContractEnds", val);
-                    })
-                  }
-                />
-              
+              <Label>{t("Contract Ends")}:</Label>
+              <Flatpickr
+                className="form-control"
+                data-enable-time
+                options={{ dateFormat: "Y/m/d H:i", enableTime: true }}
+                value={filters.ContractEnds}
+                onChange={(val) => {
+                  handleFiltersChange("ContractEnds", val);
+                }}
+              />
             </Col>
             {/* <Col md="2">
               <FormGroup>
@@ -246,24 +240,13 @@ const Index = () => {
                 />
               </FormGroup>
             </Col> */}
-
-            {/* <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage id="Series" />:
-                </Label>
-                <Input
-                  name="Series"
-                  id="Series"
-                  onChange={(e) => {
-                    sleep(500).then(() =>
-                      handleFiltersChange("Series", e.target.value ?? "")
-                    );
-                    // handleFiltersChange('AffectedSeries', e.target.value ?? "")
-                  }}
-                />
-              </FormGroup>
-            </Col>*/}
+          </Row>
+          <Row className="mt-1">
+            <Col sm="3">
+              <Button color="primary" onClick={() => ref.current.filter()}>
+                Search <Search size={21} />{" "}
+              </Button>
+            </Col>
           </Row>
         </CardBody>
         <CustomTableV2

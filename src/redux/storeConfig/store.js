@@ -30,6 +30,7 @@ const persistConfig = {
     storage: storage('data'),
     // whitelist: ["layout", "tempData", "Offline", ...DATA],
     whitelist: ["layout", "tempData", "Offline","auth"],
+    // whitelist: ["layout", "tempData", "Offline","auth"],
 };
 // ** Dev Tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
