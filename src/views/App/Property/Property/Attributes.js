@@ -34,8 +34,8 @@ const RefsList = ({ loading }) => {
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "30%" }}>{t("Attributes")}</th>
-              <th style={{ width: "25%" }}>{t("Value")}</th>
+              <th style={{ width: "50%" }}>{t("Attributes")}</th>
+              <th style={{ width: "50%" }}>{t("Value")}</th>
             </tr>
           </thead>
           <tbody {...{ ref }}>
@@ -44,7 +44,7 @@ const RefsList = ({ loading }) => {
                 <div key={x.id}>
                   <tr className="d-flex">
                     <th scope="row">{index + 1}</th>
-                    <td>
+                    <td style={{ width: "50%" }}>
                       <CustomFormSelect
                         options={PropertyAttr}
                         textName="Attribute"
@@ -56,7 +56,7 @@ const RefsList = ({ loading }) => {
                         name={`Attributes.${index}.Attributes`}
                       />
                     </td>
-                    <td>
+                    <td style={{ width: "50%" }}>
                       <CustomFormInput
                         hiddenTitle
                         name={`Attributes.${index}.AttributesValue`}

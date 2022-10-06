@@ -218,7 +218,7 @@ useEffect(() => {
           </Col>
         </Row>
         <Row>
-          <Col sm="8">
+          <Col sm="12">
             <Attributes {...{ loading }} />
           </Col>
         </Row>
