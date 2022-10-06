@@ -2,7 +2,7 @@ import Core from "../../../core";
 export default Core.Object({
   PayParty: Core.String(false),
   ReceiveParty: Core.String(false),
-  Amount: Core.Number({ more: -1 }),
+  Amount: Core.Number( {min:-2}),
   Currency: Core.String(),
   PostingDate: Core.String(),
   Reference: Core.String(),
