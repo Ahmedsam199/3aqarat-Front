@@ -62,13 +62,13 @@ const CustomTableReport = forwardRef(
               return throws(new Error())
             }
           } else {
-            toast.error("The Data Is Empty");
+            // toast.error("The Data Is Empty");
             setData([]);
           }
         }
       } catch (error) {
         setData([]);
-        toast.error("The Data Is Empty")
+        // toast.error("The Data Is Empty")
       } finally {
         setLoading(false);
       }

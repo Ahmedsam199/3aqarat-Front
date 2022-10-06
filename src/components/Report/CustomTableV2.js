@@ -79,7 +79,7 @@ const CustomTableReport = forwardRef(
       } catch (e) {
         console.error("hacker_it error", e);
         setData([]);
-        toast.error('The Data is Empty')
+        // toast.error('The Data is Empty')
       } finally {
         setLoading(false);
       }
