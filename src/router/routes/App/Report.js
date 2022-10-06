@@ -17,6 +17,8 @@ const Tenants = lazy(() => import("../../../views/App/Report/Tenants/index"));
 const LawyerReport = lazy(() =>
   import("../../../views/App/Report/LawyerReport/index")
 );
+const PaymentReport = lazy(() =>
+  import("../../../views/App/Report/PaymentReport/index"))
 export default [
   {
     element: <PayMonthly />,
@@ -70,6 +72,14 @@ export default [
   {
     element: <LawyerReport />,
     path: "/Report/LawyerReport",
+    meta: {
+      action: "read",
+      resource: "DT-2",
+    },
+  },
+  {
+    element: <PaymentReport />,
+    path: "/Report/PaymentReport",
     meta: {
       action: "read",
       resource: "DT-2",

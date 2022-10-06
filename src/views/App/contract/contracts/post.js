@@ -318,7 +318,7 @@ setValue("Furnitures", []);
                   </Col>
                 </center>
               </Row>
-              RentCurrency
+              
               <Row>
                 <Col sm="6">
                   <CustomFormSelect

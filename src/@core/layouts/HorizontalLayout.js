@@ -144,6 +144,7 @@ const HorizontalLayout = (props) => {
                   className="navbar-container d-flex content"
                   style={{ justifyContent: "space-between" }}
                 >
+                  
                   <div style={{ display: "flex" }}>
                     <MenuComponent menuData={menuData} />
                   </div>

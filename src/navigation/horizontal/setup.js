@@ -28,7 +28,7 @@ export default [
       },
       {
         id: "",
-        title: "Contract Template",
+        title: "Print Customization",
         icon: <Edit size={12} />,
         navLink: "/Setup/ContractTemplate",
         action: "read",

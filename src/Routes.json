@@ -73,6 +73,7 @@
 "collectionInsurance":"http://192.168.1.14:8080/Reports/collectionInsurance/",
 "Tenants":"http://192.168.1.14:8080/Reports/Tenants/",
 "Lawyer_Report":"http://192.168.1.14:8080/Reports/Lawyer_Report/"
+,"Payment_Report":"http://192.168.1.14:8080/Reports/Payment_Report"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",

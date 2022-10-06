@@ -64,6 +64,14 @@ export default [
         resource: "DT-2",
         navLink: "/Report/LawyerReport",
       },
+      {
+        id: "PaymentReport",
+        title: "Payment Report",
+        icon: <Edit2 size={12} />,
+        action: "read",
+        resource: "DT-2",
+        navLink: "/Report/PaymentReport",
+      },
     ],
   },
 ];
