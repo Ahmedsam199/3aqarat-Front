@@ -68,6 +68,7 @@ const CustomTableReport = forwardRef(
         }
       } catch (error) {
         setData([]);
+        //
         // toast.error("The Data Is Empty")
       } finally {
         setLoading(false);
