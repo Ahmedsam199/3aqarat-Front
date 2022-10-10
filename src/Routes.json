@@ -1,84 +1,84 @@
 {
   "Auth": {
-    "login": "http://192.168.1.14:8080/Users/login",
-    "Refresh":"http://192.168.1.14/Users/token/",
-    "signUp": "http://192.168.1.14:8080/signup",
-    "logout": "http://192.168.1.14:8080/Logout"
+    "login": "http://193.47.189.15:4500/Users/login",
+    "Refresh":"http://193.47.189.15/Users/token/",
+    "signUp": "http://193.47.189.15:4500/signup",
+    "logout": "http://193.47.189.15:4500/Logout"
   },
   "Contracts": {
-    "root": "http://192.168.1.14:8080/Contracts"
+    "root": "http://193.47.189.15:4500/Contracts"
   },
   "Payments": {
-    "root": "http://192.168.1.14:8080/Payments"
+    "root": "http://193.47.189.15:4500/Payments"
   },
   "Party": {
-    "root": "http://192.168.1.14:8080/Party"
+    "root": "http://193.47.189.15:4500/Party"
   },
   "Property": {
-    "root": "http://192.168.1.14:8080/Property"
+    "root": "http://193.47.189.15:4500/Property"
   },
   "PropertyAttr": {
-    "root": "http://192.168.1.14:8080/PropertyAttr"
+    "root": "http://193.47.189.15:4500/PropertyAttr"
   },
   "Territory": {
-    "root": "http://192.168.1.14:8080/Territory"
+    "root": "http://193.47.189.15:4500/Territory"
   },
   "Branches": {
-    "root": "http://192.168.1.14:8080/Branches"
+    "root": "http://193.47.189.15:4500/Branches"
   },
   "ContractTemplate": {
-    "root": "http://192.168.1.14:8080/ContractTemplates"
+    "root": "http://193.47.189.15:4500/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://192.168.1.14:8080/ContractType"
+    "root": "http://193.47.189.15:4500/ContractType"
   },
   "Permission": {
-    "root": "http://192.168.1.14:8080/Permission"
+    "root": "http://193.47.189.15:4500/Permission"
   },
   "Purpose": {
-    "root": "http://192.168.1.14:8080/Purpose"
+    "root": "http://193.47.189.15:4500/Purpose"
   },
   "Users": {
-    "root": "http://192.168.1.14:8080/Users"
+    "root": "http://193.47.189.15:4500/Users"
   },
   "Roles": {
-    "root": "http://192.168.1.14:8080/Roles"
+    "root": "http://193.47.189.15:4500/Roles"
   },
     
   "Currency": {
-    "root": "http://192.168.1.14:8080/Currency"
+    "root": "http://193.47.189.15:4500/Currency"
   },
   "PropertyType":{
-"root":"http://192.168.1.14:8080/PropertyType"
+"root":"http://193.47.189.15:4500/PropertyType"
   },
   "Attachments": {
-    "root": "http://192.168.1.14:8080/Attachment/"
+    "root": "http://193.47.189.15:4500/Attachment/"
   },
   "DocType": {
-    "root": "http://192.168.1.14:8080/DocTypes/"
+    "root": "http://193.47.189.15:4500/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://192.168.1.14:8080/PrintKeys/"
+    "root": "http://193.47.189.15:4500/PrintKeys/"
   },"CurrencyExchange":{
-"root":"http://192.168.1.14:8080/CurrencyExchange"
+"root":"http://193.47.189.15:4500/CurrencyExchange"
   },
   "Lawyer":{
-"root":"http://192.168.1.14:8080/Lawyer"
+"root":"http://193.47.189.15:4500/Lawyer"
   },
   "Report":{
-"PayMonthly":"http://192.168.1.14:8080/Reports/PayMonthly/",
-"OwnerProp":"http://192.168.1.14:8080/Reports/OwnerProp/",
-"getExtraPayemnts":"http://192.168.1.14:8080/Reports/getExtraPayemnts/",
-"ActivityLog":"http://192.168.1.14:8080/ActivityLog/",
-"collectionInsurance":"http://192.168.1.14:8080/Reports/collectionInsurance/",
-"Tenants":"http://192.168.1.14:8080/Reports/Tenants/",
-"Lawyer_Report":"http://192.168.1.14:8080/Reports/Lawyer_Report/"
-,"Payment_Report":"http://192.168.1.14:8080/Reports/Payment_Report"
+"PayMonthly":"http://193.47.189.15:4500/Reports/PayMonthly/",
+"OwnerProp":"http://193.47.189.15:4500/Reports/OwnerProp/",
+"getExtraPayemnts":"http://193.47.189.15:4500/Reports/getExtraPayemnts/",
+"ActivityLog":"http://193.47.189.15:4500/ActivityLog/",
+"collectionInsurance":"http://193.47.189.15:4500/Reports/collectionInsurance/",
+"Tenants":"http://193.47.189.15:4500/Reports/Tenants/",
+"Lawyer_Report":"http://193.47.189.15:4500/Reports/Lawyer_Report/"
+,"Payment_Report":"http://193.47.189.15:4500/Reports/Payment_Report"
   },
 
   "ImageBaseUrl": "https://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://192.168.1.14:8080",
+    "data": "http://193.47.189.15:4500",
     "check": "http://193.47.189.15:8000"
   }
 }

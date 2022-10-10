@@ -186,6 +186,7 @@ const CustomTableReport = forwardRef(
                             column.isResizing ? "isResizing" : ""
                           }`}
                         />
+                        
                       </div>
                     ))}
                   </div>
