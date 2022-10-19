@@ -56,7 +56,7 @@ const Index = () => {
   const handlePrint = () => {
     const data = ref.current.getData();
     data.length
-      ? PrintReport({ data, filters, title: "Lawyers" })
+      ? PrintReport({ data, filters, title: "Payment Report" })
       : toasty({ type: "warning", msg: "data empty" });
   };
   const handleExcel = () => {
@@ -64,8 +64,8 @@ const Index = () => {
     data.length
       ? exportToExcel({
           data: [[checkDateValue(removeNullValue(filters))], data],
-          fileName: "Lawyers",
-          SheetNames: ["Lawyers"],
+          fileName: "Payment Report",
+          SheetNames: ["Payment Report"],
           isMutlSheets: false,
           isTwoTable: true,
         })
@@ -77,7 +77,7 @@ const Index = () => {
       ? exportToPdf({
           data: data,
           filters: checkDateValue(removeNullValue(filters)),
-          title: "Lawyers",
+          title: "Payment Report",
         })
       : toasty({ type: "warning", msg: "data empty" });
   };
@@ -92,9 +92,9 @@ const Index = () => {
       <div className="row align-items-center">
         <div className="col-9">
           <Breadcrumbs
-            breadCrumbTitle="Lawyers"
+            breadCrumbTitle="Payment Report"
             breadCrumbParent="Reports"
-            breadCrumbActive="Lawyers"
+            breadCrumbActive="Payment Report"
           />
         </div>
         <div className="col-3 d-flex justify-content-around align-items-center">

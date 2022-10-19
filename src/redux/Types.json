@@ -171,6 +171,19 @@
       "delete": "Delete_Lawyer",
       "set": "Set_Lawyer",
       "clear": "Clear_Lawyer"
+    },"PaymentTypes":{
+      "insert": "Insert_PaymentTypes",
+      "update": "Update_PaymentTypes",
+      "delete": "Delete_PaymentTypes",
+      "set": "Set_PaymentTypes",
+      "clear": "Clear_PaymentTypes"
+    },"PaymentTermTemplate":{
+      "insert": "Insert_PaymentTermTemplate",
+      "update": "Update_PaymentTermTemplate",
+      "delete": "Delete_PaymentTermTemplate",
+      "set": "Set_PaymentTermTemplate",
+      "clear": "Clear_PaymentTermTemplate"
     }
+    
   
 }

@@ -1,6 +1,6 @@
 // ** Icons Import
 import {
-  Bookmark, Circle, TrendingUp,Settings,DollarSign, Type, User, UserCheck, Users, Edit
+  Bookmark, Circle, TrendingUp,Settings,DollarSign, Type, User, UserCheck, Users, Edit, FileText
 } from "react-feather";
 
 export default [
@@ -27,6 +27,22 @@ export default [
         resource: "DT-4",
       },
       {
+        id: "PaymentType",
+        icon: <Type size={12} />,
+        title: "Payment Type",
+        navLink: "/Setup/PaymentTypes",
+        action: "read",
+        resource: "DT-4",
+      },
+      {
+        id: "PaymentTermTemplate",
+        icon: <FileText size={12} />,
+        title: "Payment Term Template",
+        navLink: "/Setup/PaymentTermTemplate",
+        action: "read",
+        resource: "DT-4",
+      },
+      {
         id: "",
         title: "Print Customization",
         icon: <Edit size={12} />,
@@ -34,14 +50,14 @@ export default [
         action: "read",
         resource: "DT-3",
       },
-      {
-        id: "",
-        title: "Purpose",
-        icon: <Bookmark size={12} />,
-        navLink: "/Setup/Purpose",
-        action: "read",
-        resource: "DT-11",
-      },
+      // {
+      //   id: "",
+      //   title: "Purpose",
+      //   icon: <Bookmark size={12} />,
+      //   navLink: "/Setup/Purpose",
+      //   action: "read",
+      //   resource: "DT-11",
+      // },
       {
         id: "",
         title: "Branches",

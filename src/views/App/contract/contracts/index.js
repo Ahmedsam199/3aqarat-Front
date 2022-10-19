@@ -36,7 +36,9 @@ const Index = () => {
   const { t } = useTranslation();
   const {
     Contracts,
-Party,
+    Party,
+    Territory,
+    Property,
     Offline: { Contracts: OfflineContract },
     tempData: { network },
   } = useSelector((state) => state);
@@ -49,15 +51,15 @@ Party,
         value: "",
         op: "like",
       },
-      Attributes: {
+      SecondParty: {
         value: "",
         op: "like",
       },
-      ContractDate: {
+      Territory: {
         value: "",
         op: "like",
       },
-      FullName: {
+      FirstParty: {
         value: "",
         op: "like",
       },
@@ -96,7 +98,6 @@ const PartyMap = useMemo(
       ),
   });
 
-
   return (
     <div className="w-100">
       <div className="w-100 d-flex justify-content-between"></div>
@@ -122,17 +123,47 @@ const PartyMap = useMemo(
               />
             </Col>
             <Col md="3">
-              <Label>{t("Contract Date")}</Label>
-              <Input
-                type="date"
-                placeholder={t("ContractDate")}
-                onChange={(e) =>
-                  handleFiltersChange("ContractDate", e.target.value)
-                }
+              <Label>{t("Territory")}</Label>
+              <CustomSelect
+                isClearable={true}
+                valueName="Series"
+                textName="Territory"
+                value={filters.Territory.value}
+                options={Territory}
+                onChange={(e) => {
+                  handleFiltersChange("Territory", e?.value ?? null);
+                }}
               />
             </Col>
           </Row>
-          
+          <Row>
+            <Col md="3">
+              <Label>{t("First Party")}</Label>
+              <CustomSelect
+                isClearable={true}
+                valueName="Series"
+                textName="FullName"
+                value={filters.FirstParty.value}
+                options={Party}
+                onChange={(e) => {
+                  handleFiltersChange("FirstParty", e?.value ?? null);
+                }}
+              />
+            </Col>
+            <Col md="3">
+              <Label>{t("Second Party")}</Label>
+              <CustomSelect
+                isClearable={true}
+                valueName="Series"
+                textName="FullName"
+                value={filters.SecondParty.value}
+                options={Party}
+                onChange={(e) => {
+                  handleFiltersChange("SecondParty", e?.value ?? null);
+                }}
+              />
+            </Col>
+          </Row>
         </CardBody>
 
         <CustomTable

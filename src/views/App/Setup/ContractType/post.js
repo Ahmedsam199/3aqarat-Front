@@ -12,13 +12,17 @@ import { ContractType as Schema } from "@validation";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Spinner } from "reactstrap";
 import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const ability = useContext(AbilityContext);
+    const {
+    ContractTemplate
+  } = useSelector((state) => state);
+  
   const methods = useForm({ resolver: yupResolver(Schema) });
   const {
     register,
@@ -89,6 +93,12 @@ const POST = ({ onToggle, row, toggleFunc }) => {
           <Form onSubmit={handleSubmit(onSubmit)}>
             {/* s</ModalHeader> */}
             <CustomFormInput name="ContractType" />
+            <CustomFormSelect
+              options={ContractTemplate}
+              valueName='Series'
+              textName='Name'
+              name="ContractTemplate"
+            />
             <div className="mt-1">
               <Button
                 color="primary"

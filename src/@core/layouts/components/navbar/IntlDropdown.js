@@ -58,7 +58,7 @@ const img =
         <DropdownItem
           href="/"
           tag="a"
-          onClick={(e) => handleLangUpdate(e, "iq")}
+          onClick={(e) => handleLangUpdate(e, "sa")}
         >
           <ReactCountryFlag className="country-flag" countryCode="iq" svg />
           <span className="ms-1">Iraq</span>
@@ -75,7 +75,7 @@ const img =
         <DropdownItem
           href="/"
           tag="a"
-          onClick={(e) => handleLangUpdate(e, "kr")}
+          onClick={(e) => handleLangUpdate(e, "tj")}
         >
           <img
             height={14}
@@ -88,5 +88,6 @@ const img =
     </UncontrolledDropdown>
   );
 }
+
 
 export default IntlDropdown

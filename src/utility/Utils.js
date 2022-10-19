@@ -521,6 +521,10 @@ export const checkDateValue = (data) => {
     console.error("hacker_it error", error);
   }
 };
+export const checkPortions = (arr) => {
+  let sumOfPortions = arr.reduce((acc, obj) => acc + obj?.Portion, 0);
+  return sumOfPortions === 100;
+};
 export const changeDateFormat = (date) => {
   const _date = new Date(date.slice(0, date.length - 1));
   return `${_date?.toLocaleDateString()}-${_date?.toLocaleTimeString()}`;
@@ -746,7 +750,7 @@ export const sendAttachment = ({
   refDoctype = "",
   refSeries = "",
 }) => {
-  const { auth } = useSelector((state) => state);
+  
   let formData = new FormData();
   files.forEach((img) => {
     formData.append("image", img);
@@ -756,11 +760,12 @@ const config = {
           "Content-Type": "multipart/form-data",
         },
       };
-      let tokenStr = auth.accessToken
+      
   axios.post(
     `${Routes.Attachments.root}?refDoctype=${refDoctype}&refSeries=${refSeries}`,
     formData,
-    config, { headers: {"Authorization" : `Bearer ${tokenStr}`} }
+    config,
+    
   );
   
 
@@ -800,6 +805,7 @@ export const checkDiscountAmtNotValid = (data) => {
  * @param  x
  * @returns object
  */
+
 export const getAttributFromObject = (x,arr) => {
   return arr
     .map((y) => {

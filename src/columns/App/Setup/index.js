@@ -8,3 +8,5 @@ export { default as ContractTemplate } from "./contractTemplate";
 export {default as Currency} from './Currency'
 export {default as CurrencyExchange} from './CurrencyExchange'
 export {default as PropertyType} from './PropertyType'
+export {default as PaymentType} from './PaymentType'
+export { default as PaymentTermTemplate } from "./PaymentTermTemplate";

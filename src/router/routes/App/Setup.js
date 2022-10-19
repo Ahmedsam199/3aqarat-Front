@@ -19,7 +19,14 @@ const Permission = lazy(() => import("../../../views/App/Setup/Permissions"));
 const Purpose = lazy(() => import("../../../views/App/Setup/Purpose"));
 const Role = lazy(() => import("../../../views/App/Setup/Role"));
 const User = lazy(() => import("../../../views/App/Setup/User"));
+const PaymentTypes = lazy(() => import("../../../views/App/Setup/PaymentTypes"));
 const Currency =lazy(()=>import('../../../views/App/Setup/Currency'))
+const PaymentTermTemplate = lazy(() =>
+  import("../../../views/App/Setup/PaymentTermTemplate")
+);
+const NewPaymentTerm = lazy(() =>
+  import("../../../views/App/Setup/PaymentTermTemplate/post")
+);
 const CurrencyExchange = lazy(() => import("../../../views/App/Setup/CurrencyExchange"));
 const PropertyType = lazy(() =>
   import("../../../views/App/Setup/PropertyType")
@@ -113,6 +120,22 @@ export default [
       resource: "DT-7",
     },
   },
+  {
+    path: "/Setup/PaymentTypes",
+    element: <PaymentTypes />,
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
+  },
+  {
+    path: "/Setup/PaymentTermTemplate",
+    element: <PaymentTermTemplate />,
+    meta: {
+      action: "read",
+      resource: "DT-7",
+    },
+  },
   // {
   //     path: "/Setup/Template",
   //     element: <Setup_Template />,
@@ -140,6 +163,22 @@ export default [
   {
     path: "/Setup/PropertyType",
     element: <PropertyType />,
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
+  },
+  {
+    path: "/Setup/NewPaymentTermTemplate",
+    element: <NewPaymentTerm />,
+    meta: {
+      action: "read",
+      resource: "DT-3",
+    },
+  },
+  {
+    path: "/Setup/UpdatePaymentTermTemplate/:series",
+    element: <NewPaymentTerm />,
     meta: {
       action: "read",
       resource: "DT-3",

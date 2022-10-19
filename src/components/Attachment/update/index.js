@@ -31,7 +31,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   }
 
   const sendAttachment = (acceptedFiles) => {
-    const { auth } = useSelector((state) => state);
+    
     let formData = new FormData();
     acceptedFiles?.forEach((img) => {
       formData.append('image', img);
@@ -40,8 +40,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
     axios
       .post(
         `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
-        formData, { headers: {"Authorization" : `Bearer ${auth.accessToken}`}}
-      )
+        formData,)
       .then(({data}) => {
 
         setAttachments((prev) => [...prev, data]);
@@ -49,12 +48,10 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
       .catch((err) => console.log("Joseph err", err));
   };
 
-  const { auth } = useSelector((state) => state);
+  
   const onDelete = (row) => {
     axios
-      .delete(`${Routes.Attachments.root}${row?.id}/${row?.refSeries}`, {
-        headers: { Authorization: `Bearer ${auth.accessToken}` },
-      })
+      .delete(`${Routes.Attachments.root}${row?.id}/${row?.refSeries}`,)
       .then((res) => {
         toast.success(<SuccessToast msg="Deleted Successfully!" />, {
           hideProgressBar: true,
@@ -87,11 +84,11 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                   // let fileName = att?.FilePath.split(/@(.*)/s)[1];
                   return att?.OriginalFileName === acceptedFiles[0]?.name;
                 });
-const { auth } = useSelector((state) => state);
+
                 axios
                   .delete(
                     `${Routes.Attachments.delete}?filePath=${replacedFile?.FilePath}&filePath=`,
-                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
+                    
                   )
                   .then(() => {
                     setAttachments((prev) =>
@@ -134,12 +131,12 @@ const { auth } = useSelector((state) => state);
                 [newFile]?.forEach((img) => {
                   formData.append('image', img);
                 });
-const { auth } = useSelector((state) => state);
+
                 axios
                   .post(
                     `${Routes.Attachments.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
                     formData,
-                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
+                    
                   )
                   .then(({ data }) => {
                     setAttachments((prev) => [...prev, ...data]);
@@ -189,7 +186,7 @@ const { auth } = useSelector((state) => state);
                 axios
                   .delete(
                     `${Routes.Attachments.delete}?filePath=${customFilePaths}`,
-                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
+                    
                   )
                   .then(() => {
                     setAttachments((prev) =>
@@ -246,12 +243,12 @@ const { auth } = useSelector((state) => state);
                 [...tempOriginals, ...tempRenamesDone]?.forEach((img) => {
                   formData.append('image', img);
                 });
-const { auth } = useSelector((state) => state);
+
                 axios
                   .post(
                     `${Routes.Attachments.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
                     formData,
-                    { headers: { Authorization: `Bearer ${auth.accessToken}` } }
+                    
                   )
                   .then(({ data }) => {
                     setAttachments((prev) => [...prev, ...data]);
@@ -277,9 +274,7 @@ const { auth } = useSelector((state) => state);
 
   useEffect(() => {
     axios
-      .get(`${Routes.Attachments.root}${ItemSeries}`, {
-        headers: { Authorization: `Bearer ${auth.accessToken}` },
-      })
+      .get(`${Routes.Attachments.root}${ItemSeries}`, )
       .then((data) => {
         setAttachments(data?.data);
       })

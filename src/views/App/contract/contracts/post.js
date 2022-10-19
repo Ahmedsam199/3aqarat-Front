@@ -48,6 +48,7 @@ import Attribute from "./Attribute";
 import getPrintDate from "@Print/getData/Contract";
 import { isAsyncThunkAction } from "@reduxjs/toolkit";
 import { arrToHashMap } from "../../../../utility/Utils";
+import PaymentSchedule from './PaymentSchedule'
 const POST = (props) => {
   const { t } = useTranslation();
   const {
@@ -57,6 +58,7 @@ const POST = (props) => {
     Party,
     Currency,
     PropertyAttr,
+    PaymentTermTemplate,
     Lawyer,
     CurrencyExchange,
     tempData: { network },
@@ -118,20 +120,7 @@ const POST = (props) => {
             "Contract Start Cannot Be Bigger Than Contracts Ends or HandoverDate "
           )
         }
-        else if (_watchType == true && values.PaidCurrency === undefined) {
-          toast.error("Paid Amount And Paid Currency Cannot Be Empty");
-        } else if (_watchType == true && values.PaidAmt === 0) {
-          toast.error(
-            "Paid Amount And Paid Currency Cannot Be Empty OR greater Than 0"
-          );
-        } else if (
-          (_watchType == false && values.RentFor === 0) ||
-          (_watchType == false && values.RentCurrency === undefined)
-        ) {
-          toast.error(
-            "Rent And Rent Currency Cannot Be Empty OR greater Than 0"
-          );
-        } else {
+        else {
           setLoading(true);
           dispatch(
             identifier
@@ -190,10 +179,18 @@ const POST = (props) => {
         _loading: false,
       });
   }, [Contracts]);
-  const _watchProperty = useWatch({ control, name: "Property" });
   
-  const IsRent = useWatch({ control, name: "IsRent" });
-  const IsSale = useWatch({ control, name: "IsSale" });
+  const _watchProperty = useWatch({ control, name: "Property" });
+  const _watchPaymentSchedule = useWatch({ control, name: "PaymentSchedule" });
+  const {
+    fields: fieldspaymentschedualinfo,
+    append: appendpaymentschedualinfo,
+    remove: removepaymentschedualinfo,
+    replace: Replacepaymentschedualinfo,
+  } = useFieldArray({
+    control,
+    name: "paymentschedualinfo",
+  });
   const {
     fields: fieldsFurnitures,
     append: appendFurnitures,
@@ -208,15 +205,18 @@ const POST = (props) => {
     name: "Attributes",
   });
   // To Be Backed Later
+  console.log(getValues("Territory"),"Ter");
   params?.series
     ? useEffect(() => {
         Property.forEach((x) => {
           if (x.Series == _watchProperty) {
             setValue("FirstParty", x.Party);
-
+setValue("Territory", x.Territory);
             if (x.Furnitures.length == 0) {
               setValue("Furnitures", []);
-            }else if(x.Furnitures.length == null){
+            }else if (x.Furnitures.length == null) {
+              setValue("Furnitures", []);
+            } else if (x.Furnitures == null) {
               setValue("Furnitures", []);
             } else {
               console.log("first", JSON.parse(x.Furnitures));
@@ -230,14 +230,21 @@ const POST = (props) => {
           }
         });
       }, [Contracts])
+      
     : useEffect(() => {
         Property.forEach((x) => {
           if (x.Series == _watchProperty) {
+            console.log(x)
             setValue("FirstParty", x.Party);
+            setValue("Territory",x.Territory);
+            
 setValue("RequestedAmt", x.RequestedAmt);
             if (x.Furnitures.length == 0) {
               setValue("Furnitures", []);
             }else if(x.Furnitures.length==null){
+setValue("Furnitures", []);
+
+            }else if(x.Furnitures==null){
 setValue("Furnitures", []);
 
             } else {
@@ -246,18 +253,33 @@ setValue("Furnitures", []);
             }
             if (x.Attributes.length == 0) {
               setValue("Attributes", []);
+              
             } else {
               setValue("Attributes", JSON.parse(x.Attributes));
             }
           }
         });
       }, [_watchProperty])
+  params?.series
+    ? useEffect(() => {PaymentTermTemplate.forEach((x)=>{
+      if(x.Series==_watchPaymentSchedule){
+        console.log(x,'x');
+        setValue("paymentschedualinfo", JSON.parse(x.PaymentTermInfo));
+      }
+    })}, [Contracts])
+    : useEffect(() => {PaymentTermTemplate.forEach((x) => {
+      if (x.Series == _watchPaymentSchedule) {
+        
+        
+        setValue("paymentschedualinfo", JSON.parse(x.PaymentTermInfo));
+      }
+    });}, [_watchPaymentSchedule]);
   
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
+console.log(PaymentTermTemplate);
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -305,20 +327,6 @@ setValue("Furnitures", []);
         <Row>
           <Card>
             <CardBody>
-              <Row>
-                <center>
-                  <Col sm="12">
-                    <CustomFormSelect
-                      name="TypeOfTran"
-                      options={[
-                        { value: true, label: "For Sale" },
-                        { value: false, label: "For Rent" },
-                      ]}
-                    />
-                  </Col>
-                </center>
-              </Row>
-              
               <Row>
                 <Col sm="6">
                   <CustomFormSelect
@@ -381,12 +389,12 @@ setValue("Furnitures", []);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormInput name="ContractStarts" type="Date" />
+                  <CustomFormInput name="StartContract" type="Date" />
                   <CustomFormInput name="HandoverDate" type="Date" />
                 </Col>
 
                 <Col>
-                  <CustomFormInput type="Date" name="ContractEnds" />
+                  <CustomFormInput type="Date" name="EndContract" />
                   <CustomFormInput name="ContractDate" type="Date" />
                 </Col>
               </Row>
@@ -397,103 +405,89 @@ setValue("Furnitures", []);
           <Card>
             <CardBody>
               <Row>
-                {_watchType ? (
-                  <Row>
-                    <Col sm="6">
-                      <CustomFormSelect
-                        name="PaidCurrency"
-                        textName="CurrencyName"
-                        valueName="Series"
-                        options={Currency}
-                      />
-                    </Col>
-                    <Col sm="6">
-                      <CustomFormNumberInput name="PaidAmt" />
-                    </Col>
-                  </Row>
-                ) : (
-                  <Row>
-                    <Col sm="6">
-                      <CustomFormSelect
-                        name="RentCurrency"
-                        textName="CurrencyName"
-                        valueName="Series"
-                        options={Currency}
-                      />
-                    </Col>
-                    <Col sm="6">
-                      <CustomFormNumberInput name="RentFor" />
-                    </Col>
-                  </Row>
-                )}
+                <Col sm="6">
+                  <CustomFormNumberInput name="PropertyValue" />
+                </Col>
 
                 <Col sm="6">
                   <CustomFormInput IsDisabled={true} name="RequestedAmt" />
                 </Col>
               </Row>
-              <Row></Row>
-              <Row className="mt-1"></Row>
-            </CardBody>
-          </Card>
-        </Row>
-        {/* Third */}
-        <Row>
-          <Card>
-            <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormNumberInput name="AdvanceAmt" />
+                  <CustomFormSelect
+                    options={Currency}
+                    valueName="Series"
+                    textName="CurrencyName"
+                    name="ValueCurrency"
+                  />
+                </Col>
+                <Col sm="6">
                   <CustomFormSelect
                     valueName="Series"
                     textName="FullName"
                     options={Lawyer}
                     name="Lawyer"
                   />
-                  <CustomFormSelect
-                    name="AdvanceCurrency"
-                    textName="CurrencyName"
-                    valueName="Series"
-                    options={Currency}
-                  />
                 </Col>
+              </Row>
+
+              <Row>
                 <Col sm="6">
-                  <CustomFormNumberInput name="InsuranceAmt" />
                   <CustomFormSelect
-                    name="InsuranceCurrency"
-                    textName="CurrencyName"
                     valueName="Series"
-                    options={Currency}
+                    textName="PaymentTerm"
+                    options={PaymentTermTemplate}
+                    name="PaymentSchedule"
                   />
                 </Col>
               </Row>
             </CardBody>
           </Card>
         </Row>
-        <Row>
-          <Row>
-            <Col sm="8">
-              <Furnitures
-                {...{
-                  loading,
-                  fieldsFurnitures,
-                  appendFurnitures,
-                  removeFurnitures,
-                  ReplaceFurniture,
-                }}
-              />
-            </Col>
-            {/* <br></br> */}
-            {/* <hr /> */}
-            <Col sm="4">
-              <Attribute {...{ loading, fields, append, remove, replace }} />
-            </Col>
-          </Row>
+        {/* Third */}
 
-          <hr />
+        <Row>
+          <Card>
+            <CardBody>
+              <Row>
+                <Col sm="8">
+                  <Furnitures
+                    {...{
+                      loading,
+                      fieldsFurnitures,
+                      appendFurnitures,
+                      removeFurnitures,
+                      ReplaceFurniture,
+                    }}
+                  />
+                </Col>
+                {/* <br></br> */}
+                {/* <hr /> */}
+                <Col sm="4">
+                  <Attribute
+                    {...{ loading, fields, append, remove, replace }}
+                  />
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
+
           {/* <Row></Row> */}
           <Card>
             <CardBody>
               <Row>
+                <Row>
+                  <PaymentSchedule
+                    {...{
+                      loading,
+                      fieldspaymentschedualinfo,
+                      appendpaymentschedualinfo,
+                      removepaymentschedualinfo,
+                      Replacepaymentschedualinfo,
+                    }}
+                  />
+                </Row>
                 <Col sm="8">
                   <ExtraPayment {...{ loading }} />
                 </Col>
@@ -521,6 +515,7 @@ setValue("Furnitures", []);
         />
         <input type="hidden" {...register("PaidAmt")} />
         <input type="hidden" {...register("RentCurrency")} />
+        <input type="hidden" {...register("Territory")} />
       </Form>
     </FormProvider>
   );

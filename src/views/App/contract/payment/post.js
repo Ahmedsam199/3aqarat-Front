@@ -1,6 +1,6 @@
 // ** React Import
 import React, { useContext, useEffect, useMemo, useState } from "react";
-
+ 
 // ** Custom Components
 // ** Utils
 import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
@@ -26,22 +26,23 @@ import getPrintDate from '@Print/getData/Payment';
 import PrintDropDown from "@Component/PrintDropDown";
 import PreviewFormValue from "../../../../components/Form/PreviewFormValue";
 import { arrToHashMap } from "../../../../utility/Utils";
+import Contract from "../../../../router/routes/App/Contract";
 
 const POST = (props) => {
   const { t } = useTranslation();
   const {
     Payments,
     Property,
-    Purpose,
+    
     Currency,
     Contracts,
     Party,
     Offline,
     Lawyer,
-
+PaymentTypes,
     tempData: { network },
   } = useSelector((state) => state);
-  
+  var today=new Date();
   const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   const ability = useContext(AbilityContext);
   const Attachment = useSelector((state) => state.Attachment);
@@ -57,13 +58,14 @@ const POST = (props) => {
     register,
     reset,
     getValues,
+    setValue,
     formState: { errors },
     control,
     handleSubmit,
   } = methods;
   const _dataForm = useWatch({ control });
   const PartyMap = useMemo(() => arrToHashMap(Party), [Party]);
-  const PurposeMap = useMemo(() => arrToHashMap(Purpose), [Purpose]);
+  // const PurposeMap = useMemo(() => arrToHashMap(Purpose), [Purpose]);
   // ** Function to handle form submit
   useEffect(() => {
     console.log(errors);
@@ -137,13 +139,33 @@ const POST = (props) => {
   
   let PartyOpt = [];
   let ReciveParty=[]
-  const _watchReference = useWatch({ control, name: "Reference" });
+  let PayType=[]
+  const _watchReference = useWatch({ control, name: "Contract" });
+  const _watchCurrency = useWatch({ control, name: "Currency" });
+  
   const _ = Contracts?.filter((x) => x.Series === _watchReference).map((x) =>
     
+  
     Party.forEach((y)=>{
 if(y.Series==x.FirstParty){
-
+  let __x=JSON.parse(x.ExtraPayment)
+  PaymentTypes.forEach((z)=>{
+if(__x==null){
+return 
+}else{
+  console.log(__x);
+  __x.forEach((c) => {
+    if (z.Series == c.PaymentType) {
+      
+      PayType.push({ value: z.Series, label: z.PaymentType });
+      
+    }
+  });
+}
+  })
+  
   PartyOpt.push({label:y.FullName,value:y.Series})
+  // setValue("PayParty", y.Series);
   ReciveParty.push({ label: y.FullName, value: y.Series });
 }if(y.Series==x.SecondParty){
   PartyOpt.push({ label: y.FullName, value: y.Series });
@@ -152,7 +174,56 @@ if(y.Series==x.FirstParty){
     })
     
   );
-  
+  Contract.forEach((x) => {
+    if (x.Series == _watchReference) {
+      
+      
+    }
+  });
+  params?.series
+    ? useEffect(() => {
+      setValue("PostingDate", today);
+    }, [Payments])
+    : useEffect(() => {
+            Contract.forEach((x) => {
+              if (x.Series == _watchReference) {
+                
+                // setValue("ReceiveParty", "AA");
+              }
+            });
+    }, [_watchReference]);
+  const WatchPaymentType = useWatch({ control, name: "PaymentType" });
+  useEffect(() => {
+    axios
+      .get(
+        `http://193.47.189.15:4500/Payment/RateEx/?Contract=${_watchReference}&Currency=${_watchCurrency}&PayType=${WatchPaymentType}`
+      )
+      .then((res) => {
+        console.log("testing", res.data.Outstanding);
+        setValue("Outstanding", res.data.Outstanding);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+
+  }, [WatchPaymentType]);
+  let newPayType= [...new Set(PayType)];
+const uniqueIds = new Set();
+
+const unique = newPayType.filter((element) => {
+  const isDuplicate = uniqueIds.has(element.value);
+
+  uniqueIds.add(element.value);
+
+  if (!isDuplicate) {
+    return true;
+  }
+
+  return false;
+});
+
+
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -174,7 +245,6 @@ if(y.Series==x.FirstParty){
                   await getPrintDate({
                     data: getValues(),
                     PartyMap,
-                    PurposeMap,
                   })
                 }
               />
@@ -187,7 +257,7 @@ if(y.Series==x.FirstParty){
               <Row>
                 <Col sm="6">
                   <CustomFormSelect
-                    name="Reference"
+                    name="Contract"
                     textName="Series"
                     valueName="Series"
                     options={Contracts}
@@ -219,7 +289,7 @@ if(y.Series==x.FirstParty){
                     <div>
                       <Alert className="p-5" color="danger">
                         <center>
-                          You Must Choose Reference First To Choose First And
+                          You Must Choose Contract First To Choose First And
                           Second Party
                         </center>
                       </Alert>
@@ -238,12 +308,18 @@ if(y.Series==x.FirstParty){
               <Row>
                 <Col sm="6">
                   <CustomFormSelect
-                    name="Purpose"
-                    textName="Purpose"
-                    valueName="Series"
-                    options={Purpose}
+                    name="PaymentType"
+                    // textName="PaymentType"
+                    // valueName="Series"
+                    options={unique}
                   />
                 </Col>
+                <Col sm="6">
+                  <CustomFormNumberInput name="Outstanding" />
+                </Col>
+
+              </Row>
+              <Row>
                 <Col sm="6">
                   <CustomFormNumberInput name="Amount" />
                   {/* <PreviewFormValue name="Amount" /> */}

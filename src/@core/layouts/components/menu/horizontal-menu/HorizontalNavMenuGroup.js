@@ -78,7 +78,7 @@ const HorizontalNavMenuGroup = props => {
   })
 
   const handleMouseEnter = () => {
-    setMenuOpen(true)
+    setMenuOpen(!true)
     update()
   }
 
@@ -86,8 +86,9 @@ const HorizontalNavMenuGroup = props => {
     <li
       ref={setReferenceElement}
       onClick={() => setMenuOpen(!menuOpen)}
-      // onMouseEnter={handleMouseEnter}
-      // onMouseLeave={() => setMenuOpen(false)}
+      // Disable MouseEnter
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={() => setMenuOpen(false)}
       className={classnames("dropdown", {
         show: menuOpen,
         "nav-item": submenu === false,
@@ -115,7 +116,6 @@ const HorizontalNavMenuGroup = props => {
         })}
       >
         <HorizontalNavMenuItems
-          
           isChild={true}
           submenu={true}
           parentItem={item}
@@ -127,5 +127,8 @@ const HorizontalNavMenuGroup = props => {
     </li>
   );
 }
+
+
+
 
 export default HorizontalNavMenuGroup

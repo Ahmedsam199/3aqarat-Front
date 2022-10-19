@@ -24,11 +24,7 @@ const RefsList = ({ loading }) => {
     control,
     name: "ExtraPayment",
   });
-    const {
-
-      Purpose,
-      Currency
-    } = useSelector((state) => state);
+  const { PaymentTypes, Currency, Party } = useSelector((state) => state);
   return (
     <>
       <h5 className="">{t("ExtraPayment")}</h5>
@@ -36,8 +32,10 @@ const RefsList = ({ loading }) => {
         <Table borderless striped>
           <thead>
             <tr>
-              <th style={{ width: "30%" }}>{t("Puropose")}</th>
-              <th style={{ width: "25%" }}>{t("PaidAmount")}</th>
+              <th style={{ width: "25%" }}>{t("PaymentType")}</th>
+              <th style={{ width: "25%" }}>{t("FromParty")}</th>
+              <th style={{ width: "25%" }}>{t("ToParty")}</th>
+              <th style={{ width: "25%" }}>{t("Amount")}</th>
               <th style={{ width: "25%" }}>{t("PaidCurrency")}</th>
             </tr>
           </thead>
@@ -49,25 +47,49 @@ const RefsList = ({ loading }) => {
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
-                    <td style={{ width: "30%" }}>
+                    <td style={{ width: "21%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
                         autoFocus={index === fields.length - 1}
                         hiddenTitle
-                        name={`ExtraPayment.${index}.Purpose`}
-                        options={Purpose}
+                        textName="PaymentType"
                         valueName="Series"
-                        textName="Purpose"
+                        options={PaymentTypes}
+                        name={`ExtraPayment.${index}.PaymentType`}
                       />
                     </td>
-                    <td style={{ width: "25%" }}>
+                    <td style={{ width: "21%" }}>
+                      <CustomFormSelect
+                        menuPosition={"fixed"}
+                        menuShouldBlockScroll
+                        autoFocus={index === fields.length - 1}
+                        hiddenTitle
+                        name={`ExtraPayment.${index}.FromParty`}
+                        options={Party}
+                        valueName="Series"
+                        textName="FullName"
+                      />
+                    </td>
+                    <td style={{ width: "21%" }}>
+                      <CustomFormSelect
+                        menuPosition={"fixed"}
+                        menuShouldBlockScroll
+                        autoFocus={index === fields.length - 1}
+                        hiddenTitle
+                        name={`ExtraPayment.${index}.ToParty`}
+                        options={Party}
+                        valueName="Series"
+                        textName="FullName"
+                      />
+                    </td>
+                    <td style={{ width: "21%" }}>
                       <CustomFormNumberInput
-                        name={`ExtraPayment.${index}.PaidAmount`}
+                        name={`ExtraPayment.${index}.Amount`}
                         hiddenTitle
                       />
                     </td>
-                    <td style={{ width: "25%" }}>
+                    <td style={{ width: "21%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
@@ -98,7 +120,6 @@ const RefsList = ({ loading }) => {
                   />
                   <input
                     className="d-none"
-                    
                     {...register(`contractSeries.${index}.id`)}
                   />
                 </div>

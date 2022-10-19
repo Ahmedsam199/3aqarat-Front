@@ -1,84 +1,92 @@
+
 {
   "Auth": {
-    "login": "http://75.119.128.241:6000/Users/login",
-    "Refresh":"http://75.119.128.241/Users/token/",
-    "signUp": "http://75.119.128.241:6000/signup",
-    "logout": "http://75.119.128.241:6000/Logout"
+    "login": "http://193.47.189.15:4500/Users/login",
+    "Refresh": "http://75.119.128.241/Users/token/",
+    "signUp": "http://193.47.189.15:4500/signup",
+    "logout": "http://193.47.189.15:4500/Logout"
   },
   "Contracts": {
-    "root": "http://75.119.128.241:6000/Contracts"
+    "root": "http://193.47.189.15:4500/Contracts"
   },
   "Payments": {
-    "root": "http://75.119.128.241:6000/Payments"
+    "root": "http://193.47.189.15:4500/Payments"
   },
   "Party": {
-    "root": "http://75.119.128.241:6000/Party"
+    "root": "http://193.47.189.15:4500/Party"
   },
   "Property": {
-    "root": "http://75.119.128.241:6000/Property"
+    "root": "http://193.47.189.15:4500/Property"
   },
   "PropertyAttr": {
-    "root": "http://75.119.128.241:6000/PropertyAttr"
+    "root": "http://193.47.189.15:4500/PropertyAttr"
   },
   "Territory": {
-    "root": "http://75.119.128.241:6000/Territory"
+    "root": "http://193.47.189.15:4500/Territory"
   },
   "Branches": {
-    "root": "http://75.119.128.241:6000/Branches"
+    "root": "http://193.47.189.15:4500/Branches"
   },
   "ContractTemplate": {
-    "root": "http://75.119.128.241:6000/ContractTemplates"
+    "root": "http://193.47.189.15:4500/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://75.119.128.241:6000/ContractType"
+    "root": "http://193.47.189.15:4500/ContractType"
   },
   "Permission": {
-    "root": "http://75.119.128.241:6000/Permission"
+    "root": "http://193.47.189.15:4500/Permission"
   },
   "Purpose": {
-    "root": "http://75.119.128.241:6000/Purpose"
+    "root": "http://193.47.189.15:4500/Purpose"
   },
   "Users": {
-    "root": "http://75.119.128.241:6000/Users"
+    "root": "http://193.47.189.15:4500/Users"
   },
   "Roles": {
-    "root": "http://75.119.128.241:6000/Roles"
+    "root": "http://193.47.189.15:4500/Roles"
   },
-    
+
   "Currency": {
-    "root": "http://75.119.128.241:6000/Currency"
+    "root": "http://193.47.189.15:4500/Currency"
   },
-  "PropertyType":{
-"root":"http://75.119.128.241:6000/PropertyType"
+  "PropertyType": {
+    "root": "http://193.47.189.15:4500/PropertyType"
   },
   "Attachments": {
-    "root": "http://75.119.128.241:6000/Attachment/"
+    "root": "http://193.47.189.15:4500/Attachment/"
   },
   "DocType": {
-    "root": "http://75.119.128.241:6000/DocTypes/"
+    "root": "http://193.47.189.15:4500/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://75.119.128.241:6000/PrintKeys/"
-  },"CurrencyExchange":{
-"root":"http://75.119.128.241:6000/CurrencyExchange"
+    "root": "http://193.47.189.15:4500/PrintKeys/"
   },
-  "Lawyer":{
-"root":"http://75.119.128.241:6000/Lawyer"
+  "CurrencyExchange": {
+    "root": "http://193.47.189.15:4500/CurrencyExchange"
   },
-  "Report":{
-"PayMonthly":"http://75.119.128.241:6000/Reports/PayMonthly/",
-"OwnerProp":"http://75.119.128.241:6000/Reports/OwnerProp/",
-"getExtraPayemnts":"http://75.119.128.241:6000/Reports/getExtraPayemnts/",
-"ActivityLog":"http://75.119.128.241:6000/ActivityLog/",
-"collectionInsurance":"http://75.119.128.241:6000/Reports/collectionInsurance/",
-"Tenants":"http://75.119.128.241:6000/Reports/Tenants/",
-"Lawyer_Report":"http://75.119.128.241:6000/Reports/Lawyer_Report/"
-,"Payment_Report":"http://75.119.128.241:6000/Reports/Payment_Report"
+  "Lawyer": {
+    "root": "http://193.47.189.15:4500/Lawyer"
+  },
+  "PaymentTypes": {
+    "root": "http://193.47.189.15:4500/PaymentTypes"
+  },
+  "PaymentTermTemplate": {
+    "root": "http://193.47.189.15:4500/PaymentTermTemplate"
+  },
+  "Report": {
+    "PayMonthly": "http://193.47.189.15:4500/Reports/PayMonthly/",
+    "OwnerProp": "http://193.47.189.15:4500/Reports/OwnerProp/",
+    "getExtraPayemnts": "http://193.47.189.15:4500/Reports/getExtraPayemnts/",
+    "ActivityLog": "http://193.47.189.15:4500/ActivityLog/",
+    "collectionInsurance": "http://193.47.189.15:4500/Reports/collectionInsurance/",
+    "Tenants": "http://193.47.189.15:4500/Reports/Tenants/",
+    "Lawyer_Report": "http://193.47.189.15:4500/Reports/Lawyer_Report/",
+    "Payment_Report": "http://193.47.189.15:4500/Reports/Payment_Report"
   },
 
   "ImageBaseUrl": "http://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://75.119.128.241:6000",
-    "check":  "http://193.47.189.15:8000"
+    "data": "http://193.47.189.15:4500",
+    "check": "http://193.47.189.15:8000"
   }
 }

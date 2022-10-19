@@ -17,19 +17,15 @@ export default ({ onEdit, onDelete, PurposeMap, CurrencyMap }) => {
   };
   const selectors = [
     "Series",
-    // "Reference",
-    "Amount",
     "Currency",
-    "Purpose",
     "Active",
   ];
   const sortable = [...Array.from({ length: 3 }, () => true), false];
   const sortFunctions = [sortSeries, ...Array.from({ length: 3 }, () => null)];
   const minWidths = Array.from({ length: 0 }, () => "25%");
   const cells = [
-    ...Array.from({ length: 2 }, () => null),
+    ...Array.from({ length: 1 }, () => null),
     ReadCurrency,
-    ReadPurpose,
     Actions,
   ];
   return create({

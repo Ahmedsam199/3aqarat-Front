@@ -32,8 +32,15 @@ import toast from "react-hot-toast";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
-  const { Property, Party, Territory, Purpose, Currency, PropertyAttr ,PropertyType} =
-    useSelector((state) => state);
+  const {
+    Property,
+    Party,
+    Territory,
+    ContractType,
+    Currency,
+    PropertyAttr,
+    PropertyType,
+  } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -169,12 +176,10 @@ useEffect(() => {
                     <Col>
                       <CustomFormNumberInput name="RequestedAmt" />
                       <CustomFormSelect
-                        name="Purpose"
-                        textName="Purpose"
+                        name="ContractType"
+                        textName="ContractType"
                         valueName="Series"
-                        options={Purpose.filter((x) => {
-                          return x.IsPayable;
-                        })}
+                        options={ContractType}
                       />
                       <CustomFormSelect
                         name="PropertyType"

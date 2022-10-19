@@ -29,6 +29,7 @@ import {
   useTable,
 } from "react-table";
 import Empty from "../Empty";
+import { Button } from "reactstrap";
 const PER_PAGE = 10;
 const CustomTableReport = forwardRef(
   (
@@ -43,6 +44,7 @@ const CustomTableReport = forwardRef(
   ) => {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(false);
+    const [isSeries,setisSeries]=useState(false)
     const [data, setData] = useState([]);
     const [columns, setColumns] = useState([]);
     useImperativeHandle(ref, () => ({
@@ -149,7 +151,11 @@ const CustomTableReport = forwardRef(
         );
       });
     };
-
+    const Navigator=()=>{
+      
+    }
+    Navigator()
+console.log(data, "getFinalTotalRows");
     return !data.length || !columns.length ? (
       <Empty />
     ) : (
@@ -198,7 +204,11 @@ const CustomTableReport = forwardRef(
                   return (
                     <div
                       {...row.getRowProps()}
-                      style={{ border: "1px solid #161d32",display:"flex",padding:"1rem" }}
+                      style={{
+                        border: "1px solid #161d32",
+                        display: "flex",
+                        padding: "1rem",
+                      }}
                       className="rt_TableRow"
                     >
                       {row.cells.map((cell) => {
@@ -211,6 +221,9 @@ const CustomTableReport = forwardRef(
                           </div>
                         );
                       })}
+                        {/* {isSeries? <>Hello</>: <>NotHello</>} */}
+                      {/* {
+                        <Button>{row.cells[0].value}</Button>} */}
                     </div>
                   );
                 })}

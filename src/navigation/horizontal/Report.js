@@ -1,5 +1,5 @@
 // ** Icons Import
-import { CreditCard, Edit, Edit2 } from "react-feather";
+import { Activity, CreditCard, DollarSign, Edit, Edit2, FilePlus, Home, TrendingUp, User, Users } from "react-feather";
 
 export default [
   {
@@ -11,15 +11,15 @@ export default [
       {
         id: "Pay Monthly Report",
         title: "Pay Monthly Report",
-        icon: <Edit2 size={12} />,
+        icon: <DollarSign size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/PayMonthly",
       },
       {
         id: "OwnerProp",
-        title: "OwnerProp",
-        icon: <Edit2 size={12} />,
+        title: "Owner Property",
+        icon: <Users size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/OwnerProp",
@@ -27,7 +27,7 @@ export default [
       {
         id: "get Extra Payments",
         title: "get Extra Payments",
-        icon: <Edit2 size={12} />,
+        icon: <TrendingUp size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/getExtraPayemnts",
@@ -35,7 +35,7 @@ export default [
       {
         id: "ActivityLog",
         title: "ActivityLog",
-        icon: <Edit2 size={12} />,
+        icon: <Activity size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/ActivityLog",
@@ -51,7 +51,7 @@ export default [
       {
         id: "Tenants",
         title: "Tenants",
-        icon: <Edit2 size={12} />,
+        icon: <Home size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/Tenants",
@@ -59,7 +59,7 @@ export default [
       {
         id: "LawyerReport",
         title: "Lawyer Report",
-        icon: <Edit2 size={12} />,
+        icon: <User size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/LawyerReport",
@@ -67,7 +67,7 @@ export default [
       {
         id: "PaymentReport",
         title: "Payment Report",
-        icon: <Edit2 size={12} />,
+        icon: <FilePlus size={12} />,
         action: "read",
         resource: "DT-2",
         navLink: "/Report/PaymentReport",

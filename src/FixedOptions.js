@@ -10,7 +10,11 @@ export const ActivityTypes = [
   { label: "Update", value: 1 },
   { label: "Delete", value: 2 },
 ];
-
+export const BaseOnOptionsPaymentTermTemplate = [
+  { label: "1 Month", value: 0 },
+  { label: "6 Month", value: 1 },
+  { label: "1 Year", value: 2 },
+];
 export const Doctype = [
   { Series: "DT-1", DocTypeName: "Branches" },
   { Series: "DT-2", DocTypeName: "Contract" },
@@ -197,6 +201,7 @@ export const ListFonts = [
 export const GenderOptions = [
   { label: "Male", value: true },
   { label: "Female", value: false },
+  
 ];
 
 export const Tables = {
@@ -224,9 +229,22 @@ export const Tables = {
       label: "ExtraPayment",
       value: "ExtraPayment",
       attributes: [
-        { label: "Purpose", value: "Purpose" },
-        { label: "PaidAmount", value: "PaidAmount" },
+        { label: "PaymentType", value: "PaymentType" },
+        { label: "FromParty", value: "FromParty" },
+        { label: "ToParty", value: "ToParty" },
+        { label: "Amount", value: "Amount" },
         { label: "PaidCurrency", value: "PaidCurrency" },
+      ],
+    },
+    {
+      label: "PaymentSchedule",
+      value: "PaymentSchedule",
+      attributes: [
+        { label: "BasedOn", value: "BasedOn" },
+        { label: "Portion", value: "Portion" },
+        { label: "DueDate", value: "DueDate" },
+        { label: "Amount", value: "Amount" },
+        { label: "Description", value: "Description" },
       ],
     },
   ],

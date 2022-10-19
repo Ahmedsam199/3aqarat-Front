@@ -19,7 +19,7 @@ import toast from "react-hot-toast";
 const POST = ({ onToggle, row, toggleFunc }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { Currency } =
+  const { Currency, } =
     useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const methods = useForm({ resolver: yupResolver(Schema) });

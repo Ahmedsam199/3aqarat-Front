@@ -7,3 +7,5 @@ export { default as User } from './User'
 export {default as Currency} from './Currency'
 export {default as CurrencyExchange} from './CurrencyExchange'
 export {default as PropertyType} from './PropertyType'
+export {default as PaymentType} from './PaymentTypes'
+export { default as PaymentTermTemplate } from "./PaymentTermTemplate";
