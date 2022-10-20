@@ -57,6 +57,8 @@ const POST = (props) => {
     Property,
     Party,
     Currency,
+    PropertyType,
+    Territory,
     PropertyAttr,
     PaymentTermTemplate,
     Lawyer,
@@ -211,20 +213,28 @@ const POST = (props) => {
         Property.forEach((x) => {
           if (x.Series == _watchProperty) {
             setValue("FirstParty", x.Party);
+            setValue("ContractType", x.ContractType);
 setValue("Territory", x.Territory);
+setValue("RequestedValue", x.RequestedAmt);
             if (x.Furnitures.length == 0) {
+              setValue("RequestedValue", x.RequestedAmt);
               setValue("Furnitures", []);
             }else if (x.Furnitures.length == null) {
+              setValue("RequestedValue", x.RequestedAmt);
               setValue("Furnitures", []);
             } else if (x.Furnitures == null) {
+              setValue("RequestedValue", x.RequestedAmt);
               setValue("Furnitures", []);
             } else {
+              setValue("RequestedValue", x.RequestedAmt);
               console.log("first", JSON.parse(x.Furnitures));
               setValue("Furnitures", JSON.parse(x.Furnitures));
             }
             if (x.Attributes.length == 0) {
+              setValue("RequestedValue", x.RequestedAmt);
               setValue("Attributes", []);
             } else {
+              setValue("RequestedValue", x.RequestedAmt);
               setValue("Attributes", JSON.parse(x.Attributes));
             }
           }
@@ -236,9 +246,10 @@ setValue("Territory", x.Territory);
           if (x.Series == _watchProperty) {
             console.log(x)
             setValue("FirstParty", x.Party);
+            setValue("ContractType", x.ContractType);
             setValue("Territory",x.Territory);
             
-setValue("RequestedAmt", x.RequestedAmt);
+setValue("RequestedValue", x.RequestedAmt);
             if (x.Furnitures.length == 0) {
               setValue("Furnitures", []);
             }else if(x.Furnitures.length==null){
@@ -279,7 +290,26 @@ setValue("Furnitures", []);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-console.log(PaymentTermTemplate);
+    let PropertyArr=[]
+Property.forEach((x)=>{
+Territory.forEach((y)=>{
+  if(x.Territory==y.Series){
+    Party.forEach((c) => {
+      if(x.Party==c.Series){
+        PropertyType.forEach((z)=>{
+if(x.PropertyType==z.Series){
+  
+  PropertyArr.push({
+    label: ` ${y.Territory} / ${c.FullName} / ${z.TypeName} / ${x.Series} `,
+    value: x.Series,
+  });
+}
+        })
+      }
+    });
+  }
+})
+})
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
@@ -330,9 +360,9 @@ console.log(PaymentTermTemplate);
               <Row>
                 <Col sm="6">
                   <CustomFormSelect
-                    options={Property}
-                    valueName="Series"
-                    textName="Series"
+                    options={PropertyArr}
+                    // valueName="Series"
+                    // textName="Series"
                     name="Property"
                     // IsDisabled={!!params?.series}
                     // extraOnChangeFun={PropertyChange}
@@ -341,6 +371,7 @@ console.log(PaymentTermTemplate);
                     name="ContractType"
                     textName="ContractType"
                     valueName="Series"
+                    IsDisabled={true}
                     options={ContractType}
                   />
                 </Col>
@@ -406,22 +437,9 @@ console.log(PaymentTermTemplate);
             <CardBody>
               <Row>
                 <Col sm="6">
-                  <CustomFormNumberInput name="PropertyValue" />
+                  <CustomFormInput IsDisabled={true} name="RequestedValue" />
                 </Col>
 
-                <Col sm="6">
-                  <CustomFormInput IsDisabled={true} name="RequestedAmt" />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="6">
-                  <CustomFormSelect
-                    options={Currency}
-                    valueName="Series"
-                    textName="CurrencyName"
-                    name="ValueCurrency"
-                  />
-                </Col>
                 <Col sm="6">
                   <CustomFormSelect
                     valueName="Series"
@@ -432,16 +450,7 @@ console.log(PaymentTermTemplate);
                 </Col>
               </Row>
 
-              <Row>
-                <Col sm="6">
-                  <CustomFormSelect
-                    valueName="Series"
-                    textName="PaymentTerm"
-                    options={PaymentTermTemplate}
-                    name="PaymentSchedule"
-                  />
-                </Col>
-              </Row>
+              <Row></Row>
             </CardBody>
           </Card>
         </Row>
@@ -477,7 +486,7 @@ console.log(PaymentTermTemplate);
           <Card>
             <CardBody>
               <Row>
-                <Row>
+                {/* <Row>
                   <PaymentSchedule
                     {...{
                       loading,
@@ -487,7 +496,7 @@ console.log(PaymentTermTemplate);
                       Replacepaymentschedualinfo,
                     }}
                   />
-                </Row>
+                </Row> */}
                 <Col sm="8">
                   <ExtraPayment {...{ loading }} />
                 </Col>

@@ -9,8 +9,6 @@ export default Core.Object({
   StartContract: Core.String(),
   HandoverDate: Core.String(),
   EndContract: Core.String(),
-  RequestedAmt: Core.Number(),
-  Lawyer: Core.String(),
-  PropertyValue: Core.Number(),
-  ValueCurrency: Core.String(),
+  // RequestedAmt: Core.Number(),
+  Lawyer: Core.String(false),
 });

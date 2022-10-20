@@ -33,7 +33,7 @@ const POST = (props) => {
   const {
     Payments,
     Property,
-    
+    PropertyType,
     Currency,
     Contracts,
     Party,
@@ -201,6 +201,7 @@ return
       .then((res) => {
         console.log("testing", res.data.Outstanding);
         setValue("Outstanding", res.data.Outstanding);
+        setValue("CurrencyEXRate", res.data.CurrencyEXRate);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -221,7 +222,31 @@ const unique = newPayType.filter((element) => {
 
   return false;
 });
+let ContractsArr=[]
+Contracts.forEach((x) => {
+  Property.forEach((y)=>{
+    if(y.Series==x.Property){
+      PropertyType.forEach((c)=>{
 
+        if(c.Series==y.PropertyType){
+        Party.forEach((xx)=>{
+          if(xx.Series==y.Party){
+          
+  ContractsArr.push({
+    label: `${xx.FullName} / ${c.TypeName} / ${x.Series}`,
+    value: x.Series,
+  });
+}
+
+          }
+        )  
+          
+        }
+      })
+    }
+  })
+  
+});
 
 
   return (
@@ -258,9 +283,9 @@ const unique = newPayType.filter((element) => {
                 <Col sm="6">
                   <CustomFormSelect
                     name="Contract"
-                    textName="Series"
-                    valueName="Series"
-                    options={Contracts}
+                    // valueName="Series"
+                    // textName="Series"
+                    options={ContractsArr}
                   />
                   <CustomFormSelect
                     name="Currency"
@@ -315,9 +340,8 @@ const unique = newPayType.filter((element) => {
                   />
                 </Col>
                 <Col sm="6">
-                  <CustomFormNumberInput name="Outstanding" />
+                  <CustomFormInput IsDisabled={true} name="Outstanding" />
                 </Col>
-
               </Row>
               <Row>
                 <Col sm="6">
@@ -333,6 +357,9 @@ const unique = newPayType.filter((element) => {
                   />
                 </Col>
               </Row>
+              <Col sm="6">
+                <CustomFormInput IsDisabled={true} name="CurrencyEXRate" />
+              </Col>
             </CardBody>
           </Card>
         </Row>

@@ -41,7 +41,7 @@ const DetailsList = ({ loading }) => {
               <th style={{ width: WIDTHS[1] }}>Based On</th>
               <th style={{ width: WIDTHS[2] }}>Portions</th>
               <th style={{ width: WIDTHS[3] }}>DueDate</th>
-              <th style={{ width: WIDTHS[4] }}>Amount</th>
+              
               <th style={{ width: WIDTHS[5] }}>Description</th>
             </tr>
           </thead>
@@ -86,20 +86,12 @@ const DetailsList = ({ loading }) => {
                       </td>
 
                       <td style={{ width: WIDTHS[3] }}>
-                        <CustomFormInput
+                        <CustomFormNumberInput
                           hiddenTitle
-                          type="date"
                           name={`PaymentTermInfo.${index}.DueDate`}
                         />
                       </td>
-                      <td className="d-flex">
-                        <CustomFormNumberInput
-                          menuPosition="fixed"
-                          menuShouldBlockScroll
-                          hiddenTitle
-                          name={`PaymentTermInfo.${index}.Amount`}
-                        />
-                      </td>
+                      
                       <td style={{ width: WIDTHS[4] }}>
                         <CustomFormInput
                           menuPosition="fixed"

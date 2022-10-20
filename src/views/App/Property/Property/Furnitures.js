@@ -191,11 +191,15 @@ const RefsList = ({ loading }) => {
           )}
         </Col>
       </Row>
-      <div style={{ width: "25%" }}>
-        <br></br>
-        <CustomFormNumberInput name="TotalPrice" IsDisabled={true} />
-        <br></br>
-        <CustomFormNumberInput name="TotalQty" IsDisabled={true} />
+      <div >
+        <Row>
+          <Col sm="6">
+            <CustomFormNumberInput name="TotalPrice" IsDisabled={true} />
+          </Col>
+          <Col sm="6">
+            <CustomFormNumberInput name="TotalQty" IsDisabled={true} />
+          </Col>{" "}
+        </Row>
       </div>
     </>
   );

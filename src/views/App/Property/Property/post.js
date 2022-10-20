@@ -230,10 +230,12 @@ useEffect(() => {
 
         <Row>
           <Col>
-            <CustomFormInput IsDisabled={true} name="Longitude" />
+            
           </Col>
           <Col>
-            <CustomFormInput IsDisabled={true} name="Latitude" />
+            
+            <input type="hidden" {...register("Latitude")} />
+            <input type="hidden" {...register("Longitude")} />
           </Col>
         </Row>
         <br></br>
