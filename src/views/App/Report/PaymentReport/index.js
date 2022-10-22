@@ -47,13 +47,17 @@ const Index = () => {
   const [filters, setFilters] = useState({
     From_Date: [subMonths(new Date(), 1)],
     To_Date: [addMonths(new Date(), 1)],
-    RangeFrom:0,
+    RangeFrom: 0,
     BasedOn: 0,
-    RangeTo:0,
-    PropertyType:null,
-    ContractType:null,
+
+    RangeTo: 0,
+    PropertyType: null,
+    ContractType: null,
+    Territory:null
   });
-  const { ContractType, PropertyType, Party } = useSelector((state) => state);
+  const { ContractType, Territory, PropertyType, Party } = useSelector(
+    (state) => state
+  );
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
       if (Array.isArray(key))
@@ -353,11 +357,33 @@ const Index = () => {
               />
             </Col>
           </Row>
+          <Row>
+            <Col sm="4">
+              <Label>Territory</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="Territory"
+                valueName="Series"
+                value={filters.Territory}
+                options={Territory}
+                onChange={(e) =>
+                  handleFiltersChange("Territory", e?.value ?? null)
+                }
+              />
+            </Col>
+          </Row>
           {/* <Col sm="3">
               <Button color="primary" onClick={() => ref.current.filter()}>
                 Search <Search size={21} />{" "}
               </Button>
             </Col> */}
+          <Row className="mt-1">
+            <Col sm="3">
+              <Button color="primary" onClick={() => ref.current.filter()}>
+                Search <Search size={21} />{" "}
+              </Button>
+            </Col>
+          </Row>
           <CustomTableV2
             ref={ref}
             url={Routes.Report.Payment_Report}
