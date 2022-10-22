@@ -6,9 +6,9 @@ export default Core.Object({
   Currency: Core.String(),
   PostingDate: Core.String(),
   Contract: Core.String(),
-  
+  TotalPay:Core.Number(),
   PaymentType: Core.String(),
   // Outstanding:Core.Number(),
-  // For: Core.String(false),
+  
   // Remarks: Core.String(false),
 });

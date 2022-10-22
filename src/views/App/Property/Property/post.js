@@ -3,7 +3,10 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
-import { isObjEmpty, toBoolean } from "@utils";
+
+import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
+import AttachmentComponent from "@Component/Attachment";
+import AttachmentComponent2 from "@Component/Attachment2";
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
@@ -42,6 +45,11 @@ const POST = (props) => {
     PropertyType,
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
+  const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
+
+  const [isAttachmentModalOpen2, setIsAttachmentModalOpen2] = useState(false);
+  const Attachment = useSelector((state) => state.Attachment);
+  const Attachment2 = useSelector((state) => state.Attachment2);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,8 +91,26 @@ const POST = (props) => {
             : insertItem("Property", values)
         )
           .then((res) => {
-            toast.success("");
-            navigate("/Properties/Property");
+            toast.success();
+            if(Attachment2.length >0){
+sendAttachment({
+  files: Attachment2,
+  refDoctype: "Property_Gallery",
+  refSeries: `Gallery_${res?.Series}`,
+});
+            }
+            if (Attachment.length > 0) {
+              sendAttachment({
+                files: Attachment,
+                refDoctype: "Property",
+                refSeries: res?.Series,
+              });
+              navigate("/Properties/Property");
+            } else {
+              navigate("/Properties/Property");
+            }
+            
+            
           })
           .catch((err) => {
             console.log("hacker_it_err", err);
@@ -229,16 +255,41 @@ useEffect(() => {
         </Row>
 
         <Row>
+          <Col></Col>
           <Col>
-            
-          </Col>
-          <Col>
-            
             <input type="hidden" {...register("Latitude")} />
             <input type="hidden" {...register("Longitude")} />
           </Col>
         </Row>
         <br></br>
+        <Button
+          className="ml-1"
+          color="primary"
+          onClick={() => setIsAttachmentModalOpen(true)}
+        >
+          Attachment
+        </Button>
+        <Button
+          className="ml-1"
+          color="primary"
+          onClick={() => setIsAttachmentModalOpen2(true)}
+        >
+          Gallery
+        </Button>
+
+        <AttachmentComponent
+          isModalOpen={isAttachmentModalOpen}
+          handleToggleModel={setIsAttachmentModalOpen}
+          series={params?.series}
+          refDoctype="Property"
+        />
+        <AttachmentComponent2
+          isModalOpen={isAttachmentModalOpen2}
+          handleToggleModel={setIsAttachmentModalOpen2}
+          series={`Gallery_${params?.series}`}
+          refDoctype="Property_Gallery"
+        />
+
         <Col sm="12">
           <Map
             onClick={(event) => {

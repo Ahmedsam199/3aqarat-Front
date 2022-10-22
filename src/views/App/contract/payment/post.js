@@ -357,9 +357,14 @@ Contracts.forEach((x) => {
                   />
                 </Col>
               </Row>
-              <Col sm="6">
-                <CustomFormInput IsDisabled={true} name="CurrencyEXRate" />
-              </Col>
+              <Row>
+                <Col sm="6">
+                  <CustomFormInput IsDisabled={true} name="CurrencyEXRate" />
+                </Col>
+                <Col sm="6">
+                  <CustomFormNumberInput name="TotalPay" />
+                </Col>
+              </Row>
             </CardBody>
           </Card>
         </Row>
@@ -368,9 +373,6 @@ Contracts.forEach((x) => {
           <Card>
             <CardBody>
               <Row>
-                <Col>
-                  <CustomFormInput name="For"></CustomFormInput>{" "}
-                </Col>
                 <Col>
                   {/* Table Go Here */}
                   <CustomFormInput name="Remarks" />

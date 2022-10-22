@@ -119,12 +119,12 @@ const POST = ({ onToggle, row, toggleFunc }) => {
               valueName="Series"
               options={Roles}
             />
-            <CustomFormSelect
+            {/* <CustomFormSelect
               name="Branch"
               textName="BranchName"
               valueName="Series"
               options={Branches}
-            />
+            /> */}
             <CustomFormInput name="FromDate" type="Date" />
             <CustomFormInput name="ToDate" type="Date" />
             <CustomFormInputCheckbox name="Disabled" />

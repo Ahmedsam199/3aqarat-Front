@@ -184,15 +184,7 @@ const POST = (props) => {
   
   const _watchProperty = useWatch({ control, name: "Property" });
   const _watchPaymentSchedule = useWatch({ control, name: "PaymentSchedule" });
-  const {
-    fields: fieldspaymentschedualinfo,
-    append: appendpaymentschedualinfo,
-    remove: removepaymentschedualinfo,
-    replace: Replacepaymentschedualinfo,
-  } = useFieldArray({
-    control,
-    name: "paymentschedualinfo",
-  });
+  
   const {
     fields: fieldsFurnitures,
     append: appendFurnitures,
@@ -287,28 +279,37 @@ setValue("Furnitures", []);
     });}, [_watchPaymentSchedule]);
   
     const [show, setShow] = useState(false);
-
+const {
+  fields: fieldspaymentschedualinfo,
+  append: appendpaymentschedualinfo,
+  remove: removepaymentschedualinfo,
+  replace: Replacepaymentschedualinfo,
+} = useFieldArray({
+  control,
+  name: "paymentschedualinfo",
+}); 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     let PropertyArr=[]
 Property.forEach((x)=>{
-Territory.forEach((y)=>{
-  if(x.Territory==y.Series){
-    Party.forEach((c) => {
-      if(x.Party==c.Series){
-        PropertyType.forEach((z)=>{
-if(x.PropertyType==z.Series){
-  
-  PropertyArr.push({
-    label: ` ${y.Territory} / ${c.FullName} / ${z.TypeName} / ${x.Series} `,
-    value: x.Series,
-  });
-}
-        })
+  if (x.Available==true){
+    Territory.forEach((y) => {
+      if (x.Territory == y.Series) {
+        Party.forEach((c) => {
+          if (x.Party == c.Series) {
+            PropertyType.forEach((z) => {
+              if (x.PropertyType == z.Series) {
+                PropertyArr.push({
+                  label: ` ${y.Territory} / ${c.FullName} / ${z.TypeName} / ${x.Series} `,
+                  value: x.Series,
+                });
+              }
+            });
+          }
+        });
       }
     });
   }
-})
 })
   return (
     <FormProvider {...methods}>
@@ -486,20 +487,23 @@ if(x.PropertyType==z.Series){
           <Card>
             <CardBody>
               <Row>
-                {/* <Row>
+                <Row>
                   <PaymentSchedule
                     {...{
                       loading,
+
                       fieldspaymentschedualinfo,
                       appendpaymentschedualinfo,
                       removepaymentschedualinfo,
                       Replacepaymentschedualinfo,
                     }}
                   />
-                </Row> */}
-                <Col sm="8">
+                </Row>
+                <Col sm="12">
                   <ExtraPayment {...{ loading }} />
                 </Col>
+              </Row>
+              <Row>
                 <Col sm="4">
                   {/* Table Go Here */}
                   <CustomFormInput name="Remarks" />

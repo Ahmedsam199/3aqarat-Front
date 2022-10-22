@@ -58,14 +58,14 @@ export default [
       //   action: "read",
       //   resource: "DT-11",
       // },
-      {
-        id: "",
-        title: "Branches",
-        icon: <Circle size={12} />,
-        navLink: "/Setup/Branches",
-        action: "read",
-        resource: "DT-1",
-      },
+      // {
+      //   id: "",
+      //   title: "Branches",
+      //   icon: <Circle size={12} />,
+      //   navLink: "/Setup/Branches",
+      //   action: "read",
+      //   resource: "DT-1",
+      // },
       {
         id: "Currency",
         title: "Currency",

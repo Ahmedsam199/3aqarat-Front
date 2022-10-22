@@ -116,7 +116,7 @@
     "delete": "Delete_Users",
     "clear": "Clear_Users"
   },
-  "PropertyType":{
+  "PropertyType": {
     "set": "Set_PropertyType",
     "insert": "Insert_PropertyType",
     "update": "Update_PropertyType",
@@ -144,6 +144,12 @@
     "delete": "Delete_Attachments",
     "clear": "clear_Attachments"
   },
+  "Attachments2": {
+    "set": "Set_Attachments2",
+    "add": "Add_Attachments2",
+    "delete": "Delete_Attachments2",
+    "clear": "clear_Attachments2"
+  },
   "PrintCustomization": {
     "insert": "Insert_PrintCustomization",
     "update": "Update_PrintCustomization",
@@ -158,32 +164,32 @@
     "set": "Set_PrintKeys",
     "clear": "Clear_PrintKeys"
   },
-    "CurrencyExchange":{
-      "insert": "Insert_CurrencyExchange",
-      "update": "Update_CurrencyExchange",
-      "delete": "Delete_CurrencyExchange",
-      "set": "Set_CurrencyExchange",
-      "clear": "Clear_CurrencyExchange"
-    },
-    "Lawyer":{
-      "insert": "Insert_Lawyer",
-      "update": "Update_Lawyer",
-      "delete": "Delete_Lawyer",
-      "set": "Set_Lawyer",
-      "clear": "Clear_Lawyer"
-    },"PaymentTypes":{
-      "insert": "Insert_PaymentTypes",
-      "update": "Update_PaymentTypes",
-      "delete": "Delete_PaymentTypes",
-      "set": "Set_PaymentTypes",
-      "clear": "Clear_PaymentTypes"
-    },"PaymentTermTemplate":{
-      "insert": "Insert_PaymentTermTemplate",
-      "update": "Update_PaymentTermTemplate",
-      "delete": "Delete_PaymentTermTemplate",
-      "set": "Set_PaymentTermTemplate",
-      "clear": "Clear_PaymentTermTemplate"
-    }
-    
-  
+  "CurrencyExchange": {
+    "insert": "Insert_CurrencyExchange",
+    "update": "Update_CurrencyExchange",
+    "delete": "Delete_CurrencyExchange",
+    "set": "Set_CurrencyExchange",
+    "clear": "Clear_CurrencyExchange"
+  },
+  "Lawyer": {
+    "insert": "Insert_Lawyer",
+    "update": "Update_Lawyer",
+    "delete": "Delete_Lawyer",
+    "set": "Set_Lawyer",
+    "clear": "Clear_Lawyer"
+  },
+  "PaymentTypes": {
+    "insert": "Insert_PaymentTypes",
+    "update": "Update_PaymentTypes",
+    "delete": "Delete_PaymentTypes",
+    "set": "Set_PaymentTypes",
+    "clear": "Clear_PaymentTypes"
+  },
+  "PaymentTermTemplate": {
+    "insert": "Insert_PaymentTermTemplate",
+    "update": "Update_PaymentTermTemplate",
+    "delete": "Delete_PaymentTermTemplate",
+    "set": "Set_PaymentTermTemplate",
+    "clear": "Clear_PaymentTermTemplate"
+  }
 }

@@ -9,10 +9,12 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { Button, Col, Row, Table } from "reactstrap";
+
 const RefsList = ({
   loading,
    fieldspaymentschedualinfo,
    appendpaymentschedualinfo,
+   index,
    removepaymentschedualinfo,
    Replacepaymentschedualinfo,
 }) => {
@@ -26,7 +28,9 @@ const RefsList = ({
     formState: { errors },
     reset,
   } = useFormContext();
-  
+  // Modal open state
+
+console.log(fieldspaymentschedualinfo);
   return (
     <>
       <h5 className="">{t("paymentschedualinfo")}</h5>
@@ -52,7 +56,6 @@ const RefsList = ({
 
                     <td style={{ width: "21%" }}>
                       <CustomFormInput
-                        IsDisabled={true}
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
                         autoFocus={
@@ -64,7 +67,6 @@ const RefsList = ({
                     </td>
                     <td style={{ width: "21%" }}>
                       <CustomFormInput
-                        IsDisabled={true}
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
                         autoFocus={
@@ -77,21 +79,18 @@ const RefsList = ({
                     <td style={{ width: "21%" }}>
                       <CustomFormInput
                         type="date"
-                        IsDisabled={true}
                         name={`paymentschedualinfo.${index}.DueDate`}
                         hiddenTitle
                       />
                     </td>
                     <td style={{ width: "21%" }}>
                       <CustomFormNumberInput
-                        IsDisabled={true}
                         name={`paymentschedualinfo.${index}.Amount`}
                         hiddenTitle
                       />
                     </td>
                     <td style={{ width: "21%" }}>
                       <CustomFormInput
-                        IsDisabled={true}
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
                         autoFocus={
@@ -101,17 +100,17 @@ const RefsList = ({
                         name={`paymentschedualinfo.${index}.Description`}
                       />
                     </td>
-                    {/* <td style={{ width: "10%" }}>
+                    <td style={{ width: "10%" }}>
                       <Button.Ripple
                         className="btn-icon"
                         color="flat-danger"
                         onClick={async () => {
-                          await Promise.all([remove(index)]);
+                          await Promise.all([removepaymentschedualinfo(index)]);
                         }}
                       >
                         <Trash2 size="15" />
                       </Button.Ripple>
-                    </td> */}
+                    </td>
                   </tr>
                   <input
                     className="d-none"
@@ -138,12 +137,12 @@ const RefsList = ({
                 )}
             </ul>
           </small>
-          {/* {toBoolean(getValues("_write")) && (
+          {toBoolean(getValues("_write")) && (
             <Button
               className="btn-icon"
               color="success"
               onClick={() => {
-                append({});
+                appendpaymentschedualinfo({});
                 // wait until add the row then scroll to down
                 // sleep(100).then(
                 //   () => (ref.current.scrollTop = ref.current.scrollHeight)
@@ -152,7 +151,7 @@ const RefsList = ({
             >
               <Plus size={14} />
             </Button>
-          )} */}
+          )}
         </Col>
       </Row>
     </>

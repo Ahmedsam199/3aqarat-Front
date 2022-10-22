@@ -55,6 +55,9 @@
   "Attachments": {
     "root": "http://193.47.189.15:4500/Attachment/"
   },
+  "Attachments2": {
+    "root": "http://193.47.189.15:4500/Attachment/"
+  },
   "DocType": {
     "root": "http://193.47.189.15:4500/DocTypes/"
   },

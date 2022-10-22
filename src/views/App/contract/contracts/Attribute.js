@@ -20,6 +20,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
     formState: { errors },
     reset,
   } = useFormContext();
+  
   return (
     <>
       <h5 className="mb-1 text-center">{t("Attributes")}</h5>
@@ -54,6 +55,7 @@ const RefsList = ({ loading, fields, append, remove, replace }) => {
                         menuPosition={"fixed"}
                       />
                     </td>
+                    
 
                     <td>
                       <Button.Ripple

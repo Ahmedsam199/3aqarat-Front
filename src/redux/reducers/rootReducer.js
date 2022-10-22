@@ -7,6 +7,7 @@ import tempData from './tempData';
 import Offline from './App/Offline';
 import Online from "./App/Online";
 import Attachment from "@Component/Attachment/store/reducer/attachments";
+import Attachment2 from "@Component/Attachment2/store/reducer/attachments";
 
 const rootReducer = combineReducers({
   ...Online,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   auth,
   layout,
   Attachment,
+  Attachment2,
   tempData,
 });
 export default rootReducer;

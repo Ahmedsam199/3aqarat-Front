@@ -4,11 +4,14 @@ import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { sleep, toBoolean } from "@utils";
 import { useRef } from "react";
+import React from 'react'
 import { Plus, Trash2 } from "react-feather";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form } from "reactstrap";
 import { Button, Col, Row, Table } from "reactstrap";
+import PaymentSchedule from './PaymentSchedule'
 const RefsList = ({ loading }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -25,6 +28,20 @@ const RefsList = ({ loading }) => {
     name: "ExtraPayment",
   });
   const { PaymentTypes, Currency, Party } = useSelector((state) => state);
+    const [modal, setModal] = React.useState(false);
+
+    // Toggle for Modal
+    const toggle = () => setModal(!modal);
+    const {
+      fields: fieldspaymentschedualinfo,
+      append: appendpaymentschedualinfo,
+      remove: removepaymentschedualinfo,
+      replace: Replacepaymentschedualinfo,
+    } = useFieldArray({
+      control,
+      name: "paymentschedualinfo",
+    });
+    console.log(fields);
   return (
     <>
       <h5 className="">{t("ExtraPayment")}</h5>
@@ -47,7 +64,7 @@ const RefsList = ({ loading }) => {
                     <th style={{ width: "5%" }} scope="row">
                       {index + 1}
                     </th>
-                    <td style={{ width: "21%" }}>
+                    <td style={{ width: "18%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
@@ -59,7 +76,7 @@ const RefsList = ({ loading }) => {
                         name={`ExtraPayment.${index}.PaymentType`}
                       />
                     </td>
-                    <td style={{ width: "21%" }}>
+                    <td style={{ width: "18%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
@@ -71,7 +88,7 @@ const RefsList = ({ loading }) => {
                         textName="FullName"
                       />
                     </td>
-                    <td style={{ width: "21%" }}>
+                    <td style={{ width: "18%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
@@ -83,13 +100,13 @@ const RefsList = ({ loading }) => {
                         textName="FullName"
                       />
                     </td>
-                    <td style={{ width: "21%" }}>
+                    <td style={{ width: "18%" }}>
                       <CustomFormNumberInput
                         name={`ExtraPayment.${index}.Amount`}
                         hiddenTitle
                       />
                     </td>
-                    <td style={{ width: "21%" }}>
+                    <td style={{ width: "18%" }}>
                       <CustomFormSelect
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
@@ -100,6 +117,25 @@ const RefsList = ({ loading }) => {
                         textName="CurrencyName"
                         name={`ExtraPayment.${index}.PaidCurrency`}
                       />
+                    </td>
+                    <td>
+                      {/* <Button onClick={toggle} /> */}
+                      <Form name={`ExtraPayment.${index}.PaymentSchedule`}>
+                        {/* <Modal isOpen={modal} toggle={toggle}>
+                          <ModalBody>
+                            <PaymentSchedule
+                              {...{
+                                loading,
+                                index,
+                                fieldspaymentschedualinfo,
+                                appendpaymentschedualinfo,
+                                removepaymentschedualinfo,
+                                Replacepaymentschedualinfo,
+                              }}
+                            />
+                          </ModalBody>
+                        </Modal> */}
+                      </Form>
                     </td>
                     <td style={{ width: "10%" }}>
                       <Button.Ripple
@@ -118,6 +154,7 @@ const RefsList = ({ loading }) => {
                     defaultValue={x.id ?? ""}
                     {...register(`ExtraPayment.${index}.id`)}
                   />
+                  
                   <input
                     className="d-none"
                     {...register(`contractSeries.${index}.id`)}
