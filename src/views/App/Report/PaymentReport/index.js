@@ -6,6 +6,11 @@ import "@styles/base/plugins/extensions/ext-component-sweet-alerts.scss";
 import "@styles/react/apps/app-invoice.scss";
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
+import CustomFormInput from "@Component/Form/CustomFormInput";
+import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
+import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
+import CustomFormSelect from "@Component/Form/CustomFormSelect";
+
 import { toasty } from "@toast";
 import { addMonths, checkDateValue, removeNullValue, subMonths } from "@utils";
 import Flatpickr from "react-flatpickr";
@@ -33,6 +38,7 @@ import {
   UncontrolledButtonDropdown,
 } from "reactstrap";
 import { Search } from "react-feather";
+// import CustomFormInputCheckbox from "../../../../components/Form/CustomFormInputCheckbox";
 const Index = () => {
   const { Purpose, Lawyer, Property } = useSelector((state) => state);
   const ref = useRef();
@@ -41,8 +47,13 @@ const Index = () => {
   const [filters, setFilters] = useState({
     From_Date: [subMonths(new Date(), 1)],
     To_Date: [addMonths(new Date(), 1)],
+    RangeFrom:0,
     BasedOn: 0,
+    RangeTo:0,
+    PropertyType:null,
+    ContractType:null,
   });
+  const { ContractType, PropertyType, Party } = useSelector((state) => state);
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
       if (Array.isArray(key))
@@ -257,7 +268,7 @@ const Index = () => {
                 />
               </FormGroup>
             </Col>*/}
-{/* 
+            {/* 
             <Col sm="4">
               <Label>Lawyer Name</Label>
               <CustomSelectV2
@@ -295,12 +306,58 @@ const Index = () => {
             </Col> */}
           </Row>
           <Row className="mt-1">
-            {/* <Col sm="3">
+            <Col sm="4">
+              <Label>Range From</Label>
+              <Input
+                value={filters.RangeFrom}
+                onChange={(e) =>
+                  handleFiltersChange("RangeFrom", e.target.value ?? "")
+                }
+              />
+            </Col>
+            <Col sm="4">
+              <Label>Range To</Label>
+              <Input
+                value={filters.RangeTo}
+                onChange={(e) =>
+                  handleFiltersChange("RangeTo", e.target.value ?? "")
+                }
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
+              <Label>ContractType</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="ContractType"
+                valueName="Series"
+                value={filters.ContractType}
+                options={ContractType}
+                onChange={(e) =>
+                  handleFiltersChange("ContractType", e?.value ?? null)
+                }
+              />
+            </Col>
+            <Col sm="4">
+              <Label>PropertyType</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="TypeName"
+                valueName="Series"
+                value={filters.PropertyType}
+                options={PropertyType}
+                onChange={(e) =>
+                  handleFiltersChange("PropertyType", e?.value ?? null)
+                }
+              />
+            </Col>
+          </Row>
+          {/* <Col sm="3">
               <Button color="primary" onClick={() => ref.current.filter()}>
                 Search <Search size={21} />{" "}
               </Button>
             </Col> */}
-          </Row>
           <CustomTableV2
             ref={ref}
             url={Routes.Report.Payment_Report}

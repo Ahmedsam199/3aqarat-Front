@@ -119,9 +119,9 @@ const RefsList = ({ loading }) => {
                       />
                     </td>
                     <td>
-                      {/* <Button onClick={toggle} /> */}
-                      <Form name={`ExtraPayment.${index}.PaymentSchedule`}>
-                        {/* <Modal isOpen={modal} toggle={toggle}>
+                      <Button onClick={toggle} />
+                      <Form >
+                        <Modal isOpen={modal} toggle={toggle}>
                           <ModalBody>
                             <PaymentSchedule
                               {...{
@@ -134,7 +134,7 @@ const RefsList = ({ loading }) => {
                               }}
                             />
                           </ModalBody>
-                        </Modal> */}
+                        </Modal>
                       </Form>
                     </td>
                     <td style={{ width: "10%" }}>
