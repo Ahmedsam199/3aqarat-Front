@@ -98,7 +98,7 @@ const POST = ({ onToggle, row, toggleFunc }) => {
               valueName="Series"
               options={Currency}
             />
-            <CustomFormInput type='checkbox' name="DefaultForContract" />
+            <CustomFormInputCheckbox  name="DefaultForContract" />
             <div className="mt-1">
               <Button
                 color="primary"
