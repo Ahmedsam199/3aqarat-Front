@@ -25,7 +25,7 @@ export const insertItem = (name, values) => {
         if (networkStatus()) {
           const _ = await axios.post(Routes[name].root, values);
           if (_.status == 201) {
-            //Cause I HAVE DATA FROM SOCKET I COMMENT THIS FUNCTION 
+            // TODO: Cause I HAVE DATA FROM SOCKET I COMMENT THIS FUNCTION 
             // dispatch({
             //   type: Types[name]?.insert,
             //   payload: {

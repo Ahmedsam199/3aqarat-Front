@@ -96,8 +96,7 @@ const Index = () => {
             )}
           </div>
           <Row>
-            <Col md="2">
-              <FormGroup>
+            <Col md="4">
                 <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
@@ -105,7 +104,6 @@ const Index = () => {
                     handleFiltersChange("Series", e.target.value)
                   }
                 />
-              </FormGroup>
             </Col>
           </Row>
         </CardBody>

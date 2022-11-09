@@ -18,6 +18,7 @@ export default ({ onEdit, onDelete }) => {
       {GenderOptions.find((x) => x.value === row.Gender).label}
     </Badge>
   );
+  
 
   const selectors = [
     "Series",

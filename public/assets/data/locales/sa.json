@@ -1,4 +1,15 @@
 {
+  "Outstanding":"المبلغ المتبقي",
+  "PaymentType":"نوع المدفوع",
+  "TotalPay":"المبلغ الكلي",
+  "CurrencyEXRate":"عمولة التحويل",
+  "Payment Term Template":"شكل الوصل",
+  "RequestedValue":"المبلغ المطلوب",
+  "Status":"حالة العقج",
+  "FromParty":"من الطرف"
+  ,
+  "ToParty":"الئ الطرف",
+  "ExtraPayment":"المبالغ الاضافية",
   "Owner Property":"تقرير الاملاك",
   "Lawyer Report":"تقرير المحامين",
   "Payment Report":"تقرير المدفوعات",

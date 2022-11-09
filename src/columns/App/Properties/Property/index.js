@@ -20,7 +20,7 @@ export default ({ onEdit, onDelete, TerritoryMap, PurposeMap }) => {
     "Series",
     "RequestedAmt",
     "Territory",
-    "Purpose",
+    
     "Active",
   ];
   const sortable = [...Array.from({ length: 3 }, () => true), false];
@@ -29,7 +29,7 @@ export default ({ onEdit, onDelete, TerritoryMap, PurposeMap }) => {
   const cells = [
     ...Array.from({ length: 2 }, () => null),
     ReadTerritory,
-    ReadPurpose,
+    
     Actions,
   ];
   return create({

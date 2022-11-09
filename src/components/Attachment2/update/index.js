@@ -16,16 +16,16 @@ import { AlertTriangle } from 'react-feather';
 import { useSelector } from 'react-redux';
 
 const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
-  const [attachments2, setAttachments2] = useState([]);
+  const [Gallery, setAttachments2] = useState([]);
   const [previewFile, setIsPreviewFile] = useState(false);
-  console.log("attachments2", attachments2);
+  console.log("Gallery", Gallery);
   let attachmentNames = useMemo(
-    () => attachments2?.map((att) => att?.name),
-    [attachments2]
+    () => Gallery?.map((att) => att?.name),
+    [Gallery]
   );
   const onPreviewV2=(row)=>{
     
-    axios.get(`${Routes.Attachments2.root}view/${row?.id}`).then((res) => {
+    axios.get(`${Routes.Gallery.root}view/${row?.id}`).then((res) => {
       window.open(res.data)
     });
   }
@@ -39,7 +39,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
     axios
       .post(
-        `${Routes.Attachments2.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
+        `${Routes.Gallery.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
         formData,)
       .then(({data}) => {
 
@@ -51,7 +51,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
   
   const onDelete = (row) => {
     axios
-      .delete(`${Routes.Attachments2.root}${row?.id}/${row?.refSeries}`,)
+      .delete(`${Routes.Gallery.root}${row?.id}/${row?.refSeries}`)
       .then((res) => {
         toast.success(<SuccessToast msg="Deleted Successfully!" />, {
           hideProgressBar: true,
@@ -80,14 +80,14 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
               denyButtonColor: 'orange',
             }).then((result) => {
               if (result.isConfirmed) {
-                let replacedFile = attachments2?.find((att) => {
+                let replacedFile = Gallery?.find((att) => {
                   // let fileName = att?.FilePath.split(/@(.*)/s)[1];
                   return att?.OriginalFileName === acceptedFiles[0]?.name;
                 });
 
                 axios
                   .delete(
-                    `${Routes.Attachments2.delete}?filePath=${replacedFile?.FilePath}&filePath=`,
+                    `${Routes.Gallery.delete}?filePath=${replacedFile?.FilePath}&filePath=`,
                     
                   )
                   .then(() => {
@@ -105,7 +105,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
                     );
                   });
 
-                // attachments2.find(att => att?.)
+                // Gallery.find(att => att?.)
               } else if (result.isDenied) {
                 let blob = acceptedFiles[0].slice(
                   0,
@@ -134,7 +134,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
                 axios
                   .post(
-                    `${Routes.Attachments2.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
+                    `${Routes.Gallery.upload}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
                     formData,
                     
                   )
@@ -171,7 +171,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
             }).then((result) => {
               if (result.isConfirmed) {
                 // Replace all of them
-                const replacedFiles = attachments2.filter((att) => {
+                const replacedFiles = Gallery.filter((att) => {
                   return duplicateNames.includes(att?.OriginalFileName);
                 });
                 let customFilePaths = '';
@@ -185,7 +185,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
                 axios
                   .delete(
-                    `${Routes.Attachments2.delete}?filePath=${customFilePaths}`,
+                    `${Routes.Gallery.delete}?filePath=${customFilePaths}`,
                     
                   )
                   .then(() => {
@@ -246,7 +246,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
 
                 axios
                   .post(
-                    `${Routes.Attachments2.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
+                    `${Routes.Gallery.root}?refDoctype=${RefDocType}&refSeries=${ItemSeries}`,
                     formData,
                     
                   )
@@ -269,12 +269,12 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
         }
       }
     },
-    [attachments2]
+    [Gallery]
   );
 
   useEffect(() => {
     axios
-      .get(`${Routes.Attachments2.root}${ItemSeries}`, )
+      .get(`${Routes.Gallery.root}${ItemSeries}`, )
       .then((data) => {
         setAttachments2(data?.data);
       })
@@ -331,7 +331,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
       toggle={() => handleToggleModel(false)}
     >
       <ModalHeader toggle={() => handleToggleModel(false)}>
-        Attachments2
+        Gallery
       </ModalHeader>
       <ModalBody>
         <ModalContainer {...getRootProps()} className="uploadContainer">
@@ -357,7 +357,7 @@ const index = ({ isModalOpen, handleToggleModel, ItemSeries, RefDocType }) => {
               )}
             </div>
           )}
-          <CustomTable offlineData={attachments2} columns={_columns} />
+          <CustomTable offlineData={Gallery} columns={_columns} />
         </ModalContainer>
         <h6 style={{ color: "gray" }}>
           <UploadCloud size="20" /> Drop files here to attach or{" "}

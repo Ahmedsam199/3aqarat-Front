@@ -109,8 +109,8 @@ const Index = () => {
             )}
           </div>
           <Row>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
@@ -118,10 +118,10 @@ const Index = () => {
                     handleFiltersChange("Series", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("ContractType")}</Label>
                 <Input
                   placeholder={t("ContractType")}
@@ -129,7 +129,7 @@ const Index = () => {
                     handleFiltersChange("ContractType", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
           </Row>
         </CardBody>

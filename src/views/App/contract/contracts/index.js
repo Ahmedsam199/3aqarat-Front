@@ -77,6 +77,11 @@ const PartyMap = useMemo(
   () => arrToHashMap(Party),
   [Party]
 );
+const StatusVal = [
+  { value: false, label: "Draft" },
+  { value: true, label: "Submitted" },
+];
+const StatusValMap = useMemo(() => arrToHashMap(StatusVal), [StatusVal]);
   const onDelete = async (Series,ID) => {
     dispatch(deleteItem("Contracts", network ? Series : ID))
       .then((res) => {
@@ -92,6 +97,8 @@ const PartyMap = useMemo(
   const Columns = createColumns({
     onDelete,
     PartyMap,
+    
+StatusValMap,
     onEdit: (row) =>
       navigate(
         `/Contract/UpdateContract/${network ? row?.Series : row.ID}`
@@ -115,42 +122,29 @@ const PartyMap = useMemo(
             )}
           </div>
           <Row>
-            <Col md="3">
+            <Col md="4">
               <Label>{t("Series")}</Label>
               <Input
                 placeholder={t("Series")}
                 onChange={(e) => handleFiltersChange("Series", e.target.value)}
               />
             </Col>
-            <Col md="3">
-              <Label>{t("Territory")}</Label>
-              <CustomSelect
-                isClearable={true}
-                valueName="Series"
-                textName="Territory"
-                value={filters.Territory.value}
-                options={Territory}
-                onChange={(e) => {
-                  handleFiltersChange("Territory", e?.value ?? null);
-                }}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md="3">
-              <Label>{t("First Party")}</Label>
-              <CustomSelect
-                isClearable={true}
-                valueName="Series"
-                textName="FullName"
-                value={filters.FirstParty.value}
-                options={Party}
-                onChange={(e) => {
-                  handleFiltersChange("FirstParty", e?.value ?? null);
-                }}
-              />
-            </Col>
-            <Col md="3">
+            
+              <Col md="4">
+                <Label>{t("First Party")}</Label>
+                <CustomSelect
+                  isClearable={true}
+                  valueName="Series"
+                  textName="FullName"
+                  value={filters.FirstParty.value}
+                  options={Party}
+                  onChange={(e) => {
+                    handleFiltersChange("FirstParty", e?.value ?? null);
+                  }}
+                />
+              </Col>
+            
+            <Col md="4">
               <Label>{t("Second Party")}</Label>
               <CustomSelect
                 isClearable={true}
@@ -164,6 +158,7 @@ const PartyMap = useMemo(
               />
             </Col>
           </Row>
+          
         </CardBody>
 
         <CustomTable

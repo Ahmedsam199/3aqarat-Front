@@ -1,5 +1,7 @@
 // Joseph : Look at findRate functino please
 import CustomFormInput from "@Component/Form/CustomFormInput";
+import CustomFormDateInput from "@Component/Form/CustomFormDateInput";
+
 import CustomFormNumberInput from "@Component/Form/CustomFormNumberInput";
 import CustomFormSelect from "@Component/Form/CustomFormSelect";
 import { sleep, toBoolean } from "@utils";
@@ -11,12 +13,11 @@ import { useSelector } from "react-redux";
 import { Button, Col, Row, Table } from "reactstrap";
 
 const RefsList = ({
-  loading,
-   fieldspaymentschedualinfo,
-   appendpaymentschedualinfo,
-   index,
-   removepaymentschedualinfo,
-   Replacepaymentschedualinfo,
+  fieldspaymentschedualinfo,
+  appendpaymentschedualinfo,
+
+  removepaymentschedualinfo,
+  Replacepaymentschedualinfo,
 }) => {
   const { t } = useTranslation();
   const ref = useRef();
@@ -30,7 +31,15 @@ const RefsList = ({
   } = useFormContext();
   // Modal open state
 
-console.log(fieldspaymentschedualinfo);
+  const refreshAmount = (index) => {
+    setValue(
+      `paymentschedualinfo.${index}.Amount`,
+      (getValues("Amount") * (+getValues(`paymentschedualinfo.${index}.Portion`))/100)
+    );
+  };
+  const PortionChange = (index) => {
+    refreshAmount(index);
+  };
   return (
     <>
       <h5 className="">{t("paymentschedualinfo")}</h5>
@@ -38,10 +47,11 @@ console.log(fieldspaymentschedualinfo);
         <Table borderless striped>
           <thead>
             <tr>
+              <th style={{ width: "12%" }}>{t("#")}</th>
               <th style={{ width: "25%" }}>{t("BasedOn")}</th>
               <th style={{ width: "25%" }}>{t("Portion")}</th>
-              <th style={{ width: "25%" }}>{t("DueDate")}</th>
               <th style={{ width: "25%" }}>{t("Amount")}</th>
+              <th style={{ width: "25%" }}>{t("DueDate")}</th>
               <th style={{ width: "25%" }}>{t("Description")}</th>
             </tr>
           </thead>
@@ -55,40 +65,56 @@ console.log(fieldspaymentschedualinfo);
                     </th>
 
                     <td style={{ width: "21%" }}>
-                      <CustomFormInput
+                      <CustomFormSelect
+                        className="d-flex"
                         menuPosition={"fixed"}
                         menuShouldBlockScroll
-                        autoFocus={
-                          index === fieldspaymentschedualinfo.length - 1
-                        }
                         hiddenTitle
                         name={`paymentschedualinfo.${index}.BasedOn`}
-                      />
-                    </td>
-                    <td style={{ width: "21%" }}>
-                      <CustomFormInput
-                        menuPosition={"fixed"}
-                        menuShouldBlockScroll
-                        autoFocus={
-                          index === fieldspaymentschedualinfo.length - 1
-                        }
-                        hiddenTitle
-                        name={`paymentschedualinfo.${index}.Portion,`}
-                      />
-                    </td>
-                    <td style={{ width: "21%" }}>
-                      <CustomFormInput
-                        type="date"
-                        name={`paymentschedualinfo.${index}.DueDate`}
-                        hiddenTitle
+                        options={[
+                          {
+                            value: true,
+                            label: "After Invoice Date",
+                          },
+                          {
+                            value: false,
+                            label: "After Invoice Month",
+                          },
+                        ]}
                       />
                     </td>
                     <td style={{ width: "21%" }}>
                       <CustomFormNumberInput
+                        menuPosition={"fixed"}
+                        menuShouldBlockScroll
+                        autoFocus={
+                          index === fieldspaymentschedualinfo.length - 1
+                        }
+                        hiddenTitle
+                        name={`paymentschedualinfo.${index}.Portion`}
+                        extraOnChangeFun={() => PortionChange(index)}
+                      />
+                    </td>
+                    <td style={{ width: "21%" }}>
+                      <CustomFormNumberInput
+                        menuPosition={"fixed"}
+                        menuShouldBlockScroll
+                        autoFocus={
+                          index === fieldspaymentschedualinfo.length - 1
+                        }
+                        IsDisabled={true}
+                        hiddenTitle
                         name={`paymentschedualinfo.${index}.Amount`}
+                      />
+                    </td>
+                    <td style={{ width: "21%" }}>
+                      <CustomFormDateInput
+                        
+                        name={`paymentschedualinfo.${index}.DueDate`}
                         hiddenTitle
                       />
                     </td>
+
                     <td style={{ width: "21%" }}>
                       <CustomFormInput
                         menuPosition={"fixed"}
@@ -137,21 +163,20 @@ console.log(fieldspaymentschedualinfo);
                 )}
             </ul>
           </small>
-          {toBoolean(getValues("_write")) && (
-            <Button
-              className="btn-icon"
-              color="success"
-              onClick={() => {
-                appendpaymentschedualinfo({});
-                // wait until add the row then scroll to down
-                // sleep(100).then(
-                //   () => (ref.current.scrollTop = ref.current.scrollHeight)
-                // );
-              }}
-            >
-              <Plus size={14} />
-            </Button>
-          )}
+
+          <Button
+            className="btn-icon"
+            color="success"
+            onClick={() => {
+              appendpaymentschedualinfo({});
+              // wait until add the row then scroll to down
+              // sleep(100).then(
+              //   () => (ref.current.scrollTop = ref.current.scrollHeight)
+              // );
+            }}
+          >
+            <Plus size={14} />
+          </Button>
         </Col>
       </Row>
     </>

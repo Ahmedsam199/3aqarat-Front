@@ -33,7 +33,7 @@ html {
     min-height: calc(100% - #{$footer-height});
     margin-left: $menu-expanded-width;
     &.app-content {
-      padding: calc(#{$content-padding} + #{$floating-nav-margin}) #{$content-padding} 0;
+      padding: 10px;
       &.show-overlay {
         .content-overlay {
           z-index: 10;

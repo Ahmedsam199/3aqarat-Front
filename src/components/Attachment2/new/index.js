@@ -169,9 +169,7 @@ const index = ({ isModalOpen, handleToggleModel }) => {
       isOpen={isModalOpen}
       toggle={() => handleToggleModel(false)}
     >
-      <ModalHeader toggle={() => handleToggleModel(false)}>
-        Attachments
-      </ModalHeader>
+      <ModalHeader toggle={() => handleToggleModel(false)}>Gallery</ModalHeader>
       <ModalBody>
         <ModalContainer {...getRootProps()} className="uploadContainer">
           <input {...getInputProps()} />
@@ -198,9 +196,11 @@ const index = ({ isModalOpen, handleToggleModel }) => {
           )}
           <CustomTable offlineData={Attachment2} columns={_columns} />
         </ModalContainer>
-        <h6 style={{ color: 'gray' }}>
-          <UploadCloud size="20" /> Drop files here to attach or{' '}
-          <BrowseText onClick={open}><Button>Browse</Button></BrowseText>
+        <h6 style={{ color: "gray" }}>
+          <UploadCloud size="20" /> Drop files here to attach or{" "}
+          <BrowseText onClick={open}>
+            <Button>Browse</Button>
+          </BrowseText>
         </h6>
       </ModalBody>
     </Modal>

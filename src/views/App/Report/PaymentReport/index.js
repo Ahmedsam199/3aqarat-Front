@@ -45,19 +45,22 @@ const Index = () => {
   const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
-    From_Date: [subMonths(new Date(), 1)],
-    To_Date: [addMonths(new Date(), 1)],
-    RangeFrom: 0,
-    BasedOn: 0,
-
-    RangeTo: 0,
-    PropertyType: null,
+    FormData:null,
+    ToDate:null,
+ReceiveParty:null,
+PayParty:null,
     ContractType: null,
-    Territory:null
+    Currency:null
+    
   });
-  const { ContractType, Territory, PropertyType, Party } = useSelector(
-    (state) => state
-  );
+  const {
+    ContractType,
+    Territory,
+    PropertyType,
+    Party,
+    PaymentType,
+    Currency,
+  } = useSelector((state) => state);
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
       if (Array.isArray(key))
@@ -71,7 +74,7 @@ const Index = () => {
   const handlePrint = () => {
     const data = ref.current.getData();
     data.length
-      ? PrintReport({ data, filters, title: "Payment Report" })
+      ? PrintReport({ data, filters, title: "Property Report" })
       : toasty({ type: "warning", msg: "data empty" });
   };
   const handleExcel = () => {
@@ -79,8 +82,8 @@ const Index = () => {
     data.length
       ? exportToExcel({
           data: [[checkDateValue(removeNullValue(filters))], data],
-          fileName: "Payment Report",
-          SheetNames: ["Payment Report"],
+          fileName: "Property Report",
+          SheetNames: ["Property Report"],
           isMutlSheets: false,
           isTwoTable: true,
         })
@@ -92,7 +95,7 @@ const Index = () => {
       ? exportToPdf({
           data: data,
           filters: checkDateValue(removeNullValue(filters)),
-          title: "Payment Report",
+          title: "Property Report",
         })
       : toasty({ type: "warning", msg: "data empty" });
   };
@@ -107,9 +110,9 @@ const Index = () => {
       <div className="row align-items-center">
         <div className="col-9">
           <Breadcrumbs
-            breadCrumbTitle="Payment Report"
+            breadCrumbTitle="Property Report"
             breadCrumbParent="Reports"
-            breadCrumbActive="Payment Report"
+            breadCrumbActive="Property Report"
           />
         </div>
         <div className="col-3 d-flex justify-content-around align-items-center">
@@ -133,9 +136,10 @@ const Index = () => {
       </div>
       <Card>
         <CardBody>
-          <Row>
-            {/* <Col md="4">
-              <Label>{t("Contract Starts")}</Label>
+          <Row></Row>
+          <Row className="mt-1">
+            <Col sm="4">
+              <Label>{t("From Date")}</Label>
 
               <Flatpickr
                 className="form-control"
@@ -143,189 +147,21 @@ const Index = () => {
                 options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
                 value={filters.ContractStarts}
                 onChange={(val) => {
-                  handleFiltersChange("ContractStarts", val);
+                  handleFiltersChange("FromDate", val);
                 }}
               />
             </Col>
-             */}
-            {/* <Col md="4">
-              <Label>{t("To Date")}:</Label>
+            <Col sm="4">
+              <Label>{t("To Date")}</Label>
+
               <Flatpickr
                 className="form-control"
                 data-enable-time
                 options={{ dateFormat: "m/d/Y H:i", enableTime: true }}
-                value={filters.To_Date}
-                onChange={(val) => () => {
-                  handleFiltersChange("Contract Ends", val);
+                value={filters.ContractStarts}
+                onChange={(val) => {
+                  handleFiltersChange("ToDate", val);
                 }}
-              />
-            </Col> */}
-            {/* <Col md="2">
-              <FormGroup>
-                <Label for="BasedOn">
-                  <FormattedMessage>{t("BasedOn")}</FormattedMessage>:
-                </Label>
-                <CustomSelect
-                  isClearable
-                  value={filters.BasedOn}
-                  textName="label"
-                  valueName="value"
-                  options={[
-                    { label: "Item", value: 1 },
-                    { label: "ItemGroup", value: 2 },
-                  ]}
-                  onChange={(e) => {
-                    handleFiltersChange("BasedOn", e?.value ?? null);
-                  }}
-                />
-              </FormGroup>
-            </Col>
-            <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage>{t("Item")}</FormattedMessage>:
-                </Label>
-
-                <CustomSelectV2
-                  isClearable={true}
-                  customName="Barcode"
-                  isDisabled={filters.BasedOn == 2}
-                  customValue="Barcode"
-                  textName="ItemName"
-                  customName2="ItemCode"
-                  customValue2="ItemCode"
-                  valueName="Series"
-                  value={filters.Item}
-                  options={Item}
-                  onChange={(e) =>
-                    handleFiltersChange("Item", e?.value ?? null)
-                  }
-                />
-              </FormGroup>
-            </Col>
-            <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage>{t("ItemGroup")}</FormattedMessage>:
-                </Label>
-                <CustomSelectV2
-                  isDisabled={filters.BasedOn == 1}
-                  isClearable={true}
-                  textName="ItemGroupName"
-                  valueName="Series"
-                  value={filters.ItemGroup}
-                  options={ItemGroup}
-                  onChange={(e) =>
-                    handleFiltersChange("ItemGroup", e?.value ?? null)
-                  }
-                />
-              </FormGroup>
-            </Col>
-            <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage>{t("Users")}</FormattedMessage>:
-                </Label>
-                <CustomSelectV2
-                  isClearable={true}
-                  textName="FullName"
-                  valueName="Series"
-                  value={filters.User}
-                  options={Users}
-                  onChange={(e) =>
-                    handleFiltersChange("User", e?.value ?? null)
-                  }
-                />
-              </FormGroup>
-            </Col> */}
-            {/* <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage id="Customers" />:
-                </Label>
-                <CustomSelectV2
-                  isClearable={true}
-                  textName="PartyName"
-                  valueName="Series"
-                  value={filters.Party}
-                  options={Customer}
-                  onChange={(e) =>
-                    handleFiltersChange("Party", e?.value ?? null)
-                  }
-                />
-              </FormGroup>
-            </Col> */}
-            {/* <Col md="2">
-              <FormGroup>
-                <Label>
-                  <FormattedMessage id="Series" />:
-                </Label>
-                <Input
-                  name="Series"
-                  id="Series"
-                  onChange={(e) => {
-                    sleep(500).then(() =>
-                      handleFiltersChange("Series", e.target.value ?? "")
-                    );
-                    // handleFiltersChange('AffectedSeries', e.target.value ?? "")
-                  }}
-                />
-              </FormGroup>
-            </Col>*/}
-            {/* 
-            <Col sm="4">
-              <Label>Lawyer Name</Label>
-              <CustomSelectV2
-                isClearable={true}
-                textName="FullName"
-                valueName="FullName"
-                value={filters.Lawyer}
-                options={Lawyer}
-                onChange={(e) =>
-                  handleFiltersChange("Lawyer", e?.value ?? null)
-                }
-              />
-            </Col>
-            <Col sm="4">
-              <Label>Phone</Label>
-              <Input
-                value={filters.Phone}
-                onChange={(e) =>
-                  handleFiltersChange("Phone", e.target.value ?? "")
-                }
-              />
-            </Col> */}
-            {/* <Col sm="4">
-              <Label>Property</Label>
-              <CustomSelectV2
-                isClearable={true}
-                textName="Series"
-                valueName="Series"
-                value={filters.Property}
-                options={Property}
-                onChange={(e) =>
-                  handleFiltersChange("Lawyer", e?.value ?? null)
-                }
-              />
-            </Col> */}
-          </Row>
-          <Row className="mt-1">
-            <Col sm="4">
-              <Label>Range From</Label>
-              <Input
-                value={filters.RangeFrom}
-                onChange={(e) =>
-                  handleFiltersChange("RangeFrom", e.target.value ?? "")
-                }
-              />
-            </Col>
-            <Col sm="4">
-              <Label>Range To</Label>
-              <Input
-                value={filters.RangeTo}
-                onChange={(e) =>
-                  handleFiltersChange("RangeTo", e.target.value ?? "")
-                }
               />
             </Col>
           </Row>
@@ -344,39 +180,47 @@ const Index = () => {
               />
             </Col>
             <Col sm="4">
-              <Label>PropertyType</Label>
+              <Label>Receive Party</Label>
               <CustomSelectV2
                 isClearable={true}
-                textName="TypeName"
+                textName="FullName"
                 valueName="Series"
-                value={filters.PropertyType}
-                options={PropertyType}
+                value={filters.ReceiveParty}
+                options={Party}
                 onChange={(e) =>
-                  handleFiltersChange("PropertyType", e?.value ?? null)
+                  handleFiltersChange("ReceiveParty", e?.value ?? null)
                 }
               />
             </Col>
           </Row>
           <Row>
             <Col sm="4">
-              <Label>Territory</Label>
+              <Label>Pay Party</Label>
               <CustomSelectV2
                 isClearable={true}
-                textName="Territory"
+                textName="FullName"
                 valueName="Series"
-                value={filters.Territory}
-                options={Territory}
+                value={filters.PayParty}
+                options={Party}
                 onChange={(e) =>
-                  handleFiltersChange("Territory", e?.value ?? null)
+                  handleFiltersChange("PayParty", e?.value ?? null)
+                }
+              />
+            </Col>
+            <Col sm="4">
+              <Label>Currency</Label>
+              <CustomSelectV2
+                isClearable={true}
+                textName="CurrencyName"
+                valueName="Series"
+                value={filters.Currency}
+                options={Currency}
+                onChange={(e) =>
+                  handleFiltersChange("Currency", e?.value ?? null)
                 }
               />
             </Col>
           </Row>
-          {/* <Col sm="3">
-              <Button color="primary" onClick={() => ref.current.filter()}>
-                Search <Search size={21} />{" "}
-              </Button>
-            </Col> */}
           <Row className="mt-1">
             <Col sm="3">
               <Button color="primary" onClick={() => ref.current.filter()}>

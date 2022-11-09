@@ -32,13 +32,13 @@ import { useNavbarType } from "@hooks/useNavbarType";
 import { useFooterType } from "@hooks/useFooterType";
 import { useNavbarColor } from "@hooks/useNavbarColor";
 
+const source= require(`@src/assets/images/logo/logo.svg`).default
 // ** Styles
 import "@styles/base/core/menu/menu-types/horizontal-menu.scss";
 
 const HorizontalLayout = (props) => {
   // ** Props
   const { navbar, menuData, footer, children, menu } = props;
-
   // ** Hooks
   const { skin, setSkin } = useSkin();
   const [isRtl, setIsRtl] = useRTL();
@@ -144,11 +144,16 @@ const HorizontalLayout = (props) => {
                   className="navbar-container d-flex content"
                   style={{ justifyContent: "space-between" }}
                 >
-                  
                   <div style={{ display: "flex" }}>
-                    <MenuComponent menuData={menuData} />
+                    <img
+                      style={{ marginTop: "0.5rem" }}
+                      width="50"
+                      height="50"
+                      src={source}
+                    />
+                    <MenuComponent  menuData={menuData} />
                   </div>
-                  <div className="ml-5" style={{ marginTop: "1rem" }}>
+                  <div style={{ marginTop: "1rem" }}>
                     {navbar ? (
                       navbar({ skin, setSkin })
                     ) : (

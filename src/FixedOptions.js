@@ -91,6 +91,11 @@ export const BooleanColors = {
   false: "light-danger",
   true: "light-success",
 };
+export const BooleanColors2 = {
+  false: "light-danger",
+  true: "light-success",
+
+};
 export const PartyTypeOptions = [
   { label: "Customer", value: false },
   { label: "Supplier", value: true },
@@ -203,7 +208,9 @@ export const GenderOptions = [
   { label: "Female", value: false },
   
 ];
-
+export const ContractStatus=[
+  {label:"Draft",value:false},{label:"Submitted",value:true}
+]
 export const Tables = {
   "DT-2": [
     {
@@ -236,18 +243,8 @@ export const Tables = {
         { label: "PaidCurrency", value: "PaidCurrency" },
       ],
     },
-    {
-      label: "PaymentSchedule",
-      value: "PaymentSchedule",
-      attributes: [
-        { label: "BasedOn", value: "BasedOn" },
-        { label: "Portion", value: "Portion" },
-        { label: "DueDate", value: "DueDate" },
-        { label: "Amount", value: "Amount" },
-        { label: "Description", value: "Description" },
-      ],
-    },
   ],
+    
   "DT-8": [
     {
       label: "Attribute",

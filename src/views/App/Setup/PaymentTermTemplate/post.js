@@ -17,7 +17,8 @@ import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import {  useParams } from "react-router";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
+import { parseNumber } from "../../../../utility/Utils";
 import Routes from "@Routes";
 import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
 // import { ErrorToast } from "../../../components/ErrorToast";
@@ -63,42 +64,53 @@ const POST = (props) => {
     () => toBoolean(ability.can("write", "DT-3")),
     [ability.can("write", "DT-3")]
   );
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const checkPortions = (arr) => {
+  let sumOfPortions = arr.reduce(
+    (acc, obj) => +acc + +parseNumber(obj?.Portion),
+    0
+  );
+  return +sumOfPortions === 100;
+};
   // ** Function to handle form submit
   const onSubmit = async (values) => {
-    // if (!checkPortions(values.PartialInfo))
-    //   return toast.error(
-    //     // <ErrorToast msg="Sum of Partions must be equal 100" />
-    //   );
+    console.log(values.PaymentTermInfo);
+    if (!checkPortions(values.PaymentTermInfo)){
 
-    // values.PartialInfo = JSON.stringify(values.PartialInfo);
+      toast.error("Portion Sums must be 100");
+    }else{
+      // if (!checkPortions(values.PartialInfo))
+      //   return toast.error(
+      //     // <ErrorToast msg="Sum of Partions must be equal 100" />
+      //   );
 
-    try {
-      if (isObjEmpty(errors)) {
-        setLoading(true);
-        dispatch(
-          values.Series
-            ? updateItem("PaymentTermTemplate", values)
-            : insertItem("PaymentTermTemplate", values)
-        )
-          .then((res) => {
-            toasty({ type: "success" });
-            setLoading(false);
+      // values.PartialInfo = JSON.stringify(values.PartialInfo);
 
-            navigate("/Setup/PaymentTermTemplate");
-          })
-          .catch((err) => {
-            setLoading(false);
+      try {
+        if (isObjEmpty(errors)) {
+          setLoading(true);
+          dispatch(
+            values.Series
+              ? updateItem("PaymentTermTemplate", values)
+              : insertItem("PaymentTermTemplate", values)
+          )
+            .then((res) => {
+              toasty({ type: "success" });
+              setLoading(false);
 
-            console.log("hacker_it_err", err);
-          });
+              navigate("/Setup/PaymentTermTemplate");
+            })
+            .catch((err) => {
+              setLoading(false);
+
+              console.log("hacker_it_err", err);
+            });
+        }
+      } catch (e) {
+        console.error("hacker_it error", e);
+      } finally {
       }
-    } catch (e) {
-      console.error("hacker_it error", e);
-    } finally {
-      
-    }
-  };
+    }};
   const updateFormData = async () => {
     try {
       if (params.Series) {

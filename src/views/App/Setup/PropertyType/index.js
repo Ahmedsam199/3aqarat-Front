@@ -110,8 +110,8 @@ console.log(PropertyType, "PropertyType");
             )}
           </div>
           <Row>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
@@ -119,10 +119,10 @@ console.log(PropertyType, "PropertyType");
                     handleFiltersChange("Series", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("TypeName")}</Label>
                 <Input
                   placeholder={t("TypeName")}
@@ -130,7 +130,7 @@ console.log(PropertyType, "PropertyType");
                     handleFiltersChange("TypeName", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
           </Row>
         </CardBody>

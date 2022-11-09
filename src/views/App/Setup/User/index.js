@@ -101,8 +101,8 @@ const BranchesMap = useMemo(() => arrToHashMap(Branches), [Branches]);
           )} */}
         </div>
           <Row>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("Series")}</Label>
                 <Input
                   placeholder={t("Series")}
@@ -110,10 +110,10 @@ const BranchesMap = useMemo(() => arrToHashMap(Branches), [Branches]);
                     handleFiltersChange("Series", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col  md="4">
+              
                 <Label>{t("UserName")}</Label>
                 <Input
                   placeholder={t("UserName")}
@@ -121,7 +121,7 @@ const BranchesMap = useMemo(() => arrToHashMap(Branches), [Branches]);
                     handleFiltersChange("UserName", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
           </Row>
         </CardBody>

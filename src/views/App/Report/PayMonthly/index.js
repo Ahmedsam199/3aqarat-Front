@@ -33,17 +33,24 @@ import {
   Row,
   UncontrolledButtonDropdown
 } from "reactstrap";
+
+import CustomSelect from "../../../../components/CustomSelect";
 import { Search } from "react-feather";
+import { useSelector } from "react-redux";
 const Index = () => {
   // const { Item, ItemGroup, Users, Party } = useSelector((state) => state);
   const ref = useRef();
   const { t } = useTranslation();
 
   const [filters, setFilters] = useState({
-    ContractStarts: [subMonths(new Date(), 1)],
-    ContractEnds: [addMonths(new Date(), 1)],
+    ToDate: null,
+    FirstParty: null,
+    SecondParty: null,
+    Currency: null,
+    PaymentType: null,
     // BasedOn: 0,
   });
+  const { Party, Currency, PaymentTypes } = useSelector((state) => state);
   const handleFiltersChange = (key, value) => {
     setFilters((prev) => {
       if (Array.isArray(key))
@@ -119,29 +126,80 @@ const Index = () => {
       </div>
       <Card>
         <CardBody>
-          <Row className="">
-            <Col md="4">
-              <Label>{t("Contract Starts")}</Label>
-              <Flatpickr
-                className="form-control"
-                data-enable-time
-                options={{ dateFormat: "Y/m/d H:i", enableTime: true }}
-                value={filters.ContractStarts}
-                onChange={(val) => {
-                  console.log(val);
-                  handleFiltersChange("ContractStarts", val);
-                }}
+          <Row>
+            <Col sm="4">
+              <Label>From Party</Label>
+              <CustomSelect
+                menuPosition="fixed"
+                menuShouldBlockScroll
+                isClearable={true}
+                textName="FullName"
+                valueName="Series"
+                value={filters.FirstParty}
+                onChange={(e) =>
+                  handleFiltersChange("FirstParty", e?.value ?? null)
+                }
+                options={Party}
               />
             </Col>
+            <Col sm="4">
+              <Label>Second Party</Label>
+              <CustomSelect
+                menuPosition="fixed"
+                menuShouldBlockScroll
+                isClearable={true}
+                textName="FullName"
+                valueName="Series"
+                value={filters.SecondParty}
+                onChange={(e) =>
+                  handleFiltersChange("SecondParty", e?.value ?? null)
+                }
+                options={Party}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="4">
+              <Label>Currency</Label>
+              <CustomSelect
+                menuPosition="fixed"
+                menuShouldBlockScroll
+                isClearable={true}
+                textName="CurrencyName"
+                valueName="Series"
+                value={filters.Currency}
+                onChange={(e) =>
+                  handleFiltersChange("Currency", e?.value ?? null)
+                }
+                options={Currency}
+              />
+            </Col>
+            <Col sm="4">
+              <Label>PaymentType</Label>
+              <CustomSelect
+                menuPosition="fixed"
+                menuShouldBlockScroll
+                isClearable={true}
+                textName="PaymentType"
+                valueName="Series"
+                value={filters.PaymentType}
+                onChange={(e) =>
+                  handleFiltersChange("PaymentType", e?.value ?? null)
+                }
+                options={PaymentTypes}
+              />
+            </Col>
+          </Row>
+          <Row className="">
             <Col md="4">
-              <Label>{t("Contract Ends")}:</Label>
+              <Label>{t("To Date")}:</Label>
               <Flatpickr
                 className="form-control"
                 data-enable-time
                 options={{ dateFormat: "Y/m/d H:i", enableTime: true }}
-                value={filters.ContractEnds}
+                value={filters.ToDate}
                 onChange={(val) => {
-                  handleFiltersChange("ContractEnds", val);
+                  handleFiltersChange("ToDate", val);
                 }}
               />
             </Col>
@@ -251,7 +309,7 @@ const Index = () => {
         </CardBody>
         <CustomTableV2
           ref={ref}
-          url={Routes.Report.PayMonthly}
+          url={Routes.Report.Payment_Monthly}
           filters={filters}
           // ignoreTotalKeys={[
           //   "FirstParty",

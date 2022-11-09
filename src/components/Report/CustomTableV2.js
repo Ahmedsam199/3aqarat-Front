@@ -205,9 +205,10 @@ console.log(data, "getFinalTotalRows");
                     <div
                       {...row.getRowProps()}
                       style={{
-                        border: "1px solid #161d32",
+                        borderBottom: "1px solid #161d32",
+                        // borderBottom: "0.5px solid #b4b7bd",
                         display: "flex",
-                        padding: "1rem",
+                        padding: "6px",
                       }}
                       className="rt_TableRow"
                     >
@@ -221,7 +222,7 @@ console.log(data, "getFinalTotalRows");
                           </div>
                         );
                       })}
-                        {/* {isSeries? <>Hello</>: <>NotHello</>} */}
+                      {/* {isSeries? <>Hello</>: <>NotHello</>} */}
                       {/* {
                         <Button>{row.cells[0].value}</Button>} */}
                     </div>

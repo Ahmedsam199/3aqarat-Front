@@ -111,9 +111,9 @@ PurposeMap,
             )}
           </div>
           <Row>
-            <Col md="8 ">
+            
               <Row className="d-flex">
-                <Col sm="6">
+                <Col md="4">
                   <Label>{t("Series")}</Label>
                   <Input
                     placeholder={t("Series")}
@@ -122,7 +122,7 @@ PurposeMap,
                     }
                   />
                 </Col>
-                <Col sm="6">
+                <Col md="4">
                   <Label>{t("From")}</Label>
                   <Input
                     placeholder={t("RequestedAmt")}
@@ -131,7 +131,7 @@ PurposeMap,
                     }
                   />
                 </Col>
-                <Col sm="6">
+                <Col md="4">
                   <Label>{t("To")}</Label>
                   <Input
                     placeholder={t("RequestedAmt")}
@@ -140,7 +140,7 @@ PurposeMap,
                     }
                   />
                 </Col>
-                <Col sm="6">
+                <Col md="4">
                   <Label>{t("Territory")}</Label>
                   <CustomSelect
                     isClearable={true}
@@ -154,7 +154,7 @@ PurposeMap,
                   />
                 </Col>
                 
-                {/* <Col sm="6">
+                {/* <Col md="4">
                   <Label>{t("Show")}</Label>
                   <Input
                     type="checkbox"
@@ -166,7 +166,7 @@ PurposeMap,
                   />
                 </Col> */}
               </Row>
-            </Col>
+            
           </Row>
         </CardBody>
 

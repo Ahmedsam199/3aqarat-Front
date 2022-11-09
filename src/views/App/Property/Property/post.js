@@ -1,12 +1,20 @@
 // ** React Import
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 // ** Custom Components
 import Breadcrumbs from "@components/breadcrumbs";
 // ** Utils
 
-import { isObjEmpty, sendAttachment, toBoolean } from "@utils";
+import {
+  isObjEmpty,
+  sendAttachment,
+  sendAttachmentV2,
+  toBoolean,
+} from "@utils";
 import AttachmentComponent from "@Component/Attachment";
 import AttachmentComponent2 from "@Component/Attachment2";
+
+
+import ImageGallery from "react-image-gallery";
 // ** Third Party Components
 import CustomFormInput from "@Component/Form/CustomFormInput";
 import CustomFormInputCheckbox from "@Component/Form/CustomFormInputCheckbox";
@@ -19,7 +27,7 @@ import { AbilityContext } from "@src/utility/context/Can";
 import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
 import { Property as Schema } from "@validation";
-import { Alert } from 'reactstrap'
+import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import PrintDropDown from "@Component/PrintDropDown";
 import axios from "axios";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
@@ -32,6 +40,14 @@ import { Map, Marker, GeoJson, GeoJsonFeature, Point, } from "pigeon-maps";
 import Furnitures from "./Furnitures";
 import Attributes from "./Attributes";
 import toast from "react-hot-toast";
+import './css.scss'
+import {
+  Carousel,
+  CarouselItem,
+  CarouselControl,
+  CarouselIndicators,
+} from "reactstrap";
+// import Carousel from "react-bootstrap/Carousel";
 // import { confirmAlert2 } from '../../../utility/alert';
 const POST = (props) => {
   const { t } = useTranslation();
@@ -46,7 +62,7 @@ const POST = (props) => {
   } = useSelector((state) => state);
   const ability = useContext(AbilityContext);
   const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
-
+const [Gallerys,SetGallery]=useState([])
   const [isAttachmentModalOpen2, setIsAttachmentModalOpen2] = useState(false);
   const Attachment = useSelector((state) => state.Attachment);
   const Attachment2 = useSelector((state) => state.Attachment2);
@@ -93,10 +109,10 @@ const POST = (props) => {
           .then((res) => {
             toast.success();
             if(Attachment2.length >0){
-sendAttachment({
+sendAttachmentV2({
   files: Attachment2,
   refDoctype: "Property_Gallery",
-  refSeries: `Gallery_${res?.Series}`,
+  refSeries: res?.Series,
 });
             }
             if (Attachment.length > 0) {
@@ -114,7 +130,7 @@ sendAttachment({
           })
           .catch((err) => {
             console.log("hacker_it_err", err);
-            toast.error(err.response.data.message);
+            // toast.error(err.response.data.message);
           })
           .finally(() => {
             setLoading(false);
@@ -122,6 +138,7 @@ sendAttachment({
       }
     }
   };
+
   const _write = useMemo(
     () => toBoolean(ability.can("write", "DT-6")),
     [ability.can("write", "DT-6")]
@@ -133,7 +150,7 @@ sendAttachment({
       const { data } = await axios.get(
         `${Routes.Property.root}/${params.series}`
       );
-
+console.log("object",data);
       reset({
         ...data,
         // IsDefault: `${_.IsDefault}`,
@@ -153,30 +170,88 @@ sendAttachment({
 useEffect(() => {
   setValue("RequestedAmt2", _watchRequestedAmt);
 }, [_watchRequestedAmt]);
+const GetGallery=()=>{
+  if(params.series){
 
+}
+
+}
+const BuyNow=()=>{
+  navigate(`/Contract/CreateContract/${params.series}`);
+}
+  const [modal, setModal] = useState(false);
+// useEffect(()=>{
+// if(params?.series){
+//   axios
+//     .get(`http://193.47.189.15:4500/Attachment/${params?.series}`)
+//     .then((res) => {
+//       SetGallery(res.data);
+//     }); 
+// }
+// },[Property])
+
+  const toggle = () => {
+axios
+  .get(`http://193.47.189.15:4500/Attachment/${params?.series}`)
+  .then((res) => {
+    SetGallery(res.data.map((x) => ({ original: x.Link, thumbnail:x.Link})));
+  });
+       setModal(!modal)
+  
+  };
+  const highlight = document.querySelector(".gallery-hightlight");
+  const previews = document.querySelectorAll(".room-preview img");
+
+  const imagePrivew=useRef()
+  function imageGallery() {
+console.log(previews);
+    previews.forEach((preview) => {
+      highlight.addEventListener("click", function () {
+        const smallSrc = this.src;
+        const bigSrc = smallSrc.replace("small", "big");
+        previews.forEach((preview) => preview.classList.remove("room-active"));
+        highlight.src = bigSrc;
+        preview.classList.add("room-active");
+      });
+    });
+  }
+imageGallery();
   return (
     <FormProvider {...methods}>
       <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
-        <Row style={{ justifyContent: "end", marginBottom: "1rem" }}>
-          <Col sm="10"></Col>
-          <Col sm="2" className="d-flex justify-content-end align-items-center">
-            <Button
-              style={{ marginRight: "1rem" }}
-              color="primary"
-              type="submit"
-              className="mr-1 "
-              disabled={loading || (params.series && !_write)}
-            >
-              {loading && <Spinner color="white" size="sm" className="mr-1" />}
-              {t("Save")}
-            </Button>
-          </Col>
-        </Row>
-
         <Row>
           <Col sm="12">
             <Card>
               <CardBody>
+                <Row style={{ justifyContent: "end", marginBottom: "1rem" }}>
+                  <Col sm="10"></Col>
+                  <Row></Row>
+                  <Col
+                    sm="2"
+                    className="d-flex justify-content-end align-items-center"
+                  >
+                    <Button
+                      style={{ marginRight: "1rem" }}
+                      color="primary"
+                      type="submit"
+                      className=" "
+                      disabled={loading || (params.series && !_write)}
+                    >
+                      {loading && (
+                        <Spinner color="white" size="sm" className="" />
+                      )}
+                      {t("Save")}
+                    </Button>
+                    {params?.series ? (
+                      <Button color="primary" onClick={BuyNow}>
+                        Make Contract
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </Col>
+                </Row>
+
                 <Row>
                   <Col sm="6">
                     <CustomFormSelect
@@ -255,27 +330,39 @@ useEffect(() => {
         </Row>
 
         <Row>
-          <Col></Col>
           <Col>
             <input type="hidden" {...register("Latitude")} />
             <input type="hidden" {...register("Longitude")} />
           </Col>
         </Row>
-        <br></br>
-        <Button
-          className="ml-1"
-          color="primary"
-          onClick={() => setIsAttachmentModalOpen(true)}
-        >
-          Attachment
-        </Button>
-        <Button
+        <Row className="mt-2 mb-2">
+          <Col sm="1">
+            <Button
+              className="ml-1"
+              color="primary"
+              onClick={() => setIsAttachmentModalOpen(true)}
+            >
+              Gallery
+            </Button>
+          </Col>
+
+          <Col>
+            {params.series ? (
+              <Button color="warning" onClick={toggle}>
+                Show Gallery
+              </Button>
+            ) : (
+              ""
+            )}
+          </Col>
+        </Row>
+        {/* <Button
           className="ml-1"
           color="primary"
           onClick={() => setIsAttachmentModalOpen2(true)}
         >
           Gallery
-        </Button>
+        </Button> */}
 
         <AttachmentComponent
           isModalOpen={isAttachmentModalOpen}
@@ -283,12 +370,12 @@ useEffect(() => {
           series={params?.series}
           refDoctype="Property"
         />
-        <AttachmentComponent2
+        {/* <AttachmentComponent2
           isModalOpen={isAttachmentModalOpen2}
           handleToggleModel={setIsAttachmentModalOpen2}
-          series={`Gallery_${params?.series}`}
+          series={params?.series}
           refDoctype="Property_Gallery"
-        />
+        /> */}
 
         <Col sm="12">
           <Map
@@ -305,6 +392,48 @@ useEffect(() => {
               anchor={[getValues("Longitude"), getValues("Latitude")]}
             />
           </Map>
+          {/* <Row>
+            <div className="carousel w-full">
+              <div id="item1" className="carousel-item w-full">
+                <img
+                  src="https://placeimg.com/800/200/arch"
+                  className="w-full"
+                />
+              </div>
+              <div id="item2" className="carousel-item w-full">
+                <img
+                  src="https://placeimg.com/800/200/arch"
+                  className="w-full"
+                />
+              </div>
+              <div id="item3" className="carousel-item w-full">
+                <img
+                  src="https://placeimg.com/800/200/arch"
+                  className="w-full"
+                />
+              </div>
+              <div id="item4" className="carousel-item w-full">
+                <img
+                  src="https://placeimg.com/800/200/arch"
+                  className="w-full"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center w-full py-2 gap-2">
+              <a href="#item1" className="btn btn-xs">
+                1
+              </a>
+              <a href="#item2" className="btn btn-xs">
+                2
+              </a>
+              <a href="#item3" className="btn btn-xs">
+                3
+              </a>
+              <a href="#item4" className="btn btn-xs">
+                4
+              </a>
+            </div>
+          </Row> */}
         </Col>
       </Form>
       <input
@@ -317,6 +446,21 @@ useEffect(() => {
         {...register("Available")}
         defaultValue={getValues("Available")}
       />
+      <Modal size="lg" isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Property Gallery</ModalHeader>
+        <ModalBody>
+          <>
+            <center>
+              <ImageGallery items={Gallerys} />
+            </center>
+          </>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>
+            Exit
+          </Button>
+        </ModalFooter>
+      </Modal>
     </FormProvider>
   );
 };

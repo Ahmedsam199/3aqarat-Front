@@ -9,6 +9,7 @@ import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import { Button, Table } from "reactstrap";
 import CustomFormInput from "@Component/Form/CustomFormInput";
+import { parseNumber } from "../../../../utility/Utils";
 // import CustomFormNumberInputV2 from "@Component/Form/CustomFormNumberInputV2";
 // import { BaseOnOptionsPaymentTermTemplate } from "../../../FixedOptions";
 const WIDTHS = ["5%", "15%", "15%", "15%",'15%', "15%", "15%", "10%"];
@@ -29,7 +30,47 @@ const DetailsList = ({ loading }) => {
     control,
     name: "PaymentTermInfo",
   });
+  Date.prototype.addDays = function (days) {
+    var date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  };
 
+  function addMonths(numOfMonths, date = new Date()) {
+    date.setMonth(date.getMonth() + numOfMonths);
+
+    return date;
+  }
+  var date = new Date();
+
+const SetDate=()=>{
+  
+  if (getValues("BasedOn") == "After Invoice Date"){
+    console.log("Hello")
+    setValue(
+      "DueDate",
+      date.addDays(
+        getValues().PaymentTermInfo.reduce(
+          (sum, x, currIndex) => parseNumber(x.CreditDays),
+          0
+        )
+      )
+    );
+  }else{
+    console.log("Jello");
+// setValue(
+//   "DueDate",
+//   addMonths(
+//     getValues().PaymentTermInfo.reduce(
+//       (sum, x, currIndex) => parseNumber(x.DueDate1),
+//       0
+//     ),
+//     date
+//   )
+// );
+setValue('DueDate',"11-11-2022")
+  }
+}
   return (
     <>
       <h5 className="mb-1 text-center">Details</h5>
@@ -41,7 +82,6 @@ const DetailsList = ({ loading }) => {
               <th style={{ width: WIDTHS[1] }}>Based On</th>
               <th style={{ width: WIDTHS[2] }}>Portions</th>
               <th style={{ width: WIDTHS[3] }}>DueDate</th>
-              
               <th style={{ width: WIDTHS[5] }}>Description</th>
             </tr>
           </thead>
@@ -66,11 +106,11 @@ const DetailsList = ({ loading }) => {
                           name={`PaymentTermInfo.${index}.BasedOn`}
                           options={[
                             {
-                              value: "After Invoice Date",
+                              value: true,
                               label: "After Invoice Date",
                             },
                             {
-                              value: "After Invoice Month",
+                              value: false,
                               label: "After Invoice Month",
                             },
                           ]}
@@ -87,11 +127,12 @@ const DetailsList = ({ loading }) => {
 
                       <td style={{ width: WIDTHS[3] }}>
                         <CustomFormNumberInput
+                          extraOnChangeFun={SetDate}
                           hiddenTitle
-                          name={`PaymentTermInfo.${index}.DueDate`}
+                          name={`PaymentTermInfo.${index}.CreditDays`}
                         />
                       </td>
-                      
+
                       <td style={{ width: WIDTHS[4] }}>
                         <CustomFormInput
                           menuPosition="fixed"
@@ -114,6 +155,12 @@ const DetailsList = ({ loading }) => {
                           </Button.Ripple>
                         )}
                       </td>
+                      <input
+                        type="date"
+                        className="d-none"
+                        name={`PaymentTermInfo.${index}.DueDate`}
+                        // {...register(`PaymentTermInfo.${index}.DueDate`)}
+                      />
                     </tr>
                   </div>
                 );
@@ -157,6 +204,7 @@ const DetailsList = ({ loading }) => {
             <Plus size={14} />
           </Button.Ripple>
         )}
+        
       </div>
     </>
   );

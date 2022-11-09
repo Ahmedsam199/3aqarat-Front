@@ -770,7 +770,27 @@ const config = {
   
 
 };
+export const sendAttachmentV2 = ({
+  files = [],
+  refDoctype = "",
+  refSeries = "",
+}) => {
+  let formData = new FormData();
+  files.forEach((img) => {
+    formData.append("image", img);
+  });
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
 
+  axios.post(
+    `${Routes.Gallery.root}?refDoctype=${refDoctype}&refSeries=${refSeries}`,
+    formData,
+    config
+  );
+};
 export const listFonts = () => {
   let { fonts } = document;
   const it = fonts.entries();

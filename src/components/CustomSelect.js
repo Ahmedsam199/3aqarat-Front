@@ -1,15 +1,15 @@
-import '@styles/react/libs/react-select/_react-select.scss';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import Select from 'react-select';
+import "@styles/react/libs/react-select/_react-select.scss";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Select from "react-select";
 const CustomSelect = (
   {
     url,
     value,
     options,
-    textName = 'label',
-    valueName = 'value',
+    textName = "label",
+    valueName = "value",
     className,
     onChange,
     defaultValue,
@@ -28,13 +28,14 @@ const CustomSelect = (
   const [loading, setLoading] = useState(true);
   const [defualtOptions, setDefualtOptions] = useState([]);
   const [val, setVal] = useState(undefined);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const mapOptions = (o) => {
     try {
       return o
         ?.filter((x) => x[valueName] !== undefined)
         .map((x) => {
           return {
+            ...x,
             value: x[valueName],
             label: x[textName],
             [customName]: x[customValue],
@@ -42,12 +43,12 @@ const CustomSelect = (
           };
         });
     } catch (e) {
-      console.error('hacker_it error', e);
+      console.error("hacker_it error", e);
       return [];
     }
   };
   const updateValue = (v, ops) => {
-    if (value === {} || value === '' || value === undefined) return;
+    if (value === {} || value === "" || value === undefined) return;
     if (v !== undefined) {
       setVal(ops?.find((x) => x.value === v));
     }

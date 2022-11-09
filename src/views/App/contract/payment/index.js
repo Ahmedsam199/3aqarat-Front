@@ -110,14 +110,14 @@ const CurrencyMap = useMemo(() => arrToHashMap(Currency), [Currency]);
             )}
           </div>
           <Row>
-            <Col md="3">
+            <Col md="4">
               <Label>{t("Series")}</Label>
               <Input
                 placeholder={t("Series")}
                 onChange={(e) => handleFiltersChange("Series", e.target.value)}
               />
             </Col>
-            <Col md="3">
+            <Col md="4">
               <Label>{t("Posting Date")}</Label>
               <Input
                 type="date"

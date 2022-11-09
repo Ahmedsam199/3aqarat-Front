@@ -1,321 +1,233 @@
 // ** React Import
-import React, { useEffect, useReducer, useRef } from "react";
-import Routes from "@Routes";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 // ** Custom Components
-import CustomSelect from "@Component/CustomSelect";
-import { SuccessToast } from "@Component/SuccessToast";
-import Breadcrumbs from "@components/breadcrumbs";
-import { insertItem, updateItem } from "@store/actions/data";
 import { toasty } from "@toast";
-import { Lock, Plus, Trash2 } from "react-feather";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useTransition } from "react";
-import { deepCopy } from "@utils";
-import { Button, Col, Input, Row, Spinner, Table } from "reactstrap";
-import { useTranslation } from "react-i18next";
+// ** Utils
+import { isObjEmpty } from "@utils";
+// ** Third Party Components
+import { useNavigate } from "react-router";
+import Breadcrumbs from "@components/breadcrumbs";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AbilityContext } from "@src/utility/context/Can";
+import { insertItem, updateItem } from "@store/actions/data";
+import { checkPortions, deepCopy, toBoolean } from "@utils";
+import { PaymentTermTemplate as Schema } from "@validation";
+import CustomFormInput from "@Component/Form/CustomFormInput";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
+import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useParams } from "react-router";
+import toast from "react-hot-toast";
+import { parseNumber } from "../../../../utility/Utils";
+import Routes from "@Routes";
+import { Button, Card, CardBody, Col, Form, Row, Spinner } from "reactstrap";
+// import { ErrorToast } from "../../../components/ErrorToast";
+// import { sleep } from "../../../utility/Utils";
 import axios from "axios";
-const reducer = (state, action) => {
-  const { type, payload } = action;
-  
-  switch (type) {
-    case "setRoleSeries":
-      return { ...state, RoleSeries: payload };
-    case "setOriginRole":
-      return { ...state, originRole: payload };
-    case "changeLoading":
-      return { ...state, loading: !state.loading };
-    case "setData":
-      return { ...state, data: payload };
-    case "setActiveRoles":
-      return { ...state, activeRoles: payload };
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  RoleSeries: null,
-  originRole: null,
-  loading: false,
-  data: [],
-  activeRoles: [],
-};
+import Permissions from "./Permissions";
+import CustomFormSelect from "../../../../components/Form/CustomFormSelect";
 const POST = (props) => {
-  const { t } = useTranslation();
-  const dispatchRedux = useDispatch();
-  const { Roles, DocType, Permission } = useSelector((state) => state);
+  const {
+    Payments,
+    Property,
 
-  const theadRef = useRef(null);
-  const [{ RoleSeries, originRole, loading, data, activeRoles }, dispatch] =
-    useReducer(reducer, initialState);
-  const navigate = useNavigate();
+    Currency,
+    Contracts,
+    Party,
+    Offline,
+    Lawyer,
+    PaymentTypes,
+    Permission,
+    Roles,
+    tempData: { network },
+  } = useSelector((state) => state);
+  const ability = useContext(AbilityContext);
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  // const history = useHistory();
   const params = useParams();
+  const methods = useForm({
+    resolver: yupResolver(Schema),
+    defaultValues: { _loading: true },
+  });
+  const {
+    register,
+    reset,
+    getValues,
+    setValue,
+    formState: { errors },
+    control,
+    handleSubmit,
+  } = methods;
+  const _dataForm = useWatch({ control });
+  console.log(errors);
+  // component for change master in row of array
+  const _write =
+    (() => toBoolean(ability.can("write", "DT-3")),
+    [ability.can("write", "DT-3")]);
+  const navigate = useNavigate();
+  
   // ** Function to handle form submit
-  // Remember to Tell Mohammed To Parse The JSON Data
-  useEffect(async () => {
-    params.series
-      ? dispatch({
-          type: "setActiveRoles",
-          payload: deepCopy(Permission).map((x) => x?.JsonData),
-        })
-      : dispatch({
-          type: "setActiveRoles",
-          payload: deepCopy(Permission).map((x) => JSON.parse(x?.JsonData)),
-        });
+  const onSubmit = async (values) => {
+   
+      // if (!checkPortions(values.PartialInfo))
+      //   return toast.error(
+      //     // <ErrorToast msg="Sum of Partions must be equal 100" />
+      //   );
+
+      // values.PartialInfo = JSON.stringify(values.PartialInfo);
+
+      try {
+        if (isObjEmpty(errors)) {
+          setLoading(true);
+          dispatch(
+            values.Series
+              ? updateItem("Permission", values)
+              : insertItem("Permission", values)
+          )
+            .then((res) => {
+              toasty({ type: "success" });
+              setLoading(false);
+
+              navigate("/Setup/Permission");
+            })
+            .catch((err) => {
+              setLoading(false);
+
+              console.log("hacker_it_err", err);
+            });
+        }
+      } catch (e) {
+        console.error("hacker_it error", e);
+      } finally {
+      }
     
-    if (params?.series) {
-      const { data: JsonData, RoleSeries } = await axios.get(
-        `${Routes.Permission.root}/${params.series}`
-      );
-
-      
-      dispatch({
-        type: "setData",
-        payload: JSON.parse(JsonData.JsonData),
-      });
-      dispatch({ type: "setRoleSeries", payload: JsonData.RoleSeries });
-      dispatch({ type: "setOriginRole", payload: JsonData.RoleSeries });
-    }
-  }, []);
-
-  //#region role
-  const changeRole = (e) => {
-    dispatch({ type: "setRoleSeries", payload: e.value });
   };
-  //#endregion role
-  //#region Permission
-  const removePermission = (index) => {
-    const _ = data;
-    _.splice(index, 1);
-    dispatch({ type: "setData", payload: [..._] });
-  };
-  const addPermission = (e) => {
-    const _ = {
-      DocTypeID: "_",
-      Read: true,
-      Write: true,
-      Create: true,
-      Delete: true,
-    };
-    dispatch({ type: "setData", payload: [...data, _] });
-  };
-  const setDocType = ({ value, label }, index) => {
-    const _ = data.map((x, i) =>
-      i === index ? { ...x, DocTypeID: value, DocTypeName: label } : x
-    );
-    dispatch({ type: "setData", payload: [..._] });
-  };
-  //#endregion Permission
-  //#region dataTable
-  const changeStatus = ({ target: { name } }, index) => {
-    dispatch({
-      type: "setData",
-      payload: data.map((x, i) => {
-        if (i === index) return { ...x, [name]: !x[name] };
-        else return x;
-      }),
-    });
-  };
-  
-  const renderRow = (row, index) => {
-    return (
-      <tr key={`row-${index}`}>
-        <td style={{ width: "40%" }}>
-          <CustomSelect
-            textName="DocType"
-            valueName="Series"
-            onChange={(e) => setDocType(e, index)}
-            options={DocType?.filter(
-              (x) =>
-                data?.findIndex((y) => y.DocTypeID == x.Series) === -1 ||
-                x.Series === row.DocTypeID
-            )}
-            // options={DocType}
-            value={row.DocTypeID}
-            className="w-100"
-          />
-        </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Read`}
-            name="Read"
-            label=""
-            defaultChecked={row.Read}
-          />
-        </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Write`}
-            name="Write"
-            label=""
-            defaultChecked={row.Write}
-          />
-        </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Create`}
-            name="Create"
-            label=""
-            defaultChecked={row.Create}
-          />
-        </td>
-        <td style={{ width: "10%" }}>
-          <Input
-            onChange={(e) => changeStatus(e, index)}
-            type="checkbox"
-            id={`${index}-Delete`}
-            name="Delete"
-            label=""
-            defaultChecked={row.Delete}
-          />
-        </td>
-       
-        <td style={{ width: "10%" }}>
-          <Button.Ripple
-            className="btn-icon"
-            color="flat-danger"
-            onClick={() => {
-              removePermission(index);
-            }}
-          >
-            <Trash2 size="15" />
-          </Button.Ripple>
-        </td>
-      </tr>
-    );
-  };
-  //#endregion dataTable
-  //#region Submit
-  
-  const onSubmit = async () => {
+  const updateFormData = async () => {
     try {
-      dispatch({ type: "changeLoading" });
-      console.log("2",data)
-      const request = {
-        Series: params.series ?? "",
-        RoleSeries: RoleSeries,
-        JsonData: data.filter((x) => x.DocTypeID !== "_"),
-      };
-      if (!request.JsonData.length) {
-        throw new Error("Tables empty");
-      }
-      dispatchRedux(
-        params.series
-          ? updateItem("Permission", request)
-          : insertItem("Permission", request)
-      )
-        .then((res) => {
-          toast.success(<SuccessToast />, { hideProgressBar: true });
-          navigate("/Setup/Permission");
-        })
-        .catch((err) => {
-          console.log("hacker_it_err", err);
+      if (params.Series) {
+        const _ = deepCopy(
+          Permission.find((x) => x.Series === params.series)
+        );
+
+        const PartialInfo = JSON.parse(_.PartialInfo);
+
+        await Promise.all([
+          reset({
+            ..._,
+            PartialInfo: PartialInfo,
+            _loading: false,
+            _write,
+          }),
+          then(() => {
+            setLoading(false);
+          }),
+        ]);
+      } else {
+        reset({
+          _write,
+          _loading: false,
+          PartialInfo: [{}],
         });
+        then(() => {
+          setLoading(false);
+        });
+      }
     } catch (e) {
-      toasty({ type: "Error", msg: e.message });
-    } finally {
-      dispatch({ type: "changeLoading" });
+      console.error("hacker_it error", e);
     }
   };
-  //#endregion Submit
-  useEffect(() => {
-    const handleScroll = () => {
-      const iconPermission = document.querySelector("#icon-permission");
-      const mainContentScrollTop = document.querySelector(
-        ".container-after-titlebar"
-      );
-      if (mainContentScrollTop.scrollTop > iconPermission?.offsetTop + 120) {
-        theadRef.current.style.position = "fixed";
-        theadRef.current.style.zIndex = "100";
-        theadRef.current.style.top = "119px";
+
+  useEffect(async () => {
+    if (params.series) {
+      if (!Permission.length) return;
+      if (network) {
+        const { data } = network
+          ? await axios.get(
+              `${Routes.Permission.root}/${params.series}`
+            )
+          : _;
+          console.log(data,"PER DATA DATA");
+        reset({
+          ...data,
+          JsonData:JSON.parse(data.JsonData),
+          _loading: false,
+          _write,
+        });
       } else {
-        theadRef.current.style.position = "relative";
-        theadRef.current.style.zIndex = "0";
+        const _ = Offline.Permission.find(
+          (x) => x.ID == params.series
+        );
+
+        reset({
+          ..._,
+          _loading: false,
+          _write,
+        });
       }
-      return;
-    };
-    document
-      .querySelector(".container-after-titlebar")
-      ?.addEventListener("scroll", handleScroll, { passive: true });
-    return () =>
-      document
-        .querySelector(".container-after-titlebar")
-        ?.removeEventListener("scroll", handleScroll);
-  }, []);
+    } else
+      reset({
+        _write: true,
+        _loading: false,
+      });
+  }, [Permission]);
 
   return (
     <>
-      <Breadcrumbs
-        breadCrumbTitle="Permissions"
-        breadCrumbParent="Permissions"
-        breadCrumbActive="Permissions"
-        breadCrumbActiveLink="//Permissions"
-      />
-      <Row>
-        <Col sm="12">
-          <div className="mt-1 permissions">
-            <div className="d-flex justify-content-between align-items-center">
-              <CustomSelect
-                textName="RoleName"
-                valueName="Series"
-                onChange={(e) => changeRole(e)}
-                // options={Roles?.filter(
-                //   (x) =>
-                //     x.Series == originRole ||
-                //     originRole?.findIndex((y) => y == x.Series) === -1
-                // )}
-                options={Roles}
-                value={RoleSeries}
-                className="w-25"
-              />
-              <Button
-                color="primary"
-                disabled={!RoleSeries || !data.length || loading}
-                onClick={onSubmit}
-              >
-                {loading && (
-                  <Spinner color="white" size="sm" className="mr-1" />
-                )}
-                {t("Save")}
-              </Button>
-            </div>
-            <h6 className="py-1 mx-1 mb-0 font-medium-2" id="icon-permission">
-              <Lock size={18} className="mr-25" />
-              <span className="align-middle">{t("Permissions")}</span>
-            </h6>
-            <div className="permission-table">
-              <Table borderless striped>
-                <thead className="thead-light" ref={theadRef}>
-                  <tr>
-                    <th style={{ width: "40%" }}>{t("DocType")}</th>
-                    <th style={{ width: "10%" }}>{t("Read")}</th>
-                    <th style={{ width: "10%" }}>{t("Write")}</th>
-                    <th style={{ width: "10%" }}>{t("Create")}</th>
-                    <th style={{ width: "10%" }}>{t("Delete")}</th>
-                    <th style={{ width: "10%" }}>{t("Actions")}</th>
-                  </tr>
-                </thead>
-                <tbody>{data.map((x, index) => renderRow(x, index))}</tbody>
-              </Table>
-            </div>
-            <Button
-              onClick={addPermission}
-              color="flat-primary"
-              style={{ margin: "0rem 0rem 7rem 0rem" }}
+      <FormProvider {...methods}>
+        <Form onSubmit={handleSubmit(onSubmit)} className=" h-100">
+          <Row>
+            <Col sm="11"></Col>
+            <Col
+              sm="1"
+              className={`d-flex align-items-center justify-content-${
+                _dataForm.Series && (!params.series || _write)
+                  ? "between"
+                  : "end"
+              }`}
             >
-              <Plus size={18} />
-            </Button>
-          </div>
-        </Col>
-      </Row>
+              <Button
+                type="submit"
+                className="mr-1"
+                color="primary"
+                // disabled={loading || (params.series && !_write)}
+              >
+                Save
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm="12">
+              <Card>
+                <CardBody>
+                  <Row>
+                    <Col sm="4">
+                      <CustomFormSelect
+                        options={Roles}
+                        textName="RoleName"
+                        valueName="Series"
+                        name="RoleSeries"
+                        
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row>
+                    <Col sm="12">
+                      <Permissions {...{ loading }} />
+                    </Col>
+                    <hr />
+                  </Row>
+                  {/* forth */}
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <input type="hidden" {...register("Series")} />
+          <input type="hidden" {...register("_write")} />
+          <input type="hidden" {...register("_loading")} />
+        </Form>
+      </FormProvider>
     </>
   );
 };

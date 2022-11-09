@@ -1,6 +1,6 @@
 import Breadcrumbs from "@components/breadcrumbs";
 import { FormattedMessage, useIntl } from "react-intl";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { Button, Card, CardBody, Col, FormGroup, Label, Row } from "reactstrap";
 
 import { AbilityContext } from "@src/utility/context/Can";
@@ -45,9 +45,7 @@ const navigate = useNavigate();
   const onDelete = async (Series) => {
     dispatch(deleteItem("PaymentTermTemplate", Series))
       .then((res) => {
-        toast.success(<SuccessToast msg="Delete Successfully!" />, {
-          hideProgressBar: true,
-        });
+        toast.success("Delete Successfully");
       })
       .catch((err) => {
         console.log("hacker_it_error", err);
@@ -81,8 +79,8 @@ const navigate = useNavigate();
       <Card>
         <CardBody>
           <Row form className="mt-1 mb-50">
-            <Col lg="3" md="4">
-              <FormGroup></FormGroup>
+            <Col  md="4">
+              
             </Col>
           </Row>
         </CardBody>

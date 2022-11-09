@@ -105,15 +105,15 @@ const Index = () => {
             )}
           </div>
           <Row>
-            <Col lg="3" md="4">
+            <Col md="4">
               <Label>{t("Series")}</Label>
               <Input
                 placeholder={t("Series")}
                 onChange={(e) => handleFiltersChange("Series", e.target.value)}
               />
             </Col>
-            <Col lg="3" md="4">
-              <FormGroup>
+            <Col md="4">
+             
                 <Label>{t("FullName")}</Label>
                 <Input
                   placeholder={t("FullName")}
@@ -121,9 +121,9 @@ const Index = () => {
                     handleFiltersChange("FullName", e.target.value)
                   }
                 />
-              </FormGroup>
+              
             </Col>
-            <Col lg="3" md="4">
+            <Col md="4">
               <Label>{t("Phone")}</Label>
               <Input
                 placeholder={t("Phone")}

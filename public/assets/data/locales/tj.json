@@ -1,4 +1,10 @@
 {
+  "CurrencyEXRate":"ڕێژەی ئاڵوگۆری دراو",
+  "FromParty":"لە پارتیەوە",
+  "ToParty":"بۆ پارتی",
+  "RequestedValue":"بەهای داواکراو",
+  "Status" : "دۆخ",
+  "TotalPay":"کۆی گشتی",
   "PropertyValue":"بەهای تایبەتمەندی",
   "ValueCurrency":"بەهای دراو",
   "PaymentSchedule":"خشتەی پارەدان",
