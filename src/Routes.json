@@ -1,98 +1,96 @@
-
 {
+  "Base*URL":"http://193<47.189.15:4500",
   "Auth": {
-    "login": "http://75.119.128.241:4500/Users/login",
-    "Refresh": "http://75.119.128.241/Users/token/",
-    "signUp": "http://75.119.128.241:4500/signup",
-    "logout": "http://75.119.128.241:4500/Logout"
+    "login": "https://realestate.aljazary.com/Users/login",
+    "Refresh": "http://193.47.189.15/Users/token/",
+    "signUp": "https://realestate.aljazary.com/signup",
+    "logout": "https://realestate.aljazary.com/Logout"
   },
   "Contracts": {
-    "root": "http://75.119.128.241:4500/Contracts"
+    "root": "https://realestate.aljazary.com/Contracts"
   },
   "Payments": {
-    "root": "http://75.119.128.241:4500/Payments"
+    "root": "https://realestate.aljazary.com/Payments"
   },
   "Party": {
-    "root": "http://75.119.128.241:4500/Party"
+    "root": "https://realestate.aljazary.com/Party"
   },
   "Property": {
-    "root": "http://75.119.128.241:4500/Property"
+    "root": "https://realestate.aljazary.com/Property"
   },
   "PropertyAttr": {
-    "root": "http://75.119.128.241:4500/PropertyAttr"
+    "root": "https://realestate.aljazary.com/PropertyAttr"
   },
   "Territory": {
-    "root": "http://75.119.128.241:4500/Territory"
+    "root": "https://realestate.aljazary.com/Territory"
   },
   "Branches": {
-    "root": "http://75.119.128.241:4500/Branches"
+    "root": "https://realestate.aljazary.com/Branches"
   },
   "ContractTemplate": {
-    "root": "http://75.119.128.241:4500/ContractTemplates"
+    "root": "https://realestate.aljazary.com/ContractTemplates"
   },
   "ContractType": {
-    "root": "http://75.119.128.241:4500/ContractType"
+    "root": "https://realestate.aljazary.com/ContractType"
   },
   "Permission": {
-    "root": "http://75.119.128.241:4500/Permission"
+    "root": "https://realestate.aljazary.com/Permission"
   },
   "Purpose": {
-    "root": "http://75.119.128.241:4500/Purpose"
+    "root": "https://realestate.aljazary.com/Purpose"
   },
   "Users": {
-    "root": "http://75.119.128.241:4500/Users"
+    "root": "https://realestate.aljazary.com/Users"
   },
   "Roles": {
-    "root": "http://75.119.128.241:4500/Roles"
+    "root": "https://realestate.aljazary.com/Roles"
   },
 
   "Currency": {
-    "root": "http://75.119.128.241:4500/Currency"
+    "root": "https://realestate.aljazary.com/Currency"
   },
   "PropertyType": {
-    "root": "http://75.119.128.241:4500/PropertyType"
+    "root": "https://realestate.aljazary.com/PropertyType"
   },
   "Attachments": {
-    "root": "http://75.119.128.241:4500/Attachment/"
+    "root": "https://realestate.aljazary.com/Attachment/"
   },
   "Gallery": {
-    "root": "http://75.119.128.241:4500/Gallery/"
+    "root": "https://realestate.aljazary.com/Gallery/"
   },
   "DocType": {
-    "root": "http://75.119.128.241:4500/DocTypes/"
+    "root": "https://realestate.aljazary.com/DocTypes/"
   },
   "PrintKeys": {
-    "root": "http://75.119.128.241:4500/PrintKeys/"
+    "root": "https://realestate.aljazary.com/PrintKeys/"
   },
   "CurrencyExchange": {
-    "root": "http://75.119.128.241:4500/CurrencyExchange"
+    "root": "https://realestate.aljazary.com/CurrencyExchange"
   },
   "Lawyer": {
-    "root": "http://75.119.128.241:4500/Lawyer"
+    "root": "https://realestate.aljazary.com/Lawyer"
   },
   "PaymentTypes": {
-    "root": "http://75.119.128.241:4500/PaymentTypes"
+    "root": "https://realestate.aljazary.com/PaymentTypes"
   },
   "PaymentTermTemplate": {
-    "root": "http://75.119.128.241:4500/PaymentTermTemplate"
+    "root": "https://realestate.aljazary.com/PaymentTermTemplate"
   },
   "Report": {
-    "PayMonthly": "http://75.119.128.241:4500/Reports/PayMonthly/",
-    "OwnerProp": "http://75.119.128.241:4500/Reports/OwnerProp/",
-    "getExtraPayemnts": "http://75.119.128.241:4500/Reports/getExtraPayemnts/",
-    "ActivityLog": "http://75.119.128.241:4500/ActivityLog/",
-    "collectionInsurance": "http://75.119.128.241:4500/Reports/collectionInsurance/",
-    "Tenants": "http://75.119.128.241:4500/Reports/Tenants/",
-    "Lawyer_Report": "http://75.119.128.241:4500/Reports/Lawyer_Report/",
-    "Property_Report": "http://75.119.128.241:4500/Reports/Property_Report",
-    "Payment_Report":"http://75.119.128.241:4500/Reports/Payment_Report",
+    "PayMonthly": "https://realestate.aljazary.com/Reports/PayMonthly/",
+    "OwnerProp": "https://realestate.aljazary.com/Reports/OwnerProp/",
+    "getExtraPayemnts": "https://realestate.aljazary.com/Reports/getExtraPayemnts/",
+    "ActivityLog": "https://realestate.aljazary.com/ActivityLog/",
+    "collectionInsurance": "https://realestate.aljazary.com/Reports/collectionInsurance/",
+    "Tenants": "https://realestate.aljazary.com/Reports/Tenants/",
+    "Lawyer_Report": "https://realestate.aljazary.com/Reports/Lawyer_Report/",
+    "Property_Report": "https://realestate.aljazary.com/Reports/Property_Report",
+    "Payment_Report":"https://realestate.aljazary.com/Reports/Payment_Report",
     "Payment_Monthly":"http://192.168.1.20:4500/Reports/Reports/Payment_Monthly"
-    
   },
-
   "ImageBaseUrl": "http://pos-aljazary.s3.eu-north-1.amazonaws.com",
   "Socket": {
-    "data": "http://75.119.128.241:4500",
+    "data": "https://realestate.aljazary.com",
     "check": "http://193.47.189.15:8000"
   } 
 }

@@ -103,7 +103,9 @@ const POST = (props) => {
   const [isAttachmentModalOpen, setIsAttachmentModalOpen] = useState(false);
   const _watchType = useWatch({ control, name: "TypeOfTran" });
   // ** Function to handle form submit
-  useEffect(() => {}, [errors]);
+  useEffect(() => {
+    console.log("first", errors);
+  }, [errors]);
   const onSubmit = (values) => {
     if (isObjEmpty(errors)) {
       console.log(errors);
@@ -162,7 +164,6 @@ const POST = (props) => {
   );
   useEffect(async () => {
     if (params?.series) {
-      
       if (network) {
         const { data } = await axios.get(
           `${Routes.Contracts.root}/${params.series}`
@@ -172,7 +173,6 @@ const POST = (props) => {
           ExtraPayment: data.ExtraPayment.map((x) => ({
             ...x,
             paymentschedualinfo: JSON.stringify(x.paymentschedualinfo),
-            
           })),
           _loading: false,
           _write,
@@ -191,40 +191,38 @@ const POST = (props) => {
         _loading: false,
       });
   }, [Contracts]);
-useEffect(()=>{
-if (params?.test) {
-setValue("Property", params?.test);
-  Property.forEach((x) => {
-    
-    if (x.Series == params?.test) {
-      console.log(x);
-      setValue("FirstParty", x.Party);
-      setValue("ContractType", x.ContractType);
-      setValue("Attributes", (x.Attributes)); 
-      setValue("Territory", x.Territory);
-      setValue("RequestedValue", x.RequestedAmt);
-      if (x.Furnitures == null) {
-      } else {
-        if (x.Furnitures.length == 0) {
+  useEffect(() => {
+    if (params?.test) {
+      setValue("Property", params?.test);
+      Property.forEach((x) => {
+        if (x.Series == params?.test) {
+          console.log(x);
+          setValue("FirstParty", x.Party);
+          setValue("ContractType", x.ContractType);
+          setValue("Attributes", x.Attributes);
+          setValue("Territory", x.Territory);
           setValue("RequestedValue", x.RequestedAmt);
-          setValue("Furnitures", []);
-        } else if (x.Furnitures.length == null) {
-          setValue("RequestedValue", x.RequestedAmt);
-          setValue("Furnitures", []);
-        } else if (x.Furnitures == null) {
-          setValue("RequestedValue", x.RequestedAmt);
-          setValue("Furnitures", []);
-        } else {
-          setValue("RequestedValue", x.RequestedAmt);
-          // console.log("first", JSON.parse(x.Furnitures));
-          setValue("Furnitures", (x.Furnitures));
+          if (x.Furnitures == null) {
+          } else {
+            if (x.Furnitures.length == 0) {
+              setValue("RequestedValue", x.RequestedAmt);
+              setValue("Furnitures", []);
+            } else if (x.Furnitures.length == null) {
+              setValue("RequestedValue", x.RequestedAmt);
+              setValue("Furnitures", []);
+            } else if (x.Furnitures == null) {
+              setValue("RequestedValue", x.RequestedAmt);
+              setValue("Furnitures", []);
+            } else {
+              setValue("RequestedValue", x.RequestedAmt);
+              // console.log("first", JSON.parse(x.Furnitures));
+              setValue("Furnitures", x.Furnitures);
+            }
+          }
         }
-      }
+      });
     }
-  });
-  
-}
-},[Contracts])
+  }, [Contracts]);
 
   const _watchProperty = useWatch({ control, name: "Property" });
   const _watchPaymentSchedule = useWatch({ control, name: "PaymentSchedule" });
@@ -271,9 +269,7 @@ setValue("Property", params?.test);
         //   }
         // });
       }, [Contracts])
-    : useEffect(() => {
-        
-      }, [_watchProperty]);
+    : useEffect(() => {}, [_watchProperty]);
   params?.series
     ? useEffect(() => {
         PaymentTermTemplate.forEach((x) => {
@@ -353,32 +349,32 @@ setValue("Property", params?.test);
       options: { index },
     });
   };
-  const PropertyChange=()=>{
-Property.forEach((x) => {
-  console.log(x);
-  if (x.Series == getValues('Property')) {
-    setValue("FirstParty", x.Party);
-    setValue("ContractType", x.ContractType);
-    setValue("Territory", x.Territory);
-    setValue("Attributes", JSON.parse(x.Attributes));
-    setValue("RequestedValue", x.RequestedAmt);
-    if (x.Furnitures === null) {
-      return;
-    } else {
-      if (x.Furnitures.length == 0) {
-        setValue("Furnitures", []);
-      } else if (x.Furnitures.length == null) {
-        setValue("Furnitures", []);
-      } else if (x.Furnitures == null) {
-        setValue("Furnitures", []);
-      } else {
-        console.log("first", JSON.parse(x.Furnitures));
-        setValue("Furnitures", JSON.parse(x.Furnitures));
+  const PropertyChange = () => {
+    Property.forEach((x) => {
+      console.log(x);
+      if (x.Series == getValues("Property")) {
+        setValue("FirstParty", x.Party);
+        setValue("ContractType", x.ContractType);
+        setValue("Territory", x.Territory);
+        setValue("Attributes", JSON.parse(x.Attributes));
+        setValue("RequestedValue", x.RequestedAmt);
+        if (x.Furnitures === null) {
+          return;
+        } else {
+          if (x.Furnitures.length == 0) {
+            setValue("Furnitures", []);
+          } else if (x.Furnitures.length == null) {
+            setValue("Furnitures", []);
+          } else if (x.Furnitures == null) {
+            setValue("Furnitures", []);
+          } else {
+            console.log("first", JSON.parse(x.Furnitures));
+            setValue("Furnitures", JSON.parse(x.Furnitures));
+          }
+        }
       }
-    }
-  }
-});
-  }
+    });
+  };
   const StatusVal = [
     { value: false, label: "Draft" },
     { value: true, label: "Submitted" },
